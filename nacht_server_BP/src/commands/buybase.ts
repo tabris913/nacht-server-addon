@@ -59,9 +59,13 @@ const purchase = (
         world.setDynamicProperty(
           PREFIX_BASE + `${player.nameTag}_${count}`,
           JSON.stringify({
-            northWest: { x: 0, z: 0 },
             edgeSize: size,
             id: "",
+            index: count,
+            northWest: { x: 0, z: 0 },
+            owner: player.nameTag,
+            participants: [],
+            showBorder: true,
           } satisfies BaseAreaInfo)
         );
 

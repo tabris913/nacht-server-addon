@@ -7,14 +7,22 @@ import {
 } from "@minecraft/server";
 
 export default () =>
-  system.beforeEvents.startup.subscribe((event) =>
+  system.beforeEvents.startup.subscribe((event) => {
+    event.customCommandRegistry.registerEnum(
+      "nacht:dynamicPropertyIds",
+      world.getDynamicPropertyIds()
+    );
+
     event.customCommandRegistry.registerCommand(
       {
         name: "nacht:cleardp",
         description: "Dynamic Propertyをクリアする",
         permissionLevel: CommandPermissionLevel.Admin,
         mandatoryParameters: [
-          { name: "id", type: CustomCommandParamType.String },
+          {
+            name: "nacht:dynamicPropertyIds",
+            type: CustomCommandParamType.Enum,
+          },
         ],
       },
       (origin, id: string) => {
@@ -38,5 +46,5 @@ export default () =>
           return { message, status: CustomCommandStatus.Failure };
         }
       }
-    )
-  );
+    );
+  });

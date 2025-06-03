@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { system, TicksPerSecond, world, } from "@minecraft/server";
 import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from "../const";
-import { get3DArea, isInBaseArea, isInExploringArea, isInTownArea, } from "../utils/area";
+import { get3DArea, isInBaseArea3D, isInExploringArea3D, isInTownArea3D, } from "../utils/area";
 import { sendMessageToOps } from "../utils/player";
 import { RuleName } from "../commands/gamerule";
 const tagTownArea = "AREA_TOWN"; // 街エリアにいる
@@ -43,11 +43,11 @@ const getAreaTag = (area) => {
 const getCallback = (area) => {
     switch (area) {
         case "town":
-            return isInTownArea;
+            return isInTownArea3D;
         case "base":
-            return isInBaseArea;
+            return isInBaseArea3D;
         case "expr":
-            return isInExploringArea;
+            return isInExploringArea3D;
     }
 };
 const getCallback2 = (area) => {
@@ -55,9 +55,9 @@ const getCallback2 = (area) => {
         case "town":
             return null;
         case "base":
-            return isInExploringArea;
+            return isInExploringArea3D;
         case "expr":
-            return isInBaseArea;
+            return isInBaseArea3D;
     }
 };
 /**
@@ -132,7 +132,7 @@ const checkPlayers = (area) => __awaiter(void 0, void 0, void 0, function* () {
                     // 対称エリアにいる場合
                     tp(player, areaTag);
                 }
-                else if (isInTownArea(player)) {
+                else if (isInTownArea3D(player)) {
                     tp(player, areaTag);
                 }
             }

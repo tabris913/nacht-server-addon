@@ -1,19 +1,92 @@
-import { Direction, Player, system, world } from "@minecraft/server";
+import { Direction, Player, system, VectorXZ, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import {
+  type AreaVertices,
+  type BaseAreaInfo,
   gatherLocationsWithin,
   get2DAreaFromLoc,
-  get3DAreaFromLoc,
-  isInBaseArea,
+  isInBaseArea3D,
   offsetLocation,
-  type BaseAreaInfo,
 } from "../utils/area";
-import { Formatting } from "../const";
+import { Formatting, TAG_OPERATOR } from "../const";
 import { getBaseDps } from "../utils/dp";
+import { giveItem } from "../utils/items";
 
 const TYPE_ID = "nacht:base_flag";
 
-const fixBaseZone = (player: Player) => {
+/**
+ * 与えられた平面が拠点エリアの範囲外にはみ出してないか確認する
+ *
+ * @param area2D
+ */
+const isOutOfBaseArea = (area2D: AreaVertices<VectorXZ>) => {
+  if (area2D.southEast.x < -6400 && area2D.northWest.z < 0) return true;
+  if (
+    -6400 <= area2D.southEast.x &&
+    area2D.northWest.x <= 6400 &&
+    area2D.northWest.z <= 6400
+  ) {
+    return true;
+  }
+  if (6400 < area2D.northWest.x && area2D.northWest.z < 0) return true;
+
+  return false;
+};
+
+/**
+ * 与えられた平面が既に確定された拠点と重複しているか確認する
+ *
+ * @param area2D
+ * @returns
+ */
+const hasOverlappingBlocks = (area2D: AreaVertices<VectorXZ>) =>
+  Object.values(getBaseDps())
+    .filter((baseDp) => baseDp.name !== undefined)
+    .some((baseDp) => {
+      const locations = gatherLocationsWithin({
+        northWest: baseDp.northWest,
+        southEast: offsetLocation(baseDp.northWest, baseDp.edgeSize - 1),
+      });
+      const locationSet = new Set(locations);
+      gatherLocationsWithin(area2D).forEach((val) => locationSet.add(val));
+
+      return locations.length !== locationSet.size;
+    });
+
+/**
+ * 拠点範囲を確定する
+ *
+ * @param player
+ * @param dp
+ */
+const fixBaseZone = (
+  player: Player,
+  flagLocation: VectorXZ,
+  dp: BaseAreaInfo
+) => {
+  if (dp.entityId === undefined) {
+    player.sendMessage({});
+
+    return;
+  }
+  const area2D = get2DAreaFromLoc(flagLocation, dp.edgeSize);
+  if (area2D) {
+    if (hasOverlappingBlocks(area2D)) {
+      // 重複あり
+      player.sendMessage(
+        `${Formatting.Color.RED}既存の拠点と範囲が重なっています。`
+      );
+
+      return;
+    }
+    if (isOutOfBaseArea(area2D)) {
+      player.sendMessage(
+        `${Formatting.Color.RED}拠点エリアの範囲外に拠点はつくれません。`
+      );
+
+      return;
+    }
+  }
   const form = new ActionFormData();
   form.title("拠点範囲を確定していいですか？");
   form.button("はい");
@@ -24,15 +97,34 @@ const fixBaseZone = (player: Player) => {
 
     switch (response.selection) {
       case 0:
+        world.getEntity(dp.entityId!)?.kill();
+        world.setDynamicProperty(
+          dp.id,
+          JSON.stringify({
+            ...dp,
+            entityId: undefined,
+            northWest: {
+              x: flagLocation.x - (dp.edgeSize - 1) / 2,
+              z: flagLocation.z - (dp.edgeSize - 1) / 2,
+            },
+          })
+        );
+        giveItem(player, TYPE_ID);
         break;
     }
   });
 };
 
-const setConfig = (player: Player) => {
+/**
+ * 拠点の設定を変更する
+ *
+ * @param player
+ * @param dp
+ */
+const setConfig = (player: Player, dp: BaseAreaInfo) => {
   const form = new ModalFormData();
-  form.textField("拠点名", "");
-  form.toggle("ボーダー表示", { defaultValue: true });
+  form.textField("拠点名", "", { defaultValue: dp.name });
+  form.toggle("ボーダー表示", { defaultValue: dp.showBorder });
   form.submitButton("設定");
 
   form.show(player).then((response) => {
@@ -40,114 +132,190 @@ const setConfig = (player: Player) => {
 
     const baseName = response.formValues?.[0] as string;
     const showBorder = response.formValues?.[1] as boolean;
+
+    if (baseName.length === 0) {
+      player.sendMessage(
+        `${Formatting.Color.GOLD}拠点名が設定されていません。`
+      );
+
+      return;
+    }
+
+    world.setDynamicProperty(
+      dp.id,
+      JSON.stringify({ ...dp, name: baseName, showBorder })
+    );
   });
 };
 
-const changeCoop = (player: Player) => {
+/**
+ * 同居人を設定する
+ *
+ * @param player
+ * @param dp
+ */
+const changeCoop = (player: Player, dp: BaseAreaInfo) => {
   const form = new ModalFormData();
   form.title("同居人を選択してください");
   const candidates = world
     .getAllPlayers()
-    .filter((pl) => pl.id !== player.id)
+    .filter(
+      (pl) => pl.id !== player.id && !pl.isOp() && !pl.hasTag(TAG_OPERATOR)
+    )
     .map((pl) => pl.nameTag)
     .sort();
   candidates.forEach((nameTag) =>
-    form.toggle(nameTag, { defaultValue: false })
+    form.toggle(nameTag, { defaultValue: dp.participants.includes(nameTag) })
   );
   form.submitButton("決定");
 
   form.show(player).then((response) => {
     if (response.canceled) return;
+
+    const c = response.formValues?.map((value, index) =>
+      value ? candidates[index] : undefined
+    );
+
+    world.setDynamicProperty(dp.id, JSON.stringify({ ...dp, participants: c }));
   });
 };
 
 export default () => {
   world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
-    if (
-      event.itemStack &&
-      event.itemStack.typeId === TYPE_ID &&
-      event.isFirstEvent
-    ) {
-      if (!isInBaseArea(event.player)) {
-        event.player.sendMessage(
-          `${Formatting.Color.RED}拠点の旗は拠点エリアでのみ使用可能です。`
-        );
+    if (parseInt("1") === 1) {
+      // 既に存在する拠点範囲で使用した場合
+    } else {
+      const noNameBase = Object.values(getBaseDps(event.player.nameTag)).filter(
+        (dp) => dp.name === undefined
+      );
+      if (noNameBase.length === 0) {
+        event.player.sendMessage([
+          Formatting.Color.RED,
+          { translate: "items.base_flag.name" },
+          "の購入履歴がありません。",
+        ]);
+
         return;
       }
 
-      let canPlace = false;
-      let next;
-      switch (event.blockFace) {
-        case Direction.Down:
-          break;
-        case Direction.East:
-          next = event.block.east();
-          if (next?.isAir && next.above()?.isAir) {
-            canPlace = true;
-          }
-          break;
-        case Direction.North:
-          next = event.block.north();
-          if (next?.isAir && next.above()?.isAir) {
-            canPlace = true;
-          }
-          break;
-        case Direction.South:
-          next = event.block.south();
-          if (next?.isAir && next.above()?.isAir) {
-            canPlace = true;
-          }
-          break;
-        case Direction.Up:
-          next = event.block.above();
-          if (next?.isAir && event.block.above(2)?.isAir) {
-            canPlace = true;
-          }
-          break;
-        case Direction.West:
-          next = event.block.west();
-          if (next?.isAir && next.above()?.isAir) {
-            canPlace = true;
-          }
-          break;
-      }
-      // エリアをまたがないかチェック
-      if (canPlace && next) {
-        const area2D = get2DAreaFromLoc(next.location, 51);
-        if (area2D) {
-          // 他の範囲との競合チェック
-          Object.values(getBaseDps())
-            .filter((baseDp) => baseDp.name !== undefined)
-            .some((baseDp) => {
-              const locations = gatherLocationsWithin({
-                northWest: baseDp.northWest,
-                southEast: offsetLocation(
-                  baseDp.northWest,
-                  baseDp.edgeSize - 1
-                ),
-              });
-              const locationSet = new Set(locations);
-              gatherLocationsWithin(area2D).forEach((val) =>
-                locationSet.add(val)
-              );
-
-              return locations.length !== locationSet.size;
-            });
+      if (
+        event.itemStack &&
+        event.itemStack.typeId === TYPE_ID &&
+        event.isFirstEvent
+      ) {
+        if (!isInBaseArea3D(event.player)) {
+          event.player.sendMessage([
+            Formatting.Color.RED,
+            { translate: "items.base_flag.name" },
+            "は拠点エリアでのみ使用可能です。",
+          ]);
+          return;
         }
 
-        system.runTimeout(() => {
-          event.block.dimension.spawnEntity<typeof TYPE_ID>(
-            TYPE_ID,
+        let canPlace = false;
+        let next;
+        switch (event.blockFace) {
+          case Direction.Down:
+            break;
+          case Direction.East:
+            next = event.block.east();
+            if (next?.isAir && next.above()?.isAir) {
+              canPlace = true;
+            }
+            break;
+          case Direction.North:
+            next = event.block.north();
+            if (next?.isAir && next.above()?.isAir) {
+              canPlace = true;
+            }
+            break;
+          case Direction.South:
+            next = event.block.south();
+            if (next?.isAir && next.above()?.isAir) {
+              canPlace = true;
+            }
+            break;
+          case Direction.Up:
+            next = event.block.above();
+            if (next?.isAir && event.block.above(2)?.isAir) {
+              canPlace = true;
+            }
+            break;
+          case Direction.West:
+            next = event.block.west();
+            if (next?.isAir && next.above()?.isAir) {
+              canPlace = true;
+            }
+            break;
+        }
+        if (canPlace && next) {
+          // 置ける
+          const area2D = get2DAreaFromLoc(
             next.location,
-            { initialRotation: 180 + event.player.getRotation().y }
+            noNameBase[0].edgeSize
           );
-          // パーティクル表示
-        }, 1);
+          if (area2D) {
+            if (hasOverlappingBlocks(area2D)) {
+              // 重複あり
+              event.player.sendMessage(
+                `${Formatting.Color.RED}既存の拠点と範囲が重なっています。`
+              );
+
+              return;
+            }
+            if (isOutOfBaseArea(area2D)) {
+              // エリアをまたぐ
+              event.player.sendMessage(
+                `${Formatting.Color.RED}拠点エリアの範囲外に拠点はつくれません。`
+              );
+
+              return;
+            }
+          }
+
+          system.runTimeout(() => {
+            const entity = event.block.dimension.spawnEntity<typeof TYPE_ID>(
+              TYPE_ID,
+              next.location,
+              {
+                initialPersistence: true,
+                initialRotation: 180 + event.player.getRotation().y,
+              }
+            );
+            world.setDynamicProperty(
+              noNameBase[0].id,
+              JSON.stringify({ ...noNameBase[0], entityId: entity.id })
+            );
+            // パーティクル表示
+          }, 1);
+        } else {
+          // 置けない場合は何も起こらない
+        }
       }
     }
   });
 
   world.beforeEvents.playerInteractWithEntity.subscribe((event) => {
+    const playerBases = getBaseDps(event.player.nameTag);
+    if (
+      !Object.values(playerBases).some((dp) => dp.entityId === event.target.id)
+    ) {
+      // 別の人の旗をインタラクトしても何も起きない
+      return;
+    }
+    const noNameBase = Object.values(playerBases).filter(
+      (dp) => dp.name === undefined
+    );
+    if (noNameBase.length === 0) {
+      event.player.sendMessage([
+        Formatting.Color.RED,
+        { translate: "items.base_flag.name" },
+        "の購入履歴がありません。",
+      ]);
+
+      return;
+    }
+
     if (event.target.typeId === TYPE_ID) {
       const form = new ActionFormData();
       form.button("範囲を確定する");
@@ -161,15 +329,15 @@ export default () => {
         switch (response.selection) {
           case 0:
             // 範囲確定
-            fixBaseZone(event.player);
+            fixBaseZone(event.player, event.target.location, noNameBase[0]);
             break;
           case 1:
             // 設定変更
-            setConfig(event.player);
+            setConfig(event.player, noNameBase[0]);
             break;
           case 2:
             // 同居人登録
-            changeCoop(event.player);
+            changeCoop(event.player, noNameBase[0]);
             break;
         }
       });

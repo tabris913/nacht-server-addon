@@ -1,27 +1,33 @@
 import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, world, } from "@minecraft/server";
-export default () => system.beforeEvents.startup.subscribe((event) => event.customCommandRegistry.registerCommand({
-    name: "nacht:cleardp",
-    description: "Dynamic Propertyをクリアする",
-    permissionLevel: CommandPermissionLevel.Admin,
-    mandatoryParameters: [
-        { name: "id", type: CustomCommandParamType.String },
-    ],
-}, (origin, id) => {
-    try {
-        if (world.getDynamicPropertyIds().includes(id)) {
-            world.setDynamicProperty(id, undefined);
-            return { status: CustomCommandStatus.Success };
+export default () => system.beforeEvents.startup.subscribe((event) => {
+    event.customCommandRegistry.registerEnum("nacht:dynamicPropertyIds", world.getDynamicPropertyIds());
+    event.customCommandRegistry.registerCommand({
+        name: "nacht:cleardp",
+        description: "Dynamic Propertyをクリアする",
+        permissionLevel: CommandPermissionLevel.Admin,
+        mandatoryParameters: [
+            {
+                name: "nacht:dynamicPropertyIds",
+                type: CustomCommandParamType.Enum,
+            },
+        ],
+    }, (origin, id) => {
+        try {
+            if (world.getDynamicPropertyIds().includes(id)) {
+                world.setDynamicProperty(id, undefined);
+                return { status: CustomCommandStatus.Success };
+            }
+            return {
+                message: `${id} というDynamic Propertyは存在しません`,
+                status: CustomCommandStatus.Failure,
+            };
         }
-        return {
-            message: `${id} というDynamic Propertyは存在しません`,
-            status: CustomCommandStatus.Failure,
-        };
-    }
-    catch (error) {
-        let message = "予期せぬエラーが発生しました";
-        if (error instanceof Error) {
-            message += `\n${error.message}`;
+        catch (error) {
+            let message = "予期せぬエラーが発生しました";
+            if (error instanceof Error) {
+                message += `\n${error.message}`;
+            }
+            return { message, status: CustomCommandStatus.Failure };
         }
-        return { message, status: CustomCommandStatus.Failure };
-    }
-}));
+    });
+});

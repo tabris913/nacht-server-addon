@@ -97,42 +97,49 @@ export const getIntegerLocation = (location) => isVector3(location)
  * @param object プレイヤー
  * @returns
  */
-export const isInBaseArea = (object) => !isInTownArea(object) && 0 < object.location.z;
+export const isInBaseArea3D = (object) => isInBaseArea2D(object.location, object.dimension);
+export const isInBaseArea2D = (location, dimension) => !isInTownArea2D(location, dimension) && 0 < location.z;
 /**
  * 与えられたプレイヤーが探索エリアに居るかどうかを判定する
  *
  * @param object プレイヤー
  * @returns
  */
-export const isInExploringArea = (object) => !isInTownArea(object) && object.location.z < 0;
+export const isInExploringArea3D = (object) => isInExploringArea2D(object.location, object.dimension);
+export const isInExploringArea2D = (location, dimension) => !isInTownArea2D(location, dimension) && location.z < 0;
 /**
  * 与えられたプレイヤーが街エリアに居るかどうかを判定する
  *
  * @param object プレイヤー
  * @returns
  */
-export const isInTownArea = (object) => {
-    const nw = { x: -6400, y: -64, z: -6400 };
-    const se = { x: 6400, y: 319, z: 6400 };
-    switch (object.dimension.id) {
+export const isInTownArea3D = (object) => {
+    // const nw: Vector3 = { x: -6400, y: -64, z: -6400 };
+    // const se: Vector3 = { x: 6400, y: 319, z: 6400 };
+    return isInTownArea2D(object.location, object.dimension);
+};
+export const isInTownArea2D = (location, dimension) => {
+    const nw = { x: -6400, z: -6400 };
+    const se = { x: 6400, z: 6400 };
+    switch (dimension.id) {
         case "overworld":
-            if (object.location.x < nw.x)
+            if (se.x < location.x)
                 return false;
-            if (se.x < object.location.x)
+            if (location.x < nw.x)
                 return false;
-            if (object.location.z < nw.z)
+            if (se.z < location.z)
                 return false;
-            if (se.z < object.location.x)
+            if (location.z < nw.z)
                 return false;
             return true;
         case "nether":
-            if (object.location.x < nw.x / 8)
+            if (se.x < location.x / 8)
                 return false;
-            if (se.x / 8 < object.location.x)
+            if (location.x / 8 < nw.x)
                 return false;
-            if (object.location.z < nw.z / 8)
+            if (se.z < location.z / 8)
                 return false;
-            if (se.z / 8 < object.location.x)
+            if (location.z / 8 < nw.z)
                 return false;
             return true;
         default:

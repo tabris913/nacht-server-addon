@@ -32,9 +32,13 @@ const purchase = (player, npc, size, price, count) => {
                 addScore(player, "point", -price);
                 giveItem(player, "nacht:base_flag", 1);
                 world.setDynamicProperty(PREFIX_BASE + `${player.nameTag}_${count}`, JSON.stringify({
-                    northWest: { x: 0, z: 0 },
                     edgeSize: size,
                     id: "",
+                    index: count,
+                    northWest: { x: 0, z: 0 },
+                    owner: player.nameTag,
+                    participants: [],
+                    showBorder: true,
                 }));
                 player.sendMessage(`[${npcName}] まいどあり！`);
             }

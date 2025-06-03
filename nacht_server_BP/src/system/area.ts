@@ -9,9 +9,9 @@ import {
 import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from "../const";
 import {
   get3DArea,
-  isInBaseArea,
-  isInExploringArea,
-  isInTownArea,
+  isInBaseArea3D,
+  isInExploringArea3D,
+  isInTownArea3D,
 } from "../utils/area";
 import { sendMessageToOps } from "../utils/player";
 import { RuleName } from "../commands/gamerule";
@@ -53,11 +53,11 @@ const getAreaTag = (area: Area) => {
 const getCallback = (area: Area) => {
   switch (area) {
     case "town":
-      return isInTownArea;
+      return isInTownArea3D;
     case "base":
-      return isInBaseArea;
+      return isInBaseArea3D;
     case "expr":
-      return isInExploringArea;
+      return isInExploringArea3D;
   }
 };
 
@@ -66,9 +66,9 @@ const getCallback2 = (area: Area) => {
     case "town":
       return null;
     case "base":
-      return isInExploringArea;
+      return isInExploringArea3D;
     case "expr":
-      return isInBaseArea;
+      return isInBaseArea3D;
   }
 };
 
@@ -152,7 +152,7 @@ const checkPlayers = async (area: Area) => {
         if (isInWrongArea(player)) {
           // 対称エリアにいる場合
           tp(player, areaTag);
-        } else if (isInTownArea(player)) {
+        } else if (isInTownArea3D(player)) {
           tp(player, areaTag);
         }
       }

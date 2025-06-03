@@ -8,19 +8,19 @@ Released in 2025-06-??.
 
 #### Commands
 
-- cleardp コマンド追加
-- getdp コマンド追加
-- message コマンド追加
-- messageop コマンド追加
-- registertptarget コマンド追加
-- setdp コマンド追加
+- buybase コマンド追加
+- cleardp コマンド仕様変更
+- fill コマンド追加
+- gamerule コマンド追加
+- message コマンド仕様変更
 
 #### Entities
 
-#### Game Rules
+- 拠点の旗 (nacht:base_flag) 追加
 
 #### Items
 
+- 拠点の旗 (nacht:base_flag) 追加
 - なはとの羽根 (nacht:nacht_feather) 仕様変更
 
 #### System
@@ -121,17 +121,46 @@ NPC から物品を購入するコマンド。
 | pointless_msg |          | String   | ポイントが不足している場合のメッセージ |
 | after_msg     |          | String   | アイテム購入後のメッセージ             |
 
+#### nacht:buybase
+
+Since 0.3.0.
+
+権限レベル: GameDirectors
+
+拠点の旗を購入するコマンド。
+
 #### nacht:cleardp
 
 Since 0.2.0.
 
 権限レベル: Admin
 
-指定したキーのグローバル変数を削除する。
+指定したグローバル変数を削除する。
 
-| Parameter | Required | Type   | Description            |
-| --------- | :------: | ------ | ---------------------- |
-| id        |    ◯     | String | 購入するアイテムの種類 |
+| Parameter | Required | Type | Description      |
+| --------- | :------: | ---- | ---------------- |
+| id        |    ◯     | Enum | グローバル変数名 |
+
+#### nacht:fill
+
+Since 0.3.0.
+
+権限レベル: GameDirectors
+
+バニラコマンド fill を、対象ブロック数の制限なく実行できる。
+
+#### nacht:gamerule
+
+Since 0.3.0.
+
+権限レベル: Admin
+
+独自ゲームルールの設定を行う。
+
+| Parameter | Required | Type   | Description    |
+| --------- | :------: | ------ | -------------- |
+| ruleName  |    ◯     | Enum   | ゲームルール名 |
+| value     |    ◯     | String | 設定値         |
 
 #### nacht:getdp
 
@@ -155,7 +184,7 @@ Since 0.2.0.
 
 | Parameter | Required | Type           | Description            |
 | --------- | :------: | -------------- | ---------------------- |
-| target    |    ◯     | EntitySelector | ターゲットセレクタ     |
+| target    |    ◯     | PlayerSelector | プレイヤーセレクタ     |
 | message   |    ◯     | String         | 送信するメッセージ     |
 | name      |          | String         | メッセージ送信主の名前 |
 
@@ -228,7 +257,26 @@ Since 0.1.0.
 
 ### ゲームルール
 
+| ルール名                         | 設定値内部型  | 概要                                            |
+| -------------------------------- | ------------- | ----------------------------------------------- |
+| autoRemoveFortuneEnchant         | Boolean       | 幸運エンチャント自動除去機能のオンオフ          |
+| autoRemoveFortuneEnchantInterval | Integer       | 幸運エンチャント自動除去機能の実行間隔 [ticks]  |
+| baseMarketPrice                  | Integer       | 拠点範囲(平面)1 ブロックあたりの値段 [ポイント] |
+| baseMaximumRange                 | Integer (Odd) | 拠点範囲の購入可能な一辺あたりの最大の長さ      |
+| showAreaBorder                   | Boolean       | エリアボーダー表示のオンオフ                    |
+| showAreaBorderInterval           | Integer       | エリアボーダー表示の実行間隔 [ticks]            |
+| showAreaBorderRange              | Integer (Odd) | エリアボーダー表示範囲 [ブロック]               |
+| watchCrossingArea                | Boolean       | エリア間移動監視のオンオフ                      |
+| watchCrossingAreaInterval        | Integer       | エリア間移動監視の実行間隔 [ticks]              |
+
 ### アイテム
+
+#### nacht:base_flag
+
+Since 0.3.0.
+
+拠点範囲外で使用すると拠点の旗を設置することができる。
+拠点範囲内で使用すると拠点操作ダイアログが表示される。
 
 #### nacht:nacht_feather
 
@@ -241,7 +289,11 @@ Since 0.1.0.
 
 #### エリア間移動ブロック
 
-現在 3 つのエリアが存在し、
+Since 0.2.0.
+
+#### 幸運エンチャント自動除去
+
+Since 0.3.0.
 
 ## Version History
 
