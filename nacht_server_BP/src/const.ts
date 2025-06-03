@@ -1,5 +1,9 @@
 import type { Vector3 } from "@minecraft/server";
 
+// Dynamic Properties
+export const PREFIX_BASE = "nacht:base_";
+export const PREFIX_GAMERULE = "nacht:gamerule_";
+
 // Formatting
 export const Formatting = {
   Color: {
@@ -36,6 +40,7 @@ export const Formatting = {
   Italic: "§o",
   Reset: "§r",
 };
+
 export const flatFormatting: Record<string, string> = Object.entries(
   Formatting
 ).reduce(

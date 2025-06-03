@@ -1,57 +1,96 @@
 import { ItemStack } from "@minecraft/server";
 /**
- * 指定したアイテムのスロットを取得する
+ * 指定されたアイテムの個数をカウントする
  *
- * @param player
- * @param item
- * @returns
+ * @param player プレイヤー
+ * @param itemId アイテム ID
+ * @returns 指定されたアイテムの個数
  */
-const gatherSlots = (player, item) => Array(36)
-    .fill(null)
-    .map((_, index) => {
-    var _a;
+export const countItem = (player, itemId) => {
     try {
-        const slot = (_a = player.getComponent("inventory")) === null || _a === void 0 ? void 0 : _a.container.getSlot(index);
-        return slot;
-    }
-    catch (error) {
-        console.warn(`${player.nameTag} inventory slot ${index} is invalid`);
-        return undefined;
-    }
-})
-    .filter((slot) => slot !== undefined &&
-    slot.isValid &&
-    slot.hasItem() &&
-    (slot === null || slot === void 0 ? void 0 : slot.typeId) === item);
-/**
- * アイテムをカウントする
- *
- * @param player
- * @param item
- * @returns
- */
-export const countItem = (player, item) => {
-    try {
-        const slots = gatherSlots(player, item);
+        const slots = gatherSlots(player, itemId);
         return slots.reduce((prev, cur) => prev + cur.amount, 0);
     }
     catch (error) {
+        console.error(`Failed to count the amount of ${itemId} in ${player.nameTag}'s inventory.`);
         console.error(error);
-        return null;
+        return undefined;
+    }
+};
+/**
+ * 指定したアイテムのスロットを取得する
+ *
+ * @param player プレイヤー
+ * @param itemId アイテム ID
+ * @returns 指定したアイテムのスロットの配列
+ */
+export const gatherSlots = (player, itemId) => {
+    try {
+        return Array(36)
+            .fill(null)
+            .map((_, index) => {
+            var _a;
+            try {
+                const slot = (_a = player
+                    .getComponent("inventory")) === null || _a === void 0 ? void 0 : _a.container.getSlot(index);
+                return slot;
+            }
+            catch (error) {
+                console.warn(`${player.nameTag}'s inventory slot ${index} is invalid.`);
+                return undefined;
+            }
+        })
+            .filter((slot) => {
+            const commonCond = slot !== undefined && slot.isValid && slot.hasItem();
+            if (itemId === undefined) {
+                // スロットのみ取得
+                return commonCond;
+            }
+            else {
+                // アイテムでフィルタ
+                return commonCond && slot.typeId === itemId;
+            }
+        });
+    }
+    catch (error) {
+        console.error(`Failed to get slots of ${itemId} in ${player.nameTag}'s inventory.`);
+        console.error(error);
+        return [];
+    }
+};
+/**
+ * アイテムをインベントリに追加する
+ *
+ * @param player プレイヤー
+ * @param itemId アイテム ID
+ * @param amount アイテムの個数
+ * @returns 成否を表すフラグ
+ */
+export const giveItem = (player, itemId, amount = 1) => {
+    var _a;
+    try {
+        (_a = player
+            .getComponent("inventory")) === null || _a === void 0 ? void 0 : _a.container.addItem(new ItemStack(itemId, amount));
+        return true;
+    }
+    catch (error) {
+        console.error(`Failed to give ${itemId} to ${player.nameTag}.`);
+        console.error(error);
+        return false;
     }
 };
 /**
  * アイテムを持っているか判定する
  *
- * @param player
- * @param item
- * @param opt
+ * @param player プレイヤー
+ * @param itemId アイテム ID
+ * @param opt 個数条件
  * @returns
  */
-export const hasItem = (player, item, opt) => {
+export const hasItem = (player, itemId, opt) => {
     try {
-        let count = countItem(player, item);
-        if (count === null) {
+        let count = countItem(player, itemId);
+        if (count === undefined) {
             // count error
             return false;
         }
@@ -64,26 +103,7 @@ export const hasItem = (player, item, opt) => {
         return 0 < count;
     }
     catch (error) {
-        console.error(error);
-        return false;
-    }
-};
-/**
- * アイテムをインベントリに追加する
- *
- * @param player
- * @param item
- * @param amount
- * @returns
- */
-export const giveItem = (player, item, amount = 1) => {
-    var _a;
-    try {
-        (_a = player
-            .getComponent("inventory")) === null || _a === void 0 ? void 0 : _a.container.addItem(new ItemStack(item, amount));
-        return true;
-    }
-    catch (error) {
+        console.error(`Failed to check whether ${player.nameTag} have ${itemId}.`);
         console.error(error);
         return false;
     }
@@ -91,24 +111,25 @@ export const giveItem = (player, item, amount = 1) => {
 /**
  * アイテムをインベントリから削除する
  *
- * @param player
- * @param item
- * @param amount
+ * @param player プレイヤー
+ * @param itemId アイテム ID
+ * @param amount 削除するアイテムの個数
+ * @returns 成否を表すフラグ
  */
-export const removeItem = (player, item, amount = Infinity) => {
+export const removeItem = (player, itemId, amount = Infinity) => {
     try {
         if (amount < 0) {
             return false;
         }
-        const count = countItem(player, item);
-        if (count === null) {
+        const count = countItem(player, itemId);
+        if (count === undefined) {
             return false;
         }
         if (count < amount) {
             // 足りない
             return false;
         }
-        const slots = gatherSlots(player, item);
+        const slots = gatherSlots(player, itemId);
         if (amount === Infinity || count === amount) {
             // 全部消す
             slots.forEach((slot) => slot.setItem(undefined));
@@ -143,6 +164,7 @@ export const removeItem = (player, item, amount = Infinity) => {
         }
     }
     catch (error) {
+        console.error(`Failed to remove ${itemId} from ${player.nameTag}'s inventory.`);
         console.error(error);
         return false;
     }

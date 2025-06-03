@@ -15,10 +15,11 @@ export default () => system.beforeEvents.startup.subscribe((event) => event.cust
         },
     ],
 }, (origin, arg1, arg2) => {
+    var _a, _b;
     try {
         world.setDynamicProperty(`nacht:location_${arg1}`, `${arg2.x}_${arg2.y}_${arg2.z}`);
         if (origin.initiator) {
-            getPlayer(origin.initiator).sendMessage(`nacht:location_${arg1} に ${arg2.x}_${arg2.y}_${arg2.z} が設定されました`);
+            (_a = getPlayer(origin.initiator)) === null || _a === void 0 ? void 0 : _a.sendMessage(`nacht:location_${arg1} に ${arg2.x}_${arg2.y}_${arg2.z} が設定されました`);
         }
         return {
             message: `nacht:location_${arg1} に ${arg2.x}_${arg2.y}_${arg2.z} が設定されました`,
@@ -31,7 +32,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => event.cust
             message += `\n${error.message}`;
         }
         if (origin.initiator) {
-            getPlayer(origin.initiator).sendMessage(message);
+            (_b = getPlayer(origin.initiator)) === null || _b === void 0 ? void 0 : _b.sendMessage(message);
         }
         return { message, status: CustomCommandStatus.Failure };
     }

@@ -1,10 +1,13 @@
 {
   "name": "nacht_server_bp",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "",
   "main": "scripts/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "archive": "sh archive.sh",
+    "build": "sh build.sh",
+    "package": "sh build.sh && sh archive.sh"
   },
   "author": "",
   "license": "ISC",

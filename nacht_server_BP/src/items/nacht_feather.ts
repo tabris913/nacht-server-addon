@@ -2,6 +2,7 @@ import { system, TicksPerSecond, type Vector3, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Formatting, LOC_ERSTE } from "../const";
 import { sendMessageToOps } from "../utils/player";
+import { getLocationDps } from "../utils/dp";
 
 // なはとの羽根
 
@@ -25,15 +26,12 @@ export default () =>
           location: LOC_ERSTE,
         },
       ];
-      world
-        .getDynamicPropertyIds()
-        .filter((dpId) => dpId.startsWith(`LOC_${event.source.nameTag}_`))
-        .forEach((ttId) =>
-          tpTargets.push({
-            ...JSON.parse(world.getDynamicProperty(ttId) as string),
-            dpId: ttId,
-          })
-        );
+      getLocationDps(event.source.nameTag).forEach((ttId) =>
+        tpTargets.push({
+          ...JSON.parse(world.getDynamicProperty(ttId) as string),
+          dpId: ttId,
+        })
+      );
       const choices = tpTargets.map((tt) => tt.displayName);
 
       const form = new ModalFormData();

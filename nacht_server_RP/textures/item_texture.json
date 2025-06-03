@@ -4,6 +4,9 @@
   "texture_data": {
     "nacht_feather": {
       "textures": "textures/items/nacht_feather"
+    },
+    "base_flag": {
+      "textures": "textures/items/base_flag"
     }
   }
 }

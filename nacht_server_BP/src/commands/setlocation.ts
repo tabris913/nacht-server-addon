@@ -34,7 +34,7 @@ export default () =>
           );
 
           if (origin.initiator) {
-            getPlayer(origin.initiator).sendMessage(
+            getPlayer(origin.initiator)?.sendMessage(
               `nacht:location_${arg1} に ${arg2.x}_${arg2.y}_${arg2.z} が設定されました`
             );
           }
@@ -50,7 +50,7 @@ export default () =>
           }
 
           if (origin.initiator) {
-            getPlayer(origin.initiator).sendMessage(message);
+            getPlayer(origin.initiator)?.sendMessage(message);
           }
 
           return { message, status: CustomCommandStatus.Failure };

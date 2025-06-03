@@ -2,6 +2,7 @@ import {
   CommandPermissionLevel,
   CustomCommandParamType,
   CustomCommandStatus,
+  ItemType,
   system,
 } from "@minecraft/server";
 import { getPlayer } from "../utils/player";
@@ -28,25 +29,24 @@ export default () =>
       },
       (
         origin,
-        item,
+        item: ItemType,
         amount: number,
         point: number,
         pointless_msg?: string,
         after_msg?: string
       ) => {
         try {
-          const initiator = origin.initiator;
-          if (initiator) {
+          const initiatorPlayer = getPlayer(origin.initiator);
+          if (initiatorPlayer) {
             // called by NPC
-            const initiatorPlayer = getPlayer(initiator);
-            const score = getScore(initiator, "point");
-            if (score === null) {
+            const score = getScore(initiatorPlayer, "point");
+            if (score === undefined) {
               // ポイントシステムが無効
               console.error(
-                `${initiator.nameTag}のスコアボードpointが有効になっていません`
+                `${initiatorPlayer.nameTag}のスコアボードpointが有効になっていません`
               );
               system.runTimeout(() => {
-                setScore(initiator, "point", 0);
+                setScore(initiatorPlayer, "point", 0);
                 initiatorPlayer.sendMessage(
                   `${Formatting.Color.GOLD}ポイントシステムが有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`
                 );
@@ -57,16 +57,16 @@ export default () =>
 
             const npcName = origin.sourceEntity?.nameTag || "NPC";
             if (
-              initiator.matches({
+              initiatorPlayer.matches({
                 scoreOptions: [{ minScore: point, objective: "point" }],
               })
             ) {
               // 必要なポイントを持っている
               system.runTimeout(() => {
-                if (score !== null) {
+                if (score !== undefined) {
                   addScore(initiatorPlayer, "point", -point);
                 }
-                giveItem(initiator, item.id, amount);
+                giveItem(initiatorPlayer, item.id, amount);
                 initiatorPlayer.sendMessage(
                   `[${npcName}] ${after_msg || "まいどあり！"}`
                 );
@@ -94,7 +94,7 @@ export default () =>
           }
 
           if (origin.initiator) {
-            getPlayer(origin.initiator).sendMessage(message);
+            getPlayer(origin.initiator)?.sendMessage(message);
           }
 
           return { message, status: CustomCommandStatus.Failure };

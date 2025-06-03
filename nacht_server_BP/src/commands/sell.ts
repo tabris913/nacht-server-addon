@@ -36,18 +36,17 @@ export default () =>
         after_msg?: string
       ) => {
         try {
-          const initiator = origin.initiator;
-          if (initiator) {
+          const initiatorPlayer = getPlayer(origin.initiator);
+          if (initiatorPlayer) {
             // called by NPC
-            const initiatorPlayer = getPlayer(initiator);
-            const score = getScore(initiator, "point");
-            if (score === null) {
+            const score = getScore(initiatorPlayer, "point");
+            if (score === undefined) {
               // ポイントシステムが無効
               console.error(
-                `${initiator.nameTag}のスコアボードpointが有効になっていません`
+                `${initiatorPlayer.nameTag}のスコアボードpointが有効になっていません`
               );
               system.runTimeout(() => {
-                setScore(initiator, "point", 0);
+                setScore(initiatorPlayer, "point", 0);
                 initiatorPlayer.sendMessage(
                   `${Formatting.Color.GOLD}ポイントシステムが有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`
                 );
@@ -57,12 +56,12 @@ export default () =>
             }
 
             const npcName = origin.sourceEntity?.nameTag || "NPC";
-            if (hasItem(initiator, item.id, { min: amount })) {
+            if (hasItem(initiatorPlayer, item.id, { min: amount })) {
               // 必要なポイントを持っている
               system.runTimeout(() => {
-                removeItem(initiator, item.id, amount);
+                removeItem(initiatorPlayer, item.id, amount);
                 if (score !== null) {
-                  addScore(initiator, "point", point);
+                  addScore(initiatorPlayer, "point", point);
                 }
                 initiatorPlayer.sendMessage(
                   `[${npcName}] ${after_msg || "まいどあり！"}`

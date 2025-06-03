@@ -2,6 +2,7 @@ import { system, TicksPerSecond, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Formatting, LOC_ERSTE } from "../const";
 import { sendMessageToOps } from "../utils/player";
+import { getLocationDps } from "../utils/dp";
 export default () => world.afterEvents.itemUse.subscribe((event) => {
     if (event.itemStack.type.id === "nacht:nacht_feather") {
         event.source.sendMessage(`${event.source.name}は　なはとの羽根を　ほうりなげた！`);
@@ -12,10 +13,7 @@ export default () => world.afterEvents.itemUse.subscribe((event) => {
                 location: LOC_ERSTE,
             },
         ];
-        world
-            .getDynamicPropertyIds()
-            .filter((dpId) => dpId.startsWith(`LOC_${event.source.nameTag}_`))
-            .forEach((ttId) => tpTargets.push(Object.assign(Object.assign({}, JSON.parse(world.getDynamicProperty(ttId))), { dpId: ttId })));
+        getLocationDps(event.source.nameTag).forEach((ttId) => tpTargets.push(Object.assign(Object.assign({}, JSON.parse(world.getDynamicProperty(ttId))), { dpId: ttId })));
         const choices = tpTargets.map((tt) => tt.displayName);
         const form = new ModalFormData();
         form.title("テレポート");

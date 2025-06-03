@@ -1,0 +1,20 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "nacht:base_flag",
+      "materials": {
+        "default": "entity_alphatest_change_color"
+      },
+      "textures": {
+        "default": "textures/entity/base_flag"
+      },
+      "geometry": {
+        "default": "geometry.base_flag"
+      },
+      "render_controllers": [
+        "controller.render.armor_stand"
+      ]
+    }
+  }
+}

@@ -2,9 +2,9 @@
 
 ## Latest Version
 
-### 0.2.0
+### 0.3.0
 
-Released in 2025-05-30.
+Released in 2025-06-??.
 
 #### Commands
 
@@ -14,6 +14,10 @@ Released in 2025-05-30.
 - messageop コマンド追加
 - registertptarget コマンド追加
 - setdp コマンド追加
+
+#### Entities
+
+#### Game Rules
 
 #### Items
 
@@ -213,6 +217,8 @@ Since 0.1.0.
 | name      |    ◯     | String   | 地点名      |
 | location  |    ◯     | Location | 座標        |
 
+### ゲームルール
+
 ### アイテム
 
 #### nacht:nacht_feather
@@ -234,6 +240,7 @@ Since 0.1.0.
 | ------: | ---------- | -------- |
 |   0.1.0 | 2025-05-28 | 新規作成 |
 |   0.2.0 | 2025-05-30 |          |
+|   0.3.0 | 2025-06-?? |          |
 
 ### 0.1.0
 
@@ -248,3 +255,24 @@ Released in 2025-05-28.
 #### Items
 
 - なはとの羽根 (nacht:nacht_feather) 追加
+
+### 0.2.0
+
+Released in 2025-05-30.
+
+#### Commands
+
+- cleardp コマンド追加
+- getdp コマンド追加
+- message コマンド追加
+- messageop コマンド追加
+- registertptarget コマンド追加
+- setdp コマンド追加
+
+#### Items
+
+- なはとの羽根 (nacht:nacht_feather) 仕様変更
+
+#### System
+
+- 異なるエリアに侵入した場合に強制テレポートする仕様を導入

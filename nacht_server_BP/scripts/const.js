@@ -1,3 +1,6 @@
+// Dynamic Properties
+export const PREFIX_BASE = "nacht:base_";
+export const PREFIX_GAMERULE = "nacht:gamerule_";
 // Formatting
 export const Formatting = {
     Color: {

@@ -1,6 +1,35 @@
 import { Entity, world } from "@minecraft/server";
 
 /**
+ * スコアを加える
+ *
+ * @param player プレイヤー
+ * @param scoreName スコア名
+ * @param value 値
+ * @returns 成否を表すフラグ
+ */
+export const addScore = (player: Entity, scoreName: string, value: number) => {
+  try {
+    if (player.scoreboardIdentity) {
+      world.scoreboard
+        .getObjective(scoreName)
+        ?.addScore(player.scoreboardIdentity, value);
+
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error(
+      `Failed to add ${value} to the ${player.nameTag}'s score named ${scoreName}.`
+    );
+    console.error(error);
+
+    return false;
+  }
+};
+
+/**
  * スコアを取得する
  *
  * @param player プレイヤー
@@ -10,27 +39,29 @@ import { Entity, world } from "@minecraft/server";
 export const getScore = (player: Entity, scoreName: string) => {
   try {
     if (player.scoreboardIdentity) {
-      const score = world.scoreboard
+      return world.scoreboard
         .getObjective(scoreName)
         ?.getScore(player.scoreboardIdentity);
-
-      return score === undefined ? null : score;
     }
 
-    return null;
+    return undefined;
   } catch (error) {
+    console.error(
+      `Failed to get a value of the ${player.nameTag}'s score named ${scoreName}.`
+    );
     console.error(error);
 
-    return null;
+    return undefined;
   }
 };
 
 /**
+ * スコアをセットする
  *
- * @param player
- * @param scoreName
- * @param value
- * @returns 成功フラグ
+ * @param player プレイヤー
+ * @param scoreName スコア名
+ * @param value 値
+ * @returns 成否を表すフラグ
  */
 export const setScore = (player: Entity, scoreName: string, value: number) => {
   try {
@@ -44,30 +75,22 @@ export const setScore = (player: Entity, scoreName: string, value: number) => {
 
     return false;
   } catch (error) {
+    console.error(
+      `Failed to set a value to the ${player.nameTag}'s score named ${scoreName}.`
+    );
     console.error(error);
 
     return false;
   }
 };
 
-export const addScore = (player: Entity, scoreName: string, value: number) => {
-  try {
-    if (player.scoreboardIdentity) {
-      world.scoreboard
-        .getObjective(scoreName)
-        ?.addScore(player.scoreboardIdentity, value);
-
-      return true;
-    }
-
-    return false;
-  } catch (error) {
-    console.error(error);
-
-    return false;
-  }
-};
-
+/**
+ * スコアをリセットする
+ *
+ * @param player プレイヤー
+ * @param scoreName スコア名
+ * @returns 成否を表すフラグ
+ */
 export const resetScore = (player: Entity, scoreName: string) => {
   try {
     if (player.scoreboardIdentity) {
@@ -80,6 +103,9 @@ export const resetScore = (player: Entity, scoreName: string) => {
 
     return false;
   } catch (error) {
+    console.error(
+      `Failed to reset the ${player.nameTag}'s score named ${scoreName}.`
+    );
     console.error(error);
 
     return false;

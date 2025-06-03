@@ -1,1 +1,4 @@
-items.nacht_feather.name=なはとの羽根	#
+items.base_flag.name=拠点の旗	##
+items.nacht_feather.name=なはとの羽根	##
+
+tile.nacht:base_flag.name=拠点の旗	##

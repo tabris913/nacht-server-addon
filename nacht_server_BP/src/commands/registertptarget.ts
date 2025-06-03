@@ -6,7 +6,6 @@ import {
   system,
   world,
 } from "@minecraft/server";
-import { getPlayer } from "../utils/player";
 import { Formatting } from "../const";
 import { format } from "../utils/misc";
 
