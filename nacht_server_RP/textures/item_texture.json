@@ -1,0 +1,9 @@
+{
+  "resource_pack_name": "Nacht Server Resource Pack",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "nacht_feather": {
+      "textures": "textures/items/nacht_feather"
+    }
+  }
+}

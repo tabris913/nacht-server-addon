@@ -1,0 +1,16 @@
+{
+  "name": "nacht_server_bp",
+  "version": "0.1.0",
+  "description": "",
+  "main": "scripts/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@minecraft/server": "^2.0.0-beta.1.21.83-stable",
+    "@minecraft/server-ui": "^2.0.0-beta.1.21.83-stable",
+    "typescript": "^5.8.3"
+  }
+}
