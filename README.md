@@ -108,6 +108,7 @@ Since 0.1.0.
 #### nacht:buy
 
 Since 0.1.0.
+
 権限レベル: GameDirectors
 
 NPC から物品を購入するコマンド。
@@ -123,6 +124,7 @@ NPC から物品を購入するコマンド。
 #### nacht:cleardp
 
 Since 0.2.0.
+
 権限レベル: Admin
 
 指定したキーのグローバル変数を削除する。
@@ -134,6 +136,7 @@ Since 0.2.0.
 #### nacht:getdp
 
 Since 0.2.0.
+
 権限レベル: Admin
 
 グローバル変数を取得する。
@@ -142,9 +145,10 @@ Since 0.2.0.
 | --------- | :------: | ------ | ------------------------------- |
 | filter    |          | String | キーのフィルタ文字列 (部分一致) |
 
-#### nacht:getdp
+#### nacht:message
 
 Since 0.2.0.
+
 権限レベル: GameDirectors
 
 メッセージを送信する。
@@ -155,9 +159,10 @@ Since 0.2.0.
 | message   |    ◯     | String         | 送信するメッセージ     |
 | name      |          | String         | メッセージ送信主の名前 |
 
-#### nacht:getdp
+#### nacht:messageop
 
 Since 0.2.0.
+
 権限レベル: Any
 
 オペレーターにメッセージを送信する。
@@ -169,6 +174,7 @@ Since 0.2.0.
 #### nacht:registertptarget
 
 Since 0.2.0.
+
 権限レベル: GameDirectors
 
 なはとの羽根(nacht:nacht_feather)に転移先を登録する。
@@ -181,6 +187,7 @@ Since 0.2.0.
 #### nacht:sell
 
 Since 0.1.0.
+
 権限レベル: GameDirectors
 
 NPC が物品を買取するコマンド。
@@ -196,6 +203,7 @@ NPC が物品を買取するコマンド。
 #### nacht:setdp
 
 Since 0.2.0.
+
 権限レベル: Admin
 
 グローバル変数を設定する。
@@ -208,6 +216,7 @@ Since 0.2.0.
 #### nacht:setlocation
 
 Since 0.1.0.
+
 権限レベル: GameDirectors
 
 座標を記録するコマンド。
