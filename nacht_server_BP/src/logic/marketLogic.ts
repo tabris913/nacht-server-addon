@@ -1,38 +1,31 @@
-import { type Entity, Player } from "@minecraft/server";
+import { type Entity, Player, system } from "@minecraft/server";
 import { SCOREBOARD_POINT } from "../const";
-import PlayerUtils from "../utils/PlayerUtils";
+import { PointlessError } from "../errors/market";
+import InventoryUtils from "../utils/InventoryUtils";
 import ScoreboardUtils from "../utils/ScoreboardUtils";
-import { PointlessError } from "../errors";
 
 /**
  * プレイヤーがアイテムを購入する
  *
- * @param entityOrPlayer エンティティまたはプレイヤー
+ * @param player エンティティまたはプレイヤー
  * @param sourceEntity 売り手
- * @param item アイテム
+ * @param itemType アイテム
  * @param amount 数量
  * @param price 金額
+ * @param pointless_msg
+ * @param after_msg
  */
 const purchaseItem = (
-  entityOrPlayer: Entity | Player,
+  player: Player,
   sourceEntity: Entity,
-  item: string,
+  itemType: string,
   amount: number,
   price: number,
   pointless_msg?: string,
   after_msg?: string
 ) => {
   try {
-    const player = PlayerUtils.convertToPlayer(entityOrPlayer);
-    if (player === undefined) {
-      console.warn(
-        "A converted player from a given entity/player is undefined."
-      );
-
-      throw new Error("プレイヤーが指定されていません。");
-    }
-
-    const score = ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
+    ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
     const sellerName = sourceEntity.nameTag || "NPC";
     if (
       player.matches({
@@ -43,11 +36,17 @@ const purchaseItem = (
         `[${sellerName}] ${pointless_msg || "ポイントが足りません。"}`
       );
 
-      throw new PointlessError("ポイントが足りません。");
+      throw new PointlessError();
     }
+
+    system.runTimeout(() => {
+      ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
+      InventoryUtils.giveItem(player, itemType, amount);
+      player.sendMessage(`${sellerName} ${after_msg || "まいどあり！"}`);
+    }, 1);
   } catch (error) {
     console.error(
-      `${entityOrPlayer.nameTag} failed to purchase ${amount} ${item}(s) for ${price} points.`
+      `${player.nameTag} failed to purchase ${amount} ${itemType}(s) for ${price} points.`
     );
 
     throw error;

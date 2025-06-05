@@ -1,9 +1,10 @@
 import { system, TicksPerSecond, world } from "@minecraft/server";
 import { RuleName } from "../commands/gamerule";
-import { gatherSlots } from "../utils/items";
+import { PREFIX_GAMERULE } from "../const";
+import InventoryUtils from "../utils/InventoryUtils";
 
-const GAME_RULE_KEY = `nacht:gamerule_${RuleName.autoRemoveFortuneEnchant}`;
-const GAME_RULE_KEY_INTERVAL = `nacht:gamerule_${RuleName.autoRemoveFortuneEnchantInterval}`;
+const GAME_RULE_KEY = `${PREFIX_GAMERULE}${RuleName.autoRemoveFortuneEnchant}`;
+const GAME_RULE_KEY_INTERVAL = `${PREFIX_GAMERULE}${RuleName.autoRemoveFortuneEnchantInterval}`;
 
 // 幸運エンチャントを除去する
 export default () =>
@@ -12,7 +13,7 @@ export default () =>
       system.runInterval(() => {
         if (world.getDynamicProperty(GAME_RULE_KEY) || false) {
           world.getAllPlayers().forEach((player) =>
-            gatherSlots(player).forEach((slot) => {
+            InventoryUtils.gatherSlots(player).forEach((slot) => {
               const item = slot.getItem();
               if (item === undefined) {
                 return;

@@ -6,7 +6,7 @@ import {
   Vector3,
   world,
 } from "@minecraft/server";
-import { convertToPlayer } from "../utils/player";
+import PlayerUtils from "../../utils/PlayerUtils";
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) =>
@@ -34,7 +34,7 @@ export default () =>
           );
 
           if (origin.initiator) {
-            convertToPlayer(origin.initiator)?.sendMessage(
+            PlayerUtils.convertToPlayer(origin.initiator)?.sendMessage(
               `nacht:location_${arg1} に ${arg2.x}_${arg2.y}_${arg2.z} が設定されました`
             );
           }
@@ -50,7 +50,7 @@ export default () =>
           }
 
           if (origin.initiator) {
-            convertToPlayer(origin.initiator)?.sendMessage(message);
+            PlayerUtils.convertToPlayer(origin.initiator)?.sendMessage(message);
           }
 
           return { message, status: CustomCommandStatus.Failure };

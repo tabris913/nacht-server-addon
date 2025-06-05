@@ -13,8 +13,8 @@ import {
   isInExploringArea3D,
   isInTownArea3D,
 } from "../utils/area";
-import { sendMessageToOps } from "../utils/player";
 import { RuleName } from "../commands/gamerule";
+import PlayerUtils from "../utils/PlayerUtils";
 
 const tagTownArea = "AREA_TOWN"; // 街エリアにいる
 const tagExploreArea = "AREA_EXP"; // 探索エリアにいる
@@ -110,14 +110,16 @@ const checkPlayers = async (area: Area) => {
         .filter((tag) => player.hasTag(tag))
         .forEach((tag) => {
           player.removeTag(tag);
-          sendMessageToOps(`${player.name} が${areaName}に戻りました`);
+          PlayerUtils.sendMessageToOps(
+            `${player.name} が${areaName}に戻りました`
+          );
         });
 
       continue;
     }
     if (!player.hasTag(tagAreaAlert1) && !player.hasTag(tagAreaAlert2)) {
       // 違反タグなし --> 初検出 --> 20 秒猶予を与える (10 秒後に警告)
-      sendMessageToOps(
+      PlayerUtils.sendMessageToOps(
         `${Formatting.Color.GOLD}${player.name} が${areaName}から脱走しました${Formatting.Reset}`
       );
       player.addTag(tagAreaAlert1);
@@ -146,7 +148,7 @@ const checkPlayers = async (area: Area) => {
       // 違反タグ2あり --> 三回目の検出 --> 転移させる
       if (isInWrongArea) {
         // town 以外
-        sendMessageToOps(
+        PlayerUtils.sendMessageToOps(
           `所定の時間内に ${player.name} が${areaName}に戻らなかったため、転移させます`
         );
         if (isInWrongArea(player)) {

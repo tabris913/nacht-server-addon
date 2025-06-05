@@ -1,4 +1,9 @@
-import { ContainerSlot, Entity, ItemStack } from "@minecraft/server";
+import {
+  type ContainerSlot,
+  type Entity,
+  EntityComponentTypes,
+  ItemStack,
+} from "@minecraft/server";
 
 /**
  * 指定されたアイテムの個数をカウントする
@@ -70,29 +75,29 @@ export const gatherSlots = (player: Entity, itemId?: string) => {
 };
 
 /**
- * アイテムをインベントリに追加する
+ * プレイヤーにアイテムを与える。
+ * インベントリスロットの指定はしない。
  *
- * @param player プレイヤー
- * @param itemId アイテム ID
- * @param amount アイテムの個数
- * @returns 成否を表すフラグ
+ * @param playerEntity プレイヤー
+ * @param itemType アイテム ID
+ * @param amount 数量
+ * @returns 成否
  */
-export const giveItem = (
-  player: Entity,
-  itemId: string,
+const giveItem = (
+  playerEntity: Entity,
+  itemType: string,
   amount: number = 1
 ) => {
   try {
-    player
-      .getComponent("inventory")
-      ?.container.addItem(new ItemStack(itemId, amount));
+    playerEntity
+      .getComponent(EntityComponentTypes.Inventory)
+      ?.container.addItem(new ItemStack(itemType, amount));
 
     return true;
   } catch (error) {
-    console.error(`Failed to give ${itemId} to ${player.nameTag}.`);
-    console.error(error);
+    console.error();
 
-    return false;
+    throw error;
   }
 };
 
@@ -203,3 +208,13 @@ export const removeItem = (
     return false;
   }
 };
+
+const InventoryUtils = {
+  countItem,
+  gatherSlots,
+  giveItem,
+  hasItem,
+  removeItem,
+};
+
+export default InventoryUtils;

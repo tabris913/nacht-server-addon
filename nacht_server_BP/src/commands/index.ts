@@ -1,4 +1,3 @@
-import areaparticle from "./areaparticle";
 import buy from "./buy";
 import buybase from "./buybase";
 import cleardp from "./cleardp";
@@ -8,16 +7,13 @@ import getdp from "./getdp";
 import message from "./message";
 import messageop from "./messageop";
 import registertptarget from "./registertptarget";
+import renamedp from "./renamedp";
 import sell from "./sell";
 import setdp from "./setdp";
-import setlocation from "./setlocation";
-import setparticle from "./setparticle";
-import testparams from "./testparams";
 
 export default () => {
   console.log("set commands");
 
-  areaparticle();
   buy();
   buybase();
   cleardp();
@@ -27,9 +23,7 @@ export default () => {
   message();
   messageop();
   registertptarget();
+  renamedp();
   sell();
   setdp();
-  setparticle();
-  setlocation();
-  testparams();
 };

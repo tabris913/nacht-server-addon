@@ -13,7 +13,7 @@ import {
 } from "../utils/area";
 import { Formatting, TAG_OPERATOR } from "../const";
 import { getBaseDps } from "../utils/dp";
-import { giveItem } from "../utils/items";
+import InventoryUtils from "../utils/InventoryUtils";
 
 const TYPE_ID = "nacht:base_flag";
 
@@ -138,7 +138,7 @@ const fixBaseZone = (
             },
           })
         );
-        giveItem(player, TYPE_ID);
+        InventoryUtils.giveItem(player, TYPE_ID);
         break;
     }
   });

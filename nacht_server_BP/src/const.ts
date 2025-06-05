@@ -3,6 +3,7 @@ import type { Vector3 } from "@minecraft/server";
 // Dynamic Properties
 export const PREFIX_BASE = "nacht:base_";
 export const PREFIX_GAMERULE = "nacht:gamerule_";
+export const PREFIX_LOCATION = "nacht:location_";
 
 // Formatting
 export const Formatting = {
@@ -63,11 +64,13 @@ export const flatFormatting: Record<string, string> = Object.entries(
   {}
 );
 
+// Game rule
+export const COMMAND_MODIFICATION_BLOCK_LIMIT = 32768;
+
 // Location
 export const LOC_ERSTE: Vector3 = { x: -10, y: 63, z: 0 };
 
 // Scoreboard
-
 export const SCOREBOARD_POINT = "point";
 
 // Tag

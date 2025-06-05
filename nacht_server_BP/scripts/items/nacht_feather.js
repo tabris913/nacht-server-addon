@@ -1,8 +1,8 @@
 import { system, TicksPerSecond, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Formatting, LOC_ERSTE } from "../const";
-import { sendMessageToOps } from "../utils/player";
 import { getLocationDps } from "../utils/dp";
+import PlayerUtils from "../utils/PlayerUtils";
 export default () => world.afterEvents.itemUse.subscribe((event) => {
     try {
         if (event.itemStack.type.id === "nacht:nacht_feather") {
@@ -65,7 +65,7 @@ export default () => world.afterEvents.itemUse.subscribe((event) => {
                 else {
                     // みつからないよ
                     event.source.sendMessage(`${Formatting.Color.GOLD}${choices[selectedIndex]}が見つかりませんでした。オペレーターにもメッセージを送りますがログインしてない際は届きません。見落とす場合もあるので対応がない場合は別途ご連絡ください`);
-                    sendMessageToOps(`${Formatting.Color.GOLD}${event.source.nameTag}が転移先「${choices[selectedIndex]}」の操作に失敗しました`);
+                    PlayerUtils.sendMessageToOps(`${Formatting.Color.GOLD}${event.source.nameTag}が転移先「${choices[selectedIndex]}」の操作に失敗しました`);
                 }
             });
         }

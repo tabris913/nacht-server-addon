@@ -1,26 +1,31 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, world, } from "@minecraft/server";
-import { TAG_OPERATOR } from "../const";
-import { format } from "../utils/misc";
-export default () => system.beforeEvents.startup.subscribe((event) => event.customCommandRegistry.registerCommand({
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from "@minecraft/server";
+import { UndefinedSourceOrInitiatorError } from "../errors/command";
+import PlayerUtils from "../utils/PlayerUtils";
+import StringUtils from "../utils/StringUtils";
+import { registerCommand } from "./common";
+const messageOpCommand = {
     name: "nacht:messageop",
     description: "オペレーターにメッセージを送信する",
     permissionLevel: CommandPermissionLevel.Any,
     mandatoryParameters: [
         { name: "message", type: CustomCommandParamType.String },
     ],
-}, (origin, message) => {
-    try {
-        const msg = format(message);
-        world
-            .getPlayers({ tags: [TAG_OPERATOR] })
-            .forEach((player) => { var _a; return player.sendMessage(`[${(_a = origin.sourceEntity) === null || _a === void 0 ? void 0 : _a.nameTag}] ${msg}`); });
-        return { status: CustomCommandStatus.Success };
+};
+/**
+ * オペレーターにメッセージを送信するコマンドの処理
+ *
+ * @param origin
+ * @param message
+ * @returns
+ * @throws This function can throw error.
+ *
+ * {@link UndefinedSourceOrInitiatorError}
+ */
+const commandProcess = ({ sourceEntity }, message) => {
+    if (sourceEntity === undefined) {
+        throw new UndefinedSourceOrInitiatorError();
     }
-    catch (error) {
-        let message = "予期せぬエラーが発生しました";
-        if (error instanceof Error) {
-            message += `\n${error.message}`;
-        }
-        return { message, status: CustomCommandStatus.Failure };
-    }
-}));
+    PlayerUtils.sendMessageToOps(`[${sourceEntity.nameTag}] ${StringUtils.format(message)}`);
+    return { status: CustomCommandStatus.Success };
+};
+export default () => system.beforeEvents.startup.subscribe(registerCommand(messageOpCommand, commandProcess));

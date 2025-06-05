@@ -21,6 +21,8 @@ Released in 2025-06-??.
 - fill コマンド追加
 - gamerule コマンド追加
 - message コマンド仕様変更
+- renamedp コマンド追加
+- setlocation コマンド廃止
 
 #### Entities
 
@@ -30,10 +32,6 @@ Released in 2025-06-??.
 
 - 拠点の旗 (nacht:base_flag) 追加
 - なはとの羽根 (nacht:nacht_feather) 仕様変更
-
-#### System
-
-- 異なるエリアに侵入した場合に強制テレポートする仕様を導入
 
 ### 0.2.0
 

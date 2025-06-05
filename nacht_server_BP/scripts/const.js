@@ -1,6 +1,7 @@
 // Dynamic Properties
 export const PREFIX_BASE = "nacht:base_";
 export const PREFIX_GAMERULE = "nacht:gamerule_";
+export const PREFIX_LOCATION = "nacht:location_";
 // Formatting
 export const Formatting = {
     Color: {
@@ -39,7 +40,11 @@ export const Formatting = {
 };
 export const flatFormatting = Object.entries(Formatting).reduce((prev, [curK, curV]) => curK !== "Color"
     ? Object.assign(Object.assign({}, prev), { [curK.toLowerCase()]: curV }) : Object.assign(Object.assign({}, prev), Object.entries(curV).reduce((prev2, [cur2K, cur2V]) => (Object.assign(Object.assign({}, prev2), { [cur2K.toLowerCase()]: cur2V })), {})), {});
+// Game rule
+export const COMMAND_MODIFICATION_BLOCK_LIMIT = 32768;
 // Location
 export const LOC_ERSTE = { x: -10, y: 63, z: 0 };
+// Scoreboard
+export const SCOREBOARD_POINT = "point";
 // Tag
 export const TAG_OPERATOR = "OP";

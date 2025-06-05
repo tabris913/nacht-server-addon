@@ -1,6 +1,7 @@
 import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from "@minecraft/server";
-import { format } from "../utils/misc";
-export default () => system.beforeEvents.startup.subscribe((event) => event.customCommandRegistry.registerCommand({
+import { registerCommand } from "./common";
+import StringUtils from "../utils/StringUtils";
+const messageCommand = {
     name: "nacht:message",
     description: "メッセージを送信する",
     permissionLevel: CommandPermissionLevel.GameDirectors,
@@ -8,22 +9,22 @@ export default () => system.beforeEvents.startup.subscribe((event) => event.cust
         { name: "target", type: CustomCommandParamType.PlayerSelector },
         { name: "message", type: CustomCommandParamType.String },
     ],
-    optionalParameters: [
-        { name: "name", type: CustomCommandParamType.String },
-    ],
-}, (origin, target, message, name) => {
+    optionalParameters: [{ name: "name", type: CustomCommandParamType.String }],
+};
+/**
+ * メッセージ送信コマンドの処理
+ *
+ * @param origin
+ * @param target
+ * @param message
+ * @param name
+ * @returns
+ */
+const commandProcess = (origin, target, message, name) => {
     var _a;
-    try {
-        const msgFrom = name || ((_a = origin.sourceEntity) === null || _a === void 0 ? void 0 : _a.nameTag);
-        const msg = format(message);
-        target.forEach((player) => player.sendMessage(`[${msgFrom}] ${msg}`));
-        return { status: CustomCommandStatus.Success };
-    }
-    catch (error) {
-        let message = "予期せぬエラーが発生しました";
-        if (error instanceof Error) {
-            message += `\n${error.message}`;
-        }
-        return { message, status: CustomCommandStatus.Failure };
-    }
-}));
+    const msgFrom = name || ((_a = origin.sourceEntity) === null || _a === void 0 ? void 0 : _a.nameTag);
+    const msg = StringUtils.format(message);
+    target.forEach((player) => player.sendMessage(`[${msgFrom}] ${msg}`));
+    return { status: CustomCommandStatus.Success };
+};
+export default () => system.beforeEvents.startup.subscribe(registerCommand(messageCommand, commandProcess));

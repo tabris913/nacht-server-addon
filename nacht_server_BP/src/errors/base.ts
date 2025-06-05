@@ -1,7 +1,7 @@
 type LogLevel = "warning" | "error";
 
 export class NachtServerAddonError extends Error {
-  _logLevel: LogLevel;
+  private _logLevel: LogLevel;
 
   constructor(
     message?: string,

@@ -1,14 +1,7 @@
 import { makeArray } from "./misc";
+import AreaUtils from "./AreaUtils";
 export const isVector = (location) => "x" in location && "z" in location;
 const isVector3 = (location) => "y" in location;
-/**
- * 2座標間の距離を計算する
- *
- * @param value1
- * @param value2
- * @returns
- */
-export const calcDistance = (value1, value2) => Math.abs(value1 - value2) + 1;
 /**
  * エリア内のすべてのブロックを取得する
  *
@@ -175,16 +168,16 @@ export const isInTownArea2D = (location, dimension) => {
  */
 export const isOverlapped = (area1, area2, edgeLength) => {
     const area1EdgeLength = (edgeLength === null || edgeLength === void 0 ? void 0 : edgeLength.area1) || {
-        x: calcDistance(area1.northWest.x, area1.southEast.x),
-        z: calcDistance(area1.northWest.z, area1.southEast.z),
+        x: AreaUtils.calcDistance(area1.northWest.x, area1.southEast.x),
+        z: AreaUtils.calcDistance(area1.northWest.z, area1.southEast.z),
     };
     const area2EdgeLength = (edgeLength === null || edgeLength === void 0 ? void 0 : edgeLength.area2) || {
-        x: calcDistance(area2.northWest.x, area2.southEast.x),
-        z: calcDistance(area2.northWest.z, area2.southEast.z),
+        x: AreaUtils.calcDistance(area2.northWest.x, area2.southEast.x),
+        z: AreaUtils.calcDistance(area2.northWest.z, area2.southEast.z),
     };
     const total = {
-        x: Math.max(calcDistance(area1.northWest.x, area2.southEast.x), calcDistance(area1.southEast.x, area2.northWest.x)),
-        z: Math.max(calcDistance(area1.northWest.z, area2.southEast.z), calcDistance(area1.southEast.z, area2.northWest.z)),
+        x: Math.max(AreaUtils.calcDistance(area1.northWest.x, area2.southEast.x), AreaUtils.calcDistance(area1.southEast.x, area2.northWest.x)),
+        z: Math.max(AreaUtils.calcDistance(area1.northWest.z, area2.southEast.z), AreaUtils.calcDistance(area1.southEast.z, area2.northWest.z)),
     };
     return (area1EdgeLength.x + area2EdgeLength.x < total.x &&
         area1EdgeLength.z + area2EdgeLength.z < total.z);

@@ -1,0 +1,61 @@
+import { Player, world } from "@minecraft/server";
+import { TAG_OPERATOR } from "../const";
+/**
+ * 与えられたエンティティをプレイヤーに変換する
+ *
+ * @param entityOrPlayer エンティティまたはプレイヤー
+ * @returns 与えられたエンティティと ID が一致するプレイヤー
+ */
+export const convertToPlayer = (entityOrPlayer) => {
+    try {
+        if (entityOrPlayer === undefined) {
+            console.warn("A given entity/player cannot be converted because it is undefined.");
+            return undefined;
+        }
+        if (entityOrPlayer instanceof Player) {
+            console.log("A given entity/player is already player.");
+            return entityOrPlayer;
+        }
+        return world
+            .getAllPlayers()
+            .filter((player) => player.id === entityOrPlayer.id)
+            .at(0);
+    }
+    catch (error) {
+        console.error("Failed to convert a given entity to a player who has the same id because of", error);
+        throw error;
+    }
+};
+/**
+ * オペレーターを取得する。
+ *
+ * ゲームのオペレーターレベル権限を持つプレイヤーおよび、OP タグが付与されたプレイヤー。
+ *
+ * @returns オペレータープレイヤーの配列
+ */
+export const getOperators = () => {
+    try {
+        return world
+            .getAllPlayers()
+            .filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
+    }
+    catch (error) {
+        console.warn("Failed to get players who have operator-level permissions because of", error);
+        throw error;
+    }
+};
+/**
+ * オペレーターにメッセージを送信する
+ *
+ * @param message メッセージ
+ */
+export const sendMessageToOps = (message) => {
+    try {
+        getOperators().forEach((op) => op.sendMessage(message));
+    }
+    catch (error) {
+        console.error("Failed to send message to operators because of", error);
+        throw error;
+    }
+};
+export default { convertToPlayer, getOperators, sendMessageToOps };

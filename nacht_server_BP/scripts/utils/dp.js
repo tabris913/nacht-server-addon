@@ -1,5 +1,5 @@
 import { world } from "@minecraft/server";
-import { PREFIX_BASE } from "../const";
+import { PREFIX_BASE, PREFIX_LOCATION } from "../const";
 export const getBaseDp = (key) => {
     const dp = world.getDynamicProperty(PREFIX_BASE + key);
     if (dp) {
@@ -33,4 +33,4 @@ export const getBaseDps = (playerName) => world
  */
 export const getLocationDps = (playerNameTag) => world
     .getDynamicPropertyIds()
-    .filter((dpId) => dpId.startsWith(`LOC_${playerNameTag}_`));
+    .filter((dpId) => dpId.startsWith(`${PREFIX_LOCATION}${playerNameTag}_`));

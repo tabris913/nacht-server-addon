@@ -1,4 +1,5 @@
 import { type Entity, Player, world } from "@minecraft/server";
+import { TAG_OPERATOR } from "../const";
 
 /**
  * 与えられたエンティティをプレイヤーに変換する
@@ -28,11 +29,49 @@ export const convertToPlayer = (entityOrPlayer?: Entity | Player) => {
       .at(0);
   } catch (error) {
     console.error(
-      "Failed to convert a given entity to a player who has the same id."
+      "Failed to convert a given entity to a player who has the same id because of",
+      error
     );
 
     throw error;
   }
 };
 
-export default { convertToPlayer };
+/**
+ * オペレーターを取得する。
+ *
+ * ゲームのオペレーターレベル権限を持つプレイヤーおよび、OP タグが付与されたプレイヤー。
+ *
+ * @returns オペレータープレイヤーの配列
+ */
+export const getOperators = () => {
+  try {
+    return world
+      .getAllPlayers()
+      .filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
+  } catch (error) {
+    console.warn(
+      "Failed to get players who have operator-level permissions because of",
+      error
+    );
+
+    throw error;
+  }
+};
+
+/**
+ * オペレーターにメッセージを送信する
+ *
+ * @param message メッセージ
+ */
+export const sendMessageToOps = (message: string) => {
+  try {
+    getOperators().forEach((op) => op.sendMessage(message));
+  } catch (error) {
+    console.error("Failed to send message to operators because of", error);
+
+    throw error;
+  }
+};
+
+export default { convertToPlayer, getOperators, sendMessageToOps };

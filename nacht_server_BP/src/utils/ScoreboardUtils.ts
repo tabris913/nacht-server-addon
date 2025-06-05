@@ -1,6 +1,38 @@
 import { type Entity, type Player, world } from "@minecraft/server";
 
 /**
+ * スコアを加える
+ *
+ * @param playerEntity プレイヤー
+ * @param scoreName スコア名
+ * @param value 値
+ * @returns 成否を表すフラグ
+ */
+export const addScore = (
+  playerEntity: Entity,
+  scoreName: string,
+  value: number
+) => {
+  try {
+    if (playerEntity.scoreboardIdentity) {
+      world.scoreboard
+        .getObjective(scoreName)
+        ?.addScore(playerEntity.scoreboardIdentity, value);
+
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error(
+      `${playerEntity.nameTag} failed to add ${value} to the score named ${scoreName}.`
+    );
+
+    return false;
+  }
+};
+
+/**
  * 指定したスコアボードが無効の場合は有効にする
  *
  * @param player プレイヤー
@@ -52,7 +84,7 @@ const getScore = (playerEntity: Entity, scoreName: string) => {
     return undefined;
   } catch (error) {
     console.error(
-      `Failed to get a value of the ${playerEntity.nameTag}'s score named ${scoreName}.`
+      `${playerEntity.nameTag} failed to get a value of the score named ${scoreName}.`
     );
 
     return undefined;
@@ -117,7 +149,34 @@ const setScore = (playerEntity: Entity, scoreName: string, value: number) => {
     return false;
   } catch (error) {
     console.error(
-      `Failed to set a value to the ${playerEntity.nameTag}'s score named ${scoreName}.`
+      `${playerEntity.nameTag} failed to set a value to the score named ${scoreName}.`
+    );
+
+    return false;
+  }
+};
+
+/**
+ * スコアをリセットする
+ *
+ * @param playerEntity プレイヤー
+ * @param scoreName スコア名
+ * @returns 成否を表すフラグ
+ */
+export const resetScore = (playerEntity: Entity, scoreName: string) => {
+  try {
+    if (playerEntity.scoreboardIdentity) {
+      world.scoreboard
+        .getObjective(scoreName)
+        ?.removeParticipant(playerEntity.scoreboardIdentity);
+
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error(
+      `${playerEntity.nameTag} failed to reset the score named ${scoreName}.`
     );
 
     return false;
@@ -125,10 +184,12 @@ const setScore = (playerEntity: Entity, scoreName: string, value: number) => {
 };
 
 const ScoreboardUtils = {
+  addScore,
   enableScoreboardIfDisabled,
   getScore,
   getScoreOrEnable,
   setScore,
+  resetScore,
 };
 
 export default ScoreboardUtils;

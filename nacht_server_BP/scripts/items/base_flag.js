@@ -3,7 +3,7 @@ import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { get2DAreaFromLoc, isInArea, isInBaseArea3D, isOverlapped, offsetLocation, } from "../utils/area";
 import { Formatting, TAG_OPERATOR } from "../const";
 import { getBaseDps } from "../utils/dp";
-import { giveItem } from "../utils/items";
+import InventoryUtils from "../utils/InventoryUtils";
 const TYPE_ID = "nacht:base_flag";
 /**
  * 与えられた平面が拠点エリアの範囲外にはみ出してないか確認する
@@ -93,7 +93,7 @@ const fixBaseZone = (player, flagLocation, dp) => {
                         x: flagLocation.x - (dp.edgeSize - 1) / 2,
                         z: flagLocation.z - (dp.edgeSize - 1) / 2,
                     } })));
-                giveItem(player, TYPE_ID);
+                InventoryUtils.giveItem(player, TYPE_ID);
                 break;
         }
     });
