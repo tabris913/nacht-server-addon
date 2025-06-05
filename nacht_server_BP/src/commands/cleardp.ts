@@ -8,10 +8,10 @@ import {
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum(
-      "nacht:dynamicPropertyIds",
-      world.getDynamicPropertyIds()
-    );
+    // event.customCommandRegistry.registerEnum(
+    //   "nacht:dynamicPropertyIds",
+    //   world.getDynamicPropertyIds()
+    // );
 
     event.customCommandRegistry.registerCommand(
       {
@@ -21,7 +21,7 @@ export default () =>
         mandatoryParameters: [
           {
             name: "nacht:dynamicPropertyIds",
-            type: CustomCommandParamType.Enum,
+            type: CustomCommandParamType.String,
           },
         ],
       },

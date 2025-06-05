@@ -1,4 +1,14 @@
 import { makeArray } from "./misc";
+export const isVector = (location) => "x" in location && "z" in location;
+const isVector3 = (location) => "y" in location;
+/**
+ * 2座標間の距離を計算する
+ *
+ * @param value1
+ * @param value2
+ * @returns
+ */
+export const calcDistance = (value1, value2) => Math.abs(value1 - value2) + 1;
 /**
  * エリア内のすべてのブロックを取得する
  *
@@ -80,7 +90,6 @@ export const get3DAreaFromLoc = (location, edgeLength) => {
         return undefined;
     }
 };
-const isVector3 = (location) => "y" in location;
 export const getIntegerLocation = (location) => isVector3(location)
     ? {
         x: Math.floor(location.x),
@@ -91,6 +100,17 @@ export const getIntegerLocation = (location) => isVector3(location)
         x: Math.floor(location.x),
         z: Math.floor(location.z),
     };
+/**
+ * 座標がエリアに含まれるか判定する
+ *
+ * @param location
+ * @param area
+ * @returns
+ */
+export const isInArea = (location, area) => area.northWest.x <= location.x &&
+    location.x <= area.southEast.x &&
+    area.northWest.z <= location.z &&
+    location.z <= area.southEast.x;
 /**
  * 与えられたプレイヤーが拠点エリアに居るかどうかを判定する
  *
@@ -145,6 +165,29 @@ export const isInTownArea2D = (location, dimension) => {
         default:
             return false;
     }
+};
+/**
+ * 2つのエリアが重なっているか判定する
+ *
+ * @param area1
+ * @param area2
+ * @param edgeLength
+ */
+export const isOverlapped = (area1, area2, edgeLength) => {
+    const area1EdgeLength = (edgeLength === null || edgeLength === void 0 ? void 0 : edgeLength.area1) || {
+        x: calcDistance(area1.northWest.x, area1.southEast.x),
+        z: calcDistance(area1.northWest.z, area1.southEast.z),
+    };
+    const area2EdgeLength = (edgeLength === null || edgeLength === void 0 ? void 0 : edgeLength.area2) || {
+        x: calcDistance(area2.northWest.x, area2.southEast.x),
+        z: calcDistance(area2.northWest.z, area2.southEast.z),
+    };
+    const total = {
+        x: Math.max(calcDistance(area1.northWest.x, area2.southEast.x), calcDistance(area1.southEast.x, area2.northWest.x)),
+        z: Math.max(calcDistance(area1.northWest.z, area2.southEast.z), calcDistance(area1.southEast.z, area2.northWest.z)),
+    };
+    return (area1EdgeLength.x + area2EdgeLength.x < total.x &&
+        area1EdgeLength.z + area2EdgeLength.z < total.z);
 };
 export const offsetLocation = (location, offset) => typeof offset === "number"
     ? isVector3(location)

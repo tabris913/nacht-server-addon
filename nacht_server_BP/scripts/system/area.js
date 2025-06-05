@@ -297,19 +297,21 @@ const showAreaBorder = () => {
     }
 };
 export default () => {
-    // 範囲チェック
-    system.runInterval(() => __awaiter(void 0, void 0, void 0, function* () {
-        if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingArea)) {
-            // 街エリアから外に出ることは基本的にありえない
-            // checkPlayers('town');
-            checkPlayers("base");
-            checkPlayers("expr");
-        }
-    }), world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingAreaInterval) || TicksPerSecond / 5);
-    // エリアボーダー
-    system.runInterval(() => {
-        if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorder)) {
-            showAreaBorder();
-        }
-    }, world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderInterval) || TicksPerSecond / 2);
+    system.runTimeout(() => {
+        // 範囲チェック
+        system.runInterval(() => __awaiter(void 0, void 0, void 0, function* () {
+            if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingArea)) {
+                // 街エリアから外に出ることは基本的にありえない
+                // checkPlayers('town');
+                checkPlayers("base");
+                checkPlayers("expr");
+            }
+        }), world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingAreaInterval) || TicksPerSecond / 5);
+        // エリアボーダー
+        system.runInterval(() => {
+            if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorder)) {
+                showAreaBorder();
+            }
+        }, world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderInterval) || TicksPerSecond / 2);
+    }, 1);
 };

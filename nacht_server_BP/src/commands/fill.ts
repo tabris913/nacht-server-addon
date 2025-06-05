@@ -6,7 +6,7 @@ import {
   system,
   type Vector3,
 } from "@minecraft/server";
-import { getPlayer } from "../utils/player";
+import { convertToPlayer } from "../utils/player";
 
 enum FillMode {
   destroy = "destroy",
@@ -199,7 +199,7 @@ export default () =>
               }
             }
 
-            getPlayer(sourceEntity)?.sendMessage(
+            convertToPlayer(sourceEntity)?.sendMessage(
               `${blocks}個のブロックで満たしました。`
             );
           } else {

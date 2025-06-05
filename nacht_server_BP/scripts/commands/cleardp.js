@@ -1,6 +1,9 @@
 import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, world, } from "@minecraft/server";
 export default () => system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum("nacht:dynamicPropertyIds", world.getDynamicPropertyIds());
+    // event.customCommandRegistry.registerEnum(
+    //   "nacht:dynamicPropertyIds",
+    //   world.getDynamicPropertyIds()
+    // );
     event.customCommandRegistry.registerCommand({
         name: "nacht:cleardp",
         description: "Dynamic Propertyをクリアする",
@@ -8,7 +11,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
         mandatoryParameters: [
             {
                 name: "nacht:dynamicPropertyIds",
-                type: CustomCommandParamType.Enum,
+                type: CustomCommandParamType.String,
             },
         ],
     }, (origin, id) => {

@@ -1,4 +1,4 @@
-import { CommandPermissionLevel, CustomCommandSource, CustomCommandStatus, system, world, } from "@minecraft/server";
+import { CommandPermissionLevel, CustomCommandSource, CustomCommandStatus, system, TicksPerSecond, world, } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { getPlayer } from "../utils/player";
 import { Formatting, PREFIX_BASE, PREFIX_GAMERULE } from "../const";
@@ -65,10 +65,8 @@ export default () => system.beforeEvents.startup.subscribe((event) => event.cust
         if (player && origin.sourceEntity) {
             const baseDps = getBaseDps(player.nameTag);
             if (Object.values(baseDps).some((baseDp) => baseDp.name === undefined)) {
-                return {
-                    message: "拠点の設定が進行中です。",
-                    status: CustomCommandStatus.Failure,
-                };
+                player.sendMessage("拠点の設定が進行中です。");
+                return { status: CustomCommandStatus.Failure };
             }
             const form = new ModalFormData();
             form.title("どんな拠点にするんだい？");
@@ -78,29 +76,36 @@ export default () => system.beforeEvents.startup.subscribe((event) => event.cust
                 defaultValue: Math.min(maxRange, 101),
             });
             form.submitButton("決定");
-            form.show(player).then((response) => {
-                var _a;
-                if (response.canceled)
-                    return;
-                const size = (_a = response.formValues) === null || _a === void 0 ? void 0 : _a[0];
-                const price = (size - 1) ** 2 *
-                    (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.baseMarketPrice) || 20);
-                purchase(player, origin.sourceEntity, size, price, Object.keys(baseDps).length);
-                // const purchaseForm = new ActionFormData();
-                // purchaseForm.title(
-                //   `${price}ポイントになりますがよろしいですか？`
-                // );
-                // purchaseForm.button("はい");
-                // purchaseForm.button("いいえ");
-                // purchaseForm.show(player).then((response2) => {
-                //   if (response2.canceled) return;
-                //   if (response2.selection === 1) {
-                //     origin.sourceEntity?.runCommand(
-                //       `nacht:buy nacht:base_flag 1 ${price}`
-                //     );
-                //   }
-                // });
-            });
+            system.runTimeout(() => {
+                form.show(player).then((response) => {
+                    var _a;
+                    if (response.canceled) {
+                        console.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
+                        return;
+                    }
+                    const size = (_a = response.formValues) === null || _a === void 0 ? void 0 : _a[0];
+                    const price = (size - 1) ** 2 *
+                        (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.baseMarketPrice) || 20);
+                    purchase(player, origin.sourceEntity, size, price, Object.keys(baseDps).length);
+                    // const purchaseForm = new ActionFormData();
+                    // purchaseForm.title(
+                    //   `${price}ポイントになりますがよろしいですか？`
+                    // );
+                    // purchaseForm.button("はい");
+                    // purchaseForm.button("いいえ");
+                    // purchaseForm.show(player).then((response2) => {
+                    //   if (response2.canceled) return;
+                    //   if (response2.selection === 1) {
+                    //     origin.sourceEntity?.runCommand(
+                    //       `nacht:buy nacht:base_flag 1 ${price}`
+                    //     );
+                    //   }
+                    // });
+                });
+            }, TicksPerSecond);
+        }
+        else {
+            console.warn("player or npc is undefined.");
         }
         return { status: CustomCommandStatus.Success };
     }

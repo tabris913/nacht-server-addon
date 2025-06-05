@@ -5,16 +5,21 @@ import {
   Entity,
   Player,
   system,
+  TicksPerSecond,
   world,
 } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
-import { getPlayer } from "../utils/player";
+import {
+  ActionFormData,
+  MessageFormData,
+  ModalFormData,
+} from "@minecraft/server-ui";
 import { Formatting, PREFIX_BASE, PREFIX_GAMERULE } from "../const";
 import { RuleName } from "./gamerule";
 import { addScore, getScore, setScore } from "../utils/scoreboard";
 import { giveItem } from "../utils/items";
 import { getBaseDps } from "../utils/dp";
 import { BaseAreaInfo } from "../utils/area";
+import PlayerUtils from "../utils/PlayerUtils";
 
 const purchase = (
   player: Player,
@@ -23,15 +28,15 @@ const purchase = (
   price: number,
   count: number
 ) => {
-  const purchaseForm = new ActionFormData();
-  purchaseForm.title(`${price}ポイントになりますがよろしいですか？`);
-  purchaseForm.button("はい");
-  purchaseForm.button("いいえ");
+  const purchaseForm = new MessageFormData();
+  purchaseForm.body(`${price}ポイントになりますがよろしいですか？`);
+  purchaseForm.button1("はい");
+  purchaseForm.button2("いいえ");
 
-  purchaseForm.show(player).then((response2) => {
-    if (response2.canceled) return;
+  purchaseForm.show(player).then((response) => {
+    if (response.canceled) return;
 
-    if (response2.selection === 1) {
+    if (response.selection === 1) {
       // はい
       // origin.sourceEntity?.runCommand(`nacht:buy nacht:base_flag 1 ${price}`);
       const score = getScore(player, "point");
@@ -95,16 +100,15 @@ export default () =>
             };
           }
 
-          const player = getPlayer(origin.initiator);
+          const player = PlayerUtils.convertToPlayer(origin.initiator);
           if (player && origin.sourceEntity) {
             const baseDps = getBaseDps(player.nameTag);
             if (
               Object.values(baseDps).some((baseDp) => baseDp.name === undefined)
             ) {
-              return {
-                message: "拠点の設定が進行中です。",
-                status: CustomCommandStatus.Failure,
-              };
+              player.sendMessage("拠点の設定が進行中です。");
+
+              return { status: CustomCommandStatus.Failure };
             }
 
             const form = new ModalFormData();
@@ -121,40 +125,49 @@ export default () =>
             });
             form.submitButton("決定");
 
-            form.show(player).then((response) => {
-              if (response.canceled) return;
+            system.runTimeout(() => {
+              form.show(player).then((response) => {
+                if (response.canceled) {
+                  console.log(
+                    `[${player.nameTag}] canceled: ${response.cancelationReason}`
+                  );
+                  return;
+                }
 
-              const size = response.formValues?.[0] as number;
-              const price =
-                (size - 1) ** 2 *
-                ((world.getDynamicProperty(
-                  PREFIX_GAMERULE + RuleName.baseMarketPrice
-                ) as number | undefined) || 20);
-              purchase(
-                player,
-                origin.sourceEntity!,
-                size,
-                price,
-                Object.keys(baseDps).length
-              );
+                const size = response.formValues?.[0] as number;
+                const price =
+                  (size - 1) ** 2 *
+                  ((world.getDynamicProperty(
+                    PREFIX_GAMERULE + RuleName.baseMarketPrice
+                  ) as number | undefined) || 20);
+                purchase(
+                  player,
+                  origin.sourceEntity!,
+                  size,
+                  price,
+                  Object.keys(baseDps).length
+                );
 
-              // const purchaseForm = new ActionFormData();
-              // purchaseForm.title(
-              //   `${price}ポイントになりますがよろしいですか？`
-              // );
-              // purchaseForm.button("はい");
-              // purchaseForm.button("いいえ");
+                // const purchaseForm = new ActionFormData();
+                // purchaseForm.title(
+                //   `${price}ポイントになりますがよろしいですか？`
+                // );
+                // purchaseForm.button("はい");
+                // purchaseForm.button("いいえ");
 
-              // purchaseForm.show(player).then((response2) => {
-              //   if (response2.canceled) return;
+                // purchaseForm.show(player).then((response2) => {
+                //   if (response2.canceled) return;
 
-              //   if (response2.selection === 1) {
-              //     origin.sourceEntity?.runCommand(
-              //       `nacht:buy nacht:base_flag 1 ${price}`
-              //     );
-              //   }
-              // });
-            });
+                //   if (response2.selection === 1) {
+                //     origin.sourceEntity?.runCommand(
+                //       `nacht:buy nacht:base_flag 1 ${price}`
+                //     );
+                //   }
+                // });
+              });
+            }, TicksPerSecond);
+          } else {
+            console.warn("player or npc is undefined.");
           }
 
           return { status: CustomCommandStatus.Success };

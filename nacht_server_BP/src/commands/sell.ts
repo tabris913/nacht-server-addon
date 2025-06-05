@@ -6,7 +6,7 @@ import {
   world,
 } from "@minecraft/server";
 import { hasItem, removeItem } from "../utils/items";
-import { getPlayer } from "../utils/player";
+import { convertToPlayer } from "../utils/player";
 import { addScore, getScore, setScore } from "../utils/scoreboard";
 import { Formatting } from "../const";
 
@@ -36,7 +36,7 @@ export default () =>
         after_msg?: string
       ) => {
         try {
-          const initiatorPlayer = getPlayer(origin.initiator);
+          const initiatorPlayer = convertToPlayer(origin.initiator);
           if (initiatorPlayer) {
             // called by NPC
             const score = getScore(initiatorPlayer, "point");

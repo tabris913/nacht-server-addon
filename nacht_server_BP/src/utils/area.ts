@@ -8,7 +8,7 @@ import {
 } from "@minecraft/server";
 import { makeArray } from "./misc";
 
-export type AreaVertices<T extends VectorXZ | Vector3> = {
+export type AreaVertices<T extends VectorXZ | Vector3 = VectorXZ> = {
   northWest: T;
   southEast: T;
 };
@@ -23,6 +23,22 @@ export type BaseAreaInfo = {
   participants: Array<string>;
   showBorder: boolean;
 };
+
+export const isVector = (location: any): location is VectorXZ =>
+  "x" in location && "z" in location;
+
+const isVector3 = (location: VectorXZ | Vector3): location is Vector3 =>
+  "y" in location;
+
+/**
+ * 2座標間の距離を計算する
+ *
+ * @param value1
+ * @param value2
+ * @returns
+ */
+export const calcDistance = (value1: number, value2: number) =>
+  Math.abs(value1 - value2) + 1;
 
 /**
  * エリア内のすべてのブロックを取得する
@@ -136,9 +152,6 @@ export const get3DAreaFromLoc = (
   }
 };
 
-const isVector3 = (location: VectorXZ | Vector3): location is Vector3 =>
-  "y" in location;
-
 export const getIntegerLocation = <T extends VectorXZ | Vector3>(
   location: T
 ): T =>
@@ -152,6 +165,19 @@ export const getIntegerLocation = <T extends VectorXZ | Vector3>(
         x: Math.floor(location.x),
         z: Math.floor(location.z),
       } as T);
+
+/**
+ * 座標がエリアに含まれるか判定する
+ *
+ * @param location
+ * @param area
+ * @returns
+ */
+export const isInArea = (location: VectorXZ, area: AreaVertices) =>
+  area.northWest.x <= location.x &&
+  location.x <= area.southEast.x &&
+  area.northWest.z <= location.z &&
+  location.z <= area.southEast.x;
 
 /**
  * 与えられたプレイヤーが拠点エリアに居るかどうかを判定する
@@ -212,6 +238,43 @@ export const isInTownArea2D = (location: VectorXZ, dimension: Dimension) => {
     default:
       return false;
   }
+};
+
+/**
+ * 2つのエリアが重なっているか判定する
+ *
+ * @param area1
+ * @param area2
+ * @param edgeLength
+ */
+export const isOverlapped = (
+  area1: AreaVertices,
+  area2: AreaVertices,
+  edgeLength?: { area1?: VectorXZ; area2?: VectorXZ }
+) => {
+  const area1EdgeLength = edgeLength?.area1 || {
+    x: calcDistance(area1.northWest.x, area1.southEast.x),
+    z: calcDistance(area1.northWest.z, area1.southEast.z),
+  };
+  const area2EdgeLength = edgeLength?.area2 || {
+    x: calcDistance(area2.northWest.x, area2.southEast.x),
+    z: calcDistance(area2.northWest.z, area2.southEast.z),
+  };
+  const total = {
+    x: Math.max(
+      calcDistance(area1.northWest.x, area2.southEast.x),
+      calcDistance(area1.southEast.x, area2.northWest.x)
+    ),
+    z: Math.max(
+      calcDistance(area1.northWest.z, area2.southEast.z),
+      calcDistance(area1.southEast.z, area2.northWest.z)
+    ),
+  };
+
+  return (
+    area1EdgeLength.x + area2EdgeLength.x < total.x &&
+    area1EdgeLength.z + area2EdgeLength.z < total.z
+  );
 };
 
 export const offsetLocation = <T extends VectorXZ | Vector3>(

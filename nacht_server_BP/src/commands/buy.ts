@@ -5,10 +5,10 @@ import {
   ItemType,
   system,
 } from "@minecraft/server";
-import { getPlayer } from "../utils/player";
 import { addScore, getScore, setScore } from "../utils/scoreboard";
 import { giveItem } from "../utils/items";
 import { Formatting } from "../const";
+import PlayerUtils from "../utils/PlayerUtils";
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) =>
@@ -36,7 +36,7 @@ export default () =>
         after_msg?: string
       ) => {
         try {
-          const initiatorPlayer = getPlayer(origin.initiator);
+          const initiatorPlayer = PlayerUtils.convertToPlayer(origin.initiator);
           if (initiatorPlayer) {
             // called by NPC
             const score = getScore(initiatorPlayer, "point");
@@ -94,7 +94,7 @@ export default () =>
           }
 
           if (origin.initiator) {
-            getPlayer(origin.initiator)?.sendMessage(message);
+            PlayerUtils.convertToPlayer(origin.initiator)?.sendMessage(message);
           }
 
           return { message, status: CustomCommandStatus.Failure };

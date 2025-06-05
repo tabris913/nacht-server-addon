@@ -66,5 +66,9 @@ export const flatFormatting: Record<string, string> = Object.entries(
 // Location
 export const LOC_ERSTE: Vector3 = { x: -10, y: 63, z: 0 };
 
+// Scoreboard
+
+export const SCOREBOARD_POINT = "point";
+
 // Tag
 export const TAG_OPERATOR = "OP";

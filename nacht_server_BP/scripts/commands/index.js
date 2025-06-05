@@ -1,7 +1,10 @@
 import areaparticle from "./areaparticle";
 import buy from "./buy";
+import buybase from "./buybase";
 import cleardp from "./cleardp";
 import fill from "./fill";
+import gamerule from "./gamerule";
+import getdp from "./getdp";
 import message from "./message";
 import messageop from "./messageop";
 import registertptarget from "./registertptarget";
@@ -14,8 +17,11 @@ export default () => {
     console.log("set commands");
     areaparticle();
     buy();
+    buybase();
     cleardp();
     fill();
+    gamerule();
+    getdp();
     message();
     messageop();
     registertptarget();
