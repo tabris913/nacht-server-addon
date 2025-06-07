@@ -8,6 +8,7 @@ import {
   system,
   world,
 } from "@minecraft/server";
+import { MinecraftDimensionTypes } from "../types/index";
 import { PREFIX_GAMERULE, PREFIX_LOCATION } from "../const";
 import {
   CommandProcessError,
@@ -88,7 +89,7 @@ const register = (entity: Entity, name: string, displayName: string) => {
     locationName,
     JSON.stringify({
       displayName: StringUtils.format(displayName),
-      dimension: entity.dimension.id,
+      dimension: entity.dimension.id as MinecraftDimensionTypes,
       id: locationName,
       location: entity.location,
       name,

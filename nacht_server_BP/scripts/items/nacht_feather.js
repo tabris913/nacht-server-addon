@@ -1,15 +1,18 @@
 import { system, TicksPerSecond, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import { MinecraftDimensionTypes } from "../types/index";
 import { Formatting, LOC_ERSTE } from "../const";
 import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
 import PlayerUtils from "../utils/PlayerUtils";
+import { Logger } from "../utils/logger";
+// なはとの羽根
 export default () => world.afterEvents.itemUse.subscribe((event) => {
     try {
         if (event.itemStack.type.id === "nacht:nacht_feather") {
             event.source.sendMessage(`${event.source.name}は　なはとの羽根を　ほうりなげた！`);
             const tpTargets = [
                 {
-                    dimension: "overworld",
+                    dimension: MinecraftDimensionTypes.Overworld,
                     displayName: "Erste",
                     id: "",
                     location: LOC_ERSTE,
@@ -34,7 +37,7 @@ export default () => world.afterEvents.itemUse.subscribe((event) => {
                 const target = tpTargets[selectedIndex];
                 if (target) {
                     if (deleteFlag) {
-                        if (target.dpId) {
+                        if (target.id !== "") {
                             const deleteForm = new ActionFormData();
                             deleteForm.title(`${target.displayName} を削除しますか?`);
                             deleteForm.button("はい");
@@ -46,7 +49,7 @@ export default () => world.afterEvents.itemUse.subscribe((event) => {
                                 switch (deleteResponse.selection) {
                                     case 0:
                                         // はい
-                                        world.setDynamicProperty(target.dpId, undefined);
+                                        world.setDynamicProperty(target.id, undefined);
                                         event.source.sendMessage(`${target.displayName}を削除しました`);
                                         break;
                                     case 1:
@@ -74,6 +77,6 @@ export default () => world.afterEvents.itemUse.subscribe((event) => {
         }
     }
     catch (error) {
-        console.error(error);
+        Logger.error(error);
     }
 });

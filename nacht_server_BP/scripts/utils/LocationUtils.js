@@ -1,4 +1,7 @@
+import { BlockVolume, BlockVolumeIntersection, } from "@minecraft/server";
 import { LengthError } from "../errors/locations";
+import { DimensionBlockVolume } from "../models/DimensionBlockVolume";
+import { Logger } from "./logger";
 /**
  * 2座標間の距離を計算する
  *
@@ -14,51 +17,49 @@ const calcDistance = (value1, value2) => Math.abs(value1 - value2) + 1;
  * @param location2
  * @returns
  */
-const calcDistances = (location1, location2) => ({
-    x: calcDistance(location1.x, location2.x),
-    y: calcDistance(location1.y, location2.y),
-    z: calcDistance(location1.z, location2.z),
-});
+const calcDistances = (location1, location2) => new BlockVolume(location1, location2).getSpan();
 /**
  * エリア内のすべてのブロックを取得する
  *
- * @param area
+ * @param blockVolume
  * @param dimension
  * @returns
  */
-export const collectBlocksWithin = (area, dimension) => {
+export function* collectBlocksWithin(blockVolume, dimension) {
     try {
-        const yArray = makeArray(area.northWest.y, area.southEast.y);
-        const zArray = makeArray(area.northWest.z, area.southEast.z);
-        return makeArray(area.northWest.x, area.southEast.z).flatMap((x) => yArray.flatMap((y) => zArray
-            .map((z) => dimension.getBlock({ x, y, z }))
-            .filter((b) => b !== undefined)));
+        for (const location of blockVolume.getBlockLocationIterator()) {
+            const block = dimension.getBlock(location);
+            if (block === undefined)
+                continue;
+            yield block;
+        }
     }
     catch (error) {
-        console.error("Failed to collect blocks within a give area because of", error);
+        Logger.error("Failed to collect blocks within a give area because of", error);
         throw error;
     }
-};
+}
 /**
- * エリア内の整数座標を取得する
+ * 与えられた座標を中心とする、指定された長さの正方形の頂点座標を返す
  *
- * @param area
+ * @param location 中心座標
+ * @param edgeLength 一辺の長さ
  * @returns
+ * @throws This function can throw error.
+ *
+ * {@link LengthError}
  */
-export const collectLocationsWithin = (area) => {
+export const generateBlockVolume = (location, edgeLength) => {
     try {
-        const zArray = makeArray(area.northWest.z, area.southEast.z);
-        if (isVector3(area.northWest) && isVector3(area.southEast)) {
-            const yArray = makeArray(area.northWest.y, area.southEast.y);
-            return makeArray(area.northWest.x, area.southEast.x).flatMap((x) => yArray.flatMap((y) => zArray.map((z) => ({ x, y, z }))));
+        if (edgeLength <= 0) {
+            throw new LengthError("edgeLength");
         }
-        if (!isVector3(area.northWest) && !isVector3(area.southEast)) {
-            return makeArray(area.northWest.x, area.southEast.x).flatMap((x) => zArray.map((z) => ({ x, z })));
-        }
-        return [];
+        const loc = generateIntegerLocation(location);
+        const length = (edgeLength & 1 ? edgeLength - 1 : edgeLength) / 2;
+        return new BlockVolume({ x: loc.x - length, y: loc.y, z: loc.z - length }, { x: loc.x + length, y: loc.y, z: loc.z + length });
     }
     catch (error) {
-        console.error("Failed to colelct locations within a give area because of", error);
+        Logger.error("Failed to get vertices because of", error);
         throw error;
     }
 };
@@ -79,68 +80,22 @@ export const generateIntegerLocation = (location) => isVector3(location)
         z: Math.floor(location.z),
     };
 /**
- * 座標がエリアに含まれるか判定する
- *
- * @param location
- * @param area
- * @returns
- */
-export const isInArea = (location, area) => area.northWest.x <= location.x &&
-    location.x <= area.southEast.x &&
-    area.northWest.z <= location.z &&
-    location.z <= area.southEast.x;
-/**
  * 2つのエリアが重なっているか判定する
  *
  * @param area1
  * @param area2
- * @param edgeLength
+ * @param edgeLengthx
  */
-export const isOverlapped = (area1, area2, edgeLength) => {
-    const area1EdgeLength = (edgeLength === null || edgeLength === void 0 ? void 0 : edgeLength.area1) || {
-        x: calcDistance(area1.northWest.x, area1.southEast.x),
-        z: calcDistance(area1.northWest.z, area1.southEast.z),
-    };
-    const area2EdgeLength = (edgeLength === null || edgeLength === void 0 ? void 0 : edgeLength.area2) || {
-        x: calcDistance(area2.northWest.x, area2.southEast.x),
-        z: calcDistance(area2.northWest.z, area2.southEast.z),
-    };
-    const total = {
-        x: Math.max(calcDistance(area1.northWest.x, area2.southEast.x), calcDistance(area1.southEast.x, area2.northWest.x)),
-        z: Math.max(calcDistance(area1.northWest.z, area2.southEast.z), calcDistance(area1.southEast.z, area2.northWest.z)),
-    };
-    return (area1EdgeLength.x + area2EdgeLength.x < total.x &&
-        area1EdgeLength.z + area2EdgeLength.z < total.z);
+export const isOverlapped = (area1, area2) => {
+    const isOverlappedFlatly = area1.intersects(area2) !== BlockVolumeIntersection.Disjoint;
+    if (area1 instanceof DimensionBlockVolume &&
+        area2 instanceof DimensionBlockVolume) {
+        return isOverlappedFlatly && area1.dimension === area2.dimension;
+    }
+    return isOverlappedFlatly;
 };
 export const isVector = (location) => "x" in location && "z" in location;
 const isVector3 = (location) => "y" in location;
-/**
- * 与えられた座標を中心とする、指定された長さの正方形の頂点座標を返す
- *
- * @param location 中心座標
- * @param edgeLength 一辺の長さ
- * @returns
- * @throws This function can throw error.
- *
- * {@link LengthError}
- */
-export const make2DAreaFromLoc = (location, edgeLength) => {
-    try {
-        if (edgeLength <= 0) {
-            throw new LengthError("edgeLength");
-        }
-        const loc = generateIntegerLocation(location);
-        const length = (edgeLength & 1 ? edgeLength - 1 : edgeLength) / 2;
-        return {
-            northWest: { x: loc.x - length, z: loc.z - length },
-            southEast: { x: loc.x + length, z: loc.z + length },
-        };
-    }
-    catch (error) {
-        console.error("Failed to get vertices because of", error);
-        throw error;
-    }
-};
 /**
  * プレイヤーまたはブロックを中心とする、与えられた長さの立方体エリアの頂点座標を取得する
  *
@@ -175,7 +130,7 @@ export const make3DAreaFromLoc = (location, edgeLength) => {
         };
     }
     catch (error) {
-        console.error(`Failed to get vertices because of`, error);
+        Logger.error(`Failed to get vertices because of`, error);
         throw error;
     }
 };
@@ -218,13 +173,11 @@ const LocationUtils = {
     calcDistance,
     calcDistances,
     collectBlocksWithin,
-    collectLocationsWithin,
+    generateBlockVolume,
     generateIntegerLocation,
-    isInArea,
     isOverlapped,
     isVector,
     isVector3,
-    make2DAreaFromLoc,
     make3DArea,
     make3DAreaFromLoc,
     makeArray,

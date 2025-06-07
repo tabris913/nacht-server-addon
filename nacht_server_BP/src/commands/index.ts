@@ -10,9 +10,10 @@ import registertptarget from "./registertptarget";
 import renamedp from "./renamedp";
 import sell from "./sell";
 import setdp from "./setdp";
+import { Logger } from "../utils/logger";
 
 export default () => {
-  console.log("set commands");
+  Logger.log("set commands");
 
   buy();
   buybase();

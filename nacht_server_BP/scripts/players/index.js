@@ -1,5 +1,6 @@
+import { Logger } from "../utils/logger";
 import join from "./join";
 export default () => {
-    console.log("set players");
+    Logger.log("set players");
     join();
 };

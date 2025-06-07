@@ -6,6 +6,7 @@ import {
   Vector3,
   world,
 } from "@minecraft/server";
+import { Logger } from "../utils/logger";
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) => {
@@ -37,7 +38,7 @@ export default () =>
         ],
       },
       (origin, id: string, value) => {
-        console.log(JSON.stringify(value));
+        Logger.log(JSON.stringify(value));
         world.setDynamicProperty(id, JSON.stringify(value));
 
         return { status: CustomCommandStatus.Success };

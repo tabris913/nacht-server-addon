@@ -1,6 +1,7 @@
 import { world } from "@minecraft/server";
 import { PREFIX_BASE, PREFIX_LOCATION } from "../const";
 import { DynamicPropertyNotFoundError } from "../errors/dp";
+import { Logger } from "./logger";
 /**
  * Dynamic Property から指定した拠点を取得する
  *
@@ -19,7 +20,7 @@ export const getBaseById = (idSuffix) => {
         return base;
     }
     catch (error) {
-        console.error("Failed to get dynamic property by a given key because of", error);
+        Logger.error("Failed to get dynamic property by a given key because of", error);
         throw error;
     }
 };
@@ -35,7 +36,7 @@ export const findBaseById = (idSuffix) => {
         return base ? JSON.parse(base) : undefined;
     }
     catch (error) {
-        console.error("Failed to find base because of", error);
+        Logger.error("Failed to find base because of", error);
         throw error;
     }
 };
@@ -56,7 +57,7 @@ export const retrieveBases = (playerNameTag) => {
             .map((dp) => JSON.parse(dp));
     }
     catch (error) {
-        console.error("Failed to get dynamic properties of base area because of", error);
+        Logger.error("Failed to get dynamic properties of base area because of", error);
         throw error;
     }
 };
@@ -67,16 +68,20 @@ export const retrieveBases = (playerNameTag) => {
  */
 export const retrieveLocations = (playerNameTag) => {
     try {
-        const prefix = PREFIX_LOCATION + playerNameTag ? `${playerNameTag}_` : "";
-        return world
+        const prefix = PREFIX_LOCATION + (playerNameTag ? `${playerNameTag}_` : "");
+        const locations = world
             .getDynamicPropertyIds()
             .filter((dpId) => dpId.startsWith(prefix))
             .map((dpId) => world.getDynamicProperty(dpId))
             .filter((dp) => dp !== undefined)
             .map((dp) => JSON.parse(dp));
+        // Logger.log(
+        //   `${locations.length} dynamic properties filtered by ${prefix} are found.`
+        // );
+        return locations;
     }
     catch (error) {
-        console.error("Failed to retrieve locations because of", error);
+        Logger.error("Failed to retrieve locations because of", error);
         throw error;
     }
 };

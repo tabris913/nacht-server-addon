@@ -1,5 +1,6 @@
 import { Player, world } from "@minecraft/server";
 import { TAG_OPERATOR } from "../const";
+import { Logger } from "./logger";
 /**
  * 与えられたエンティティをプレイヤーに変換する
  *
@@ -9,11 +10,11 @@ import { TAG_OPERATOR } from "../const";
 export const convertToPlayer = (entityOrPlayer) => {
     try {
         if (entityOrPlayer === undefined) {
-            console.warn("A given entity/player cannot be converted because it is undefined.");
+            Logger.warning("A given entity/player cannot be converted because it is undefined.");
             return undefined;
         }
         if (entityOrPlayer instanceof Player) {
-            console.log("A given entity/player is already player.");
+            Logger.log("A given entity/player is already player.");
             return entityOrPlayer;
         }
         return world
@@ -22,7 +23,7 @@ export const convertToPlayer = (entityOrPlayer) => {
             .at(0);
     }
     catch (error) {
-        console.error("Failed to convert a given entity to a player who has the same id because of", error);
+        Logger.error("Failed to convert a given entity to a player who has the same id because of", error);
         throw error;
     }
 };
@@ -40,7 +41,7 @@ export const getOperators = () => {
             .filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
     }
     catch (error) {
-        console.warn("Failed to get players who have operator-level permissions because of", error);
+        Logger.warning("Failed to get players who have operator-level permissions because of", error);
         throw error;
     }
 };
@@ -54,7 +55,7 @@ export const sendMessageToOps = (message) => {
         getOperators().forEach((op) => op.sendMessage(message));
     }
     catch (error) {
-        console.error("Failed to send message to operators because of", error);
+        Logger.error("Failed to send message to operators because of", error);
         throw error;
     }
 };

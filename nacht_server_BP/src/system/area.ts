@@ -1,15 +1,17 @@
 import {
-  type Player,
   system,
   TicksPerSecond,
   world,
+  type Player,
   type Vector3,
 } from "@minecraft/server";
-import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from "../const";
+import { MinecraftDimensionTypes } from "../types/index";
 import { RuleName } from "../commands/gamerule";
-import PlayerUtils from "../utils/PlayerUtils";
+import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from "../const";
 import AreaUtils from "../utils/AreaUtils";
 import LocationUtils from "../utils/LocationUtils";
+import PlayerUtils from "../utils/PlayerUtils";
+import { Logger } from "../utils/logger";
 
 const tagTownArea = "AREA_TOWN"; // 街エリアにいる
 const tagExploreArea = "AREA_EXP"; // 探索エリアにいる
@@ -80,9 +82,9 @@ const tp = (player: Player, tag: string) => {
   player.addTag(tagTownArea);
   // ブロックの1マス上に転移
   player.teleport(LOC_ERSTE, {
-    dimension: world.getDimension("minecraft:overworld"),
+    dimension: world.getDimension(MinecraftDimensionTypes.Overworld),
   });
-  console.log(`teleported ${player.name} to Erste[-10 63 0]`);
+  Logger.log(`teleported ${player.name} to Erste[-10 63 0]`);
 };
 
 /**
@@ -162,10 +164,10 @@ const checkPlayers = async (area: Area) => {
  */
 const showAreaBorder = () => {
   try {
-    const locs: Record<string, Set<Vector3>> = {
-      "minecraft:overworld": new Set(),
-      "minecraft:nether": new Set(),
-      "minecraft:the_end": new Set(),
+    const locs: Record<MinecraftDimensionTypes, Set<Vector3>> = {
+      [MinecraftDimensionTypes.Overworld]: new Set(),
+      [MinecraftDimensionTypes.Nether]: new Set(),
+      [MinecraftDimensionTypes.TheEnd]: new Set(),
     };
 
     const distance = world.getDynamicProperty(
@@ -222,7 +224,7 @@ const showAreaBorder = () => {
               );
             }
           } catch (error) {
-            console.error("Failed to gather block locations (base / expr).");
+            Logger.error("Failed to gather block locations (base / expr).");
 
             throw error;
           }
@@ -262,7 +264,7 @@ const showAreaBorder = () => {
               );
             }
           } catch (error) {
-            console.error(
+            Logger.error(
               `Failed to gather block locations [town e-w] (${
                 Math.abs(
                   Math.max(northWest.z, -6401) - Math.min(southEast.z, 6401)
@@ -306,7 +308,7 @@ const showAreaBorder = () => {
               );
             }
           } catch (error) {
-            console.error(
+            Logger.error(
               `Failed to gather block locations [town n-s] (${
                 Math.abs(
                   Math.max(northWest.x, -6401) - Math.min(southEast.x, 6401)
@@ -319,7 +321,7 @@ const showAreaBorder = () => {
         }
 
         locations.forEach((location) =>
-          locs[player.dimension.id].add(location)
+          locs[player.dimension.id as MinecraftDimensionTypes].add(location)
         );
       });
 
@@ -340,14 +342,14 @@ const showAreaBorder = () => {
               );
             });
         } catch (error) {
-          console.error(`Failed to spawn particles (${locations.size}).`);
+          Logger.error(`Failed to spawn particles (${locations.size}).`);
 
           throw error;
         }
       });
   } catch (error) {
-    console.error("Failed to show particles for area borders.");
-    console.error(error);
+    Logger.error("Failed to show particles for area borders.");
+    Logger.error(error);
   }
 };
 

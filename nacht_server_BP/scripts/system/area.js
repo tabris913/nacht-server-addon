@@ -8,11 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { system, TicksPerSecond, world, } from "@minecraft/server";
-import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from "../const";
+import { MinecraftDimensionTypes } from "../types/index";
 import { RuleName } from "../commands/gamerule";
-import PlayerUtils from "../utils/PlayerUtils";
+import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from "../const";
 import AreaUtils from "../utils/AreaUtils";
 import LocationUtils from "../utils/LocationUtils";
+import PlayerUtils from "../utils/PlayerUtils";
+import { Logger } from "../utils/logger";
 const tagTownArea = "AREA_TOWN"; // 街エリアにいる
 const tagExploreArea = "AREA_EXP"; // 探索エリアにいる
 const tagBaseArea = "AREA_BASE"; // 拠点エリアにいる
@@ -74,9 +76,9 @@ const tp = (player, tag) => {
     player.addTag(tagTownArea);
     // ブロックの1マス上に転移
     player.teleport(LOC_ERSTE, {
-        dimension: world.getDimension("minecraft:overworld"),
+        dimension: world.getDimension(MinecraftDimensionTypes.Overworld),
     });
-    console.log(`teleported ${player.name} to Erste[-10 63 0]`);
+    Logger.log(`teleported ${player.name} to Erste[-10 63 0]`);
 };
 /**
  * プレイヤーのエリア違反をチェックする
@@ -146,9 +148,9 @@ const checkPlayers = (area) => __awaiter(void 0, void 0, void 0, function* () {
 const showAreaBorder = () => {
     try {
         const locs = {
-            "minecraft:overworld": new Set(),
-            "minecraft:nether": new Set(),
-            "minecraft:the_end": new Set(),
+            [MinecraftDimensionTypes.Overworld]: new Set(),
+            [MinecraftDimensionTypes.Nether]: new Set(),
+            [MinecraftDimensionTypes.TheEnd]: new Set(),
         };
         const distance = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderRange);
         world
@@ -198,7 +200,7 @@ const showAreaBorder = () => {
                     }
                 }
                 catch (error) {
-                    console.error("Failed to gather block locations (base / expr).");
+                    Logger.error("Failed to gather block locations (base / expr).");
                     throw error;
                 }
             }
@@ -234,7 +236,7 @@ const showAreaBorder = () => {
                     }
                 }
                 catch (error) {
-                    console.error(`Failed to gather block locations [town e-w] (${Math.abs(Math.max(northWest.z, -6401) - Math.min(southEast.z, 6401)) + 1}).`);
+                    Logger.error(`Failed to gather block locations [town e-w] (${Math.abs(Math.max(northWest.z, -6401) - Math.min(southEast.z, 6401)) + 1}).`);
                     throw error;
                 }
             }
@@ -267,7 +269,7 @@ const showAreaBorder = () => {
                     }
                 }
                 catch (error) {
-                    console.error(`Failed to gather block locations [town n-s] (${Math.abs(Math.max(northWest.x, -6401) - Math.min(southEast.x, 6401)) + 1}).`);
+                    Logger.error(`Failed to gather block locations [town n-s] (${Math.abs(Math.max(northWest.x, -6401) - Math.min(southEast.x, 6401)) + 1}).`);
                     throw error;
                 }
             }
@@ -287,14 +289,14 @@ const showAreaBorder = () => {
                 });
             }
             catch (error) {
-                console.error(`Failed to spawn particles (${locations.size}).`);
+                Logger.error(`Failed to spawn particles (${locations.size}).`);
                 throw error;
             }
         });
     }
     catch (error) {
-        console.error("Failed to show particles for area borders.");
-        console.error(error);
+        Logger.error("Failed to show particles for area borders.");
+        Logger.error(error);
     }
 };
 export default () => {

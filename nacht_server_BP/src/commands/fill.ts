@@ -9,7 +9,6 @@ import {
   CustomCommandStatus,
   type Entity,
   system,
-  TicksPerSecond,
   type Vector3,
 } from "@minecraft/server";
 import { COMMAND_MODIFICATION_BLOCK_LIMIT } from "../const";
@@ -17,6 +16,7 @@ import { UndefinedSourceOrInitiatorError } from "../errors/command";
 import PlayerUtils from "../utils/PlayerUtils";
 import { registerCommand } from "./common";
 import { NachtServerAddonError } from "../errors/base";
+import { Logger } from "../utils/logger";
 
 enum FillMode {
   destroy = "destroy",
@@ -202,7 +202,7 @@ function* callFillCommand(
     const successCount = player.dimension.runCommand(command).successCount;
     totalSuccessCount += successCount;
     start += div;
-    console.log(
+    Logger.log(
       `nacht:fill ${
         timesToRun - count
       }/${timesToRun} (${successCount}): ${command}`
@@ -210,7 +210,7 @@ function* callFillCommand(
     // system.waitTicks(TicksPerSecond / 2);
     yield;
   }
-  // console.log(`Run ${timesToRun} times and successed ${totalSuccessCount}.`);
+  // Logger.log(`Run ${timesToRun} times and successed ${totalSuccessCount}.`);
 }
 
 export default () =>

@@ -1,3 +1,5 @@
+import { Logger } from "../utils/logger";
+
 type LogLevel = "warning" | "error";
 
 export class NachtServerAddonError extends Error {
@@ -20,10 +22,10 @@ export class NachtServerAddonError extends Error {
   log = () => {
     switch (this._logLevel) {
       case "error":
-        console.error(this);
+        Logger.error(this);
         break;
       case "warning":
-        console.warn(this);
+        Logger.warning(this);
         break;
     }
   };

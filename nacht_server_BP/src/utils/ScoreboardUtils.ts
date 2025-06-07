@@ -1,4 +1,5 @@
 import { type Entity, type Player, world } from "@minecraft/server";
+import { Logger } from "./logger";
 
 /**
  * スコアを加える
@@ -24,7 +25,7 @@ export const addScore = (
 
     return false;
   } catch (error) {
-    console.error(
+    Logger.error(
       `${playerEntity.nameTag} failed to add ${value} to the score named ${scoreName}.`
     );
 
@@ -48,7 +49,7 @@ const enableScoreboardIfDisabled = (
     const score = ScoreboardUtils.getScore(player, scoreName);
 
     if (score === undefined) {
-      console.warn(
+      Logger.warning(
         `${player.nameTag}'s scoreboard named ${scoreName} was disabled.`
       );
       ScoreboardUtils.setScore(player, scoreName, defaultValue);
@@ -58,9 +59,7 @@ const enableScoreboardIfDisabled = (
       );
     }
   } catch (error) {
-    console.error(
-      `${player.nameTag} failed to enable scoreboard ${scoreName}.`
-    );
+    Logger.error(`${player.nameTag} failed to enable scoreboard ${scoreName}.`);
 
     throw error;
   }
@@ -83,7 +82,7 @@ const getScore = (playerEntity: Entity, scoreName: string) => {
 
     return undefined;
   } catch (error) {
-    console.error(
+    Logger.error(
       `${playerEntity.nameTag} failed to get a value of the score named ${scoreName}.`
     );
 
@@ -108,7 +107,7 @@ const getScoreOrEnable = (
     const score = ScoreboardUtils.getScore(player, scoreName);
 
     if (score === undefined) {
-      console.warn(
+      Logger.warning(
         `${player.nameTag}'s scoreboard named ${scoreName} was disabled.`
       );
       ScoreboardUtils.setScore(player, scoreName, defaultValue);
@@ -120,9 +119,7 @@ const getScoreOrEnable = (
 
     return score || defaultValue;
   } catch (error) {
-    console.error(
-      `${player.nameTag} failed to enable scoreboard ${scoreName}.`
-    );
+    Logger.error(`${player.nameTag} failed to enable scoreboard ${scoreName}.`);
 
     throw error;
   }
@@ -148,7 +145,7 @@ const setScore = (playerEntity: Entity, scoreName: string, value: number) => {
 
     return false;
   } catch (error) {
-    console.error(
+    Logger.error(
       `${playerEntity.nameTag} failed to set a value to the score named ${scoreName}.`
     );
 
@@ -175,7 +172,7 @@ export const resetScore = (playerEntity: Entity, scoreName: string) => {
 
     return false;
   } catch (error) {
-    console.error(
+    Logger.error(
       `${playerEntity.nameTag} failed to reset the score named ${scoreName}.`
     );
 

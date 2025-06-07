@@ -1,4 +1,5 @@
 import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from "@minecraft/server";
+import { Logger } from "../../utils/logger";
 export default () => system.beforeEvents.startup.subscribe((event) => {
     event.customCommandRegistry.registerEnum("nacht:sampleEnum", [
         "a",
@@ -26,12 +27,12 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
     }, (origin, blockType, entitySelector, enumParam, itemType, location, playerSelector) => {
         var _a, _b;
         try {
-            console.log(blockType, JSON.stringify(blockType));
-            console.log(entitySelector, JSON.stringify(entitySelector), (_a = entitySelector[0]) === null || _a === void 0 ? void 0 : _a.isValid);
-            console.log(enumParam, JSON.stringify(enumParam));
-            console.log(itemType, JSON.stringify(itemType));
-            console.log(location, JSON.stringify(location));
-            console.log(playerSelector, JSON.stringify(playerSelector), (_b = playerSelector[0]) === null || _b === void 0 ? void 0 : _b.isValid);
+            Logger.log(blockType, JSON.stringify(blockType));
+            Logger.log(entitySelector, JSON.stringify(entitySelector), (_a = entitySelector[0]) === null || _a === void 0 ? void 0 : _a.isValid);
+            Logger.log(enumParam, JSON.stringify(enumParam));
+            Logger.log(itemType, JSON.stringify(itemType));
+            Logger.log(location, JSON.stringify(location));
+            Logger.log(playerSelector, JSON.stringify(playerSelector), (_b = playerSelector[0]) === null || _b === void 0 ? void 0 : _b.isValid);
             return { status: CustomCommandStatus.Success };
         }
         catch (error) {

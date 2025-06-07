@@ -1,13 +1,13 @@
 import { system, TicksPerSecond, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import { MinecraftDimensionTypes } from "../types/index";
 import { Formatting, LOC_ERSTE } from "../const";
 import type { LocationInfo } from "../models/location";
 import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
 import PlayerUtils from "../utils/PlayerUtils";
+import { Logger } from "../utils/logger";
 
 // なはとの羽根
-
-type TeleportTarget2 = LocationInfo & { dpId?: string };
 
 export default () =>
   world.afterEvents.itemUse.subscribe((event) => {
@@ -16,9 +16,9 @@ export default () =>
         event.source.sendMessage(
           `${event.source.name}は　なはとの羽根を　ほうりなげた！`
         );
-        const tpTargets: Array<TeleportTarget2> = [
+        const tpTargets: Array<LocationInfo> = [
           {
-            dimension: "overworld",
+            dimension: MinecraftDimensionTypes.Overworld,
             displayName: "Erste",
             id: "",
             location: LOC_ERSTE,
@@ -46,7 +46,7 @@ export default () =>
           const target = tpTargets[selectedIndex];
           if (target) {
             if (deleteFlag) {
-              if (target.dpId) {
+              if (target.id !== "") {
                 const deleteForm = new ActionFormData();
                 deleteForm.title(`${target.displayName} を削除しますか?`);
                 deleteForm.button("はい");
@@ -59,7 +59,7 @@ export default () =>
                   switch (deleteResponse.selection) {
                     case 0:
                       // はい
-                      world.setDynamicProperty(target.dpId!, undefined);
+                      world.setDynamicProperty(target.id!, undefined);
                       event.source.sendMessage(
                         `${target.displayName}を削除しました`
                       );
@@ -97,6 +97,6 @@ export default () =>
         });
       }
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
     }
   });

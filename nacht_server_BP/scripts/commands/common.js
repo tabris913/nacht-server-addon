@@ -1,5 +1,6 @@
 import { CustomCommandSource, CustomCommandStatus, } from "@minecraft/server";
 import { NachtServerAddonError } from "../errors/base";
+import { Logger } from "../utils/logger";
 /**
  * 共通エラー処理を組み込んだカスタムコマンド登録
  *
@@ -29,11 +30,11 @@ export const registerCommand = (customCommand, callback) => (arg0) => {
                 }
             }
             catch (error) {
-                console.warn("Failed to get source name because of", error);
+                Logger.warning("Failed to get source name because of", error);
                 sourceName = "undefined";
             }
             try {
-                console.log(`[start] ${sourceName} ran command: ${customCommand.name} ${args
+                Logger.log(`[start] ${sourceName} ran command: ${customCommand.name} ${args
                     .map((arg) => JSON.stringify(arg))
                     .join(" ")}`);
                 return callback(origin, ...args);
@@ -43,26 +44,26 @@ export const registerCommand = (customCommand, callback) => (arg0) => {
                 if (error instanceof NachtServerAddonError) {
                     switch (error.logLevel) {
                         case "warning":
-                            console.warn(error);
+                            Logger.warning(error);
                             break;
                         default:
-                            console.error(error);
+                            Logger.error(error);
                             break;
                     }
                     message = error.message;
                 }
                 else {
-                    console.error(error);
+                    Logger.error(error);
                 }
                 return { message, status: CustomCommandStatus.Failure };
             }
             finally {
-                console.log(`[finish] ${sourceName} has run command: ${customCommand.name}`);
+                Logger.log(`[finish] ${sourceName} has run command: ${customCommand.name}`);
             }
         });
     }
     catch (error) {
-        console.error(`Custom command named ${customCommand.name} registoration failed because of`, error);
+        Logger.error(`Custom command named ${customCommand.name} registoration failed because of`, error);
         throw error;
     }
 };

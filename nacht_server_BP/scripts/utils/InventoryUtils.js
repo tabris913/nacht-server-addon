@@ -1,4 +1,5 @@
 import { EntityComponentTypes, ItemStack, } from "@minecraft/server";
+import { Logger } from "./logger";
 /**
  * 指定されたアイテムの個数をカウントする
  *
@@ -12,8 +13,8 @@ export const countItem = (player, itemId) => {
         return slots.reduce((prev, cur) => prev + cur.amount, 0);
     }
     catch (error) {
-        console.error(`Failed to count the amount of ${itemId} in ${player.nameTag}'s inventory.`);
-        console.error(error);
+        Logger.error(`Failed to count the amount of ${itemId} in ${player.nameTag}'s inventory.`);
+        Logger.error(error);
         return undefined;
     }
 };
@@ -36,7 +37,7 @@ export const gatherSlots = (player, itemId) => {
                 return slot;
             }
             catch (error) {
-                console.warn(`${player.nameTag}'s inventory slot ${index} is invalid.`);
+                Logger.warning(`${player.nameTag}'s inventory slot ${index} is invalid.`);
                 return undefined;
             }
         })
@@ -53,8 +54,8 @@ export const gatherSlots = (player, itemId) => {
         });
     }
     catch (error) {
-        console.error(`Failed to get slots of ${itemId} in ${player.nameTag}'s inventory.`);
-        console.error(error);
+        Logger.error(`Failed to get slots of ${itemId} in ${player.nameTag}'s inventory.`);
+        Logger.error(error);
         return [];
     }
 };
@@ -75,7 +76,7 @@ const giveItem = (playerEntity, itemType, amount = 1) => {
         return true;
     }
     catch (error) {
-        console.error();
+        Logger.error();
         throw error;
     }
 };
@@ -96,15 +97,15 @@ export const hasItem = (player, itemId, opt) => {
         }
         if (opt) {
             // 条件あり
-            console.log(`item count: ${count} (expected: min ${opt.min} / max ${opt.max})`);
+            Logger.log(`item count: ${count} (expected: min ${opt.min} / max ${opt.max})`);
             return ((opt.max === undefined ? true : count <= opt.max) &&
                 (opt.min === undefined ? true : opt.min <= count));
         }
         return 0 < count;
     }
     catch (error) {
-        console.error(`Failed to check whether ${player.nameTag} have ${itemId}.`);
-        console.error(error);
+        Logger.error(`Failed to check whether ${player.nameTag} have ${itemId}.`);
+        Logger.error(error);
         return false;
     }
 };
@@ -164,8 +165,8 @@ export const removeItem = (player, itemId, amount = Infinity) => {
         }
     }
     catch (error) {
-        console.error(`Failed to remove ${itemId} from ${player.nameTag}'s inventory.`);
-        console.error(error);
+        Logger.error(`Failed to remove ${itemId} from ${player.nameTag}'s inventory.`);
+        Logger.error(error);
         return false;
     }
 };

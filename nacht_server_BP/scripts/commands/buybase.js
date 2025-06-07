@@ -8,8 +8,9 @@ import PlayerUtils from "../utils/PlayerUtils";
 import ScoreboardUtils from "../utils/ScoreboardUtils";
 import { registerCommand } from "./common";
 import { RuleName } from "./gamerule";
+import { Logger } from "../utils/logger";
 const buybaseCommand = {
-    name: "nacht:buyarea",
+    name: "nacht:buybase",
     description: "拠点用地を購入する",
     permissionLevel: CommandPermissionLevel.GameDirectors,
 };
@@ -49,7 +50,7 @@ const commandProcess = (origin) => {
         form.show(player).then((response) => {
             var _a;
             if (response.canceled) {
-                console.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
+                Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
                 return;
             }
             const size = (_a = response.formValues) === null || _a === void 0 ? void 0 : _a[0];
@@ -88,7 +89,7 @@ const purchase = (player, npc, size, price, count) => {
             const score = ScoreboardUtils.getScore(player, "point");
             if (score === undefined) {
                 // ポイントシステムが無効
-                console.error(`${player.nameTag}のスコアボードpointが有効になっていません`);
+                Logger.error(`${player.nameTag}のスコアボードpointが有効になっていません`);
                 ScoreboardUtils.setScore(player, "point", 0);
                 player.sendMessage(`${Formatting.Color.GOLD}ポイントシステムが有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`);
                 return;

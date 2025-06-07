@@ -7,13 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "archive": "sh archive.sh",
     "build": "sh build.sh",
-    "package": "sh build.sh && sh archive.sh"
+    "package": "sh copy.sh && sh build.sh && sh archive.sh",
+    "copy": "sh copy.sh"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@minecraft/server": "^2.0.0-beta.1.21.83-stable",
     "@minecraft/server-ui": "^2.0.0-beta.1.21.83-stable",
+    "@minecraft/vanilla-data": "^1.21.81",
     "typescript": "^5.8.3"
   }
 }

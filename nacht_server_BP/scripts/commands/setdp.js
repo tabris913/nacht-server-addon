@@ -1,4 +1,5 @@
 import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, world, } from "@minecraft/server";
+import { Logger } from "../utils/logger";
 export default () => system.beforeEvents.startup.subscribe((event) => {
     event.customCommandRegistry.registerCommand({
         name: "nacht:setdpstring",
@@ -21,7 +22,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
             { name: "value", type: CustomCommandParamType.BlockType },
         ],
     }, (origin, id, value) => {
-        console.log(JSON.stringify(value));
+        Logger.log(JSON.stringify(value));
         world.setDynamicProperty(id, JSON.stringify(value));
         return { status: CustomCommandStatus.Success };
     });

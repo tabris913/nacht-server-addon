@@ -7,6 +7,7 @@ import {
   type StartupEvent,
 } from "@minecraft/server";
 import { NachtServerAddonError } from "../errors/base";
+import { Logger } from "../utils/logger";
 
 type CallbackType = (
   origin: CustomCommandOrigin,
@@ -47,12 +48,12 @@ export const registerCommand =
                 break;
             }
           } catch (error) {
-            console.warn("Failed to get source name because of", error);
+            Logger.warning("Failed to get source name because of", error);
             sourceName = "undefined";
           }
 
           try {
-            console.log(
+            Logger.log(
               `[start] ${sourceName} ran command: ${customCommand.name} ${args
                 .map((arg) => JSON.stringify(arg))
                 .join(" ")}`
@@ -64,27 +65,27 @@ export const registerCommand =
             if (error instanceof NachtServerAddonError) {
               switch (error.logLevel) {
                 case "warning":
-                  console.warn(error);
+                  Logger.warning(error);
                   break;
                 default:
-                  console.error(error);
+                  Logger.error(error);
                   break;
               }
               message = error.message;
             } else {
-              console.error(error);
+              Logger.error(error);
             }
 
             return { message, status: CustomCommandStatus.Failure };
           } finally {
-            console.log(
+            Logger.log(
               `[finish] ${sourceName} has run command: ${customCommand.name}`
             );
           }
         }
       );
     } catch (error) {
-      console.error(
+      Logger.error(
         `Custom command named ${customCommand.name} registoration failed because of`,
         error
       );

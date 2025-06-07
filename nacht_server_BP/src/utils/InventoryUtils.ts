@@ -4,6 +4,7 @@ import {
   EntityComponentTypes,
   ItemStack,
 } from "@minecraft/server";
+import { Logger } from "./logger";
 
 /**
  * 指定されたアイテムの個数をカウントする
@@ -18,10 +19,10 @@ export const countItem = (player: Entity, itemId: string) => {
 
     return slots.reduce((prev, cur) => prev + cur.amount, 0);
   } catch (error) {
-    console.error(
+    Logger.error(
       `Failed to count the amount of ${itemId} in ${player.nameTag}'s inventory.`
     );
-    console.error(error);
+    Logger.error(error);
 
     return undefined;
   }
@@ -46,7 +47,7 @@ export const gatherSlots = (player: Entity, itemId?: string) => {
 
           return slot;
         } catch (error) {
-          console.warn(
+          Logger.warning(
             `${player.nameTag}'s inventory slot ${index} is invalid.`
           );
 
@@ -65,10 +66,10 @@ export const gatherSlots = (player: Entity, itemId?: string) => {
         }
       }) as Array<ContainerSlot>;
   } catch (error) {
-    console.error(
+    Logger.error(
       `Failed to get slots of ${itemId} in ${player.nameTag}'s inventory.`
     );
-    console.error(error);
+    Logger.error(error);
 
     return [];
   }
@@ -95,7 +96,7 @@ const giveItem = (
 
     return true;
   } catch (error) {
-    console.error();
+    Logger.error();
 
     throw error;
   }
@@ -124,7 +125,7 @@ export const hasItem = (
 
     if (opt) {
       // 条件あり
-      console.log(
+      Logger.log(
         `item count: ${count} (expected: min ${opt.min} / max ${opt.max})`
       );
 
@@ -136,8 +137,8 @@ export const hasItem = (
 
     return 0 < count;
   } catch (error) {
-    console.error(`Failed to check whether ${player.nameTag} have ${itemId}.`);
-    console.error(error);
+    Logger.error(`Failed to check whether ${player.nameTag} have ${itemId}.`);
+    Logger.error(error);
 
     return false;
   }
@@ -200,10 +201,10 @@ export const removeItem = (
       }
     }
   } catch (error) {
-    console.error(
+    Logger.error(
       `Failed to remove ${itemId} from ${player.nameTag}'s inventory.`
     );
-    console.error(error);
+    Logger.error(error);
 
     return false;
   }

@@ -9,6 +9,7 @@ import {
   system,
   type Vector3,
 } from "@minecraft/server";
+import { Logger } from "../../utils/logger";
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) => {
@@ -48,16 +49,16 @@ export default () =>
         playerSelector: Array<Player>
       ) => {
         try {
-          console.log(blockType, JSON.stringify(blockType));
-          console.log(
+          Logger.log(blockType, JSON.stringify(blockType));
+          Logger.log(
             entitySelector,
             JSON.stringify(entitySelector),
             entitySelector[0]?.isValid
           );
-          console.log(enumParam, JSON.stringify(enumParam));
-          console.log(itemType, JSON.stringify(itemType));
-          console.log(location, JSON.stringify(location));
-          console.log(
+          Logger.log(enumParam, JSON.stringify(enumParam));
+          Logger.log(itemType, JSON.stringify(itemType));
+          Logger.log(location, JSON.stringify(location));
+          Logger.log(
             playerSelector,
             JSON.stringify(playerSelector),
             playerSelector[0]?.isValid

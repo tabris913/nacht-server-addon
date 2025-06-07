@@ -7,7 +7,7 @@ import LocationUtils from "../utils/LocationUtils";
 export default () => {
   // ブロック破壊
   world.beforeEvents.playerBreakBlock.subscribe((event) => {
-    if (AreaUtils.isInBaseArea(event.block.location, event.block.dimension)) {
+    if (AreaUtils.isInBaseArea(event.block)) {
       for (const dp of DynamicPropertyUtils.retrieveBases()) {
         const southEast = LocationUtils.offsetLocation(
           dp.northWest,
@@ -38,7 +38,7 @@ export default () => {
 
   // ブロック設置
   world.beforeEvents.playerPlaceBlock.subscribe((event) => {
-    if (AreaUtils.isInBaseArea(event.block.location, event.block.dimension)) {
+    if (AreaUtils.isInBaseArea(event.block)) {
       for (const dp of DynamicPropertyUtils.retrieveBases()) {
         const southEast = LocationUtils.offsetLocation(
           dp.northWest,

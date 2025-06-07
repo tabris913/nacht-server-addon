@@ -1,8 +1,9 @@
-import { type Entity, Player, system } from "@minecraft/server";
+import { type Entity, type Player, system } from "@minecraft/server";
 import { SCOREBOARD_POINT } from "../const";
 import { PointlessError } from "../errors/market";
 import InventoryUtils from "../utils/InventoryUtils";
 import ScoreboardUtils from "../utils/ScoreboardUtils";
+import { Logger } from "../utils/logger";
 
 /**
  * プレイヤーがアイテムを購入する
@@ -10,7 +11,7 @@ import ScoreboardUtils from "../utils/ScoreboardUtils";
  * @param player エンティティまたはプレイヤー
  * @param sourceEntity 売り手
  * @param itemType アイテム
- * @param amount 数量
+ * @param quantity 数量
  * @param price 金額
  * @param pointless_msg
  * @param after_msg
@@ -19,7 +20,7 @@ const purchaseItem = (
   player: Player,
   sourceEntity: Entity,
   itemType: string,
-  amount: number,
+  quantity: number,
   price: number,
   pointless_msg?: string,
   after_msg?: string
@@ -41,12 +42,12 @@ const purchaseItem = (
 
     system.runTimeout(() => {
       ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
-      InventoryUtils.giveItem(player, itemType, amount);
+      InventoryUtils.giveItem(player, itemType, quantity);
       player.sendMessage(`${sellerName} ${after_msg || "まいどあり！"}`);
     }, 1);
   } catch (error) {
-    console.error(
-      `${player.nameTag} failed to purchase ${amount} ${itemType}(s) for ${price} points.`
+    Logger.error(
+      `${player.nameTag} failed to purchase ${quantity} ${itemType}(s) for ${price} points.`
     );
 
     throw error;

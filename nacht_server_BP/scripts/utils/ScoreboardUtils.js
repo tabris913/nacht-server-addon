@@ -1,4 +1,5 @@
 import { world } from "@minecraft/server";
+import { Logger } from "./logger";
 /**
  * スコアを加える
  *
@@ -18,7 +19,7 @@ export const addScore = (playerEntity, scoreName, value) => {
         return false;
     }
     catch (error) {
-        console.error(`${playerEntity.nameTag} failed to add ${value} to the score named ${scoreName}.`);
+        Logger.error(`${playerEntity.nameTag} failed to add ${value} to the score named ${scoreName}.`);
         return false;
     }
 };
@@ -33,13 +34,13 @@ const enableScoreboardIfDisabled = (player, scoreName, defaultValue = 0) => {
     try {
         const score = ScoreboardUtils.getScore(player, scoreName);
         if (score === undefined) {
-            console.warn(`${player.nameTag}'s scoreboard named ${scoreName} was disabled.`);
+            Logger.warning(`${player.nameTag}'s scoreboard named ${scoreName} was disabled.`);
             ScoreboardUtils.setScore(player, scoreName, defaultValue);
             player.sendMessage(`スコアボード${scoreName}が有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`);
         }
     }
     catch (error) {
-        console.error(`${player.nameTag} failed to enable scoreboard ${scoreName}.`);
+        Logger.error(`${player.nameTag} failed to enable scoreboard ${scoreName}.`);
         throw error;
     }
 };
@@ -60,7 +61,7 @@ const getScore = (playerEntity, scoreName) => {
         return undefined;
     }
     catch (error) {
-        console.error(`${playerEntity.nameTag} failed to get a value of the score named ${scoreName}.`);
+        Logger.error(`${playerEntity.nameTag} failed to get a value of the score named ${scoreName}.`);
         return undefined;
     }
 };
@@ -76,14 +77,14 @@ const getScoreOrEnable = (player, scoreName, defaultValue = 0) => {
     try {
         const score = ScoreboardUtils.getScore(player, scoreName);
         if (score === undefined) {
-            console.warn(`${player.nameTag}'s scoreboard named ${scoreName} was disabled.`);
+            Logger.warning(`${player.nameTag}'s scoreboard named ${scoreName} was disabled.`);
             ScoreboardUtils.setScore(player, scoreName, defaultValue);
             player.sendMessage(`スコアボード${scoreName}が有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`);
         }
         return score || defaultValue;
     }
     catch (error) {
-        console.error(`${player.nameTag} failed to enable scoreboard ${scoreName}.`);
+        Logger.error(`${player.nameTag} failed to enable scoreboard ${scoreName}.`);
         throw error;
     }
 };
@@ -106,7 +107,7 @@ const setScore = (playerEntity, scoreName, value) => {
         return false;
     }
     catch (error) {
-        console.error(`${playerEntity.nameTag} failed to set a value to the score named ${scoreName}.`);
+        Logger.error(`${playerEntity.nameTag} failed to set a value to the score named ${scoreName}.`);
         return false;
     }
 };
@@ -128,7 +129,7 @@ export const resetScore = (playerEntity, scoreName) => {
         return false;
     }
     catch (error) {
-        console.error(`${playerEntity.nameTag} failed to reset the score named ${scoreName}.`);
+        Logger.error(`${playerEntity.nameTag} failed to reset the score named ${scoreName}.`);
         return false;
     }
 };

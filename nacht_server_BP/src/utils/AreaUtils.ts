@@ -1,4 +1,58 @@
-import type { Block, Dimension, Entity, VectorXZ } from "@minecraft/server";
+import {
+  BlockVolume,
+  world,
+  type Block,
+  type DimensionLocation,
+  type Entity,
+} from "@minecraft/server";
+import { MinecraftDimensionTypes } from "../types/index";
+import { Logger } from "./logger";
+
+/**
+ * ネザーの街エリアの BlockVolume を生成する
+ *
+ * @returns `BlockVolume`
+ */
+export const createNetherTownArea = () => {
+  try {
+    const nether = world.getDimension(MinecraftDimensionTypes.Nether);
+
+    return new BlockVolume(
+      { x: -800, y: nether.heightRange.min, z: -800 },
+      { x: 800, y: nether.heightRange.max, z: 800 }
+    );
+  } catch (error) {
+    Logger.error(
+      "Failed to create BlockVolume for town area in nether because of",
+      error
+    );
+
+    throw error;
+  }
+};
+
+/**
+ * オーバーワールドの街エリアの BlockVolume を生成する
+ *
+ * @returns `BlockVolume`
+ */
+export const createOverworldTownArea = () => {
+  try {
+    const overworld = world.getDimension(MinecraftDimensionTypes.Overworld);
+
+    return new BlockVolume(
+      { x: -6400, y: overworld.heightRange.min, z: -6400 },
+      { x: 6400, y: overworld.heightRange.max, z: 6400 }
+    );
+  } catch (error) {
+    Logger.error(
+      "Failed to create BlockVolume for town area in overworld because of",
+      error
+    );
+
+    throw error;
+  }
+};
 
 /**
  * 与えられたエンティティまたはブロックが拠点エリアに居るかどうかを判定する
@@ -7,7 +61,7 @@ import type { Block, Dimension, Entity, VectorXZ } from "@minecraft/server";
  * @returns
  */
 export const existsInBaseArea = (object: Entity | Block) =>
-  isInBaseArea(object.location, object.dimension);
+  isInBaseArea({ dimension: object.dimension, ...object.location });
 
 /**
  * 与えられたエンティティまたはブロックが街エリアに存在するかどうかを判定する
@@ -16,7 +70,7 @@ export const existsInBaseArea = (object: Entity | Block) =>
  * @returns
  */
 export const existsInTownArea = (object: Entity | Block) =>
-  isInTownArea(object.location, object.dimension);
+  isInTownArea({ dimension: object.dimension, ...object.location });
 
 /**
  * 与えられたエンティティまたはブロックが探索エリアに居るかどうかを判定する
@@ -25,7 +79,7 @@ export const existsInTownArea = (object: Entity | Block) =>
  * @returns
  */
 export const existsInExploringArea = (object: Entity | Block) =>
-  isInExploringArea(object.location, object.dimension);
+  isInExploringArea({ dimension: object.dimension, ...object.location });
 
 /**
  * 与えられた座標が拠点エリアに含まれるかどうか判定する
@@ -34,8 +88,8 @@ export const existsInExploringArea = (object: Entity | Block) =>
  * @param dimension ディメンション
  * @returns
  */
-export const isInBaseArea = (location: VectorXZ, dimension: Dimension) =>
-  !isInTownArea(location, dimension) && 0 < location.z;
+export const isInBaseArea = (location: DimensionLocation) =>
+  !isInTownArea(location) && 0 < location.z;
 
 /**
  * 与えられた座標が探索エリアに含まれるかどうか判定する
@@ -44,8 +98,8 @@ export const isInBaseArea = (location: VectorXZ, dimension: Dimension) =>
  * @param dimension ディメンション
  * @returns
  */
-export const isInExploringArea = (location: VectorXZ, dimension: Dimension) =>
-  !isInTownArea(location, dimension) && location.z < 0;
+export const isInExploringArea = (location: DimensionLocation) =>
+  !isInTownArea(location) && location.z < 0;
 
 /**
  * 与えられた座標が街エリアに含まれるかどうか判定する
@@ -54,31 +108,22 @@ export const isInExploringArea = (location: VectorXZ, dimension: Dimension) =>
  * @param dimension ディメンション
  * @returns
  */
-export const isInTownArea = (location: VectorXZ, dimension: Dimension) => {
-  const nw: VectorXZ = { x: -6400, z: -6400 };
-  const se: VectorXZ = { x: 6400, z: 6400 };
-
-  switch (dimension.id) {
-    case "overworld":
-      if (se.x < location.x) return false;
-      if (location.x < nw.x) return false;
-      if (se.z < location.z) return false;
-      if (location.z < nw.z) return false;
-
-      return true;
-    case "nether":
-      if (se.x < location.x / 8) return false;
-      if (location.x / 8 < nw.x) return false;
-      if (se.z < location.z / 8) return false;
-      if (location.z / 8 < nw.z) return false;
-
-      return true;
+export const isInTownArea = (location: DimensionLocation) => {
+  switch (location.dimension.id) {
+    case MinecraftDimensionTypes.Overworld:
+      const overworld = createOverworldTownArea();
+      return overworld.isInside(location);
+    case MinecraftDimensionTypes.Nether:
+      const nether = createNetherTownArea();
+      return nether.isInside(location);
     default:
       return false;
   }
 };
 
 const AreaUtils = {
+  createNetherTownArea,
+  createOverworldTownArea,
   existsInBaseArea,
   existsInTownArea,
   existsInExploringArea,

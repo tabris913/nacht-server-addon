@@ -1,35 +1,54 @@
 import {
+  BlockVolume,
+  type Dimension,
   Direction,
+  type Entity,
   type Player,
   system,
-  type VectorXZ,
+  type Vector3,
   world,
 } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import { MinecraftDimensionTypes } from "../types/index";
 import { Formatting, TAG_OPERATOR } from "../const";
-import InventoryUtils from "../utils/InventoryUtils";
-import type { AreaVertices, BaseAreaInfo } from "../models/location";
-import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
-import LocationUtils from "../utils/LocationUtils";
+import { BaseAreaDimensionBlockVolume } from "../models/BaseAreaDimensionBlockVolume";
+import { DimensionBlockVolume } from "../models/DimensionBlockVolume";
+import type { BaseAreaInfo } from "../models/location";
 import AreaUtils from "../utils/AreaUtils";
+import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
+import InventoryUtils from "../utils/InventoryUtils";
+import LocationUtils from "../utils/LocationUtils";
+import { isFixedBase } from "../utils/TypeGuards";
+import { Logger } from "../utils/logger";
 
 const TYPE_ID = "nacht:base_flag";
 
 /**
  * 与えられた平面が拠点エリアの範囲外にはみ出してないか確認する
  *
- * @param area2D
+ * @param volume
  */
-const isOutOfBaseArea = (area2D: AreaVertices) => {
-  if (area2D.southEast.x < -6400 && area2D.northWest.z < 0) return true;
-  if (
-    -6400 <= area2D.southEast.x &&
-    area2D.northWest.x <= 6400 &&
-    area2D.northWest.z <= 6400
-  ) {
+const isOutOfBaseArea = (volume: DimensionBlockVolume) => {
+  const { min, max } = volume.getBoundingBox();
+  let minXZ, maxXZ;
+  switch (volume.dimension.id) {
+    case MinecraftDimensionTypes.Overworld:
+      minXZ = -6400;
+      maxXZ = 6400;
+      break;
+    case MinecraftDimensionTypes.Nether:
+      minXZ = -800;
+      maxXZ = 800;
+      break;
+    default:
+      return false;
+  }
+
+  if (max.x < minXZ && min.z < 0) return true;
+  if (minXZ <= max.x && min.x <= maxXZ && min.z <= maxXZ) {
     return true;
   }
-  if (6400 < area2D.northWest.x && area2D.northWest.z < 0) return true;
+  if (maxXZ < min.x && min.z < 0) return true;
 
   return false;
 };
@@ -37,47 +56,50 @@ const isOutOfBaseArea = (area2D: AreaVertices) => {
 /**
  * 与えられた平面が既に確定された拠点と重複しているか確認する
  *
- * @param area2D
+ * @param baseArea
  * @returns
  */
-const hasOverlappingBlocks = (area2D: AreaVertices) =>
+const hasOverlappingBlocks = (baseArea: BaseAreaDimensionBlockVolume) =>
   DynamicPropertyUtils.retrieveBases()
-    .filter((baseDp) => baseDp.name !== undefined)
+    .filter(isFixedBase)
     .some((baseDp) => {
-      const baseArea: AreaVertices = {
-        northWest: baseDp.northWest,
-        southEast: LocationUtils.offsetLocation(
-          baseDp.northWest,
-          baseDp.edgeSize - 1
-        ),
-      };
+      const base = new BaseAreaDimensionBlockVolume(
+        baseDp.northWest,
+        LocationUtils.offsetLocation(baseDp.northWest, baseDp.edgeSize - 1),
+        baseDp.dimension
+      );
 
-      // const locations = gatherLocationsWithin({
-      //   northWest: baseDp.northWest,
-      //   southEast: offsetLocation(baseDp.northWest, baseDp.edgeSize - 1),
-      // });
-      // const locationSet = new Set(locations);
-      // gatherLocationsWithin(area2D).forEach((val) => locationSet.add(val));
-
-      // return locations.length !== locationSet.size;
-
-      return LocationUtils.isOverlapped(area2D, baseArea, {
-        area2: { x: baseDp.edgeSize, z: baseDp.edgeSize },
-      });
+      return LocationUtils.isOverlapped(baseArea, base);
     });
 
-const isInBaseArea = (location: VectorXZ) =>
-  DynamicPropertyUtils.retrieveBases()
-    .filter((baseDp) => baseDp.name !== undefined)
-    .some((baseDp) =>
-      LocationUtils.isInArea(location, {
-        northWest: baseDp.northWest,
-        southEast: LocationUtils.offsetLocation(
-          baseDp.northWest,
-          baseDp.edgeSize - 1
-        ),
-      })
-    );
+/**
+ * 既に存在する拠点範囲の中であるか判定する
+ *
+ * @param location
+ * @returns
+ */
+const isInBaseArea = (location: Vector3) => {
+  const dimensions: Record<string, Dimension> = {};
+
+  return DynamicPropertyUtils.retrieveBases()
+    .filter(isFixedBase)
+    .map((baseDp) => {
+      if (!(baseDp.dimension in dimensions)) {
+        dimensions[baseDp.dimension] = world.getDimension(baseDp.dimension);
+      }
+
+      const from = {
+        ...baseDp.northWest,
+        y: dimensions[baseDp.dimension].heightRange.min,
+      };
+
+      return new BlockVolume(
+        from,
+        LocationUtils.offsetLocation(from, baseDp.edgeSize)
+      );
+    }, {})
+    .some((blockVolume) => blockVolume.isInside(location));
+};
 
 /**
  * 拠点範囲を確定する
@@ -85,34 +107,32 @@ const isInBaseArea = (location: VectorXZ) =>
  * @param player
  * @param dp
  */
-const fixBaseZone = (
-  player: Player,
-  flagLocation: VectorXZ,
-  dp: BaseAreaInfo
-) => {
+const fixBaseZone = (player: Player, flag: Entity, dp: BaseAreaInfo) => {
   if (dp.entityId === undefined) {
     player.sendMessage({});
 
     return;
   }
-  const area2D = LocationUtils.make2DAreaFromLoc(flagLocation, dp.edgeSize);
-  if (area2D) {
-    if (hasOverlappingBlocks(area2D)) {
-      // 重複あり
-      player.sendMessage(
-        `${Formatting.Color.RED}既存の拠点と範囲が重なっています。`
-      );
+  const baseVolume = BaseAreaDimensionBlockVolume.from(
+    LocationUtils.generateBlockVolume(flag.location, dp.edgeSize),
+    flag.dimension
+  );
+  if (hasOverlappingBlocks(baseVolume)) {
+    // 重複あり
+    player.sendMessage(
+      `${Formatting.Color.RED}既存の拠点と範囲が重なっています。`
+    );
 
-      return;
-    }
-    if (isOutOfBaseArea(area2D)) {
-      player.sendMessage(
-        `${Formatting.Color.RED}拠点エリアの範囲外に拠点はつくれません。`
-      );
-
-      return;
-    }
+    return;
   }
+  if (isOutOfBaseArea(baseVolume)) {
+    player.sendMessage(
+      `${Formatting.Color.RED}拠点エリアの範囲外に拠点はつくれません。`
+    );
+
+    return;
+  }
+
   const form = new ActionFormData();
   form.title("拠点範囲を確定していいですか？");
   form.button("はい");
@@ -130,8 +150,8 @@ const fixBaseZone = (
             ...dp,
             entityId: undefined,
             northWest: {
-              x: flagLocation.x - (dp.edgeSize - 1) / 2,
-              z: flagLocation.z - (dp.edgeSize - 1) / 2,
+              x: flag.location.x - (dp.edgeSize - 1) / 2,
+              z: flag.location.z - (dp.edgeSize - 1) / 2,
             },
           })
         );
@@ -209,124 +229,125 @@ const changeCoop = (player: Player, dp: BaseAreaInfo) => {
 export default () => {
   world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
     try {
-      if (event.block.dimension.id !== "overworld") {
+      if (event.block.dimension.id === "minecraft:the_end") {
         return;
       }
       if (isInBaseArea(event.block.location)) {
         // 既に存在する拠点範囲で使用した場合
         event.player.sendMessage("拠点には置けません。");
         return;
-      } else {
-        const noNameBase = DynamicPropertyUtils.retrieveBases(
-          event.player.nameTag
-        ).filter((dp) => dp.name === undefined);
-        if (noNameBase.length === 0) {
+      }
+      const noNameBase = DynamicPropertyUtils.retrieveBases(
+        event.player.nameTag
+      ).filter((dp) => dp.name === undefined);
+      if (noNameBase.length === 0) {
+        event.player.sendMessage([
+          Formatting.Color.RED,
+          { translate: "items.base_flag.name" },
+          "の購入履歴がありません。",
+        ]);
+
+        return;
+      }
+
+      if (
+        event.itemStack &&
+        event.itemStack.typeId === TYPE_ID &&
+        event.isFirstEvent
+      ) {
+        if (!AreaUtils.existsInBaseArea(event.player)) {
           event.player.sendMessage([
             Formatting.Color.RED,
             { translate: "items.base_flag.name" },
-            "の購入履歴がありません。",
+            "は拠点エリアでのみ使用可能です。",
           ]);
-
           return;
         }
 
-        if (
-          event.itemStack &&
-          event.itemStack.typeId === TYPE_ID &&
-          event.isFirstEvent
-        ) {
-          if (!AreaUtils.existsInBaseArea(event.player)) {
-            event.player.sendMessage([
-              Formatting.Color.RED,
-              { translate: "items.base_flag.name" },
-              "は拠点エリアでのみ使用可能です。",
-            ]);
+        let canPlace = false;
+        let next;
+        switch (event.blockFace) {
+          case Direction.Down:
+            break;
+          case Direction.East:
+            next = event.block.east();
+            if (next?.isAir && next.above()?.isAir) {
+              canPlace = true;
+            }
+            break;
+          case Direction.North:
+            next = event.block.north();
+            if (next?.isAir && next.above()?.isAir) {
+              canPlace = true;
+            }
+            break;
+          case Direction.South:
+            next = event.block.south();
+            if (next?.isAir && next.above()?.isAir) {
+              canPlace = true;
+            }
+            break;
+          case Direction.Up:
+            next = event.block.above();
+            if (next?.isAir && event.block.above(2)?.isAir) {
+              canPlace = true;
+            }
+            break;
+          case Direction.West:
+            next = event.block.west();
+            if (next?.isAir && next.above()?.isAir) {
+              canPlace = true;
+            }
+            break;
+        }
+
+        if (canPlace && next) {
+          // 置ける
+          const baseVolume = BaseAreaDimensionBlockVolume.from(
+            LocationUtils.generateBlockVolume(
+              next.location,
+              noNameBase[0].edgeSize
+            ),
+            next.dimension
+          );
+          if (hasOverlappingBlocks(baseVolume)) {
+            // 重複あり
+            event.player.sendMessage(
+              `${Formatting.Color.RED}既存の拠点と範囲が重なっています。`
+            );
+
+            return;
+          }
+          if (isOutOfBaseArea(baseVolume)) {
+            // エリアをまたぐ
+            event.player.sendMessage(
+              `${Formatting.Color.RED}拠点エリアの範囲外に拠点はつくれません。`
+            );
+
             return;
           }
 
-          let canPlace = false;
-          let next;
-          switch (event.blockFace) {
-            case Direction.Down:
-              break;
-            case Direction.East:
-              next = event.block.east();
-              if (next?.isAir && next.above()?.isAir) {
-                canPlace = true;
-              }
-              break;
-            case Direction.North:
-              next = event.block.north();
-              if (next?.isAir && next.above()?.isAir) {
-                canPlace = true;
-              }
-              break;
-            case Direction.South:
-              next = event.block.south();
-              if (next?.isAir && next.above()?.isAir) {
-                canPlace = true;
-              }
-              break;
-            case Direction.Up:
-              next = event.block.above();
-              if (next?.isAir && event.block.above(2)?.isAir) {
-                canPlace = true;
-              }
-              break;
-            case Direction.West:
-              next = event.block.west();
-              if (next?.isAir && next.above()?.isAir) {
-                canPlace = true;
-              }
-              break;
-          }
-          if (canPlace && next) {
-            // 置ける
-            const area2D = LocationUtils.make2DAreaFromLoc(
+          system.runTimeout(() => {
+            const entity = event.block.dimension.spawnEntity<typeof TYPE_ID>(
+              TYPE_ID,
               next.location,
-              noNameBase[0].edgeSize
+              {
+                initialPersistence: true,
+                initialRotation: 180 + event.player.getRotation().y,
+              }
             );
-            if (area2D) {
-              if (hasOverlappingBlocks(area2D)) {
-                // 重複あり
-                event.player.sendMessage(
-                  `${Formatting.Color.RED}既存の拠点と範囲が重なっています。`
-                );
-
-                return;
-              }
-              if (isOutOfBaseArea(area2D)) {
-                // エリアをまたぐ
-                event.player.sendMessage(
-                  `${Formatting.Color.RED}拠点エリアの範囲外に拠点はつくれません。`
-                );
-
-                return;
-              }
-            }
-
-            system.runTimeout(() => {
-              const entity = event.block.dimension.spawnEntity<typeof TYPE_ID>(
-                TYPE_ID,
-                next.location,
-                {
-                  initialPersistence: true,
-                  initialRotation: 180 + event.player.getRotation().y,
-                }
-              );
-              world.setDynamicProperty(
-                noNameBase[0].id,
-                JSON.stringify({ ...noNameBase[0], entityId: entity.id })
-              );
-              // パーティクル表示
-            }, 1);
-          } else {
-            // 置けない場合は何も起こらない
-          }
+            world.setDynamicProperty(
+              noNameBase[0].id,
+              JSON.stringify({ ...noNameBase[0], entityId: entity.id })
+            );
+            // パーティクル表示
+          }, 1);
+        } else {
+          // 置けない場合は何も起こらない
         }
       }
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
     }
   });
 
@@ -363,7 +384,7 @@ export default () => {
           switch (response.selection) {
             case 0:
               // 範囲確定
-              fixBaseZone(event.player, event.target.location, noNameBase[0]);
+              fixBaseZone(event.player, event.target, noNameBase[0]);
               break;
             case 1:
               // 設定変更
@@ -377,7 +398,7 @@ export default () => {
         });
       }
     } catch (error) {
-      console.error(error);
+      Logger.error(error);
     }
   });
 };

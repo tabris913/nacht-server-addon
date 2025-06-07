@@ -2,6 +2,7 @@ import { world } from "@minecraft/server";
 import { PREFIX_BASE, PREFIX_LOCATION } from "../const";
 import { DynamicPropertyNotFoundError } from "../errors/dp";
 import type { BaseAreaInfo, LocationInfo } from "../models/location";
+import { Logger } from "./logger";
 
 /**
  * Dynamic Property から指定した拠点を取得する
@@ -22,7 +23,7 @@ export const getBaseById = (idSuffix: string) => {
 
     return base;
   } catch (error) {
-    console.error(
+    Logger.error(
       "Failed to get dynamic property by a given key because of",
       error
     );
@@ -45,7 +46,7 @@ export const findBaseById = (idSuffix: string) => {
 
     return base ? (JSON.parse(base) as BaseAreaInfo) : undefined;
   } catch (error) {
-    console.error("Failed to find base because of", error);
+    Logger.error("Failed to find base because of", error);
 
     throw error;
   }
@@ -68,7 +69,7 @@ export const retrieveBases = (playerNameTag?: string) => {
       .filter((dp) => dp !== undefined)
       .map((dp) => JSON.parse(dp) as BaseAreaInfo);
   } catch (error) {
-    console.error(
+    Logger.error(
       "Failed to get dynamic properties of base area because of",
       error
     );
@@ -84,16 +85,21 @@ export const retrieveBases = (playerNameTag?: string) => {
  */
 export const retrieveLocations = (playerNameTag?: string) => {
   try {
-    const prefix = PREFIX_LOCATION + playerNameTag ? `${playerNameTag}_` : "";
+    const prefix = PREFIX_LOCATION + (playerNameTag ? `${playerNameTag}_` : "");
 
-    return world
+    const locations = world
       .getDynamicPropertyIds()
       .filter((dpId) => dpId.startsWith(prefix))
       .map((dpId) => world.getDynamicProperty(dpId) as string | undefined)
       .filter((dp) => dp !== undefined)
       .map((dp) => JSON.parse(dp) as LocationInfo);
+    // Logger.log(
+    //   `${locations.length} dynamic properties filtered by ${prefix} are found.`
+    // );
+
+    return locations;
   } catch (error) {
-    console.error("Failed to retrieve locations because of", error);
+    Logger.error("Failed to retrieve locations because of", error);
 
     throw error;
   }

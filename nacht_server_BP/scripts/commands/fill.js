@@ -4,6 +4,7 @@ import { UndefinedSourceOrInitiatorError } from "../errors/command";
 import PlayerUtils from "../utils/PlayerUtils";
 import { registerCommand } from "./common";
 import { NachtServerAddonError } from "../errors/base";
+import { Logger } from "../utils/logger";
 var FillMode;
 (function (FillMode) {
     FillMode["destroy"] = "destroy";
@@ -130,11 +131,11 @@ function* callFillCommand(dynamicAxis, player, blockVolume, totalBlocks, options
         const successCount = player.dimension.runCommand(command).successCount;
         totalSuccessCount += successCount;
         start += div;
-        console.log(`nacht:fill ${timesToRun - count}/${timesToRun} (${successCount}): ${command}`);
+        Logger.log(`nacht:fill ${timesToRun - count}/${timesToRun} (${successCount}): ${command}`);
         // system.waitTicks(TicksPerSecond / 2);
         yield;
     }
-    console.log(`Run ${timesToRun} times and successed ${totalSuccessCount}.`);
+    // Logger.log(`Run ${timesToRun} times and successed ${totalSuccessCount}.`);
 }
 export default () => system.beforeEvents.startup.subscribe((event) => {
     event.customCommandRegistry.registerEnum("nacht:oldBlockHandling", [

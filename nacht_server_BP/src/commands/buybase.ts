@@ -24,9 +24,10 @@ import PlayerUtils from "../utils/PlayerUtils";
 import ScoreboardUtils from "../utils/ScoreboardUtils";
 import { registerCommand } from "./common";
 import { RuleName } from "./gamerule";
+import { Logger } from "../utils/logger";
 
 const buybaseCommand: CustomCommand = {
-  name: "nacht:buyarea",
+  name: "nacht:buybase",
   description: "拠点用地を購入する",
   permissionLevel: CommandPermissionLevel.GameDirectors,
 };
@@ -76,7 +77,7 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
   system.runTimeout(() => {
     form.show(player).then((response) => {
       if (response.canceled) {
-        console.log(
+        Logger.log(
           `[${player.nameTag}] canceled: ${response.cancelationReason}`
         );
         return;
@@ -139,7 +140,7 @@ const purchase = (
       const score = ScoreboardUtils.getScore(player, "point");
       if (score === undefined) {
         // ポイントシステムが無効
-        console.error(
+        Logger.error(
           `${player.nameTag}のスコアボードpointが有効になっていません`
         );
         ScoreboardUtils.setScore(player, "point", 0);
