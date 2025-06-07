@@ -6,13 +6,14 @@ import type { LocationInfo } from "../models/location";
 import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
 import PlayerUtils from "../utils/PlayerUtils";
 import { Logger } from "../utils/logger";
+import { NachtServerAddonItemTypes } from "../enums";
 
 // なはとの羽根
 
 export default () =>
   world.afterEvents.itemUse.subscribe((event) => {
     try {
-      if (event.itemStack.type.id === "nacht:nacht_feather") {
+      if (event.itemStack.type.id === NachtServerAddonItemTypes.NachtFeather) {
         event.source.sendMessage(
           `${event.source.name}は　なはとの羽根を　ほうりなげた！`
         );

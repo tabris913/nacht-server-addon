@@ -15,6 +15,9 @@ import { Logger } from "../utils/logger";
  * @param price 金額
  * @param pointless_msg
  * @param after_msg
+ * @throws This function can throw error.
+ *
+ * {@link PointlessError}
  */
 const purchaseItem = (
   player: Player,

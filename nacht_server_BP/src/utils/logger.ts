@@ -1,6 +1,9 @@
 const getDateString = () => new Date().toISOString();
 
 export const Logger = {
+  debug: (...data: Array<any>) => {
+    console.log(`${`[${getDateString()}]`} | [DEBUG]`, ...data);
+  },
   error: (...data: Array<any>) => {
     console.error(`${`[${getDateString()}]`} |`, ...data);
   },

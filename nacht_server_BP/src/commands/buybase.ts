@@ -12,19 +12,19 @@ import {
   world,
 } from "@minecraft/server";
 import { MessageFormData, ModalFormData } from "@minecraft/server-ui";
-import { Formatting, PREFIX_BASE, PREFIX_GAMERULE } from "../const";
+import { PREFIX_BASE, PREFIX_GAMERULE } from "../const";
+import { NachtServerAddonItemTypes } from "../enums";
 import {
   NonNPCSourceError,
   UndefinedSourceOrInitiatorError,
 } from "../errors/command";
+import marketLogic from "../logic/marketLogic";
 import { BaseAreaInfo } from "../models/location";
 import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
-import InventoryUtils from "../utils/InventoryUtils";
+import { Logger } from "../utils/logger";
 import PlayerUtils from "../utils/PlayerUtils";
-import ScoreboardUtils from "../utils/ScoreboardUtils";
 import { registerCommand } from "./common";
 import { RuleName } from "./gamerule";
-import { Logger } from "../utils/logger";
 
 const buybaseCommand: CustomCommand = {
   name: "nacht:buybase",
@@ -75,45 +75,31 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
   form.submitButton("決定");
 
   system.runTimeout(() => {
-    form.show(player).then((response) => {
-      if (response.canceled) {
-        Logger.log(
-          `[${player.nameTag}] canceled: ${response.cancelationReason}`
+    form
+      .show(player)
+      .then((response) => {
+        if (response.canceled) {
+          Logger.log(
+            `[${player.nameTag}] canceled: ${response.cancelationReason}`
+          );
+          return;
+        }
+
+        const size = response.formValues?.[0] as number;
+        const price =
+          (size - 1) ** 2 *
+          ((world.getDynamicProperty(
+            PREFIX_GAMERULE + RuleName.baseMarketPrice
+          ) as number | undefined) || 20);
+        purchase(
+          player,
+          origin.sourceEntity!,
+          size,
+          price,
+          Object.keys(baseDps).length
         );
-        return;
-      }
-
-      const size = response.formValues?.[0] as number;
-      const price =
-        (size - 1) ** 2 *
-        ((world.getDynamicProperty(
-          PREFIX_GAMERULE + RuleName.baseMarketPrice
-        ) as number | undefined) || 20);
-      purchase(
-        player,
-        origin.sourceEntity!,
-        size,
-        price,
-        Object.keys(baseDps).length
-      );
-
-      // const purchaseForm = new ActionFormData();
-      // purchaseForm.title(
-      //   `${price}ポイントになりますがよろしいですか？`
-      // );
-      // purchaseForm.button("はい");
-      // purchaseForm.button("いいえ");
-
-      // purchaseForm.show(player).then((response2) => {
-      //   if (response2.canceled) return;
-
-      //   if (response2.selection === 1) {
-      //     origin.sourceEntity?.runCommand(
-      //       `nacht:buy nacht:base_flag 1 ${price}`
-      //     );
-      //   }
-      // });
-    });
+      })
+      .catch(() => null);
   }, TicksPerSecond);
 
   return { status: CustomCommandStatus.Success };
@@ -131,39 +117,31 @@ const purchase = (
   purchaseForm.button1("はい");
   purchaseForm.button2("いいえ");
 
-  purchaseForm.show(player).then((response) => {
-    if (response.canceled) return;
-
-    if (response.selection === 1) {
-      // はい
-      // origin.sourceEntity?.runCommand(`nacht:buy nacht:base_flag 1 ${price}`);
-      const score = ScoreboardUtils.getScore(player, "point");
-      if (score === undefined) {
-        // ポイントシステムが無効
-        Logger.error(
-          `${player.nameTag}のスコアボードpointが有効になっていません`
+  purchaseForm
+    .show(player)
+    .then((response) => {
+      if (response.canceled) {
+        Logger.log(
+          `[${player.nameTag}] canceled: ${response.cancelationReason}`
         );
-        ScoreboardUtils.setScore(player, "point", 0);
-        player.sendMessage(
-          `${Formatting.Color.GOLD}ポイントシステムが有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`
-        );
-
         return;
       }
 
-      const npcName = npc.nameTag || "NPC";
-      if (
-        player.matches({
-          scoreOptions: [{ minScore: price, objective: "point" }],
-        })
-      ) {
-        ScoreboardUtils.addScore(player, "point", -price);
-        InventoryUtils.giveItem(player, "nacht:base_flag", 1);
+      if (response.selection === 0) {
+        // はい
+        marketLogic.purchaseItem(
+          player,
+          npc,
+          NachtServerAddonItemTypes.BaseFlag,
+          1,
+          price
+        );
+        const id = `${PREFIX_BASE}${player.nameTag}_${count}`;
         world.setDynamicProperty(
-          PREFIX_BASE + `${player.nameTag}_${count}`,
+          id,
           JSON.stringify({
             edgeSize: size,
-            id: "",
+            id,
             index: count,
             northWest: { x: 0, z: 0 },
             owner: player.nameTag,
@@ -171,14 +149,9 @@ const purchase = (
             showBorder: true,
           } satisfies BaseAreaInfo)
         );
-
-        player.sendMessage(`[${npcName}] まいどあり！`);
-      } else {
-        player.sendMessage(`[${npcName}] ポイントが足りません`);
-        return;
       }
-    }
-  });
+    })
+    .catch(() => null);
 };
 
 export default () =>

@@ -9,19 +9,21 @@ import {
   world,
 } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
-import { MinecraftDimensionTypes } from "../types/index";
 import { Formatting, TAG_OPERATOR } from "../const";
+import {
+  NachtServerAddonEntityTypes,
+  NachtServerAddonItemTypes,
+} from "../enums";
 import { BaseAreaDimensionBlockVolume } from "../models/BaseAreaDimensionBlockVolume";
 import { DimensionBlockVolume } from "../models/DimensionBlockVolume";
 import type { BaseAreaInfo } from "../models/location";
+import { MinecraftDimensionTypes } from "../types/index";
 import AreaUtils from "../utils/AreaUtils";
 import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
 import InventoryUtils from "../utils/InventoryUtils";
 import LocationUtils from "../utils/LocationUtils";
 import { isFixedBase } from "../utils/TypeGuards";
 import { Logger } from "../utils/logger";
-
-const TYPE_ID = "nacht:base_flag";
 
 /**
  * 与えられた平面が拠点エリアの範囲外にはみ出してないか確認する
@@ -155,7 +157,7 @@ const fixBaseZone = (player: Player, flag: Entity, dp: BaseAreaInfo) => {
             },
           })
         );
-        InventoryUtils.giveItem(player, TYPE_ID);
+        InventoryUtils.giveItem(player, NachtServerAddonItemTypes.BaseFlag);
         break;
     }
   });
@@ -173,25 +175,30 @@ const setConfig = (player: Player, dp: BaseAreaInfo) => {
   form.toggle("ボーダー表示", { defaultValue: dp.showBorder });
   form.submitButton("設定");
 
-  form.show(player).then((response) => {
-    if (response.canceled) return;
+  form
+    .show(player)
+    .then((response) => {
+      if (response.canceled) return;
 
-    const baseName = response.formValues?.[0] as string;
-    const showBorder = response.formValues?.[1] as boolean;
+      const baseName = response.formValues?.[0] as string;
+      const showBorder = response.formValues?.[1] as boolean;
 
-    if (baseName.length === 0) {
-      player.sendMessage(
-        `${Formatting.Color.GOLD}拠点名が設定されていません。`
+      if (baseName.length === 0) {
+        player.sendMessage(
+          `${Formatting.Color.GOLD}拠点名が設定されていません。`
+        );
+
+        return;
+      }
+
+      world.setDynamicProperty(
+        dp.id,
+        JSON.stringify({ ...dp, name: baseName, showBorder })
       );
-
-      return;
-    }
-
-    world.setDynamicProperty(
-      dp.id,
-      JSON.stringify({ ...dp, name: baseName, showBorder })
-    );
-  });
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 /**
@@ -252,7 +259,7 @@ export default () => {
 
       if (
         event.itemStack &&
-        event.itemStack.typeId === TYPE_ID &&
+        event.itemStack.typeId === NachtServerAddonItemTypes.BaseFlag &&
         event.isFirstEvent
       ) {
         if (!AreaUtils.existsInBaseArea(event.player)) {
@@ -328,14 +335,15 @@ export default () => {
           }
 
           system.runTimeout(() => {
-            const entity = event.block.dimension.spawnEntity<typeof TYPE_ID>(
-              TYPE_ID,
-              next.location,
-              {
-                initialPersistence: true,
-                initialRotation: 180 + event.player.getRotation().y,
-              }
-            );
+            const entity =
+              event.block.dimension.spawnEntity<NachtServerAddonEntityTypes>(
+                NachtServerAddonEntityTypes.BaseFlag,
+                next.location,
+                {
+                  initialPersistence: true,
+                  initialRotation: 180 + event.player.getRotation().y,
+                }
+              );
             world.setDynamicProperty(
               noNameBase[0].id,
               JSON.stringify({ ...noNameBase[0], entityId: entity.id })
@@ -371,7 +379,7 @@ export default () => {
         return;
       }
 
-      if (event.target.typeId === TYPE_ID) {
+      if (event.target.typeId === NachtServerAddonItemTypes.BaseFlag) {
         const form = new ActionFormData();
         form.button("範囲を確定する");
         form.button("拠点の設定を変更する");

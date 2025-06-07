@@ -1,15 +1,15 @@
 import { BlockVolume, Direction, system, world, } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
-import { MinecraftDimensionTypes } from "../types/index";
 import { Formatting, TAG_OPERATOR } from "../const";
+import { NachtServerAddonEntityTypes, NachtServerAddonItemTypes, } from "../enums";
 import { BaseAreaDimensionBlockVolume } from "../models/BaseAreaDimensionBlockVolume";
+import { MinecraftDimensionTypes } from "../types/index";
 import AreaUtils from "../utils/AreaUtils";
 import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
 import InventoryUtils from "../utils/InventoryUtils";
 import LocationUtils from "../utils/LocationUtils";
 import { isFixedBase } from "../utils/TypeGuards";
 import { Logger } from "../utils/logger";
-const TYPE_ID = "nacht:base_flag";
 /**
  * 与えられた平面が拠点エリアの範囲外にはみ出してないか確認する
  *
@@ -106,7 +106,7 @@ const fixBaseZone = (player, flag, dp) => {
                         x: flag.location.x - (dp.edgeSize - 1) / 2,
                         z: flag.location.z - (dp.edgeSize - 1) / 2,
                     } })));
-                InventoryUtils.giveItem(player, TYPE_ID);
+                InventoryUtils.giveItem(player, NachtServerAddonItemTypes.BaseFlag);
                 break;
         }
     });
@@ -122,7 +122,9 @@ const setConfig = (player, dp) => {
     form.textField("拠点名", "", { defaultValue: dp.name });
     form.toggle("ボーダー表示", { defaultValue: dp.showBorder });
     form.submitButton("設定");
-    form.show(player).then((response) => {
+    form
+        .show(player)
+        .then((response) => {
         var _a, _b;
         if (response.canceled)
             return;
@@ -133,6 +135,9 @@ const setConfig = (player, dp) => {
             return;
         }
         world.setDynamicProperty(dp.id, JSON.stringify(Object.assign(Object.assign({}, dp), { name: baseName, showBorder })));
+    })
+        .catch((error) => {
+        throw error;
     });
 };
 /**
@@ -181,7 +186,7 @@ export default () => {
                 return;
             }
             if (event.itemStack &&
-                event.itemStack.typeId === TYPE_ID &&
+                event.itemStack.typeId === NachtServerAddonItemTypes.BaseFlag &&
                 event.isFirstEvent) {
                 if (!AreaUtils.existsInBaseArea(event.player)) {
                     event.player.sendMessage([
@@ -241,7 +246,7 @@ export default () => {
                         return;
                     }
                     system.runTimeout(() => {
-                        const entity = event.block.dimension.spawnEntity(TYPE_ID, next.location, {
+                        const entity = event.block.dimension.spawnEntity(NachtServerAddonEntityTypes.BaseFlag, next.location, {
                             initialPersistence: true,
                             initialRotation: 180 + event.player.getRotation().y,
                         });
@@ -274,7 +279,7 @@ export default () => {
                 ]);
                 return;
             }
-            if (event.target.typeId === TYPE_ID) {
+            if (event.target.typeId === NachtServerAddonItemTypes.BaseFlag) {
                 const form = new ActionFormData();
                 form.button("範囲を確定する");
                 form.button("拠点の設定を変更する");
