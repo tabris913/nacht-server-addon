@@ -63,7 +63,10 @@ const register = (entity, name, displayName) => {
     world.setDynamicProperty(locationName, JSON.stringify({
         displayName: StringUtils.format(displayName),
         dimension: entity.dimension.id,
+        id: locationName,
         location: entity.location,
+        name,
+        owner: entity.nameTag,
     }));
 };
 export default () => system.beforeEvents.startup.subscribe(registerCommand(registerTeleportTargetCommand, commandProcess));

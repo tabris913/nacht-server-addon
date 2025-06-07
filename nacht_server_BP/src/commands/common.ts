@@ -2,6 +2,7 @@ import {
   type CustomCommand,
   type CustomCommandOrigin,
   type CustomCommandResult,
+  CustomCommandSource,
   CustomCommandStatus,
   type StartupEvent,
 } from "@minecraft/server";
@@ -29,18 +30,44 @@ export const registerCommand =
           origin: CustomCommandOrigin,
           ...args: Array<any>
         ): CustomCommandResult => {
+          let sourceName;
           try {
+            switch (origin.sourceType) {
+              case CustomCommandSource.Block:
+                sourceName = `CommandBlock(${origin.sourceBlock?.x},${origin.sourceBlock?.y},${origin.sourceBlock?.z})`;
+                break;
+              case CustomCommandSource.Server:
+                sourceName = "Server";
+                break;
+              case CustomCommandSource.NPCDialogue:
+                sourceName = `NPC(${origin.sourceEntity?.nameTag}/${origin.sourceEntity?.location.x},${origin.sourceEntity?.location.y},${origin.sourceEntity?.location.z})`;
+                break;
+              case CustomCommandSource.Entity:
+                sourceName = origin.sourceEntity?.nameTag;
+                break;
+            }
+          } catch (error) {
+            console.warn("Failed to get source name because of", error);
+            sourceName = "undefined";
+          }
+
+          try {
+            console.log(
+              `[start] ${sourceName} ran command: ${customCommand.name} ${args
+                .map((arg) => JSON.stringify(arg))
+                .join(" ")}`
+            );
             return callback(origin, ...args);
           } catch (error) {
             let message = "予期せぬエラーが発生しました。";
 
             if (error instanceof NachtServerAddonError) {
               switch (error.logLevel) {
-                case "error":
-                  console.error(error);
-                  break;
                 case "warning":
                   console.warn(error);
+                  break;
+                default:
+                  console.error(error);
                   break;
               }
               message = error.message;
@@ -49,6 +76,10 @@ export const registerCommand =
             }
 
             return { message, status: CustomCommandStatus.Failure };
+          } finally {
+            console.log(
+              `[finish] ${sourceName} has run command: ${customCommand.name}`
+            );
           }
         }
       );

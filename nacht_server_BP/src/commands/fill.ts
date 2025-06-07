@@ -1,5 +1,6 @@
 import {
   type BlockType,
+  BlockVolume,
   CommandPermissionLevel,
   type CustomCommand,
   type CustomCommandOrigin,
@@ -13,9 +14,9 @@ import {
 } from "@minecraft/server";
 import { COMMAND_MODIFICATION_BLOCK_LIMIT } from "../const";
 import { UndefinedSourceOrInitiatorError } from "../errors/command";
-import AreaUtils from "../utils/AreaUtils";
 import PlayerUtils from "../utils/PlayerUtils";
 import { registerCommand } from "./common";
+import { NachtServerAddonError } from "../errors/base";
 
 enum FillMode {
   destroy = "destroy",
@@ -76,8 +77,7 @@ const commandProcess = (
     throw new UndefinedSourceOrInitiatorError();
   }
 
-  const { x, y, z } = AreaUtils.calcDistances(from, to);
-  const blocks = x * y * z;
+  const blockVolume = new BlockVolume(from, to);
   const options: [
     BlockType,
     number | undefined,
@@ -86,64 +86,38 @@ const commandProcess = (
     number | undefined
   ] = [tileName, tileData, oldBlockHandling, replaceTileName, replaceDataValue];
 
-  if (blocks <= COMMAND_MODIFICATION_BLOCK_LIMIT) {
+  const capacity = blockVolume.getCapacity();
+  if (capacity <= COMMAND_MODIFICATION_BLOCK_LIMIT) {
     // 一回で実行できる範囲ブロック数
     system.runTimeout(() => {
-      player.dimension.runCommand(makeFillCommand(from, to, ...options));
+      player.dimension.runCommand(makeFillCommand(blockVolume, ...options));
     }, 1);
   } else {
     // 分割実行
+    const { x, y, z } = blockVolume.getSpan();
     // 一番面積が小さい平面を繰り返す
-    const timesToRun =
-      Math.floor(blocks / COMMAND_MODIFICATION_BLOCK_LIMIT) + 1;
     const xy = x * y;
     const yz = y * z;
     const zx = z * x;
 
+    let generator: Generator<void, void, void>;
     switch (Math.min(xy, yz, zx)) {
       case xy:
-        callFillCommand(
-          "z",
-          player,
-          from,
-          to,
-          timesToRun,
-          xy,
-          Math.min(from.z, to.z),
-          Math.max(from.z, to.z),
-          options
-        );
+        generator = callFillCommand("z", player, blockVolume, xy, options);
         break;
       case yz:
-        callFillCommand(
-          "x",
-          player,
-          from,
-          to,
-          timesToRun,
-          xy,
-          Math.min(from.x, to.x),
-          Math.max(from.x, to.x),
-          options
-        );
+        generator = callFillCommand("x", player, blockVolume, yz, options);
         break;
       case zx:
-        callFillCommand(
-          "y",
-          player,
-          from,
-          to,
-          timesToRun,
-          xy,
-          Math.min(from.y, to.y),
-          Math.max(from.y, to.y),
-          options
-        );
+        generator = callFillCommand("y", player, blockVolume, zx, options);
         break;
+      default:
+        throw new NachtServerAddonError();
     }
+    system.runJob(generator);
   }
 
-  player.sendMessage(`${blocks}個のブロックで満たしました。`);
+  player.sendMessage(`${capacity}個のブロックで満たしました。`);
 
   return { status: CustomCommandStatus.Success };
 };
@@ -151,8 +125,7 @@ const commandProcess = (
 /**
  * fill コマンドを構築する
  *
- * @param from
- * @param to
+ * @param blockVolume
  * @param tileName
  * @param tileData
  * @param oldBlockHandling
@@ -161,14 +134,14 @@ const commandProcess = (
  * @returns
  */
 const makeFillCommand = (
-  from: Vector3,
-  to: Vector3,
+  blockVolume: BlockVolume,
   tileName: BlockType,
   tileData?: number,
   oldBlockHandling?: FillMode,
   replaceTileName?: BlockType,
   replaceDataValue?: number
 ) => {
+  const { from, to } = blockVolume;
   const mandatory = `fill ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${tileName.id}`;
 
   let optional = "";
@@ -191,15 +164,11 @@ const makeFillCommand = (
   return mandatory + optional;
 };
 
-const callFillCommand = (
+function* callFillCommand(
   dynamicAxis: "x" | "y" | "z",
   player: Entity,
-  from: Vector3,
-  to: Vector3,
-  timesToRun: number,
+  blockVolume: BlockVolume,
   totalBlocks: number,
-  startIndex: number,
-  endIndex: number,
   options: [
     BlockType,
     number | undefined,
@@ -207,32 +176,42 @@ const callFillCommand = (
     BlockType | undefined,
     number | undefined
   ]
-) => {
+) {
   const div = Math.floor(COMMAND_MODIFICATION_BLOCK_LIMIT / totalBlocks);
-  let start: number = startIndex;
+  let start: number = blockVolume.getMin()[dynamicAxis];
   let totalSuccessCount = 0;
+  const timesToRun =
+    Math.floor(blockVolume.getCapacity() / COMMAND_MODIFICATION_BLOCK_LIMIT) +
+    1;
   let count = timesToRun;
 
-  system.runTimeout(() => {
-    while (count--) {
-      const command = makeFillCommand(
-        { ...from, [dynamicAxis]: start },
-        { ...to, [dynamicAxis]: Math.min(start + div - 1, endIndex) },
-        ...options
-      );
-      const successCount = player.dimension.runCommand(command).successCount;
-      totalSuccessCount += successCount;
-      start += div;
-      console.log(
-        `nacht:fill ${
-          timesToRun - count
-        }/${timesToRun} (${successCount}): ${command}`
-      );
-      system.waitTicks(TicksPerSecond / 2);
-    }
-    console.log(`Run ${timesToRun} times and successed ${totalSuccessCount}.`);
-  }, 1);
-};
+  while (count--) {
+    const command = makeFillCommand(
+      new BlockVolume(
+        { ...blockVolume.from, [dynamicAxis]: start },
+        {
+          ...blockVolume.to,
+          [dynamicAxis]: Math.min(
+            start + div - 1,
+            blockVolume.getMax()[dynamicAxis]
+          ),
+        }
+      ),
+      ...options
+    );
+    const successCount = player.dimension.runCommand(command).successCount;
+    totalSuccessCount += successCount;
+    start += div;
+    console.log(
+      `nacht:fill ${
+        timesToRun - count
+      }/${timesToRun} (${successCount}): ${command}`
+    );
+    // system.waitTicks(TicksPerSecond / 2);
+    yield;
+  }
+  // console.log(`Run ${timesToRun} times and successed ${totalSuccessCount}.`);
+}
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) => {

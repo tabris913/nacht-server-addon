@@ -1,7 +1,7 @@
 import { system, TicksPerSecond, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Formatting, LOC_ERSTE } from "../const";
-import { getLocationDps } from "../utils/dp";
+import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
 import PlayerUtils from "../utils/PlayerUtils";
 export default () => world.afterEvents.itemUse.subscribe((event) => {
     try {
@@ -11,10 +11,13 @@ export default () => world.afterEvents.itemUse.subscribe((event) => {
                 {
                     dimension: "overworld",
                     displayName: "Erste",
+                    id: "",
                     location: LOC_ERSTE,
+                    name: "",
+                    owner: "",
                 },
             ];
-            getLocationDps(event.source.nameTag).forEach((ttId) => tpTargets.push(Object.assign(Object.assign({}, JSON.parse(world.getDynamicProperty(ttId))), { dpId: ttId })));
+            DynamicPropertyUtils.retrieveLocations(event.source.nameTag).forEach((locationInfo) => tpTargets.push(locationInfo));
             const choices = tpTargets.map((tt) => tt.displayName);
             const form = new ModalFormData();
             form.title("テレポート");

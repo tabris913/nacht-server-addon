@@ -1,19 +1,17 @@
-import { Direction, Player, system, VectorXZ, world } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import {
-  type AreaVertices,
-  type BaseAreaInfo,
-  gatherLocationsWithin,
-  get2DAreaFromLoc,
-  isInArea,
-  isInBaseArea3D,
-  isOverlapped,
-  isVector,
-  offsetLocation,
-} from "../utils/area";
+  Direction,
+  type Player,
+  system,
+  type VectorXZ,
+  world,
+} from "@minecraft/server";
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Formatting, TAG_OPERATOR } from "../const";
-import { getBaseDps } from "../utils/dp";
 import InventoryUtils from "../utils/InventoryUtils";
+import type { AreaVertices, BaseAreaInfo } from "../models/location";
+import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
+import LocationUtils from "../utils/LocationUtils";
+import AreaUtils from "../utils/AreaUtils";
 
 const TYPE_ID = "nacht:base_flag";
 
@@ -22,7 +20,7 @@ const TYPE_ID = "nacht:base_flag";
  *
  * @param area2D
  */
-const isOutOfBaseArea = (area2D: AreaVertices<VectorXZ>) => {
+const isOutOfBaseArea = (area2D: AreaVertices) => {
   if (area2D.southEast.x < -6400 && area2D.northWest.z < 0) return true;
   if (
     -6400 <= area2D.southEast.x &&
@@ -43,12 +41,15 @@ const isOutOfBaseArea = (area2D: AreaVertices<VectorXZ>) => {
  * @returns
  */
 const hasOverlappingBlocks = (area2D: AreaVertices) =>
-  Object.values(getBaseDps())
+  DynamicPropertyUtils.retrieveBases()
     .filter((baseDp) => baseDp.name !== undefined)
     .some((baseDp) => {
       const baseArea: AreaVertices = {
         northWest: baseDp.northWest,
-        southEast: offsetLocation(baseDp.northWest, baseDp.edgeSize - 1),
+        southEast: LocationUtils.offsetLocation(
+          baseDp.northWest,
+          baseDp.edgeSize - 1
+        ),
       };
 
       // const locations = gatherLocationsWithin({
@@ -60,25 +61,21 @@ const hasOverlappingBlocks = (area2D: AreaVertices) =>
 
       // return locations.length !== locationSet.size;
 
-      return isOverlapped(
-        area2D,
-        {
-          northWest: baseDp.northWest,
-          southEast: offsetLocation(baseDp.northWest, baseDp.edgeSize - 1),
-        },
-        {
-          area2: { x: baseDp.edgeSize, z: baseDp.edgeSize },
-        }
-      );
+      return LocationUtils.isOverlapped(area2D, baseArea, {
+        area2: { x: baseDp.edgeSize, z: baseDp.edgeSize },
+      });
     });
 
 const isInBaseArea = (location: VectorXZ) =>
-  Object.values(getBaseDps())
+  DynamicPropertyUtils.retrieveBases()
     .filter((baseDp) => baseDp.name !== undefined)
     .some((baseDp) =>
-      isInArea(location, {
+      LocationUtils.isInArea(location, {
         northWest: baseDp.northWest,
-        southEast: offsetLocation(baseDp.northWest, baseDp.edgeSize - 1),
+        southEast: LocationUtils.offsetLocation(
+          baseDp.northWest,
+          baseDp.edgeSize - 1
+        ),
       })
     );
 
@@ -98,7 +95,7 @@ const fixBaseZone = (
 
     return;
   }
-  const area2D = get2DAreaFromLoc(flagLocation, dp.edgeSize);
+  const area2D = LocationUtils.make2DAreaFromLoc(flagLocation, dp.edgeSize);
   if (area2D) {
     if (hasOverlappingBlocks(area2D)) {
       // 重複あり
@@ -220,8 +217,8 @@ export default () => {
         event.player.sendMessage("拠点には置けません。");
         return;
       } else {
-        const noNameBase = Object.values(
-          getBaseDps(event.player.nameTag)
+        const noNameBase = DynamicPropertyUtils.retrieveBases(
+          event.player.nameTag
         ).filter((dp) => dp.name === undefined);
         if (noNameBase.length === 0) {
           event.player.sendMessage([
@@ -238,7 +235,7 @@ export default () => {
           event.itemStack.typeId === TYPE_ID &&
           event.isFirstEvent
         ) {
-          if (!isInBaseArea3D(event.player)) {
+          if (!AreaUtils.existsInBaseArea(event.player)) {
             event.player.sendMessage([
               Formatting.Color.RED,
               { translate: "items.base_flag.name" },
@@ -285,7 +282,7 @@ export default () => {
           }
           if (canPlace && next) {
             // 置ける
-            const area2D = get2DAreaFromLoc(
+            const area2D = LocationUtils.make2DAreaFromLoc(
               next.location,
               noNameBase[0].edgeSize
             );
@@ -335,18 +332,14 @@ export default () => {
 
   world.beforeEvents.playerInteractWithEntity.subscribe((event) => {
     try {
-      const playerBases = getBaseDps(event.player.nameTag);
-      if (
-        !Object.values(playerBases).some(
-          (dp) => dp.entityId === event.target.id
-        )
-      ) {
+      const playerBases = DynamicPropertyUtils.retrieveBases(
+        event.player.nameTag
+      );
+      if (!playerBases.some((dp) => dp.entityId === event.target.id)) {
         // 別の人の旗をインタラクトしても何も起きない
         return;
       }
-      const noNameBase = Object.values(playerBases).filter(
-        (dp) => dp.name === undefined
-      );
+      const noNameBase = playerBases.filter((dp) => dp.name === undefined);
       if (noNameBase.length === 0) {
         event.player.sendMessage([
           Formatting.Color.RED,

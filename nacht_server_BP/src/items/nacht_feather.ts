@@ -1,17 +1,13 @@
-import { system, TicksPerSecond, type Vector3, world } from "@minecraft/server";
+import { system, TicksPerSecond, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Formatting, LOC_ERSTE } from "../const";
-import { getLocationDps } from "../utils/dp";
+import type { LocationInfo } from "../models/location";
+import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
 import PlayerUtils from "../utils/PlayerUtils";
 
 // なはとの羽根
 
-type TeleportTarget = {
-  displayName: string;
-  dimension: string;
-  location: Vector3;
-};
-type TeleportTarget2 = TeleportTarget & { dpId?: string };
+type TeleportTarget2 = LocationInfo & { dpId?: string };
 
 export default () =>
   world.afterEvents.itemUse.subscribe((event) => {
@@ -24,14 +20,14 @@ export default () =>
           {
             dimension: "overworld",
             displayName: "Erste",
+            id: "",
             location: LOC_ERSTE,
+            name: "",
+            owner: "",
           },
         ];
-        getLocationDps(event.source.nameTag).forEach((ttId) =>
-          tpTargets.push({
-            ...JSON.parse(world.getDynamicProperty(ttId) as string),
-            dpId: ttId,
-          })
+        DynamicPropertyUtils.retrieveLocations(event.source.nameTag).forEach(
+          (locationInfo) => tpTargets.push(locationInfo)
         );
         const choices = tpTargets.map((tt) => tt.displayName);
 

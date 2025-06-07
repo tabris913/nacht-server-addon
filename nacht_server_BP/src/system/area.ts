@@ -1,20 +1,15 @@
 import {
-  Block,
-  Player,
+  type Player,
   system,
   TicksPerSecond,
   world,
   type Vector3,
 } from "@minecraft/server";
 import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from "../const";
-import {
-  get3DArea,
-  isInBaseArea3D,
-  isInExploringArea3D,
-  isInTownArea3D,
-} from "../utils/area";
 import { RuleName } from "../commands/gamerule";
 import PlayerUtils from "../utils/PlayerUtils";
+import AreaUtils from "../utils/AreaUtils";
+import LocationUtils from "../utils/LocationUtils";
 
 const tagTownArea = "AREA_TOWN"; // 街エリアにいる
 const tagExploreArea = "AREA_EXP"; // 探索エリアにいる
@@ -53,11 +48,11 @@ const getAreaTag = (area: Area) => {
 const getCallback = (area: Area) => {
   switch (area) {
     case "town":
-      return isInTownArea3D;
+      return AreaUtils.existsInTownArea;
     case "base":
-      return isInBaseArea3D;
+      return AreaUtils.existsInBaseArea;
     case "expr":
-      return isInExploringArea3D;
+      return AreaUtils.existsInExploringArea;
   }
 };
 
@@ -66,9 +61,9 @@ const getCallback2 = (area: Area) => {
     case "town":
       return null;
     case "base":
-      return isInExploringArea3D;
+      return AreaUtils.existsInExploringArea;
     case "expr":
-      return isInBaseArea3D;
+      return AreaUtils.existsInBaseArea;
   }
 };
 
@@ -154,7 +149,7 @@ const checkPlayers = async (area: Area) => {
         if (isInWrongArea(player)) {
           // 対称エリアにいる場合
           tp(player, areaTag);
-        } else if (isInTownArea3D(player)) {
+        } else if (AreaUtils.existsInTownArea(player)) {
           tp(player, areaTag);
         }
       }
@@ -181,7 +176,7 @@ const showAreaBorder = () => {
       .getAllPlayers()
       .filter((player) => player.isValid)
       .forEach((player) => {
-        const area3D = get3DArea(player, distance || 101);
+        const area3D = LocationUtils.make3DArea(player, distance || 101);
         if (area3D === undefined) {
           return;
         }

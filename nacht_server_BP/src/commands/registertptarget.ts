@@ -13,6 +13,7 @@ import {
   CommandProcessError,
   UndefinedSourceOrInitiatorError,
 } from "../errors/command";
+import type { LocationInfo } from "../models/location";
 import StringUtils from "../utils/StringUtils";
 import { registerCommand } from "./common";
 import { RuleName } from "./gamerule";
@@ -88,8 +89,11 @@ const register = (entity: Entity, name: string, displayName: string) => {
     JSON.stringify({
       displayName: StringUtils.format(displayName),
       dimension: entity.dimension.id,
+      id: locationName,
       location: entity.location,
-    })
+      name,
+      owner: entity.nameTag,
+    } satisfies LocationInfo)
   );
 };
 

@@ -1,13 +1,13 @@
 import { CommandPermissionLevel, CustomCommandSource, CustomCommandStatus, system, TicksPerSecond, world, } from "@minecraft/server";
 import { MessageFormData, ModalFormData } from "@minecraft/server-ui";
 import { Formatting, PREFIX_BASE, PREFIX_GAMERULE } from "../const";
-import { getBaseDps } from "../utils/dp";
-import PlayerUtils from "../utils/PlayerUtils";
-import { RuleName } from "./gamerule";
 import { NonNPCSourceError, UndefinedSourceOrInitiatorError, } from "../errors/command";
-import { registerCommand } from "./common";
-import ScoreboardUtils from "../utils/ScoreboardUtils";
+import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
 import InventoryUtils from "../utils/InventoryUtils";
+import PlayerUtils from "../utils/PlayerUtils";
+import ScoreboardUtils from "../utils/ScoreboardUtils";
+import { registerCommand } from "./common";
+import { RuleName } from "./gamerule";
 const buybaseCommand = {
     name: "nacht:buyarea",
     description: "拠点用地を購入する",
@@ -32,8 +32,8 @@ const commandProcess = (origin) => {
     if (player === undefined || origin.sourceEntity === undefined) {
         throw new UndefinedSourceOrInitiatorError();
     }
-    const baseDps = getBaseDps(player.nameTag);
-    if (Object.values(baseDps).some((baseDp) => baseDp.name === undefined)) {
+    const baseDps = DynamicPropertyUtils.retrieveBases(player.nameTag);
+    if (baseDps.some((baseDp) => baseDp.name === undefined)) {
         player.sendMessage("拠点の設定が進行中です。");
         return { status: CustomCommandStatus.Failure };
     }
