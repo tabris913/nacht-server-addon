@@ -1,12 +1,14 @@
-import { system, TicksPerSecond, world } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
-import { MinecraftDimensionTypes } from "../types/index";
-import { Formatting, LOC_ERSTE } from "../const";
-import type { LocationInfo } from "../models/location";
-import DynamicPropertyUtils from "../utils/DynamicPropertyUtils";
-import PlayerUtils from "../utils/PlayerUtils";
-import { Logger } from "../utils/logger";
-import { NachtServerAddonItemTypes } from "../enums";
+import { system, TicksPerSecond, world } from '@minecraft/server';
+import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
+
+import { Formatting, LOC_ERSTE } from '../const';
+import { NachtServerAddonItemTypes } from '../enums';
+import { MinecraftDimensionTypes } from '../types/index';
+import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
+import { Logger } from '../utils/logger';
+import PlayerUtils from '../utils/PlayerUtils';
+
+import type { LocationInfo } from '../models/location';
 
 // なはとの羽根
 
@@ -14,32 +16,31 @@ export default () =>
   world.afterEvents.itemUse.subscribe((event) => {
     try {
       if (event.itemStack.type.id === NachtServerAddonItemTypes.NachtFeather) {
-        event.source.sendMessage(
-          `${event.source.name}は　なはとの羽根を　ほうりなげた！`
-        );
+        event.source.sendMessage(`${event.source.name}は　なはとの羽根を　ほうりなげた！`);
         const tpTargets: Array<LocationInfo> = [
           {
             dimension: MinecraftDimensionTypes.Overworld,
-            displayName: "Erste",
-            id: "",
+            displayName: 'Erste',
+            id: '',
             location: LOC_ERSTE,
-            name: "",
-            owner: "",
+            name: '',
+            owner: '',
           },
         ];
-        DynamicPropertyUtils.retrieveLocations(event.source.nameTag).forEach(
-          (locationInfo) => tpTargets.push(locationInfo)
+        DynamicPropertyUtils.retrieveLocations(event.source.nameTag).forEach((locationInfo) =>
+          tpTargets.push(locationInfo)
         );
         const choices = tpTargets.map((tt) => tt.displayName);
 
         const form = new ModalFormData();
-        form.title("テレポート");
-        form.dropdown("転移先", choices, { defaultValueIndex: 0 });
-        form.toggle("削除");
-        form.submitButton("決定");
+        form.title('テレポート');
+        form.dropdown('転移先', choices, { defaultValueIndex: 0 });
+        form.toggle('削除');
+        form.submitButton('決定');
 
         form.show(event.source).then((response) => {
           if (response.canceled) {
+            Logger.log(`[${event.source.nameTag}] canceled: ${response.cancelationReason}`);
             return;
           }
           const selectedIndex = response.formValues?.[0] as number;
@@ -47,42 +48,34 @@ export default () =>
           const target = tpTargets[selectedIndex];
           if (target) {
             if (deleteFlag) {
-              if (target.id !== "") {
+              if (target.id !== '') {
                 const deleteForm = new ActionFormData();
                 deleteForm.title(`${target.displayName} を削除しますか?`);
-                deleteForm.button("はい");
-                deleteForm.button("いいえ");
+                deleteForm.button('はい');
+                deleteForm.button('いいえ');
 
                 deleteForm.show(event.source).then((deleteResponse) => {
                   if (deleteResponse.canceled) {
+                    Logger.log(`[${event.source.nameTag}] canceled: ${deleteResponse.cancelationReason}`);
                     return;
                   }
                   switch (deleteResponse.selection) {
                     case 0:
                       // はい
                       world.setDynamicProperty(target.id!, undefined);
-                      event.source.sendMessage(
-                        `${target.displayName}を削除しました`
-                      );
+                      event.source.sendMessage(`${target.displayName}を削除しました`);
                       break;
                     case 1:
                       // いいえ
-                      event.source.sendMessage(
-                        `${target.displayName}の削除を取り消しました`
-                      );
+                      event.source.sendMessage(`${target.displayName}の削除を取り消しました`);
                   }
                 });
               } else {
-                event.source.sendMessage(
-                  `${Formatting.Color.RED}${target.displayName}は削除できません`
-                );
+                event.source.sendMessage(`${Formatting.Color.RED}${target.displayName}は削除できません`);
               }
             } else {
               system.runTimeout(
-                () =>
-                  event.source.teleport(target.location, {
-                    dimension: world.getDimension(target.dimension),
-                  }),
+                () => event.source.teleport(target.location, { dimension: world.getDimension(target.dimension) }),
                 TicksPerSecond / 2
               );
             }

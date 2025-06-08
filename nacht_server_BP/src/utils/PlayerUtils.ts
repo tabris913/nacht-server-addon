@@ -1,6 +1,8 @@
-import { type Entity, Player, world } from "@minecraft/server";
-import { TAG_OPERATOR } from "../const";
-import { Logger } from "./logger";
+import { type Entity, Player, world } from '@minecraft/server';
+
+import { TAG_OPERATOR } from '../const';
+
+import { Logger } from './logger';
 
 /**
  * 与えられたエンティティをプレイヤーに変換する
@@ -11,15 +13,13 @@ import { Logger } from "./logger";
 export const convertToPlayer = (entityOrPlayer?: Entity | Player) => {
   try {
     if (entityOrPlayer === undefined) {
-      Logger.warning(
-        "A given entity/player cannot be converted because it is undefined."
-      );
+      Logger.warning('A given entity/player cannot be converted because it is undefined.');
 
       return undefined;
     }
 
     if (entityOrPlayer instanceof Player) {
-      Logger.log("A given entity/player is already player.");
+      Logger.log('A given entity/player is already player.');
 
       return entityOrPlayer;
     }
@@ -29,10 +29,27 @@ export const convertToPlayer = (entityOrPlayer?: Entity | Player) => {
       .filter((player) => player.id === entityOrPlayer.id)
       .at(0);
   } catch (error) {
-    Logger.error(
-      "Failed to convert a given entity to a player who has the same id because of",
-      error
-    );
+    Logger.error('Failed to convert a given entity to a player who has the same id because of', error);
+
+    throw error;
+  }
+};
+
+/**
+ * 条件に合うプレイヤーを取得する
+ *
+ * @param condition 条件
+ * @returns
+ */
+export const findPlayer = (condition: { id?: string; nameTag?: string }) => {
+  try {
+    return world
+      .getAllPlayers()
+      .filter((player) => (player.id ? player.id === condition.id : true))
+      .filter((player) => (player.nameTag ? player.nameTag === condition.nameTag : true))
+      .at(0);
+  } catch (error) {
+    Logger.error('Failed to get player because of', error);
 
     throw error;
   }
@@ -47,14 +64,9 @@ export const convertToPlayer = (entityOrPlayer?: Entity | Player) => {
  */
 export const getOperators = () => {
   try {
-    return world
-      .getAllPlayers()
-      .filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
+    return world.getAllPlayers().filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
   } catch (error) {
-    Logger.warning(
-      "Failed to get players who have operator-level permissions because of",
-      error
-    );
+    Logger.warning('Failed to get players who have operator-level permissions because of', error);
 
     throw error;
   }
@@ -69,10 +81,10 @@ export const sendMessageToOps = (message: string) => {
   try {
     getOperators().forEach((op) => op.sendMessage(message));
   } catch (error) {
-    Logger.error("Failed to send message to operators because of", error);
+    Logger.error('Failed to send message to operators because of', error);
 
     throw error;
   }
 };
 
-export default { convertToPlayer, getOperators, sendMessageToOps };
+export default { convertToPlayer, findPlayer, getOperators, sendMessageToOps };

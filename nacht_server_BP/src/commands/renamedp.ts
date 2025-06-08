@@ -7,17 +7,19 @@ import {
   CustomCommandStatus,
   system,
   world,
-} from "@minecraft/server";
-import { DynamicPropertyNotFoundError } from "../errors/dp";
-import { registerCommand } from "./common";
+} from '@minecraft/server';
+
+import { DynamicPropertyNotFoundError } from '../errors/dp';
+
+import { registerCommand } from './common';
 
 const renameDynamicPropertyCommand: CustomCommand = {
-  name: "nacht:renamedp",
-  description: "グローバル変数の名前を変更する",
+  name: 'nacht:renamedp',
+  description: 'グローバル変数の名前を変更する',
   permissionLevel: CommandPermissionLevel.Admin,
   mandatoryParameters: [
-    { name: "before", type: CustomCommandParamType.String },
-    { name: "after", type: CustomCommandParamType.String },
+    { name: 'before', type: CustomCommandParamType.String },
+    { name: 'after', type: CustomCommandParamType.String },
   ],
 };
 
@@ -32,11 +34,7 @@ const renameDynamicPropertyCommand: CustomCommand = {
  *
  * {@link DynamicPropertyNotFoundError}
  */
-const commandProcess = (
-  origin: CustomCommandOrigin,
-  before: string,
-  after: string
-): CustomCommandResult => {
+const commandProcess = (origin: CustomCommandOrigin, before: string, after: string): CustomCommandResult => {
   const property = world.getDynamicProperty(before);
   if (property === undefined) {
     throw new DynamicPropertyNotFoundError(before);
@@ -49,6 +47,4 @@ const commandProcess = (
 };
 
 export default () =>
-  system.beforeEvents.startup.subscribe(
-    registerCommand(renameDynamicPropertyCommand, commandProcess)
-  );
+  system.beforeEvents.startup.subscribe(registerCommand(renameDynamicPropertyCommand, commandProcess));

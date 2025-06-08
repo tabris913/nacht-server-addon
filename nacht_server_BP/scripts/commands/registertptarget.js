@@ -1,16 +1,14 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, world, } from "@minecraft/server";
-import { PREFIX_GAMERULE, PREFIX_LOCATION } from "../const";
-import { CommandProcessError, UndefinedSourceOrInitiatorError, } from "../errors/command";
-import StringUtils from "../utils/StringUtils";
-import { registerCommand } from "./common";
-import { RuleName } from "./gamerule";
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from '@minecraft/server';
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
+import teleportLogic from '../logic/teleportLogic';
+import { registerCommand } from './common';
 const registerTeleportTargetCommand = {
-    name: "nacht:registertptarget",
-    description: "なはとの羽根に転移先を登録する",
+    name: 'nacht:registertptarget',
+    description: 'なはとの羽根に転移先を登録する',
     permissionLevel: CommandPermissionLevel.GameDirectors,
     mandatoryParameters: [
-        { name: "name", type: CustomCommandParamType.String },
-        { name: "displayName", type: CustomCommandParamType.String },
+        { name: 'name', type: CustomCommandParamType.String },
+        { name: 'displayName', type: CustomCommandParamType.String },
     ],
 };
 /**
@@ -29,44 +27,14 @@ const registerTeleportTargetCommand = {
 const commandProcess = (origin, name, displayName) => {
     if (origin.initiator) {
         // called by NPC
-        register(origin.initiator, name, displayName);
+        teleportLogic.registerTeleportTarget(origin.initiator, name, displayName);
     }
     else if (origin.sourceEntity) {
-        register(origin.sourceEntity, name, displayName);
+        teleportLogic.registerTeleportTarget(origin.sourceEntity, name, displayName);
     }
     else {
         throw new UndefinedSourceOrInitiatorError();
     }
     return { status: CustomCommandStatus.Success };
-};
-/**
- * 登録する
- *
- * @param entity 操作者
- * @param name 地点名
- * @param displayName 地点表示名
- * @throws This function can throw errors
- *
- * {@link CommandProcessError}
- */
-const register = (entity, name, displayName) => {
-    const prefix = `${PREFIX_LOCATION}${entity.nameTag}_`;
-    const locationName = `${prefix}${name}`;
-    const dpIds = world.getDynamicPropertyIds();
-    if (dpIds.includes(locationName)) {
-        throw new CommandProcessError("その名前は既に使用されています。");
-    }
-    const num = world.getDynamicProperty(`${PREFIX_GAMERULE}${RuleName.teleportTargets}`);
-    if (dpIds.filter((dpId) => dpId.startsWith(prefix)).length === num) {
-        throw new CommandProcessError(`すでにテレポート先が${num}件登録されています`);
-    }
-    world.setDynamicProperty(locationName, JSON.stringify({
-        displayName: StringUtils.format(displayName),
-        dimension: entity.dimension.id,
-        id: locationName,
-        location: entity.location,
-        name,
-        owner: entity.nameTag,
-    }));
 };
 export default () => system.beforeEvents.startup.subscribe(registerCommand(registerTeleportTargetCommand, commandProcess));

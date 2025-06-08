@@ -1,5 +1,5 @@
-import { EntityComponentTypes, ItemStack, } from "@minecraft/server";
-import { Logger } from "./logger";
+import { EntityComponentTypes, ItemStack } from '@minecraft/server';
+import { Logger } from './logger';
 /**
  * 指定されたアイテムの個数をカウントする
  *
@@ -32,8 +32,7 @@ export const gatherSlots = (player, itemId) => {
             .map((_, index) => {
             var _a;
             try {
-                const slot = (_a = player
-                    .getComponent("inventory")) === null || _a === void 0 ? void 0 : _a.container.getSlot(index);
+                const slot = (_a = player.getComponent('inventory')) === null || _a === void 0 ? void 0 : _a.container.getSlot(index);
                 return slot;
             }
             catch (error) {
@@ -65,14 +64,13 @@ export const gatherSlots = (player, itemId) => {
  *
  * @param playerEntity プレイヤー
  * @param itemType アイテム ID
- * @param amount 数量
+ * @param quantity 数量
  * @returns 成否
  */
-const giveItem = (playerEntity, itemType, amount = 1) => {
+const giveItem = (playerEntity, itemType, quantity = 1) => {
     var _a;
     try {
-        (_a = playerEntity
-            .getComponent(EntityComponentTypes.Inventory)) === null || _a === void 0 ? void 0 : _a.container.addItem(new ItemStack(itemType, amount));
+        (_a = playerEntity.getComponent(EntityComponentTypes.Inventory)) === null || _a === void 0 ? void 0 : _a.container.addItem(new ItemStack(itemType, quantity));
         return true;
     }
     catch (error) {
@@ -90,7 +88,7 @@ const giveItem = (playerEntity, itemType, amount = 1) => {
  */
 export const hasItem = (player, itemId, opt) => {
     try {
-        let count = countItem(player, itemId);
+        const count = countItem(player, itemId);
         if (count === undefined) {
             // count error
             return false;
@@ -98,8 +96,7 @@ export const hasItem = (player, itemId, opt) => {
         if (opt) {
             // 条件あり
             Logger.log(`item count: ${count} (expected: min ${opt.min} / max ${opt.max})`);
-            return ((opt.max === undefined ? true : count <= opt.max) &&
-                (opt.min === undefined ? true : opt.min <= count));
+            return (opt.max === undefined ? true : count <= opt.max) && (opt.min === undefined ? true : opt.min <= count);
         }
         return 0 < count;
     }
@@ -114,29 +111,29 @@ export const hasItem = (player, itemId, opt) => {
  *
  * @param player プレイヤー
  * @param itemId アイテム ID
- * @param amount 削除するアイテムの個数
+ * @param quantity 削除するアイテムの個数
  * @returns 成否を表すフラグ
  */
-export const removeItem = (player, itemId, amount = Infinity) => {
+export const removeItem = (player, itemId, quantity = Infinity) => {
     try {
-        if (amount < 0) {
+        if (quantity < 0) {
             return false;
         }
         const count = countItem(player, itemId);
         if (count === undefined) {
             return false;
         }
-        if (count < amount) {
+        if (count < quantity) {
             // 足りない
             return false;
         }
         const slots = gatherSlots(player, itemId);
-        if (amount === Infinity || count === amount) {
+        if (quantity === Infinity || count === quantity) {
             // 全部消す
             slots.forEach((slot) => slot.setItem(undefined));
         }
         else {
-            let num = amount; // 消す残量
+            let num = quantity; // 消す残量
             for (let index = 0; index < slots.length; index++) {
                 const slotAmount = slots[index].amount;
                 if (slotAmount < num) {

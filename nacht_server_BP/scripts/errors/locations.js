@@ -1,4 +1,4 @@
-import { NachtServerAddonError } from "./base";
+import { NachtServerAddonError } from './base';
 export class LocationError extends NachtServerAddonError {
 }
 export class LengthError extends LocationError {

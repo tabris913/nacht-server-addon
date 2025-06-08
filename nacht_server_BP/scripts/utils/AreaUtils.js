@@ -1,6 +1,6 @@
-import { BlockVolume, world, } from "@minecraft/server";
-import { MinecraftDimensionTypes } from "../types/index";
-import { Logger } from "./logger";
+import { BlockVolume, world } from '@minecraft/server';
+import { MinecraftDimensionTypes } from '../types/index';
+import { Logger } from './logger';
 /**
  * ネザーの街エリアの BlockVolume を生成する
  *
@@ -12,7 +12,7 @@ export const createNetherTownArea = () => {
         return new BlockVolume({ x: -800, y: nether.heightRange.min, z: -800 }, { x: 800, y: nether.heightRange.max, z: 800 });
     }
     catch (error) {
-        Logger.error("Failed to create BlockVolume for town area in nether because of", error);
+        Logger.error('Failed to create BlockVolume for town area in nether because of', error);
         throw error;
     }
 };
@@ -27,7 +27,7 @@ export const createOverworldTownArea = () => {
         return new BlockVolume({ x: -6400, y: overworld.heightRange.min, z: -6400 }, { x: 6400, y: overworld.heightRange.max, z: 6400 });
     }
     catch (error) {
-        Logger.error("Failed to create BlockVolume for town area in overworld because of", error);
+        Logger.error('Failed to create BlockVolume for town area in overworld because of', error);
         throw error;
     }
 };
@@ -87,6 +87,39 @@ export const isInTownArea = (location) => {
             return false;
     }
 };
+/**
+ * 与えられた平面が拠点エリアの範囲外にはみ出してないか確認する
+ *
+ * @param volume
+ */
+export const isOutOfBaseArea = (volume) => {
+    const min = volume.getMin();
+    const max = volume.getMax();
+    let minXZ, maxXZ;
+    switch (volume.dimension.id) {
+        case MinecraftDimensionTypes.Overworld:
+            minXZ = -6400;
+            maxXZ = 6400;
+            break;
+        case MinecraftDimensionTypes.Nether:
+            minXZ = -800;
+            maxXZ = 800;
+            break;
+        default:
+            return false;
+    }
+    // 西側
+    if (max.x < minXZ && min.z < 0)
+        return true;
+    // 中央 (凵型部分)
+    if (minXZ <= max.x && min.x <= maxXZ && min.z <= maxXZ) {
+        return true;
+    }
+    // 東側
+    if (maxXZ < min.x && min.z < 0)
+        return true;
+    return false;
+};
 const AreaUtils = {
     createNetherTownArea,
     createOverworldTownArea,
@@ -96,5 +129,6 @@ const AreaUtils = {
     isInBaseArea,
     isInExploringArea,
     isInTownArea,
+    isOutOfBaseArea,
 };
 export default AreaUtils;

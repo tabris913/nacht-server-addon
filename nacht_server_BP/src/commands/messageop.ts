@@ -5,19 +5,19 @@ import {
   CustomCommandParamType,
   CustomCommandStatus,
   system,
-} from "@minecraft/server";
-import { UndefinedSourceOrInitiatorError } from "../errors/command";
-import PlayerUtils from "../utils/PlayerUtils";
-import StringUtils from "../utils/StringUtils";
-import { registerCommand } from "./common";
+} from '@minecraft/server';
+
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
+import PlayerUtils from '../utils/PlayerUtils';
+import StringUtils from '../utils/StringUtils';
+
+import { registerCommand } from './common';
 
 const messageOpCommand: CustomCommand = {
-  name: "nacht:messageop",
-  description: "オペレーターにメッセージを送信する",
+  name: 'nacht:messageop',
+  description: 'オペレーターにメッセージを送信する',
   permissionLevel: CommandPermissionLevel.Any,
-  mandatoryParameters: [
-    { name: "message", type: CustomCommandParamType.String },
-  ],
+  mandatoryParameters: [{ name: 'message', type: CustomCommandParamType.String }],
 };
 
 /**
@@ -30,22 +30,14 @@ const messageOpCommand: CustomCommand = {
  *
  * {@link UndefinedSourceOrInitiatorError}
  */
-const commandProcess = (
-  { sourceEntity }: CustomCommandOrigin,
-  message: string
-) => {
+const commandProcess = ({ sourceEntity }: CustomCommandOrigin, message: string) => {
   if (sourceEntity === undefined) {
     throw new UndefinedSourceOrInitiatorError();
   }
 
-  PlayerUtils.sendMessageToOps(
-    `[${sourceEntity.nameTag}] ${StringUtils.format(message)}`
-  );
+  PlayerUtils.sendMessageToOps(`[${sourceEntity.nameTag}] ${StringUtils.format(message)}`);
 
   return { status: CustomCommandStatus.Success };
 };
 
-export default () =>
-  system.beforeEvents.startup.subscribe(
-    registerCommand(messageOpCommand, commandProcess)
-  );
+export default () => system.beforeEvents.startup.subscribe(registerCommand(messageOpCommand, commandProcess));

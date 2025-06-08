@@ -1,20 +1,20 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from "@minecraft/server";
-import { UndefinedSourceOrInitiatorError } from "../errors/command";
-import marketLogic from "../logic/marketLogic";
-import PlayerUtils from "../utils/PlayerUtils";
-import { registerCommand } from "./common";
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from '@minecraft/server';
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
+import marketLogic from '../logic/marketLogic';
+import PlayerUtils from '../utils/PlayerUtils';
+import { registerCommand } from './common';
 const buyCommand = {
-    name: "nacht:buy",
-    description: "NPCからアイテムを購入する。",
+    name: 'nacht:buy',
+    description: 'NPCからアイテムを購入する。',
     permissionLevel: CommandPermissionLevel.GameDirectors,
     mandatoryParameters: [
-        { name: "item", type: CustomCommandParamType.ItemType },
-        { name: "amount", type: CustomCommandParamType.Integer },
-        { name: "point", type: CustomCommandParamType.Integer },
+        { name: 'item', type: CustomCommandParamType.ItemType },
+        { name: 'amount', type: CustomCommandParamType.Integer },
+        { name: 'point', type: CustomCommandParamType.Integer },
     ],
     optionalParameters: [
-        { name: "pointless_msg", type: CustomCommandParamType.String },
-        { name: "after_msg", type: CustomCommandParamType.String },
+        { name: 'pointless_msg', type: CustomCommandParamType.String },
+        { name: 'after_msg', type: CustomCommandParamType.String },
     ],
 };
 /**

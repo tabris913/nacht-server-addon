@@ -1,6 +1,7 @@
-import { world } from "@minecraft/server";
-import { SCOREBOARD_POINT } from "../const";
-import { Logger } from "../utils/logger";
+import { world } from '@minecraft/server';
+
+import { SCOREBOARD_POINT } from '../const';
+import { Logger } from '../utils/logger';
 
 export default () =>
   world.afterEvents.worldLoad.subscribe((event) => {

@@ -1,5 +1,5 @@
-import { flatFormatting } from "../const";
-import { Logger } from "./logger";
+import { flatFormatting } from '../const';
+import { Logger } from './logger';
 /**
  * 文字列を装飾文字でフォーマットする
  *
@@ -11,7 +11,7 @@ export const format = (message) => {
         return Object.entries(flatFormatting).reduce((prev, [curK, curV]) => prev.replace(`<${curK}>`, curV), message);
     }
     catch (error) {
-        Logger.error("Failed to format the message because of", error);
+        Logger.error('Failed to format the message because of', error);
         return message;
     }
 };

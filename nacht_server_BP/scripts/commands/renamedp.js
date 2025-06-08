@@ -1,13 +1,13 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, world, } from "@minecraft/server";
-import { DynamicPropertyNotFoundError } from "../errors/dp";
-import { registerCommand } from "./common";
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, world, } from '@minecraft/server';
+import { DynamicPropertyNotFoundError } from '../errors/dp';
+import { registerCommand } from './common';
 const renameDynamicPropertyCommand = {
-    name: "nacht:renamedp",
-    description: "グローバル変数の名前を変更する",
+    name: 'nacht:renamedp',
+    description: 'グローバル変数の名前を変更する',
     permissionLevel: CommandPermissionLevel.Admin,
     mandatoryParameters: [
-        { name: "before", type: CustomCommandParamType.String },
-        { name: "after", type: CustomCommandParamType.String },
+        { name: 'before', type: CustomCommandParamType.String },
+        { name: 'after', type: CustomCommandParamType.String },
     ],
 };
 /**

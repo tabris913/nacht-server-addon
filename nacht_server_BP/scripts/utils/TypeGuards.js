@@ -4,4 +4,4 @@
  * @param base
  * @returns
  */
-export const isFixedBase = (base) => base.dimension !== undefined && base.name !== undefined;
+export const isFixedBase = (base) => base.fixed && base.dimension !== undefined && base.name !== undefined && base.northWest !== undefined;

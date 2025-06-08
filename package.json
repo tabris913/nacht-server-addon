@@ -2,20 +2,47 @@
   "name": "nacht_server_bp",
   "version": "0.3.0",
   "description": "",
+  "type": "module",
   "main": "scripts/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "archive": "sh archive.sh",
     "build": "sh build.sh",
     "package": "sh copy.sh && sh build.sh && sh archive.sh",
-    "copy": "sh copy.sh"
+    "copy": "sh copy.sh",
+    "prettier": "npx prettier --write nacht_server_BP/src/**/*.ts",
+    "eslint": "npx eslint --fix --format=stylish nacht_server_BP/src/**/*.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@minecraft/server": "^2.0.0-beta.1.21.83-stable",
-    "@minecraft/server-ui": "^2.0.0-beta.1.21.83-stable",
-    "@minecraft/vanilla-data": "^1.21.81",
-    "typescript": "^5.8.3"
+    "@minecraft/server": "2.0.0-beta.1.21.84-stable",
+    "@minecraft/server-ui": "2.0.0-beta.1.21.84-stable",
+    "@minecraft/vanilla-data": "^1.21.81"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "endOfLine": "lf",
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.28.0",
+    "@typescript-eslint/eslint-plugin": "^8.33.1",
+    "@typescript-eslint/parser": "^8.33.1",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-import-resolver-typescript": "^4.4.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.4.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1"
   }
 }

@@ -1,6 +1,6 @@
-import { CustomCommandSource, CustomCommandStatus, } from "@minecraft/server";
-import { NachtServerAddonError } from "../errors/base";
-import { Logger } from "../utils/logger";
+import { CustomCommandSource, CustomCommandStatus, } from '@minecraft/server';
+import { NachtServerAddonError } from '../errors/base';
+import { Logger } from '../utils/logger';
 /**
  * 共通エラー処理を組み込んだカスタムコマンド登録
  *
@@ -19,7 +19,7 @@ export const registerCommand = (customCommand, callback) => (arg0) => {
                         sourceName = `CommandBlock(${(_a = origin.sourceBlock) === null || _a === void 0 ? void 0 : _a.x},${(_b = origin.sourceBlock) === null || _b === void 0 ? void 0 : _b.y},${(_c = origin.sourceBlock) === null || _c === void 0 ? void 0 : _c.z})`;
                         break;
                     case CustomCommandSource.Server:
-                        sourceName = "Server";
+                        sourceName = 'Server';
                         break;
                     case CustomCommandSource.NPCDialogue:
                         sourceName = `NPC(${(_d = origin.sourceEntity) === null || _d === void 0 ? void 0 : _d.nameTag}/${(_e = origin.sourceEntity) === null || _e === void 0 ? void 0 : _e.location.x},${(_f = origin.sourceEntity) === null || _f === void 0 ? void 0 : _f.location.y},${(_g = origin.sourceEntity) === null || _g === void 0 ? void 0 : _g.location.z})`;
@@ -30,20 +30,20 @@ export const registerCommand = (customCommand, callback) => (arg0) => {
                 }
             }
             catch (error) {
-                Logger.warning("Failed to get source name because of", error);
-                sourceName = "undefined";
+                Logger.warning('Failed to get source name because of', error);
+                sourceName = 'undefined';
             }
             try {
                 Logger.log(`[start] ${sourceName} ran command: ${customCommand.name} ${args
                     .map((arg) => JSON.stringify(arg))
-                    .join(" ")}`);
+                    .join(' ')}`);
                 return callback(origin, ...args);
             }
             catch (error) {
-                let message = "予期せぬエラーが発生しました。";
+                let message = '予期せぬエラーが発生しました。';
                 if (error instanceof NachtServerAddonError) {
                     switch (error.logLevel) {
-                        case "warning":
+                        case 'warning':
                             Logger.warning(error);
                             break;
                         default:

@@ -1,15 +1,13 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from "@minecraft/server";
-import { UndefinedSourceOrInitiatorError } from "../errors/command";
-import PlayerUtils from "../utils/PlayerUtils";
-import StringUtils from "../utils/StringUtils";
-import { registerCommand } from "./common";
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from '@minecraft/server';
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
+import PlayerUtils from '../utils/PlayerUtils';
+import StringUtils from '../utils/StringUtils';
+import { registerCommand } from './common';
 const messageOpCommand = {
-    name: "nacht:messageop",
-    description: "オペレーターにメッセージを送信する",
+    name: 'nacht:messageop',
+    description: 'オペレーターにメッセージを送信する',
     permissionLevel: CommandPermissionLevel.Any,
-    mandatoryParameters: [
-        { name: "message", type: CustomCommandParamType.String },
-    ],
+    mandatoryParameters: [{ name: 'message', type: CustomCommandParamType.String }],
 };
 /**
  * オペレーターにメッセージを送信するコマンドの処理

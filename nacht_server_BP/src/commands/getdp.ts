@@ -7,15 +7,17 @@ import {
   CustomCommandStatus,
   system,
   world,
-} from "@minecraft/server";
-import { NonAdminSourceError } from "../errors/command";
-import { registerCommand } from "./common";
+} from '@minecraft/server';
+
+import { NonAdminSourceError } from '../errors/command';
+
+import { registerCommand } from './common';
 
 const getDynamicPropertyCommand: CustomCommand = {
-  name: "nacht:getdp",
-  description: "Dynamic Propertyを取得する",
+  name: 'nacht:getdp',
+  description: 'Dynamic Propertyを取得する',
   permissionLevel: CommandPermissionLevel.Admin,
-  optionalParameters: [{ name: "filter", type: CustomCommandParamType.String }],
+  optionalParameters: [{ name: 'filter', type: CustomCommandParamType.String }],
 };
 
 /**
@@ -29,24 +31,17 @@ const getDynamicPropertyCommand: CustomCommand = {
  * {@link NonAdminSourceError}
  */
 const commandProcess = (origin: CustomCommandOrigin, filter?: string) => {
-  if (
-    [CustomCommandSource.Block, CustomCommandSource.NPCDialogue].includes(
-      origin.sourceType
-    )
-  ) {
+  if ([CustomCommandSource.Block, CustomCommandSource.NPCDialogue].includes(origin.sourceType)) {
     throw new NonAdminSourceError();
   }
 
   const message = world
     .getDynamicPropertyIds()
-    .filter((dpId) => dpId.includes(filter || ""))
+    .filter((dpId) => dpId.includes(filter || ''))
     .map((dpId) => `${dpId}: ${JSON.stringify(world.getDynamicProperty(dpId))}`)
-    .join("\n");
+    .join('\n');
 
   return { message, status: CustomCommandStatus.Success };
 };
 
-export default () =>
-  system.beforeEvents.startup.subscribe(
-    registerCommand(getDynamicPropertyCommand, commandProcess)
-  );
+export default () => system.beforeEvents.startup.subscribe(registerCommand(getDynamicPropertyCommand, commandProcess));

@@ -1,5 +1,5 @@
-import { world } from "@minecraft/server";
-import { Logger } from "./logger";
+import { world } from '@minecraft/server';
+import { Logger } from './logger';
 /**
  * スコアを加える
  *
@@ -12,8 +12,7 @@ export const addScore = (playerEntity, scoreName, value) => {
     var _a;
     try {
         if (playerEntity.scoreboardIdentity) {
-            (_a = world.scoreboard
-                .getObjective(scoreName)) === null || _a === void 0 ? void 0 : _a.addScore(playerEntity.scoreboardIdentity, value);
+            (_a = world.scoreboard.getObjective(scoreName)) === null || _a === void 0 ? void 0 : _a.addScore(playerEntity.scoreboardIdentity, value);
             return true;
         }
         return false;
@@ -55,8 +54,7 @@ const getScore = (playerEntity, scoreName) => {
     var _a;
     try {
         if (playerEntity.scoreboardIdentity) {
-            return (_a = world.scoreboard
-                .getObjective(scoreName)) === null || _a === void 0 ? void 0 : _a.getScore(playerEntity.scoreboardIdentity);
+            return (_a = world.scoreboard.getObjective(scoreName)) === null || _a === void 0 ? void 0 : _a.getScore(playerEntity.scoreboardIdentity);
         }
         return undefined;
     }
@@ -100,8 +98,7 @@ const setScore = (playerEntity, scoreName, value) => {
     var _a;
     try {
         if (playerEntity.scoreboardIdentity) {
-            (_a = world.scoreboard
-                .getObjective(scoreName)) === null || _a === void 0 ? void 0 : _a.setScore(playerEntity.scoreboardIdentity, value);
+            (_a = world.scoreboard.getObjective(scoreName)) === null || _a === void 0 ? void 0 : _a.setScore(playerEntity.scoreboardIdentity, value);
             return true;
         }
         return false;
@@ -122,8 +119,7 @@ export const resetScore = (playerEntity, scoreName) => {
     var _a;
     try {
         if (playerEntity.scoreboardIdentity) {
-            (_a = world.scoreboard
-                .getObjective(scoreName)) === null || _a === void 0 ? void 0 : _a.removeParticipant(playerEntity.scoreboardIdentity);
+            (_a = world.scoreboard.getObjective(scoreName)) === null || _a === void 0 ? void 0 : _a.removeParticipant(playerEntity.scoreboardIdentity);
             return true;
         }
         return false;

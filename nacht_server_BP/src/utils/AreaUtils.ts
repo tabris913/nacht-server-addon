@@ -1,12 +1,10 @@
-import {
-  BlockVolume,
-  world,
-  type Block,
-  type DimensionLocation,
-  type Entity,
-} from "@minecraft/server";
-import { MinecraftDimensionTypes } from "../types/index";
-import { Logger } from "./logger";
+import { type Block, BlockVolume, type DimensionLocation, type Entity, world } from '@minecraft/server';
+
+import { MinecraftDimensionTypes } from '../types/index';
+
+import { Logger } from './logger';
+
+import type { DimensionBlockVolume } from '../models/DimensionBlockVolume';
 
 /**
  * ネザーの街エリアの BlockVolume を生成する
@@ -22,10 +20,7 @@ export const createNetherTownArea = () => {
       { x: 800, y: nether.heightRange.max, z: 800 }
     );
   } catch (error) {
-    Logger.error(
-      "Failed to create BlockVolume for town area in nether because of",
-      error
-    );
+    Logger.error('Failed to create BlockVolume for town area in nether because of', error);
 
     throw error;
   }
@@ -45,10 +40,7 @@ export const createOverworldTownArea = () => {
       { x: 6400, y: overworld.heightRange.max, z: 6400 }
     );
   } catch (error) {
-    Logger.error(
-      "Failed to create BlockVolume for town area in overworld because of",
-      error
-    );
+    Logger.error('Failed to create BlockVolume for town area in overworld because of', error);
 
     throw error;
   }
@@ -88,8 +80,7 @@ export const existsInExploringArea = (object: Entity | Block) =>
  * @param dimension ディメンション
  * @returns
  */
-export const isInBaseArea = (location: DimensionLocation) =>
-  !isInTownArea(location) && 0 < location.z;
+export const isInBaseArea = (location: DimensionLocation) => !isInTownArea(location) && 0 < location.z;
 
 /**
  * 与えられた座標が探索エリアに含まれるかどうか判定する
@@ -98,8 +89,7 @@ export const isInBaseArea = (location: DimensionLocation) =>
  * @param dimension ディメンション
  * @returns
  */
-export const isInExploringArea = (location: DimensionLocation) =>
-  !isInTownArea(location) && location.z < 0;
+export const isInExploringArea = (location: DimensionLocation) => !isInTownArea(location) && location.z < 0;
 
 /**
  * 与えられた座標が街エリアに含まれるかどうか判定する
@@ -121,6 +111,40 @@ export const isInTownArea = (location: DimensionLocation) => {
   }
 };
 
+/**
+ * 与えられた平面が拠点エリアの範囲外にはみ出してないか確認する
+ *
+ * @param volume
+ */
+export const isOutOfBaseArea = (volume: DimensionBlockVolume) => {
+  const min = volume.getMin();
+  const max = volume.getMax();
+  let minXZ, maxXZ;
+  switch (volume.dimension.id) {
+    case MinecraftDimensionTypes.Overworld:
+      minXZ = -6400;
+      maxXZ = 6400;
+      break;
+    case MinecraftDimensionTypes.Nether:
+      minXZ = -800;
+      maxXZ = 800;
+      break;
+    default:
+      return false;
+  }
+
+  // 西側
+  if (max.x < minXZ && min.z < 0) return true;
+  // 中央 (凵型部分)
+  if (minXZ <= max.x && min.x <= maxXZ && min.z <= maxXZ) {
+    return true;
+  }
+  // 東側
+  if (maxXZ < min.x && min.z < 0) return true;
+
+  return false;
+};
+
 const AreaUtils = {
   createNetherTownArea,
   createOverworldTownArea,
@@ -130,6 +154,7 @@ const AreaUtils = {
   isInBaseArea,
   isInExploringArea,
   isInTownArea,
+  isOutOfBaseArea,
 };
 
 export default AreaUtils;

@@ -1,7 +1,7 @@
-import { NachtServerAddonError } from "./base";
+import { NachtServerAddonError } from './base';
 
 export class PointlessError extends NachtServerAddonError {
   constructor() {
-    super("ポイントが足りません。");
+    super('ポイントが足りません。');
   }
 }

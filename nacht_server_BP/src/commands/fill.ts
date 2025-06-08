@@ -10,39 +10,41 @@ import {
   type Entity,
   system,
   type Vector3,
-} from "@minecraft/server";
-import { COMMAND_MODIFICATION_BLOCK_LIMIT } from "../const";
-import { UndefinedSourceOrInitiatorError } from "../errors/command";
-import PlayerUtils from "../utils/PlayerUtils";
-import { registerCommand } from "./common";
-import { NachtServerAddonError } from "../errors/base";
-import { Logger } from "../utils/logger";
+} from '@minecraft/server';
+
+import { COMMAND_MODIFICATION_BLOCK_LIMIT } from '../const';
+import { NachtServerAddonError } from '../errors/base';
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
+import { Logger } from '../utils/logger';
+import PlayerUtils from '../utils/PlayerUtils';
+
+import { registerCommand } from './common';
 
 enum FillMode {
-  destroy = "destroy",
-  hollow = "hollow",
-  keep = "keep",
-  outline = "outline",
-  replace = "replace",
+  destroy = 'destroy',
+  hollow = 'hollow',
+  keep = 'keep',
+  outline = 'outline',
+  replace = 'replace',
 }
 
 const fillCommand: CustomCommand = {
-  name: "nacht:fill",
-  description: "領域の一部または全体を指定したブロックで埋める。",
+  name: 'nacht:fill',
+  description: '領域の一部または全体を指定したブロックで埋める。',
   permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [
-    { name: "from", type: CustomCommandParamType.Location },
-    { name: "to", type: CustomCommandParamType.Location },
-    { name: "tileName", type: CustomCommandParamType.BlockType },
+    { name: 'from', type: CustomCommandParamType.Location },
+    { name: 'to', type: CustomCommandParamType.Location },
+    { name: 'tileName', type: CustomCommandParamType.BlockType },
   ],
   optionalParameters: [
-    { name: "tileData", type: CustomCommandParamType.Integer },
+    { name: 'tileData', type: CustomCommandParamType.Integer },
     {
-      name: "nacht:oldBlockHandling",
+      name: 'nacht:oldBlockHandling',
       type: CustomCommandParamType.Enum,
     },
-    { name: "replaceTileName", type: CustomCommandParamType.BlockType },
-    { name: "replaceDataValue", type: CustomCommandParamType.Integer },
+    { name: 'replaceTileName', type: CustomCommandParamType.BlockType },
+    { name: 'replaceDataValue', type: CustomCommandParamType.Integer },
   ],
 };
 
@@ -70,7 +72,7 @@ const commandProcess = (
   tileData?: number,
   oldBlockHandling?: FillMode,
   replaceTileName?: BlockType,
-  replaceDataValue?: number
+  replaceDataValue?: number,
 ): CustomCommandResult => {
   const player = PlayerUtils.convertToPlayer(sourceEntity);
   if (player === undefined) {
@@ -78,13 +80,13 @@ const commandProcess = (
   }
 
   const blockVolume = new BlockVolume(from, to);
-  const options: [
-    BlockType,
-    number | undefined,
-    FillMode | undefined,
-    BlockType | undefined,
-    number | undefined
-  ] = [tileName, tileData, oldBlockHandling, replaceTileName, replaceDataValue];
+  const options: [BlockType, number | undefined, FillMode | undefined, BlockType | undefined, number | undefined] = [
+    tileName,
+    tileData,
+    oldBlockHandling,
+    replaceTileName,
+    replaceDataValue,
+  ];
 
   const capacity = blockVolume.getCapacity();
   if (capacity <= COMMAND_MODIFICATION_BLOCK_LIMIT) {
@@ -103,13 +105,13 @@ const commandProcess = (
     let generator: Generator<void, void, void>;
     switch (Math.min(xy, yz, zx)) {
       case xy:
-        generator = callFillCommand("z", player, blockVolume, xy, options);
+        generator = callFillCommand('z', player, blockVolume, xy, options);
         break;
       case yz:
-        generator = callFillCommand("x", player, blockVolume, yz, options);
+        generator = callFillCommand('x', player, blockVolume, yz, options);
         break;
       case zx:
-        generator = callFillCommand("y", player, blockVolume, zx, options);
+        generator = callFillCommand('y', player, blockVolume, zx, options);
         break;
       default:
         throw new NachtServerAddonError();
@@ -139,12 +141,12 @@ const makeFillCommand = (
   tileData?: number,
   oldBlockHandling?: FillMode,
   replaceTileName?: BlockType,
-  replaceDataValue?: number
+  replaceDataValue?: number,
 ) => {
   const { from, to } = blockVolume;
   const mandatory = `fill ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${tileName.id}`;
 
-  let optional = "";
+  let optional = '';
   if (tileData !== undefined) {
     optional += ` ${tileData}`;
   }
@@ -165,24 +167,16 @@ const makeFillCommand = (
 };
 
 function* callFillCommand(
-  dynamicAxis: "x" | "y" | "z",
+  dynamicAxis: 'x' | 'y' | 'z',
   player: Entity,
   blockVolume: BlockVolume,
   totalBlocks: number,
-  options: [
-    BlockType,
-    number | undefined,
-    FillMode | undefined,
-    BlockType | undefined,
-    number | undefined
-  ]
+  options: [BlockType, number | undefined, FillMode | undefined, BlockType | undefined, number | undefined],
 ) {
   const div = Math.floor(COMMAND_MODIFICATION_BLOCK_LIMIT / totalBlocks);
   let start: number = blockVolume.getMin()[dynamicAxis];
   let totalSuccessCount = 0;
-  const timesToRun =
-    Math.floor(blockVolume.getCapacity() / COMMAND_MODIFICATION_BLOCK_LIMIT) +
-    1;
+  const timesToRun = Math.floor(blockVolume.getCapacity() / COMMAND_MODIFICATION_BLOCK_LIMIT) + 1;
   let count = timesToRun;
 
   while (count--) {
@@ -191,22 +185,15 @@ function* callFillCommand(
         { ...blockVolume.from, [dynamicAxis]: start },
         {
           ...blockVolume.to,
-          [dynamicAxis]: Math.min(
-            start + div - 1,
-            blockVolume.getMax()[dynamicAxis]
-          ),
-        }
+          [dynamicAxis]: Math.min(start + div - 1, blockVolume.getMax()[dynamicAxis]),
+        },
       ),
-      ...options
+      ...options,
     );
     const successCount = player.dimension.runCommand(command).successCount;
     totalSuccessCount += successCount;
     start += div;
-    Logger.log(
-      `nacht:fill ${
-        timesToRun - count
-      }/${timesToRun} (${successCount}): ${command}`
-    );
+    Logger.log(`nacht:fill ${timesToRun - count}/${timesToRun} (${successCount}): ${command}`);
     // system.waitTicks(TicksPerSecond / 2);
     yield;
   }
@@ -215,7 +202,7 @@ function* callFillCommand(
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum("nacht:oldBlockHandling", [
+    event.customCommandRegistry.registerEnum('nacht:oldBlockHandling', [
       FillMode.destroy,
       FillMode.hollow,
       FillMode.keep,

@@ -1,7 +1,8 @@
-import { BlockVolume, BlockVolumeIntersection, } from "@minecraft/server";
-import { LengthError } from "../errors/locations";
-import { DimensionBlockVolume } from "../models/DimensionBlockVolume";
-import { Logger } from "./logger";
+import { BlockVolume, BlockVolumeIntersection, world, } from '@minecraft/server';
+import { PREFIX_LOCATION } from '../const';
+import { LengthError } from '../errors/locations';
+import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
+import { Logger } from './logger';
 /**
  * 2座標間の距離を計算する
  *
@@ -35,7 +36,7 @@ export function* collectBlocksWithin(blockVolume, dimension) {
         }
     }
     catch (error) {
-        Logger.error("Failed to collect blocks within a give area because of", error);
+        Logger.error('Failed to collect blocks within a give area because of', error);
         throw error;
     }
 }
@@ -52,14 +53,14 @@ export function* collectBlocksWithin(blockVolume, dimension) {
 export const generateBlockVolume = (location, edgeLength) => {
     try {
         if (edgeLength <= 0) {
-            throw new LengthError("edgeLength");
+            throw new LengthError('edgeLength');
         }
         const loc = generateIntegerLocation(location);
         const length = (edgeLength & 1 ? edgeLength - 1 : edgeLength) / 2;
         return new BlockVolume({ x: loc.x - length, y: loc.y, z: loc.z - length }, { x: loc.x + length, y: loc.y, z: loc.z + length });
     }
     catch (error) {
-        Logger.error("Failed to get vertices because of", error);
+        Logger.error('Failed to get vertices because of', error);
         throw error;
     }
 };
@@ -88,14 +89,13 @@ export const generateIntegerLocation = (location) => isVector3(location)
  */
 export const isOverlapped = (area1, area2) => {
     const isOverlappedFlatly = area1.intersects(area2) !== BlockVolumeIntersection.Disjoint;
-    if (area1 instanceof DimensionBlockVolume &&
-        area2 instanceof DimensionBlockVolume) {
+    if (area1 instanceof DimensionBlockVolume && area2 instanceof DimensionBlockVolume) {
         return isOverlappedFlatly && area1.dimension === area2.dimension;
     }
     return isOverlappedFlatly;
 };
-export const isVector = (location) => "x" in location && "z" in location;
-const isVector3 = (location) => "y" in location;
+export const isVector = (location) => 'x' in location && 'z' in location;
+const isVector3 = (location) => 'y' in location;
 /**
  * プレイヤーまたはブロックを中心とする、与えられた長さの立方体エリアの頂点座標を取得する
  *
@@ -120,7 +120,7 @@ export const make3DArea = (object, edgeLength) => make3DAreaFromLoc(object.locat
 export const make3DAreaFromLoc = (location, edgeLength) => {
     try {
         if (edgeLength <= 0) {
-            throw new LengthError("edgeLength");
+            throw new LengthError('edgeLength');
         }
         const loc = generateIntegerLocation(location);
         const length = (edgeLength & 1 ? edgeLength - 1 : edgeLength) / 2;
@@ -148,7 +148,7 @@ export const makeArray = (value1, value2) => {
         .fill(null)
         .map((_, index) => index + minValue);
 };
-export const offsetLocation = (location, offset) => typeof offset === "number"
+export const offsetLocation = (location, offset) => typeof offset === 'number'
     ? isVector3(location)
         ? {
             x: location.x + offset,
@@ -169,6 +169,36 @@ export const offsetLocation = (location, offset) => typeof offset === "number"
             x: location.x + offset.x,
             z: location.z + offset.z,
         };
+const findDynamicPropertiesByPrefix = (playerNameTag) => {
+    try {
+        const prefix = `${PREFIX_LOCATION}${playerNameTag ? `${playerNameTag}_` : ''}`;
+        return world
+            .getDynamicPropertyIds()
+            .filter((dpid) => dpid.startsWith(prefix))
+            .map((dpid) => world.getDynamicProperty(dpid))
+            .filter((dp) => dp !== undefined)
+            .map((dp) => JSON.parse(dp));
+    }
+    catch (error) {
+        Logger.error('Failed to retrieve dynamic properties of locations because of', error);
+        throw error;
+    }
+};
+const findDynamicPropertiesBySuffix = (owner, index) => {
+    try {
+        const suffix = `_${owner}_${index}`;
+        return world
+            .getDynamicPropertyIds()
+            .filter((dpid) => dpid.startsWith(PREFIX_LOCATION) && dpid.endsWith(suffix))
+            .map((dpid) => world.getDynamicProperty(dpid))
+            .filter((dp) => dp !== undefined)
+            .map((dp) => JSON.parse(dp));
+    }
+    catch (error) {
+        Logger.error('Failed to retrieve dynamic properties of locations because of', error);
+        throw error;
+    }
+};
 const LocationUtils = {
     calcDistance,
     calcDistances,
@@ -182,5 +212,7 @@ const LocationUtils = {
     make3DAreaFromLoc,
     makeArray,
     offsetLocation,
+    findDynamicPropertiesByPrefix,
+    findDynamicPropertiesBySuffix,
 };
 export default LocationUtils;

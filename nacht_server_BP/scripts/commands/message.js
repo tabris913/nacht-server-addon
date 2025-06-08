@@ -1,15 +1,15 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from "@minecraft/server";
-import { registerCommand } from "./common";
-import StringUtils from "../utils/StringUtils";
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from '@minecraft/server';
+import StringUtils from '../utils/StringUtils';
+import { registerCommand } from './common';
 const messageCommand = {
-    name: "nacht:message",
-    description: "メッセージを送信する",
+    name: 'nacht:message',
+    description: 'メッセージを送信する',
     permissionLevel: CommandPermissionLevel.GameDirectors,
     mandatoryParameters: [
-        { name: "target", type: CustomCommandParamType.PlayerSelector },
-        { name: "message", type: CustomCommandParamType.String },
+        { name: 'target', type: CustomCommandParamType.PlayerSelector },
+        { name: 'message', type: CustomCommandParamType.String },
     ],
-    optionalParameters: [{ name: "name", type: CustomCommandParamType.String }],
+    optionalParameters: [{ name: 'name', type: CustomCommandParamType.String }],
 };
 /**
  * メッセージ送信コマンドの処理

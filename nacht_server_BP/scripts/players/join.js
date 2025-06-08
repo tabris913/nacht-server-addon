@@ -1,7 +1,7 @@
-import { world } from "@minecraft/server";
-import { SCOREBOARD_POINT } from "../const";
-import ScoreboardUtils from "../utils/ScoreboardUtils";
-import { Logger } from "../utils/logger";
+import { world } from '@minecraft/server';
+import { SCOREBOARD_POINT } from '../const';
+import { Logger } from '../utils/logger';
+import ScoreboardUtils from '../utils/ScoreboardUtils';
 export default () => world.afterEvents.playerJoin.subscribe((event) => {
     Logger.info(`${event.playerName} is joined.`);
     world.sendMessage(`${event.playerName} さんが参加しました`);

@@ -6,17 +6,19 @@ import {
   CustomCommandStatus,
   system,
   world,
-} from "@minecraft/server";
-import { DynamicPropertyNotFoundError } from "../errors/dp";
-import { registerCommand } from "./common";
+} from '@minecraft/server';
+
+import { DynamicPropertyNotFoundError } from '../errors/dp';
+
+import { registerCommand } from './common';
 
 const clearDynamicPropertyCommand: CustomCommand = {
-  name: "nacht:cleardp",
-  description: "Dynamic Propertyをクリアする",
+  name: 'nacht:cleardp',
+  description: 'Dynamic Propertyをクリアする',
   permissionLevel: CommandPermissionLevel.Admin,
   mandatoryParameters: [
     {
-      name: "nacht:dynamicPropertyIds",
+      name: 'nacht:dynamicPropertyIds',
       type: CustomCommandParamType.String,
     },
   ],
@@ -43,6 +45,4 @@ const commandProcess = (origin: CustomCommandOrigin, id: string) => {
 };
 
 export default () =>
-  system.beforeEvents.startup.subscribe(
-    registerCommand(clearDynamicPropertyCommand, commandProcess)
-  );
+  system.beforeEvents.startup.subscribe(registerCommand(clearDynamicPropertyCommand, commandProcess));

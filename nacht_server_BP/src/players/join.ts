@@ -1,7 +1,8 @@
-import { world } from "@minecraft/server";
-import { SCOREBOARD_POINT } from "../const";
-import ScoreboardUtils from "../utils/ScoreboardUtils";
-import { Logger } from "../utils/logger";
+import { world } from '@minecraft/server';
+
+import { SCOREBOARD_POINT } from '../const';
+import { Logger } from '../utils/logger';
+import ScoreboardUtils from '../utils/ScoreboardUtils';
 
 export default () =>
   world.afterEvents.playerJoin.subscribe((event) => {
@@ -13,13 +14,9 @@ export default () =>
       const score = ScoreboardUtils.getScore(entity, SCOREBOARD_POINT);
       if (score === undefined) {
         ScoreboardUtils.setScore(entity, SCOREBOARD_POINT, 0);
-        Logger.log(
-          `${entity.nameTag}'s scoreboard ${SCOREBOARD_POINT} is enabled.`
-        );
+        Logger.log(`${entity.nameTag}'s scoreboard ${SCOREBOARD_POINT} is enabled.`);
       } else {
-        Logger.log(
-          `${entity.nameTag}'s scoreboard ${SCOREBOARD_POINT} has already enabled.`
-        );
+        Logger.log(`${entity.nameTag}'s scoreboard ${SCOREBOARD_POINT} has already enabled.`);
       }
     } else {
       Logger.warning(`Entity ${event.playerId} cannot be gotten.`);

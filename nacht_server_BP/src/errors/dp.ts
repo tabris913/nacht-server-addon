@@ -1,4 +1,4 @@
-import { NachtServerAddonError } from "./base";
+import { NachtServerAddonError } from './base';
 
 export class DynamicPropertyError extends NachtServerAddonError {}
 

@@ -1,8 +1,9 @@
-import { Logger } from "../utils/logger";
-import join from "./join";
+import { Logger } from '../utils/logger';
+
+import join from './join';
 
 export default () => {
-  Logger.log("set players");
+  Logger.log('set players');
 
   join();
 };

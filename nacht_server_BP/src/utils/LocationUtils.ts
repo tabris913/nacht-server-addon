@@ -1,16 +1,21 @@
 import {
+  type Block,
   BlockVolume,
   BlockVolumeIntersection,
-  type Block,
   type Dimension,
   type Entity,
   type Vector3,
   type VectorXZ,
-} from "@minecraft/server";
-import { LengthError } from "../errors/locations";
-import { DimensionBlockVolume } from "../models/DimensionBlockVolume";
-import type { AreaVertices } from "../models/location";
-import { Logger } from "./logger";
+  world,
+} from '@minecraft/server';
+
+import { PREFIX_LOCATION } from '../const';
+import { LengthError } from '../errors/locations';
+import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
+
+import { Logger } from './logger';
+
+import type { AreaVertices, LocationInfo } from '../models/location';
 
 /**
  * 2座標間の距離を計算する
@@ -19,8 +24,7 @@ import { Logger } from "./logger";
  * @param value2
  * @returns
  */
-const calcDistance = (value1: number, value2: number) =>
-  Math.abs(value1 - value2) + 1;
+const calcDistance = (value1: number, value2: number) => Math.abs(value1 - value2) + 1;
 
 /**
  * 2座標間の距離を計算する
@@ -39,10 +43,7 @@ const calcDistances = (location1: Vector3, location2: Vector3): Vector3 =>
  * @param dimension
  * @returns
  */
-export function* collectBlocksWithin(
-  blockVolume: BlockVolume,
-  dimension: Dimension
-) {
+export function* collectBlocksWithin(blockVolume: BlockVolume, dimension: Dimension) {
   try {
     for (const location of blockVolume.getBlockLocationIterator()) {
       const block = dimension.getBlock(location);
@@ -51,10 +52,7 @@ export function* collectBlocksWithin(
       yield block;
     }
   } catch (error) {
-    Logger.error(
-      "Failed to collect blocks within a give area because of",
-      error
-    );
+    Logger.error('Failed to collect blocks within a give area because of', error);
 
     throw error;
   }
@@ -73,7 +71,7 @@ export function* collectBlocksWithin(
 export const generateBlockVolume = (location: Vector3, edgeLength: number) => {
   try {
     if (edgeLength <= 0) {
-      throw new LengthError("edgeLength");
+      throw new LengthError('edgeLength');
     }
 
     const loc = generateIntegerLocation(location);
@@ -84,7 +82,7 @@ export const generateBlockVolume = (location: Vector3, edgeLength: number) => {
       { x: loc.x + length, y: loc.y, z: loc.z + length }
     );
   } catch (error) {
-    Logger.error("Failed to get vertices because of", error);
+    Logger.error('Failed to get vertices because of', error);
 
     throw error;
   }
@@ -96,9 +94,7 @@ export const generateBlockVolume = (location: Vector3, edgeLength: number) => {
  * @param location
  * @returns
  */
-export const generateIntegerLocation = <T extends VectorXZ | Vector3>(
-  location: T
-): T =>
+export const generateIntegerLocation = <T extends VectorXZ | Vector3>(location: T): T =>
   isVector3(location)
     ? ({
         x: Math.floor(location.x),
@@ -118,23 +114,17 @@ export const generateIntegerLocation = <T extends VectorXZ | Vector3>(
  * @param edgeLengthx
  */
 export const isOverlapped = <T extends BlockVolume>(area1: T, area2: T) => {
-  const isOverlappedFlatly =
-    area1.intersects(area2) !== BlockVolumeIntersection.Disjoint;
-  if (
-    area1 instanceof DimensionBlockVolume &&
-    area2 instanceof DimensionBlockVolume
-  ) {
+  const isOverlappedFlatly = area1.intersects(area2) !== BlockVolumeIntersection.Disjoint;
+  if (area1 instanceof DimensionBlockVolume && area2 instanceof DimensionBlockVolume) {
     return isOverlappedFlatly && area1.dimension === area2.dimension;
   }
 
   return isOverlappedFlatly;
 };
 
-export const isVector = (location: any): location is VectorXZ =>
-  "x" in location && "z" in location;
+export const isVector = (location: any): location is VectorXZ => 'x' in location && 'z' in location;
 
-const isVector3 = (location: VectorXZ | Vector3): location is Vector3 =>
-  "y" in location;
+const isVector3 = (location: VectorXZ | Vector3): location is Vector3 => 'y' in location;
 
 /**
  * プレイヤーまたはブロックを中心とする、与えられた長さの立方体エリアの頂点座標を取得する
@@ -146,10 +136,8 @@ const isVector3 = (location: VectorXZ | Vector3): location is Vector3 =>
  *
  * {@link LengthError}
  */
-export const make3DArea = (
-  object: Entity | Block,
-  edgeLength: number
-): AreaVertices<Vector3> => make3DAreaFromLoc(object.location, edgeLength);
+export const make3DArea = (object: Entity | Block, edgeLength: number): AreaVertices<Vector3> =>
+  make3DAreaFromLoc(object.location, edgeLength);
 
 /**
  * 中心座標から一辺`edgeLength`マスの立方体エリアの頂点座標を取得する
@@ -161,13 +149,10 @@ export const make3DArea = (
  *
  * {@link LengthError}
  */
-export const make3DAreaFromLoc = (
-  location: Vector3,
-  edgeLength: number
-): AreaVertices<Vector3> => {
+export const make3DAreaFromLoc = (location: Vector3, edgeLength: number): AreaVertices<Vector3> => {
   try {
     if (edgeLength <= 0) {
-      throw new LengthError("edgeLength");
+      throw new LengthError('edgeLength');
     }
     const loc = generateIntegerLocation(location);
     const length = (edgeLength & 1 ? edgeLength - 1 : edgeLength) / 2;
@@ -199,11 +184,8 @@ export const makeArray = (value1: number, value2: number) => {
     .map((_, index) => index + minValue);
 };
 
-export const offsetLocation = <T extends VectorXZ | Vector3>(
-  location: T,
-  offset: number | T
-): T =>
-  typeof offset === "number"
+export const offsetLocation = <T extends VectorXZ | Vector3>(location: T, offset: number | T): T =>
+  typeof offset === 'number'
     ? isVector3(location)
       ? ({
           x: location.x + offset,
@@ -215,15 +197,48 @@ export const offsetLocation = <T extends VectorXZ | Vector3>(
           z: location.z + offset,
         } as T)
     : isVector3(location) && isVector3(offset)
-    ? ({
-        x: location.x + offset.x,
-        y: location.y + offset.y,
-        z: location.z + offset.z,
-      } as T)
-    : ({
-        x: location.x + offset.x,
-        z: location.z + offset.z,
-      } as T);
+      ? ({
+          x: location.x + offset.x,
+          y: location.y + offset.y,
+          z: location.z + offset.z,
+        } as T)
+      : ({
+          x: location.x + offset.x,
+          z: location.z + offset.z,
+        } as T);
+
+const findDynamicPropertiesByPrefix = (playerNameTag?: string) => {
+  try {
+    const prefix = `${PREFIX_LOCATION}${playerNameTag ? `${playerNameTag}_` : ''}`;
+
+    return world
+      .getDynamicPropertyIds()
+      .filter((dpid) => dpid.startsWith(prefix))
+      .map((dpid) => world.getDynamicProperty(dpid) as string | undefined)
+      .filter((dp) => dp !== undefined)
+      .map((dp) => JSON.parse(dp) as LocationInfo);
+  } catch (error) {
+    Logger.error('Failed to retrieve dynamic properties of locations because of', error);
+
+    throw error;
+  }
+};
+const findDynamicPropertiesBySuffix = (owner: string, index: string | number) => {
+  try {
+    const suffix = `_${owner}_${index}`;
+
+    return world
+      .getDynamicPropertyIds()
+      .filter((dpid) => dpid.startsWith(PREFIX_LOCATION) && dpid.endsWith(suffix))
+      .map((dpid) => world.getDynamicProperty(dpid) as string | undefined)
+      .filter((dp) => dp !== undefined)
+      .map((dp) => JSON.parse(dp) as LocationInfo);
+  } catch (error) {
+    Logger.error('Failed to retrieve dynamic properties of locations because of', error);
+
+    throw error;
+  }
+};
 
 const LocationUtils = {
   calcDistance,
@@ -238,6 +253,8 @@ const LocationUtils = {
   make3DAreaFromLoc,
   makeArray,
   offsetLocation,
+  findDynamicPropertiesByPrefix,
+  findDynamicPropertiesBySuffix,
 };
 
 export default LocationUtils;

@@ -1,8 +1,10 @@
-import { Logger } from "../utils/logger";
-import area from "./area";
-import fortune from "./fortune";
+import { Logger } from '../utils/logger';
+import area from './area';
+import border from './border';
+import fortune from './fortune';
 export default () => {
-    Logger.log("set system");
+    Logger.log('set system');
     area();
+    border();
     fortune();
 };

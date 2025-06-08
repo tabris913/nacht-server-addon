@@ -1,4 +1,4 @@
-import type { BaseAreaInfo, FixedBaseAreaInfo } from "../models/location";
+import type { BaseAreaInfo, FixedBaseAreaInfo } from '../models/location';
 
 /**
  * 確定された拠点範囲であることを判定する
@@ -7,4 +7,4 @@ import type { BaseAreaInfo, FixedBaseAreaInfo } from "../models/location";
  * @returns
  */
 export const isFixedBase = (base: BaseAreaInfo): base is FixedBaseAreaInfo =>
-  base.dimension !== undefined && base.name !== undefined;
+  base.fixed && base.dimension !== undefined && base.name !== undefined && base.northWest !== undefined;

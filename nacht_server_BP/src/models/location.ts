@@ -1,5 +1,7 @@
-import type { Vector3, VectorXZ } from "@minecraft/server";
-import { MinecraftDimensionTypes } from "../types/index";
+import { MinecraftDimensionTypes } from '../types/index';
+
+import type { Vector3, VectorXZ } from '@minecraft/server';
+
 // import { MinecraftDimensionTypes } from "../types/index";
 
 export type AreaVertices<T extends VectorXZ | Vector3 = VectorXZ> = {
@@ -11,26 +13,21 @@ export type BaseAreaInfo = {
   dimension?: MinecraftDimensionTypes;
   edgeSize: number;
   entityId?: string;
+  fixed: boolean;
   id: string; // base_{owner}_{index}
   index: number;
   name?: string;
-  northWest: VectorXZ;
+  northWest?: VectorXZ;
   owner: string;
   participants: Array<string>;
   showBorder: boolean;
 };
 
-export type FixedBaseAreaInfo = {
+export type FixedBaseAreaInfo = BaseAreaInfo & {
   dimension: MinecraftDimensionTypes;
-  edgeSize: number;
-  entityId?: string;
-  id: string; // base_{owner}_{index}
-  index: number;
+  fixed: true;
   name: string;
   northWest: VectorXZ;
-  owner: string;
-  participants: Array<string>;
-  showBorder: boolean;
 };
 
 export type LocationInfo = {

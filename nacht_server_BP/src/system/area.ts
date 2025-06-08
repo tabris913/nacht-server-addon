@@ -1,70 +1,65 @@
-import {
-  system,
-  TicksPerSecond,
-  world,
-  type Player,
-  type Vector3,
-} from "@minecraft/server";
-import { MinecraftDimensionTypes } from "../types/index";
-import { RuleName } from "../commands/gamerule";
-import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from "../const";
-import AreaUtils from "../utils/AreaUtils";
-import LocationUtils from "../utils/LocationUtils";
-import PlayerUtils from "../utils/PlayerUtils";
-import { Logger } from "../utils/logger";
+import { type Player, system, TicksPerSecond, type Vector3, world } from '@minecraft/server';
 
-const tagTownArea = "AREA_TOWN"; // 街エリアにいる
-const tagExploreArea = "AREA_EXP"; // 探索エリアにいる
-const tagBaseArea = "AREA_BASE"; // 拠点エリアにいる
-const tagAreaAlert1 = "ALERT_AREA1"; // アラート1回目
-const tagAreaAlert2 = "ALERT_AREA2"; // アラート2回目 (5秒後)
-const tagAreaAlertTimeout = "ALERT_TIMEOUT";
+import { RuleName } from '../commands/gamerule';
+import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from '../const';
+import { MinecraftDimensionTypes } from '../types/index';
+import AreaUtils from '../utils/AreaUtils';
+import LocationUtils from '../utils/LocationUtils';
+import { Logger } from '../utils/logger';
+import PlayerUtils from '../utils/PlayerUtils';
+
+const tagTownArea = 'AREA_TOWN'; // 街エリアにいる
+const tagExploreArea = 'AREA_EXP'; // 探索エリアにいる
+const tagBaseArea = 'AREA_BASE'; // 拠点エリアにいる
+const tagAreaAlert1 = 'ALERT_AREA1'; // アラート1回目
+const tagAreaAlert2 = 'ALERT_AREA2'; // アラート2回目 (5秒後)
+const tagAreaAlertTimeout = 'ALERT_TIMEOUT';
 
 const COMMON_MSG_A1 = `${Formatting.Color.GOLD}20秒以内に元のエリアに戻らないと${Formatting.Color.DARK_PURPLE}Erste${Formatting.Color.GOLD}に強制テレポートされます`;
 const COMMON_MSG_A2 = `${Formatting.Color.GOLD}10秒以内に元のエリアに戻らないと${Formatting.Color.DARK_PURPLE}Erste${Formatting.Color.GOLD}に強制テレポートされます`;
 
-type Area = "town" | "base" | "expr";
+type Area = 'town' | 'base' | 'expr';
 
 const getAreaName = (area: Area) => {
   switch (area) {
-    case "town":
-      return "街エリア";
-    case "base":
-      return "拠点エリア";
-    case "expr":
-      return "探索エリア";
+    case 'town':
+      return '街エリア';
+    case 'base':
+      return '拠点エリア';
+    case 'expr':
+      return '探索エリア';
   }
 };
 
 const getAreaTag = (area: Area) => {
   switch (area) {
-    case "town":
+    case 'town':
       return tagTownArea;
-    case "base":
+    case 'base':
       return tagBaseArea;
-    case "expr":
+    case 'expr':
       return tagExploreArea;
   }
 };
 
 const getCallback = (area: Area) => {
   switch (area) {
-    case "town":
+    case 'town':
       return AreaUtils.existsInTownArea;
-    case "base":
+    case 'base':
       return AreaUtils.existsInBaseArea;
-    case "expr":
+    case 'expr':
       return AreaUtils.existsInExploringArea;
   }
 };
 
 const getCallback2 = (area: Area) => {
   switch (area) {
-    case "town":
+    case 'town':
       return null;
-    case "base":
+    case 'base':
       return AreaUtils.existsInExploringArea;
-    case "expr":
+    case 'expr':
       return AreaUtils.existsInBaseArea;
   }
 };
@@ -107,9 +102,7 @@ const checkPlayers = async (area: Area) => {
         .filter((tag) => player.hasTag(tag))
         .forEach((tag) => {
           player.removeTag(tag);
-          PlayerUtils.sendMessageToOps(
-            `${player.name} が${areaName}に戻りました`
-          );
+          PlayerUtils.sendMessageToOps(`${player.name} が${areaName}に戻りました`);
         });
 
       continue;
@@ -125,10 +118,7 @@ const checkPlayers = async (area: Area) => {
       system.runTimeout(() => {
         player.addTag(tagAreaAlertTimeout);
       }, TicksPerSecond * 10);
-    } else if (
-      player.hasTag(tagAreaAlert1) &&
-      player.hasTag(tagAreaAlertTimeout)
-    ) {
+    } else if (player.hasTag(tagAreaAlert1) && player.hasTag(tagAreaAlertTimeout)) {
       // 違反タグ1あり --> 二回目の検出 --> 10 秒猶予を与える
       player.addTag(tagAreaAlert2);
       player.removeTag(tagAreaAlertTimeout);
@@ -138,16 +128,11 @@ const checkPlayers = async (area: Area) => {
       system.runTimeout(() => {
         player.addTag(tagAreaAlertTimeout);
       }, TicksPerSecond * 10);
-    } else if (
-      player.hasTag(tagAreaAlert2) &&
-      player.hasTag(tagAreaAlertTimeout)
-    ) {
+    } else if (player.hasTag(tagAreaAlert2) && player.hasTag(tagAreaAlertTimeout)) {
       // 違反タグ2あり --> 三回目の検出 --> 転移させる
       if (isInWrongArea) {
         // town 以外
-        PlayerUtils.sendMessageToOps(
-          `所定の時間内に ${player.name} が${areaName}に戻らなかったため、転移させます`
-        );
+        PlayerUtils.sendMessageToOps(`所定の時間内に ${player.name} が${areaName}に戻らなかったため、転移させます`);
         if (isInWrongArea(player)) {
           // 対称エリアにいる場合
           tp(player, areaTag);
@@ -159,219 +144,20 @@ const checkPlayers = async (area: Area) => {
   }
 };
 
-/**
- * エリアの境界としてパーティクルを表示する
- */
-const showAreaBorder = () => {
-  try {
-    const locs: Record<MinecraftDimensionTypes, Set<Vector3>> = {
-      [MinecraftDimensionTypes.Overworld]: new Set(),
-      [MinecraftDimensionTypes.Nether]: new Set(),
-      [MinecraftDimensionTypes.TheEnd]: new Set(),
-    };
-
-    const distance = world.getDynamicProperty(
-      PREFIX_GAMERULE + RuleName.showAreaBorderRange
-    ) as number | undefined;
-
-    world
-      .getAllPlayers()
-      .filter((player) => player.isValid)
-      .forEach((player) => {
-        const area3D = LocationUtils.make3DArea(player, distance || 101);
-        if (area3D === undefined) {
-          return;
-        }
-        const { northWest, southEast } = area3D;
-        // y 座標は奇数のみ
-        const yArray = Array(Math.abs(northWest.y - southEast.y) + 1)
-          .fill(null)
-          .map((_, index) => index + northWest.y)
-          .filter((y) => y & 1);
-        const locations: Array<Vector3> = [];
-
-        // Borders Between Base and Exploring Area
-        if (northWest.z <= 0 && 0 <= southEast.z) {
-          // 表示範囲の z 座標条件 (z = 0 のブロック)
-          try {
-            /**
-             * 表示するブロック数 (東西方向; z 軸に平行)
-             */
-            let xLength = 0;
-            if (northWest.x <= -6401) {
-              // western border
-              xLength =
-                Math.abs(northWest.x - Math.min(southEast.x, -6401)) + 1;
-            }
-            if (6401 <= southEast.x) {
-              // eastern border
-              xLength = Math.abs(Math.max(northWest.x, 6401) - southEast.x) + 1;
-            }
-            if (0 < xLength) {
-              // 表示するブロックあり
-              /**
-               * x 座標の配列
-               *
-               * 10 の倍数のみ
-               */
-              const xArray = Array(xLength)
-                .fill(null)
-                .map((_, index) => index + northWest.x)
-                .filter((x) => x % 10 === 0);
-
-              yArray.forEach((y) =>
-                locations.push(...xArray.map((x) => ({ x, y, z: 0 })))
-              );
-            }
-          } catch (error) {
-            Logger.error("Failed to gather block locations (base / expr).");
-
-            throw error;
-          }
-        }
-        // Borders for Town Area
-        if (-6401 <= southEast.z && northWest.z <= 6401) {
-          // 東西のボーダー (z軸に平行 := x 座標が固定)
-          try {
-            let xIndex = 0;
-            if (northWest.x <= -6401 && -6401 <= southEast.x) {
-              // western border
-              xIndex = -6401;
-            } else if (northWest.x <= 6401 && 6401 <= southEast.x) {
-              // eastern border
-              xIndex = 6401;
-            }
-            if (xIndex !== 0) {
-              // 表示範囲に含まれる
-              /**
-               * 最小の z 座標
-               */
-              const minZ = Math.max(northWest.z, -6401);
-              /**
-               * z 座標の配列
-               *
-               * 10 の倍数のみ
-               */
-              const zArray = Array(
-                Math.abs(minZ - Math.min(southEast.z, 6401)) + 1
-              )
-                .fill(null)
-                .map((_, index) => minZ + index)
-                .filter((z) => z % 10 === 0);
-
-              yArray.forEach((y) =>
-                locations.push(...zArray.map((z) => ({ x: xIndex, y, z })))
-              );
-            }
-          } catch (error) {
-            Logger.error(
-              `Failed to gather block locations [town e-w] (${
-                Math.abs(
-                  Math.max(northWest.z, -6401) - Math.min(southEast.z, 6401)
-                ) + 1
-              }).`
-            );
-
-            throw error;
-          }
-        }
-        if (-6401 <= southEast.x && northWest.x <= 6401) {
-          // 南北のボーダー (x 軸に平行 := z 座標が固定)
-          try {
-            let zIndex = 0;
-            if (northWest.z <= -6401 && -6401 <= southEast.z) {
-              // northern border
-              zIndex = -6401;
-            }
-            if (northWest.z <= 6401 && 6401 <= southEast.z) {
-              // southern border
-              zIndex = 6401;
-            }
-            if (zIndex !== 0) {
-              // 表示範囲に含まれる
-              /**
-               * 最小の x 座標
-               */
-              const minX = Math.max(northWest.x, -6401);
-              /**
-               * x 座標の配列
-               */
-              const xArray = Array(
-                Math.abs(minX - Math.min(southEast.x, 6401)) + 1
-              )
-                .fill(null)
-                .map((_, index) => minX + index)
-                .filter((x) => x % 10 === 0);
-
-              yArray.forEach((y) =>
-                locations.push(...xArray.map((x) => ({ x, y, z: zIndex })))
-              );
-            }
-          } catch (error) {
-            Logger.error(
-              `Failed to gather block locations [town n-s] (${
-                Math.abs(
-                  Math.max(northWest.x, -6401) - Math.min(southEast.x, 6401)
-                ) + 1
-              }).`
-            );
-
-            throw error;
-          }
-        }
-
-        locations.forEach((location) =>
-          locs[player.dimension.id as MinecraftDimensionTypes].add(location)
-        );
-      });
-
-    Object.entries(locs)
-      .filter(([_, locations]) => locations.size > 0)
-      .forEach(([dimensionId, locations]) => {
-        const dimension = world.getDimension(dimensionId);
-
-        try {
-          Array.from(locations)
-            .map((location) => dimension.getBlock(location))
-            .filter((block) => block !== undefined)
-            .filter((block) => block.isValid && (block.isAir || block.isLiquid))
-            .forEach((block) => {
-              dimension.spawnParticle(
-                "minecraft:small_flame_particle",
-                block.location
-              );
-            });
-        } catch (error) {
-          Logger.error(`Failed to spawn particles (${locations.size}).`);
-
-          throw error;
-        }
-      });
-  } catch (error) {
-    Logger.error("Failed to show particles for area borders.");
-    Logger.error(error);
-  }
-};
-
 export default () => {
   system.runTimeout(() => {
     // 範囲チェック
-    system.runInterval(async () => {
-      if (
-        world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingArea)
-      ) {
-        // 街エリアから外に出ることは基本的にありえない
-        // checkPlayers('town');
-        checkPlayers("base");
-        checkPlayers("expr");
-      }
-    }, (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingAreaInterval) as number | undefined) || TicksPerSecond / 5);
-
-    // エリアボーダー
-    system.runInterval(() => {
-      if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorder)) {
-        showAreaBorder();
-      }
-    }, (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderInterval) as number | undefined) || TicksPerSecond / 2);
+    system.runInterval(
+      async () => {
+        if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingArea)) {
+          // 街エリアから外に出ることは基本的にありえない
+          // checkPlayers('town');
+          checkPlayers('base');
+          checkPlayers('expr');
+        }
+      },
+      (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingAreaInterval) as number | undefined) ||
+        TicksPerSecond / 5
+    );
   }, 1);
 };

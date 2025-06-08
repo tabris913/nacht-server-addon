@@ -1,10 +1,10 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from "@minecraft/server";
-import { registerCommand } from "./common";
-import { setAutoRemoveFortuneEnchant, setAutoRemoveFortuneEnchantInterval, } from "./gameRules/autoRemoveFortuneEnchant";
-import { setBaseMarketPrice, setBaseMaximumRange } from "./gameRules/base";
-import { setShowAreaBorder, setShowAreaBorderInterval, setShowAreaBorderRange, } from "./gameRules/showAreaBorder";
-import { setTeleportTarget } from "./gameRules/teleportTarget";
-import { setWatchCrossingArea, setWatchCrossingAreaInterval, } from "./gameRules/watchCrossingArea";
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from '@minecraft/server';
+import { registerCommand } from './common';
+import { setAutoRemoveFortuneEnchant, setAutoRemoveFortuneEnchantInterval } from './gameRules/autoRemoveFortuneEnchant';
+import { setBaseMarketPrice, setBaseMaximumRange } from './gameRules/base';
+import { setShowAreaBorder, setShowAreaBorderInterval, setShowAreaBorderRange } from './gameRules/showAreaBorder';
+import { setTeleportTarget } from './gameRules/teleportTarget';
+import { setWatchCrossingArea, setWatchCrossingAreaInterval } from './gameRules/watchCrossingArea';
 export var RuleName;
 (function (RuleName) {
     RuleName["autoRemoveFortuneEnchant"] = "autoRemoveFortuneEnchant";
@@ -19,12 +19,12 @@ export var RuleName;
     RuleName["watchCrossingAreaInterval"] = "watchCrossingAreaInterval";
 })(RuleName || (RuleName = {}));
 const gameruleCommand = {
-    name: "nacht:gamerule",
-    description: "アドオンで追加したゲームルールを変更する",
+    name: 'nacht:gamerule',
+    description: 'アドオンで追加したゲームルールを変更する',
     permissionLevel: CommandPermissionLevel.Admin,
     mandatoryParameters: [
-        { name: "nacht:ruleName", type: CustomCommandParamType.Enum },
-        { name: "value", type: CustomCommandParamType.String },
+        { name: 'nacht:ruleName', type: CustomCommandParamType.Enum },
+        { name: 'value', type: CustomCommandParamType.String },
     ],
 };
 /**
@@ -63,7 +63,7 @@ const commandProcess = (origin, ruleName, value) => {
 };
 export default () => {
     system.beforeEvents.startup.subscribe((event) => {
-        event.customCommandRegistry.registerEnum("nacht:ruleName", [
+        event.customCommandRegistry.registerEnum('nacht:ruleName', [
             RuleName.autoRemoveFortuneEnchant,
             RuleName.autoRemoveFortuneEnchantInterval,
             RuleName.baseMarketPrice,

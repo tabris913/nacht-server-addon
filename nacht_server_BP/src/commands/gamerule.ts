@@ -6,44 +6,35 @@ import {
   type CustomCommandResult,
   CustomCommandStatus,
   system,
-} from "@minecraft/server";
-import { registerCommand } from "./common";
-import {
-  setAutoRemoveFortuneEnchant,
-  setAutoRemoveFortuneEnchantInterval,
-} from "./gameRules/autoRemoveFortuneEnchant";
-import { setBaseMarketPrice, setBaseMaximumRange } from "./gameRules/base";
-import {
-  setShowAreaBorder,
-  setShowAreaBorderInterval,
-  setShowAreaBorderRange,
-} from "./gameRules/showAreaBorder";
-import { setTeleportTarget } from "./gameRules/teleportTarget";
-import {
-  setWatchCrossingArea,
-  setWatchCrossingAreaInterval,
-} from "./gameRules/watchCrossingArea";
+} from '@minecraft/server';
+
+import { registerCommand } from './common';
+import { setAutoRemoveFortuneEnchant, setAutoRemoveFortuneEnchantInterval } from './gameRules/autoRemoveFortuneEnchant';
+import { setBaseMarketPrice, setBaseMaximumRange } from './gameRules/base';
+import { setShowAreaBorder, setShowAreaBorderInterval, setShowAreaBorderRange } from './gameRules/showAreaBorder';
+import { setTeleportTarget } from './gameRules/teleportTarget';
+import { setWatchCrossingArea, setWatchCrossingAreaInterval } from './gameRules/watchCrossingArea';
 
 export enum RuleName {
-  autoRemoveFortuneEnchant = "autoRemoveFortuneEnchant",
-  autoRemoveFortuneEnchantInterval = "autoRemoveFortuneEnchantInterval",
-  baseMarketPrice = "baseMarketPrice",
-  baseMaximumRange = "baseMaximumRange",
-  showAreaBorder = "showAreaBorder",
-  showAreaBorderInterval = "showAreaBorderInterval",
-  showAreaBorderRange = "showAreaBorderRange",
-  teleportTargets = "teleportTargets",
-  watchCrossingArea = "watchCrossingArea",
-  watchCrossingAreaInterval = "watchCrossingAreaInterval",
+  autoRemoveFortuneEnchant = 'autoRemoveFortuneEnchant',
+  autoRemoveFortuneEnchantInterval = 'autoRemoveFortuneEnchantInterval',
+  baseMarketPrice = 'baseMarketPrice',
+  baseMaximumRange = 'baseMaximumRange',
+  showAreaBorder = 'showAreaBorder',
+  showAreaBorderInterval = 'showAreaBorderInterval',
+  showAreaBorderRange = 'showAreaBorderRange',
+  teleportTargets = 'teleportTargets',
+  watchCrossingArea = 'watchCrossingArea',
+  watchCrossingAreaInterval = 'watchCrossingAreaInterval',
 }
 
 const gameruleCommand: CustomCommand = {
-  name: "nacht:gamerule",
-  description: "アドオンで追加したゲームルールを変更する",
+  name: 'nacht:gamerule',
+  description: 'アドオンで追加したゲームルールを変更する',
   permissionLevel: CommandPermissionLevel.Admin,
   mandatoryParameters: [
-    { name: "nacht:ruleName", type: CustomCommandParamType.Enum },
-    { name: "value", type: CustomCommandParamType.String },
+    { name: 'nacht:ruleName', type: CustomCommandParamType.Enum },
+    { name: 'value', type: CustomCommandParamType.String },
   ],
 };
 
@@ -55,11 +46,7 @@ const gameruleCommand: CustomCommand = {
  * @param value
  * @returns
  */
-const commandProcess = (
-  origin: CustomCommandOrigin,
-  ruleName: RuleName,
-  value: string
-): CustomCommandResult => {
+const commandProcess = (origin: CustomCommandOrigin, ruleName: RuleName, value: string): CustomCommandResult => {
   switch (ruleName) {
     case RuleName.autoRemoveFortuneEnchant:
       return setAutoRemoveFortuneEnchant(value);
@@ -88,7 +75,7 @@ const commandProcess = (
 
 export default () => {
   system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum("nacht:ruleName", [
+    event.customCommandRegistry.registerEnum('nacht:ruleName', [
       RuleName.autoRemoveFortuneEnchant,
       RuleName.autoRemoveFortuneEnchantInterval,
       RuleName.baseMarketPrice,
