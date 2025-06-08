@@ -1,34 +1,95 @@
 import {
+  type BlockType,
   CommandPermissionLevel,
+  type CustomCommand,
+  type CustomCommandOrigin,
   CustomCommandParamType,
+  type CustomCommandResult,
+  CustomCommandSource,
   CustomCommandStatus,
+  type Entity,
+  type ItemType,
+  type Player,
   system,
-  Vector3,
+  type Vector3,
   world,
 } from '@minecraft/server';
 
-import { Logger } from '../utils/logger';
+import PlayerUtils from '../utils/PlayerUtils';
+
+import { registerCommand } from './common';
+
+const customCommand: CustomCommand = {
+  name: 'nacht:setdp',
+  description: 'Dynamic Propertyを設定する',
+  permissionLevel: CommandPermissionLevel.Admin,
+  mandatoryParameters: [
+    { name: 'id', type: CustomCommandParamType.String },
+    { name: 'nacht:CustomCommandParamType', type: CustomCommandParamType.Enum },
+    { name: 'value', type: CustomCommandParamType.String },
+  ],
+};
+
+const commandProcess = (
+  origin: CustomCommandOrigin,
+  id: string,
+  paramType: string,
+  value: string
+): CustomCommandResult => {
+  switch (paramType) {
+    case 'Boolean':
+      world.setDynamicProperty(id, value.toLowerCase() === 'true');
+      break;
+    case 'Float':
+      world.setDynamicProperty(id, parseFloat(value));
+      break;
+    case 'Integer':
+      world.setDynamicProperty(id, parseInt(value));
+      break;
+    case 'String':
+      world.setDynamicProperty(id, value);
+      break;
+    default:
+      const players: Array<Player> = [];
+      switch (origin.sourceType) {
+        case CustomCommandSource.NPCDialogue:
+          const player1 = PlayerUtils.convertToPlayer(origin.initiator);
+          if (player1) {
+            players.push(player1);
+          }
+          break;
+        case CustomCommandSource.Entity:
+          const player2 = PlayerUtils.convertToPlayer(origin.sourceEntity);
+          if (player2) {
+            players.push(player2);
+          }
+          break;
+        default:
+          players.push(...PlayerUtils.getOperators());
+      }
+      players.forEach((player) => player.sendMessage(`${paramType}をセットするには専用コマンドを利用してください。`));
+      return { status: CustomCommandStatus.Failure };
+  }
+  return { message: 'Dynamic Propertyを設定しました。', status: CustomCommandStatus.Success };
+};
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerCommand(
-      {
-        name: 'nacht:setdpstring',
-        description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
-        mandatoryParameters: [
-          { name: 'id', type: CustomCommandParamType.String },
-          { name: 'value', type: CustomCommandParamType.String },
-        ],
-      },
-      (origin, id: string, value: string) => {
-        world.setDynamicProperty(id, value);
+    event.customCommandRegistry.registerEnum('nacht:CustomCommandParamType', [
+      'BlockType',
+      'Boolean',
+      'EntitySelector',
+      'Float',
+      'Integer',
+      'ItemType',
+      'Location',
+      'PlayerSelector',
+      'String',
+    ] satisfies Array<keyof typeof CustomCommandParamType>);
 
-        return { status: CustomCommandStatus.Success };
-      },
-    );
+    registerCommand(customCommand, commandProcess)(event);
 
-    event.customCommandRegistry.registerCommand(
+    registerCommand(
       {
         name: 'nacht:setdpblock',
         description: 'Dynamic Propertyを設定する',
@@ -38,15 +99,14 @@ export default () =>
           { name: 'value', type: CustomCommandParamType.BlockType },
         ],
       },
-      (origin, id: string, value) => {
-        Logger.log(JSON.stringify(value));
+      (origin, id: string, value: BlockType) => {
         world.setDynamicProperty(id, JSON.stringify(value));
 
         return { status: CustomCommandStatus.Success };
-      },
-    );
+      }
+    )(event);
 
-    event.customCommandRegistry.registerCommand(
+    registerCommand(
       {
         name: 'nacht:setdpitem',
         description: 'Dynamic Propertyを設定する',
@@ -56,65 +116,14 @@ export default () =>
           { name: 'value', type: CustomCommandParamType.ItemType },
         ],
       },
-      (origin, id: string, value: { id: string }) => {
-        world.setDynamicProperty(id, value.id);
+      (origin, id: string, value: ItemType) => {
+        world.setDynamicProperty(id, JSON.stringify(value));
 
         return { status: CustomCommandStatus.Success };
-      },
-    );
+      }
+    )(event);
 
-    event.customCommandRegistry.registerCommand(
-      {
-        name: 'nacht:setdpfloat',
-        description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
-        mandatoryParameters: [
-          { name: 'id', type: CustomCommandParamType.String },
-          { name: 'value', type: CustomCommandParamType.Float },
-        ],
-      },
-      (origin, id: string, value: number) => {
-        world.setDynamicProperty(id, value);
-
-        return { status: CustomCommandStatus.Success };
-      },
-    );
-
-    event.customCommandRegistry.registerCommand(
-      {
-        name: 'nacht:setdpinteger',
-        description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
-        mandatoryParameters: [
-          { name: 'id', type: CustomCommandParamType.String },
-          { name: 'value', type: CustomCommandParamType.Integer },
-        ],
-      },
-      (origin, id: string, value: number) => {
-        world.setDynamicProperty(id, value);
-
-        return { status: CustomCommandStatus.Success };
-      },
-    );
-
-    event.customCommandRegistry.registerCommand(
-      {
-        name: 'nacht:setdpboolean',
-        description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
-        mandatoryParameters: [
-          { name: 'id', type: CustomCommandParamType.String },
-          { name: 'value', type: CustomCommandParamType.Boolean },
-        ],
-      },
-      (origin, id: string, value: boolean) => {
-        world.setDynamicProperty(id, value);
-
-        return { status: CustomCommandStatus.Success };
-      },
-    );
-
-    event.customCommandRegistry.registerCommand(
+    registerCommand(
       {
         name: 'nacht:setdpentity',
         description: 'Dynamic Propertyを設定する',
@@ -124,14 +133,14 @@ export default () =>
           { name: 'value', type: CustomCommandParamType.EntitySelector },
         ],
       },
-      (origin, id: string, value) => {
+      (origin, id: string, value: Array<Entity>) => {
         world.setDynamicProperty(id, JSON.stringify(value));
 
         return { status: CustomCommandStatus.Success };
-      },
-    );
+      }
+    )(event);
 
-    event.customCommandRegistry.registerCommand(
+    registerCommand(
       {
         name: 'nacht:setdpplayer',
         description: 'Dynamic Propertyを設定する',
@@ -141,14 +150,14 @@ export default () =>
           { name: 'value', type: CustomCommandParamType.PlayerSelector },
         ],
       },
-      (origin, id: string, value) => {
+      (origin, id: string, value: Array<Player>) => {
         world.setDynamicProperty(id, JSON.stringify(value));
 
         return { status: CustomCommandStatus.Success };
-      },
-    );
+      }
+    )(event);
 
-    event.customCommandRegistry.registerCommand(
+    registerCommand(
       {
         name: 'nacht:setdplocation',
         description: 'Dynamic Propertyを設定する',
@@ -159,26 +168,9 @@ export default () =>
         ],
       },
       (origin, id: string, value: Vector3) => {
-        world.setDynamicProperty(id, value);
+        world.setDynamicProperty(id, JSON.stringify(value));
 
         return { status: CustomCommandStatus.Success };
-      },
-    );
-
-    // event.customCommandRegistry.registerCommand(
-    //   {
-    //     name: "nacht:setdpenum",
-    //     description: "Dynamic Propertyを設定する",
-    //     permissionLevel: CommandPermissionLevel.Admin,
-    //     mandatoryParameters: [
-    //       { name: "id", type: CustomCommandParamType.String },
-    //       { name: "value", type: CustomCommandParamType.Enum },
-    //     ],
-    //   },
-    //   (origin, id: string, value) => {
-    //     world.setDynamicProperty(id, JSON.stringify(value));
-
-    //     return void 0;
-    //   }
-    // );
+      }
+    )(event);
   });

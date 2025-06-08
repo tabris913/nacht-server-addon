@@ -1,4 +1,4 @@
-import { type Entity, Player, world } from '@minecraft/server';
+import { type Entity, Player, type RawMessage, world } from '@minecraft/server';
 
 import { TAG_OPERATOR } from '../const';
 
@@ -10,7 +10,7 @@ import { Logger } from './logger';
  * @param entityOrPlayer エンティティまたはプレイヤー
  * @returns 与えられたエンティティと ID が一致するプレイヤー
  */
-export const convertToPlayer = (entityOrPlayer?: Entity | Player) => {
+const convertToPlayer = (entityOrPlayer?: Entity | Player) => {
   try {
     if (entityOrPlayer === undefined) {
       Logger.warning('A given entity/player cannot be converted because it is undefined.');
@@ -41,7 +41,7 @@ export const convertToPlayer = (entityOrPlayer?: Entity | Player) => {
  * @param condition 条件
  * @returns
  */
-export const findPlayer = (condition: { id?: string; nameTag?: string }) => {
+const findPlayer = (condition: { id?: string; nameTag?: string }) => {
   try {
     return world
       .getAllPlayers()
@@ -62,7 +62,7 @@ export const findPlayer = (condition: { id?: string; nameTag?: string }) => {
  *
  * @returns オペレータープレイヤーの配列
  */
-export const getOperators = () => {
+const getOperators = () => {
   try {
     return world.getAllPlayers().filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
   } catch (error) {
@@ -77,7 +77,7 @@ export const getOperators = () => {
  *
  * @param message メッセージ
  */
-export const sendMessageToOps = (message: string) => {
+const sendMessageToOps = (message: Array<RawMessage | string> | RawMessage | string) => {
   try {
     getOperators().forEach((op) => op.sendMessage(message));
   } catch (error) {

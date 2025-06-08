@@ -122,6 +122,7 @@ export const isOverlapped = <T extends BlockVolume>(area1: T, area2: T) => {
   return isOverlappedFlatly;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isVector = (location: any): location is VectorXZ => 'x' in location && 'z' in location;
 
 const isVector3 = (location: VectorXZ | Vector3): location is Vector3 => 'y' in location;

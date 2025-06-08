@@ -7,7 +7,7 @@ import { Logger } from './logger';
  * @param entityOrPlayer エンティティまたはプレイヤー
  * @returns 与えられたエンティティと ID が一致するプレイヤー
  */
-export const convertToPlayer = (entityOrPlayer) => {
+const convertToPlayer = (entityOrPlayer) => {
     try {
         if (entityOrPlayer === undefined) {
             Logger.warning('A given entity/player cannot be converted because it is undefined.');
@@ -33,7 +33,7 @@ export const convertToPlayer = (entityOrPlayer) => {
  * @param condition 条件
  * @returns
  */
-export const findPlayer = (condition) => {
+const findPlayer = (condition) => {
     try {
         return world
             .getAllPlayers()
@@ -53,7 +53,7 @@ export const findPlayer = (condition) => {
  *
  * @returns オペレータープレイヤーの配列
  */
-export const getOperators = () => {
+const getOperators = () => {
     try {
         return world.getAllPlayers().filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
     }
@@ -67,7 +67,7 @@ export const getOperators = () => {
  *
  * @param message メッセージ
  */
-export const sendMessageToOps = (message) => {
+const sendMessageToOps = (message) => {
     try {
         getOperators().forEach((op) => op.sendMessage(message));
     }

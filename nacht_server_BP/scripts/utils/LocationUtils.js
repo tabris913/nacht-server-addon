@@ -94,6 +94,7 @@ export const isOverlapped = (area1, area2) => {
     }
     return isOverlappedFlatly;
 };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isVector = (location) => 'x' in location && 'z' in location;
 const isVector3 = (location) => 'y' in location;
 /**

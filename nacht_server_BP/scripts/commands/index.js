@@ -7,6 +7,7 @@ import gamerule from './gamerule';
 import getdp from './getdp';
 import message from './message';
 import messageop from './messageop';
+import migrate from './migrate';
 import registertptarget from './registertptarget';
 import renamedp from './renamedp';
 import sell from './sell';
@@ -19,6 +20,7 @@ export default () => {
     fill();
     gamerule();
     getdp();
+    migrate();
     message();
     messageop();
     registertptarget();
