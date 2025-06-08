@@ -7,8 +7,8 @@ import { BaseAreaDimensionBlockVolume } from '../../models/BaseAreaDimensionBloc
 import AreaUtils from '../../utils/AreaUtils';
 import BaseUtils from '../../utils/BaseUtils';
 import InventoryUtils from '../../utils/InventoryUtils';
-import { Logger } from '../../utils/logger';
 import LocationUtils from '../../utils/LocationUtils';
+import { Logger } from '../../utils/logger';
 /**
  * 同居人を設定する
  *
@@ -42,10 +42,6 @@ const changeCoop = (player, dp) => {
  * @param dp
  */
 const fixBaseZone = (player, flag, dp) => {
-    if (dp.fixed) {
-        player.sendMessage('既に確定済みです。');
-        return;
-    }
     if (dp.entityId === undefined) {
         player.sendMessage({});
         return;
@@ -117,6 +113,28 @@ const setConfig = (player, dp) => {
         throw error;
     });
 };
+/**
+ * 拠点範囲を解放する
+ *
+ * @param player
+ * @param dp
+ */
+const releaseBaseZone = (player, dp) => {
+    const form = new MessageFormData();
+    form.body('拠点を解放していいですか？');
+    form.button1('はい');
+    form.button2('いいえ');
+    form.show(player).then((response) => {
+        if (response.canceled) {
+            Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
+            return;
+        }
+        if (response.selection === 0) {
+            world.setDynamicProperty(dp.id, JSON.stringify(Object.assign(Object.assign({}, dp), { fixed: false })));
+            player.sendMessage(`${dp.name}の拠点範囲を解放しました。`);
+        }
+    });
+};
 export default () => {
     /**
      * playerInteractWithEntity の beforeEvent
@@ -160,7 +178,7 @@ export default () => {
                     return;
                 }
                 const form = new ActionFormData();
-                form.button('範囲を確定する');
+                form.button(base.fixed ? '拠点を廃止する' : '範囲を確定する');
                 form.button('拠点の設定を変更する');
                 form.button('同居人を登録する');
                 form.button('アイテム化する');
@@ -173,7 +191,12 @@ export default () => {
                     switch (response.selection) {
                         case 0:
                             // 範囲確定
-                            fixBaseZone(event.player, event.target, base);
+                            if (base.fixed) {
+                                releaseBaseZone(event.player, base);
+                            }
+                            else {
+                                fixBaseZone(event.player, event.target, base);
+                            }
                             break;
                         case 1:
                             // 設定変更
