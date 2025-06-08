@@ -8,11 +8,11 @@ wiki: https://github.com/tabris913/nacht-server-addon/wiki
 | ------: | ---------- | -------- |
 |   0.1.0 | 2025-05-28 | 新規作成 |
 |   0.2.0 | 2025-05-30 |          |
-|   0.3.0 | 2025-06-?? |          |
+|   0.3.0 | 2025-06-09 |          |
 
 ### 0.3.0
 
-Released in 2025-06-??.
+Released in 2025-06-09.
 
 #### Commands
 
@@ -32,6 +32,11 @@ Released in 2025-06-??.
 
 - 拠点の旗 (nacht:base_flag) 追加
 - なはとの羽根 (nacht:nacht_feather) 仕様変更
+
+#### System
+
+- 拠点システム追加
+- ゲームルール設定追加
 
 ### 0.2.0
 
