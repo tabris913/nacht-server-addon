@@ -1,0 +1,92 @@
+{
+  "[json]": {
+    // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
+    // null: None
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[latex]": {
+    // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
+    // null: None
+    "editor.defaultFormatter": "James-Yu.latex-workshop",
+    // The number of spaces a tab is equal to. This setting is overridden based on the file contents when #editor.detectIndentation# is on.
+    "editor.tabSize": 4
+  },
+  "[markdown]": {
+    // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
+    // null: None
+    "editor.defaultFormatter": "jkillian.custom-local-formatters",
+    // The number of spaces a tab is equal to. This setting is overridden based on the file contents when #editor.detectIndentation# is on.
+    "editor.tabSize": 4
+  },
+  "customLocalFormatters.formatters": [
+    {
+      "command": "npx textlint --stdin --stdin-filename file --fix --format fixed-result",
+      "languages": ["markdown"]
+    }
+  ],
+  // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
+  // null: None
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Controls the font family.
+  "editor.fontFamily": "Consolas, 'Courier New', monospace, 'Yu Gothic'",
+  // Controls the font size in pixels.
+  "editor.fontSize": 14,
+  // Format a file on save. A formatter must be available, the file must not be saved after delay, and the editor must not be shutting down.
+  "editor.formatOnSave": true,
+  // Controls whether the minimap is shown.
+  "editor.minimap.enabled": false,
+  // Controls whether the editor should render control characters.
+  "editor.renderControlCharacters": false,
+  // Controls how the editor should render whitespace characters.
+  "editor.renderWhitespace": "all",
+  // Render vertical rulers after a certain number of monospace characters. Use multiple values for multiple rulers. No rulers are drawn if array is empty.
+  "editor.rulers": [80, 120],
+  // Controls whether the semanticHighlighting is shown for the languages that support it.
+  // true: Semantic highlighting enabled for all color themes.
+  "editor.semanticHighlighting.enabled": true,
+  // Controls how suggestions are pre-selected when showing the suggest list.
+  // first: Always select the first suggestion.
+  "editor.suggestSelection": "first",
+  // The number of spaces a tab is equal to. This setting is overridden based on the file contents when #editor.detectIndentation# is on.
+  "editor.tabSize": 2,
+  // Controls how lines should wrap.
+  // wordWrapColumn: Lines will wrap at #editor.wordWrapColumn#.
+  "editor.wordWrap": "wordWrapColumn",
+  // Controls the wrapping column of the editor when #editor.wordWrap# is wordWrapColumn or bounded.
+  "editor.wordWrapColumn": 120,
+  "extensions.verifySignature": false,
+  "rest-client.decodeEscapedUnicodeCharacters": true,
+  "textlint.autoFixOnSave": true,
+  "textlint.configPath": ".textlintrc",
+  // Enables or disables all validations.
+  "css.validate": false,
+  // Code action kinds to be run on save.
+  "editor.codeActionsOnSave": {
+    "editor.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  // The default end of line character.
+  // : LF
+  "files.eol": "\n",
+  // When enabled, will trim trailing whitespace when saving a file.
+  "files.trimTrailingWhitespace": true,
+  // When enabled, insert a final new line at the end of the file when saving it.
+  "files.insertFinalNewline": true,
+  // When enabled, will trim all new lines after the final new line at the end of the file when saving it.
+  "files.trimFinalNewlines": true,
+  // Enables or disables all validations.
+  "less.validate": false,
+  // Path to the prettier configuration file
+  // "prettier.configPath": ".prettierrc.json",
+  // Path to a .prettierignore file
+  "prettier.ignorePath": ".prettierignore",
+  // Enables or disables all validations.
+  "scss.validate": false,
+  // Specifies the folder path to the tsserver and lib*.d.ts files under a TypeScript install to use for IntelliSense, for example: ./node_modules/typescript/lib.
+  // - When specified as a user setting, the TypeScript version from typescript.tsdk automatically replaces the built-in TypeScript version.
+  // - When specified as a workspace setting, typescript.tsdk allows you to switch to use that workspace version of TypeScript for IntelliSense with the TypeScript: Select TypeScript version command.
+  // See the TypeScript documentation for more detail about managing TypeScript versions.
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "tailwindCSS.classAttributes": ["class", "className", "ngClass", "class:list", ".*ClassName*"]
+}
