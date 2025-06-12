@@ -21,7 +21,9 @@
   "customLocalFormatters.formatters": [
     {
       "command": "npx textlint --stdin --stdin-filename file --fix --format fixed-result",
-      "languages": ["markdown"]
+      "languages": [
+        "markdown"
+      ]
     }
   ],
   // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
@@ -40,7 +42,10 @@
   // Controls how the editor should render whitespace characters.
   "editor.renderWhitespace": "all",
   // Render vertical rulers after a certain number of monospace characters. Use multiple values for multiple rulers. No rulers are drawn if array is empty.
-  "editor.rulers": [80, 120],
+  "editor.rulers": [
+    80,
+    120
+  ],
   // Controls whether the semanticHighlighting is shown for the languages that support it.
   // true: Semantic highlighting enabled for all color themes.
   "editor.semanticHighlighting.enabled": true,
@@ -88,5 +93,13 @@
   // - When specified as a workspace setting, typescript.tsdk allows you to switch to use that workspace version of TypeScript for IntelliSense with the TypeScript: Select TypeScript version command.
   // See the TypeScript documentation for more detail about managing TypeScript versions.
   "typescript.tsdk": "node_modules/typescript/lib",
-  "tailwindCSS.classAttributes": ["class", "className", "ngClass", "class:list", ".*ClassName*"]
+  "eslint.format.enable": true,
+  "eslint.run": "onSave",
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list",
+    ".*ClassName*"
+  ]
 }
