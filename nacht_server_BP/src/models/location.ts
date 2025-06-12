@@ -38,3 +38,11 @@ export type LocationInfo = {
   name: string;
   owner: string;
 };
+
+export type UneditableAreas = {
+  dimension: MinecraftDimensionTypes;
+  id: string; // fixedarea_{index}
+  index: number;
+  max: Vector3;
+  min: Vector3;
+};

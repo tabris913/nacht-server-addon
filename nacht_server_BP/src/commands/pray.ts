@@ -6,8 +6,9 @@ import {
   system,
 } from '@minecraft/server';
 
-import { registerCommand } from './common';
 import { MinecraftEnchantmentTypes } from '../types';
+
+import { registerCommand } from './common';
 
 const prayCommand: CustomCommand = {
   name: 'nacht:pray',
