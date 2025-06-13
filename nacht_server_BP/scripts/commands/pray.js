@@ -2,7 +2,7 @@ import { CommandPermissionLevel, CustomCommandParamType, CustomCommandSource, Cu
 import { EffectNames, PREFIX_GAMERULE, SCOREBOARD_POINT } from '../const';
 import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
 import { PointlessError } from '../errors/market';
-import { MinecraftEffectTypes } from '../types';
+import { MinecraftEffectTypes } from '../types/index';
 import PlayerUtils from '../utils/PlayerUtils';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
 import { registerCommand } from './common';
