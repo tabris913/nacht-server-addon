@@ -28,6 +28,17 @@ const fixAreaCommand: CustomCommand = {
   ],
 };
 
+/**
+ * 編集不可範囲を設定するコマンドの処理
+ *
+ * @param origin
+ * @param from 範囲の始点
+ * @param to 範囲の終点
+ * @returns
+ * @throws This function can throw error.
+ *
+ * {@link UndefinedSourceOrInitiatorError}
+ */
 const commandProcess = (origin: CustomCommandOrigin, from: Vector3, to: Vector3): CustomCommandResult => {
   if (origin.sourceEntity === undefined) throw new UndefinedSourceOrInitiatorError();
 

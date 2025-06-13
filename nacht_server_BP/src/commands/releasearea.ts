@@ -21,6 +21,15 @@ const releaseAreaCommand: CustomCommand = {
   permissionLevel: CommandPermissionLevel.Admin,
 };
 
+/**
+ * 編集不可範囲を解除する
+ *
+ * @param origin
+ * @returns
+ * @throws This function can throw error.
+ *
+ * {@link UndefinedSourceOrInitiatorError}
+ */
 const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
   const player = PlayerUtils.convertToPlayer(origin.sourceEntity);
   if (player === undefined) throw new UndefinedSourceOrInitiatorError();
