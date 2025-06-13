@@ -18,6 +18,7 @@ Released in 2025-06-??.
 
 #### Commands
 
+- diceroll コマンド追加
 - exchange コマンド追加
 - fixarea コマンド追加
 - pray コマンド追加
