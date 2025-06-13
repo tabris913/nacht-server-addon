@@ -1,5 +1,6 @@
+import { MinecraftEffectTypes } from './types/index';
+
 import type { Vector3 } from '@minecraft/server';
-import { MinecraftEffectTypes } from '@minecraft/vanilla-data';
 
 // Counter
 export const COUNTER_TRANSFER = 'point-transfer';

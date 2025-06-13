@@ -1,4 +1,4 @@
-import { MinecraftEffectTypes } from '@minecraft/vanilla-data';
+import { MinecraftEffectTypes } from './types/index';
 // Counter
 export const COUNTER_TRANSFER = 'point-transfer';
 export const COUNTER_UNEDITABLE = 'uneditable-areas';
