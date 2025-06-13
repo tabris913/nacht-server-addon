@@ -41,7 +41,7 @@ export const countUpCounter = (id: string) => {
  */
 export const getNextCounter = (id: string) => {
   try {
-    return world.getDynamicProperty(PREFIX_COUNTER + id) || 0;
+    return (world.getDynamicProperty(PREFIX_COUNTER + id) as number | undefined) || 0;
   } catch (error) {
     Logger.error(`Failed to get the next value for counter ${id} because of`, error);
 

@@ -23,6 +23,7 @@ Released in 2025-06-??.
 - fixarea コマンド追加
 - pray コマンド追加
 - releasearea コマンド追加
+- remit コマンド追加
 
 ### 0.3.x
 
