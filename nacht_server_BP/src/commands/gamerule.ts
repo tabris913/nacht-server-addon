@@ -11,10 +11,10 @@ import {
 import { registerCommand } from './common';
 import { setAutoRemoveFortuneEnchant, setAutoRemoveFortuneEnchantInterval } from './gameRules/autoRemoveFortuneEnchant';
 import { setBaseMarketPrice, setBaseMaximumRange } from './gameRules/base';
+import { setPrayPrice } from './gameRules/pray';
 import { setShowAreaBorder, setShowAreaBorderInterval, setShowAreaBorderRange } from './gameRules/showAreaBorder';
 import { setTeleportTarget } from './gameRules/teleportTarget';
 import { setWatchCrossingArea, setWatchCrossingAreaInterval } from './gameRules/watchCrossingArea';
-import { setPrayPrice } from './gameRules/pray';
 
 export enum RuleName {
   autoRemoveFortuneEnchant = 'autoRemoveFortuneEnchant',

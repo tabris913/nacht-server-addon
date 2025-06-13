@@ -12,15 +12,17 @@ import {
   world,
 } from '@minecraft/server';
 
-import { registerCommand } from './common';
-import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
-import PlayerUtils from '../utils/PlayerUtils';
-import { MinecraftEffectTypes } from '../types';
 import { EffectNames, PREFIX_GAMERULE, SCOREBOARD_POINT } from '../const';
-import ScoreboardUtils from '../utils/ScoreboardUtils';
-import { RuleName } from './gamerule';
+import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
 import { PointlessError } from '../errors/market';
 import players from '../players';
+import { MinecraftEffectTypes } from '../types';
+import PlayerUtils from '../utils/PlayerUtils';
+import ScoreboardUtils from '../utils/ScoreboardUtils';
+
+import { registerCommand } from './common';
+import { RuleName } from './gamerule';
+
 
 type Rarity = 'N' | 'R' | 'SR' | 'SSR';
 
