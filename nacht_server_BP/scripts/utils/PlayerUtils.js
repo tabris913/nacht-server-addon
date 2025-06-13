@@ -37,8 +37,9 @@ const findPlayer = (condition) => {
     try {
         return world
             .getAllPlayers()
-            .filter((player) => (player.id ? player.id === condition.id : true))
-            .filter((player) => (player.nameTag ? player.nameTag === condition.nameTag : true))
+            .filter((player) => (condition.id ? player.id === condition.id : true))
+            .filter((player) => (condition.nameTag ? player.nameTag === condition.nameTag : true))
+            .filter((player) => (condition.isValid ? player.isValid : true))
             .at(0);
     }
     catch (error) {

@@ -7,4 +7,5 @@ export type TransferHistory = {
   isWithdrawn: boolean;
   remittee: string;
   remitter: string;
+  withdrawnDatetime?: string;
 };

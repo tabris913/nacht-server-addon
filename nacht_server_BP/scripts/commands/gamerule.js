@@ -2,6 +2,7 @@ import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, sy
 import { registerCommand } from './common';
 import { setAutoRemoveFortuneEnchant, setAutoRemoveFortuneEnchantInterval } from './gameRules/autoRemoveFortuneEnchant';
 import { setBaseMarketPrice, setBaseMaximumRange } from './gameRules/base';
+import { setPrayPrice } from './gameRules/pray';
 import { setShowAreaBorder, setShowAreaBorderInterval, setShowAreaBorderRange } from './gameRules/showAreaBorder';
 import { setTeleportTarget } from './gameRules/teleportTarget';
 import { setWatchCrossingArea, setWatchCrossingAreaInterval } from './gameRules/watchCrossingArea';
@@ -11,6 +12,7 @@ export var RuleName;
     RuleName["autoRemoveFortuneEnchantInterval"] = "autoRemoveFortuneEnchantInterval";
     RuleName["baseMarketPrice"] = "baseMarketPrice";
     RuleName["baseMaximumRange"] = "baseMaximumRange";
+    RuleName["prayPrice"] = "prayPrice";
     RuleName["showAreaBorder"] = "showAreaBorder";
     RuleName["showAreaBorderInterval"] = "showAreaBorderInterval";
     RuleName["showAreaBorderRange"] = "showAreaBorderRange";
@@ -45,6 +47,8 @@ const commandProcess = (origin, ruleName, value) => {
             return setBaseMarketPrice(value);
         case RuleName.baseMaximumRange:
             return setBaseMaximumRange(value);
+        case RuleName.prayPrice:
+            return setPrayPrice(value);
         case RuleName.showAreaBorder:
             return setShowAreaBorder(value);
         case RuleName.showAreaBorderInterval:
@@ -68,6 +72,7 @@ export default () => {
             RuleName.autoRemoveFortuneEnchantInterval,
             RuleName.baseMarketPrice,
             RuleName.baseMaximumRange,
+            RuleName.prayPrice,
             RuleName.showAreaBorder,
             RuleName.showAreaBorderInterval,
             RuleName.showAreaBorderRange,

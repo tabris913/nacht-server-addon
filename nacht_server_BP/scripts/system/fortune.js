@@ -1,4 +1,4 @@
-import { system, TicksPerSecond, world } from '@minecraft/server';
+import { ItemComponentTypes, system, TicksPerSecond, world } from '@minecraft/server';
 import { RuleName } from '../commands/gamerule';
 import { PREFIX_GAMERULE } from '../const';
 import InventoryUtils from '../utils/InventoryUtils';
@@ -13,10 +13,10 @@ export default () => system.runTimeout(() => system.runInterval(() => {
             if (item === undefined) {
                 return;
             }
-            const enchantments = ((_a = item.getComponent('minecraft:enchantable')) === null || _a === void 0 ? void 0 : _a.getEnchantments()) || [];
+            const enchantments = ((_a = item.getComponent(ItemComponentTypes.Enchantable)) === null || _a === void 0 ? void 0 : _a.getEnchantments()) || [];
             if (enchantments.filter((enchantment) => enchantment.type.id === 'fortune').length > 0) {
                 // このスロットのアイテムに幸運エンチャントがあり
-                (_b = item.getComponent('minecraft:enchantable')) === null || _b === void 0 ? void 0 : _b.removeEnchantment('fortune');
+                (_b = item.getComponent(ItemComponentTypes.Enchantable)) === null || _b === void 0 ? void 0 : _b.removeEnchantment('fortune');
                 slot.setItem(item);
                 player.sendMessage([
                     item.nameTag || {

@@ -1,4 +1,4 @@
-import { system, TicksPerSecond, world } from '@minecraft/server';
+import { ItemComponentTypes, system, TicksPerSecond, world } from '@minecraft/server';
 
 import { RuleName } from '../commands/gamerule';
 import { PREFIX_GAMERULE } from '../const';
@@ -21,11 +21,11 @@ export default () =>
                   return;
                 }
 
-                const enchantments = item.getComponent('minecraft:enchantable')?.getEnchantments() || [];
+                const enchantments = item.getComponent(ItemComponentTypes.Enchantable)?.getEnchantments() || [];
 
                 if (enchantments.filter((enchantment) => enchantment.type.id === 'fortune').length > 0) {
                   // このスロットのアイテムに幸運エンチャントがあり
-                  item.getComponent('minecraft:enchantable')?.removeEnchantment('fortune');
+                  item.getComponent(ItemComponentTypes.Enchantable)?.removeEnchantment('fortune');
                   slot.setItem(item);
                   player.sendMessage([
                     item.nameTag || {
@@ -34,11 +34,11 @@ export default () =>
                     'から幸運エンチャントを除去しました。',
                   ]);
                 }
-              }),
+              })
             );
           }
         },
-        (world.getDynamicProperty(GAME_RULE_KEY_INTERVAL) as number) || TicksPerSecond,
+        (world.getDynamicProperty(GAME_RULE_KEY_INTERVAL) as number) || TicksPerSecond
       ),
-    1,
+    1
   );

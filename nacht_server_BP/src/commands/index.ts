@@ -17,6 +17,7 @@ import renamedp from './renamedp';
 import sell from './sell';
 import setdp from './setdp';
 import transfer from './transfer';
+import withdraw from './withdraw';
 
 export default () => {
   Logger.log('set commands');
@@ -38,4 +39,5 @@ export default () => {
   sell();
   setdp();
   transfer();
+  withdraw();
 };
