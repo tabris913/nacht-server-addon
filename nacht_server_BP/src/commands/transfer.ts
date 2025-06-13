@@ -49,7 +49,7 @@ const commandProcess = (origin: CustomCommandOrigin, remittees: Array<Player>, a
   const remitter = PlayerUtils.convertToPlayer(origin.initiator);
   if (remitter === undefined) throw new UndefinedSourceOrInitiatorError();
   if (remittees.length === 0) throw new NachtServerAddonError('送金先が見つかりませんでした。');
-  if (remittees.length > 0) throw new NachtServerAddonError('送金先が複数指定されました。');
+  if (remittees.length > 1) throw new NachtServerAddonError('送金先が複数指定されました。');
   const remittee = remittees[0];
   if (amount <= 0) throw new NachtServerAddonError('ポイント数が不正です。');
   if (!Number.isSafeInteger(amount)) throw new NachtServerAddonError('ポイント数が不正です。');

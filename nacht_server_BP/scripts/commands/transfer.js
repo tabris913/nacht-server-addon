@@ -35,7 +35,7 @@ const commandProcess = (origin, remittees, amount) => {
         throw new UndefinedSourceOrInitiatorError();
     if (remittees.length === 0)
         throw new NachtServerAddonError('送金先が見つかりませんでした。');
-    if (remittees.length > 0)
+    if (remittees.length > 1)
         throw new NachtServerAddonError('送金先が複数指定されました。');
     const remittee = remittees[0];
     if (amount <= 0)

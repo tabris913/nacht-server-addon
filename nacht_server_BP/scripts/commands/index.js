@@ -10,6 +10,7 @@ import getdp from './getdp';
 import message from './message';
 import messageop from './messageop';
 import migrate from './migrate';
+import pray from './pray';
 import registertptarget from './registertptarget';
 import releasearea from './releasearea';
 import renamedp from './renamedp';
@@ -30,6 +31,7 @@ export default () => {
     migrate();
     message();
     messageop();
+    pray();
     registertptarget();
     releasearea();
     renamedp();
