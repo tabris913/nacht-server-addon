@@ -3,6 +3,7 @@ import { Logger } from '../utils/logger';
 import buy from './buy';
 import buybase from './buybase';
 import cleardp from './cleardp';
+import dice from './dice';
 import fill from './fill';
 import fixarea from './fixarea';
 import gamerule from './gamerule';
@@ -22,6 +23,7 @@ export default () => {
   buy();
   buybase();
   cleardp();
+  dice();
   fill();
   fixarea();
   gamerule();
