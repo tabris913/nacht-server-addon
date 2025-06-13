@@ -25,7 +25,7 @@ const commandProcess = (origin) => {
     system.runTimeout(() => {
         const here = DynamicPropertyUtils.retrieveUneditableAreas().find((dp) => {
             const blockVolume = new DimensionBlockVolume(dp.min, dp.max, dp.dimension);
-            return blockVolume.isInside(player.location);
+            return (blockVolume.isInside(player.location) || blockVolume.isInside(Object.assign(Object.assign({}, player.location), { y: player.location.y - 1 })));
         });
         if (here === undefined) {
             player.sendMessage('今いる場所は編集不可領域ではありません。');

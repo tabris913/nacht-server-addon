@@ -38,7 +38,9 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
     const here = DynamicPropertyUtils.retrieveUneditableAreas().find((dp) => {
       const blockVolume = new DimensionBlockVolume(dp.min, dp.max, dp.dimension);
 
-      return blockVolume.isInside(player.location);
+      return (
+        blockVolume.isInside(player.location) || blockVolume.isInside({ ...player.location, y: player.location.y - 1 })
+      );
     });
 
     if (here === undefined) {

@@ -1,7 +1,6 @@
 import { world } from '@minecraft/server';
 import { PREFIX_UNEDITABLEAREA, PREFIX_LOCATION, PREFIX_COUNTER, PREFIX_TRANSFER } from '../const';
 import { NachtServerAddonError } from '../errors/base';
-import { DynamicPropertyNotFoundError } from '../errors/dp';
 import { Logger } from './logger';
 /**
  * 指定されたカウンターを進める
@@ -9,19 +8,20 @@ import { Logger } from './logger';
  * @param id
  * @throws This function can throw errors.
  *
- * {@link DynamicPropertyNotFoundError}
- *
  * {@link NachtServerAddonError}
  */
 export const countUpCounter = (id) => {
     try {
         const counterId = PREFIX_COUNTER + id;
         const currentValue = world.getDynamicProperty(counterId);
-        if (currentValue === undefined)
-            throw new DynamicPropertyNotFoundError(counterId);
-        if (typeof currentValue !== 'number')
-            throw new NachtServerAddonError('数値ではないプロパティが指定されました。');
-        world.setDynamicProperty(counterId, currentValue + 1);
+        if (currentValue === undefined) {
+            world.setDynamicProperty(counterId, 0);
+        }
+        else {
+            if (typeof currentValue !== 'number')
+                throw new NachtServerAddonError('数値ではないプロパティが指定されています。');
+            world.setDynamicProperty(counterId, currentValue + 1);
+        }
     }
     catch (error) {
         Logger.error(`Failed to count up the value for counter ${id} because of`, error);
