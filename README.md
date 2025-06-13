@@ -24,6 +24,7 @@ Released in 2025-06-??.
 - pray コマンド追加
 - releasearea コマンド追加
 - remit コマンド追加
+- withdraw コマンド追加
 
 ### 0.3.x
 

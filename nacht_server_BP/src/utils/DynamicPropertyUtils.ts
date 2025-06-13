@@ -1,8 +1,9 @@
 import { world } from '@minecraft/server';
 
-import { PREFIX_UNEDITABLEAREA, PREFIX_LOCATION, PREFIX_COUNTER } from '../const';
+import { PREFIX_UNEDITABLEAREA, PREFIX_LOCATION, PREFIX_COUNTER, PREFIX_TRANSFER } from '../const';
 import { NachtServerAddonError } from '../errors/base';
 import { DynamicPropertyNotFoundError } from '../errors/dp';
+import { TransferHistory } from '../models/point';
 
 import { Logger } from './logger';
 
@@ -76,6 +77,21 @@ export const retrieveLocations = (playerNameTag?: string) => {
   }
 };
 
+export const retrieveTransferHistories = () => {
+  try {
+    return world
+      .getDynamicPropertyIds()
+      .filter((dpid) => dpid.startsWith(PREFIX_TRANSFER))
+      .map((dpid) => world.getDynamicProperty(dpid) as string | undefined)
+      .filter((dp) => dp !== undefined)
+      .map((dp) => JSON.parse(dp) as TransferHistory);
+  } catch (error) {
+    Logger.error('Failed to retrieve transfer histories because of', error);
+
+    throw error;
+  }
+};
+
 /**
  * 編集不可エリアの Dynamic Property を検索する
  *
@@ -96,6 +112,12 @@ export const retrieveUneditableAreas = () => {
   }
 };
 
-const DynamicPropertyUtils = { countUpCounter, getNextCounter, retrieveLocations, retrieveUneditableAreas };
+const DynamicPropertyUtils = {
+  countUpCounter,
+  getNextCounter,
+  retrieveLocations,
+  retrieveTransferHistories,
+  retrieveUneditableAreas,
+};
 
 export default DynamicPropertyUtils;

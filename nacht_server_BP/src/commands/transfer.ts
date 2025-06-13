@@ -9,15 +9,18 @@ import {
   system,
   world,
 } from '@minecraft/server';
-import PlayerUtils from '../utils/PlayerUtils';
-import { UndefinedSourceOrInitiatorError } from '../errors/command';
-import { NachtServerAddonError } from '../errors/base';
-import ScoreboardUtils from '../utils/ScoreboardUtils';
+
 import { COUNTER_TRANSFER, PREFIX_TRANSFER, SCOREBOARD_POINT } from '../const';
+import { NachtServerAddonError } from '../errors/base';
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import { PointlessError } from '../errors/market';
 import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
-import { TransferHistory } from '../models/point';
+import PlayerUtils from '../utils/PlayerUtils';
+import ScoreboardUtils from '../utils/ScoreboardUtils';
+
 import { registerCommand } from './common';
+
+import type { TransferHistory } from '../models/point';
 
 const transferCommand: CustomCommand = {
   name: 'nacht:transfer',
