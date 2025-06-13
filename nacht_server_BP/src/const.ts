@@ -1,4 +1,5 @@
 import type { Vector3 } from '@minecraft/server';
+import { MinecraftEffectTypes } from '@minecraft/vanilla-data';
 
 // Counter
 export const COUNTER_UNEDITABLE = 'uneditable-areas';
@@ -9,6 +10,40 @@ export const PREFIX_COUNTER = 'nacht:counter_';
 export const PREFIX_GAMERULE = 'nacht:gamerule_';
 export const PREFIX_LOCATION = 'nacht:location_';
 export const PREFIX_UNEDITABLEAREA = 'nacht:uneditablearea_';
+
+// Effect
+export const EffectNames: Partial<Record<MinecraftEffectTypes, string>> = {
+  [MinecraftEffectTypes.Absorption]: '衝撃吸収',
+  [MinecraftEffectTypes.BadOmen]: '不吉な予感',
+  [MinecraftEffectTypes.Blindness]: '盲目',
+  [MinecraftEffectTypes.ConduitPower]: 'コンジットパワー',
+  [MinecraftEffectTypes.Darkness]: '暗闇',
+  [MinecraftEffectTypes.FatalPoison]: '致死毒',
+  [MinecraftEffectTypes.FireResistance]: '火炎耐性',
+  [MinecraftEffectTypes.Haste]: '採掘速度上昇',
+  [MinecraftEffectTypes.HealthBoost]: '体力増強',
+  [MinecraftEffectTypes.Hunger]: '空腹',
+  [MinecraftEffectTypes.InstantDamage]: '即時ダメージ',
+  [MinecraftEffectTypes.InstantHealth]: '即時回復',
+  [MinecraftEffectTypes.Invisibility]: '透明化',
+  [MinecraftEffectTypes.JumpBoost]: '跳躍力上昇',
+  [MinecraftEffectTypes.Levitation]: '浮遊',
+  [MinecraftEffectTypes.MiningFatigue]: '採掘速度低下',
+  [MinecraftEffectTypes.Nausea]: '吐き気',
+  [MinecraftEffectTypes.NightVision]: '暗視',
+  [MinecraftEffectTypes.Poison]: '毒',
+  [MinecraftEffectTypes.Regeneration]: '再生能力',
+  [MinecraftEffectTypes.Resistance]: '耐性',
+  [MinecraftEffectTypes.Saturation]: '満腹度回復',
+  [MinecraftEffectTypes.SlowFalling]: '落下速度低下',
+  [MinecraftEffectTypes.Slowness]: '移動速度低下',
+  [MinecraftEffectTypes.Speed]: '移動速度上昇',
+  [MinecraftEffectTypes.Strength]: '攻撃力上昇',
+  [MinecraftEffectTypes.VillageHero]: '村の英雄',
+  [MinecraftEffectTypes.WaterBreathing]: '水中呼吸',
+  [MinecraftEffectTypes.Weakness]: '弱体化',
+  [MinecraftEffectTypes.Wither]: '衰弱',
+};
 
 // Formatting
 export const Formatting = {

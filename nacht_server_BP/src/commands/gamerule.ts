@@ -14,12 +14,14 @@ import { setBaseMarketPrice, setBaseMaximumRange } from './gameRules/base';
 import { setShowAreaBorder, setShowAreaBorderInterval, setShowAreaBorderRange } from './gameRules/showAreaBorder';
 import { setTeleportTarget } from './gameRules/teleportTarget';
 import { setWatchCrossingArea, setWatchCrossingAreaInterval } from './gameRules/watchCrossingArea';
+import { setPrayPrice } from './gameRules/pray';
 
 export enum RuleName {
   autoRemoveFortuneEnchant = 'autoRemoveFortuneEnchant',
   autoRemoveFortuneEnchantInterval = 'autoRemoveFortuneEnchantInterval',
   baseMarketPrice = 'baseMarketPrice',
   baseMaximumRange = 'baseMaximumRange',
+  prayPrice = 'prayPrice',
   showAreaBorder = 'showAreaBorder',
   showAreaBorderInterval = 'showAreaBorderInterval',
   showAreaBorderRange = 'showAreaBorderRange',
@@ -56,6 +58,8 @@ const commandProcess = (origin: CustomCommandOrigin, ruleName: RuleName, value: 
       return setBaseMarketPrice(value);
     case RuleName.baseMaximumRange:
       return setBaseMaximumRange(value);
+    case RuleName.prayPrice:
+      return setPrayPrice(value);
     case RuleName.showAreaBorder:
       return setShowAreaBorder(value);
     case RuleName.showAreaBorderInterval:
@@ -80,6 +84,7 @@ export default () => {
       RuleName.autoRemoveFortuneEnchantInterval,
       RuleName.baseMarketPrice,
       RuleName.baseMaximumRange,
+      RuleName.prayPrice,
       RuleName.showAreaBorder,
       RuleName.showAreaBorderInterval,
       RuleName.showAreaBorderRange,
