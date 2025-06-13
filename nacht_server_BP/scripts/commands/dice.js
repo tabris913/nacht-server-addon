@@ -23,7 +23,7 @@ const commandProcess = (origin, dice) => {
     const player = PlayerUtils.convertToPlayer(origin.initiator || origin.sourceEntity);
     if (player === undefined)
         throw new UndefinedSourceOrInitiatorError();
-    const [quantity, surface] = dice.split('D').map(parseInt);
+    const [quantity, surface] = dice.split('D').map((v) => parseInt(v));
     const rolls = Array(quantity)
         .fill(null)
         .map(() => Math.ceil(Math.random() * surface));

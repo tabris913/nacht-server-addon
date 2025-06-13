@@ -12,6 +12,7 @@ import {
 import { Formatting } from '../const';
 import { NachtServerAddonError } from '../errors/base';
 import { UndefinedSourceOrInitiatorError } from '../errors/command';
+import { Logger } from '../utils/logger';
 import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
@@ -35,7 +36,7 @@ const commandProcess = (origin: CustomCommandOrigin, dice: string): CustomComman
   const player = PlayerUtils.convertToPlayer(origin.initiator || origin.sourceEntity);
   if (player === undefined) throw new UndefinedSourceOrInitiatorError();
 
-  const [quantity, surface] = dice.split('D').map(parseInt);
+  const [quantity, surface] = dice.split('D').map((v) => parseInt(v));
   const rolls = Array(quantity)
     .fill(null)
     .map(() => Math.ceil(Math.random() * surface));
