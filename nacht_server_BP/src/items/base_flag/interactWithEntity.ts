@@ -60,11 +60,6 @@ const fixBaseZone = (player: Player, flag: Entity, dp: BaseAreaInfo) => {
 
     return;
   }
-  if (dp.dimension === undefined) {
-    player.sendMessage(`${Formatting.Color.GOLD}拠点の旗を置き直してください`);
-
-    return;
-  }
   const baseVolume = BaseAreaDimensionBlockVolume.from(
     LocationUtils.generateBlockVolume(flag.location, dp.edgeSize),
     flag.dimension
