@@ -20,7 +20,7 @@ export default () =>
       const current = world.getDynamicProperty(id);
       if (current === undefined) {
         world.setDynamicProperty(id, value);
+        Logger.log(`Default value (${value}) set as ${ruleName} is not set.`);
       }
-      Logger.log(`Default value (${value}) set as ${ruleName} is not set.`);
     });
   });

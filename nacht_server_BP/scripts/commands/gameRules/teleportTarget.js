@@ -1,6 +1,6 @@
-import { CustomCommandStatus, world } from "@minecraft/server";
-import { PREFIX_GAMERULE } from "../../const";
-import { RuleName } from "../gamerule";
+import { CustomCommandStatus, world } from '@minecraft/server';
+import { PREFIX_GAMERULE } from '../../const';
+import { RuleName } from '../gamerule';
 /**
  * テレポート登録先の数を設定する
  *
@@ -8,9 +8,9 @@ import { RuleName } from "../gamerule";
  * @returns
  */
 export const setTeleportTarget = (value) => {
-    if (!/^\d+$/.test(value) || value === "0") {
+    if (!/^\d+$/.test(value) || value === '0') {
         return {
-            message: "設定する値は正整数でなければなりません。",
+            message: '設定する値は正整数でなければなりません。',
             status: CustomCommandStatus.Failure,
         };
     }

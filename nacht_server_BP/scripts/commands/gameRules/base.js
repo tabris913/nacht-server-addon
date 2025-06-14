@@ -1,6 +1,6 @@
-import { CustomCommandStatus, world } from "@minecraft/server";
-import { PREFIX_GAMERULE } from "../../const";
-import { RuleName } from "../gamerule";
+import { CustomCommandStatus, world } from '@minecraft/server';
+import { PREFIX_GAMERULE } from '../../const';
+import { RuleName } from '../gamerule';
 /**
  * 拠点エリアの土地の相場を設定する
  *
@@ -10,7 +10,7 @@ import { RuleName } from "../gamerule";
 export const setBaseMarketPrice = (value) => {
     if (!/^\d+$/.test(value)) {
         return {
-            message: "設定する値は整数でなければなりません。",
+            message: '設定する値は整数でなければなりません。',
             status: CustomCommandStatus.Failure,
         };
     }
@@ -30,14 +30,14 @@ export const setBaseMarketPrice = (value) => {
 export const setBaseMaximumRange = (value) => {
     if (!/^\d+$/.test(value)) {
         return {
-            message: "設定する値は整数でなければなりません。",
+            message: '設定する値は整数でなければなりません。',
             status: CustomCommandStatus.Failure,
         };
     }
     const maximumRange = parseInt(value);
     if ((maximumRange & 1) === 0) {
         return {
-            message: "設定する値は奇数でなければなりません。",
+            message: '設定する値は奇数でなければなりません。',
             status: CustomCommandStatus.Failure,
         };
     }

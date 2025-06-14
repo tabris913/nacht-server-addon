@@ -31,7 +31,7 @@ const purchaseItem = (player, sourceEntity, itemType, quantity, price, pointless
         system.runTimeout(() => {
             ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
             InventoryUtils.giveItem(player, itemType, quantity);
-            player.sendMessage(`${sellerName} ${after_msg || 'まいどあり！'}`);
+            player.sendMessage(`[${sellerName}] ${after_msg || 'まいどあり！'}`);
         }, 1);
     }
     catch (error) {

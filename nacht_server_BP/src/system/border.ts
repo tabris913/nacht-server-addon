@@ -261,8 +261,7 @@ export default () => {
             );
             if (area3D === undefined) return;
             const bv = new BlockVolume(area3D.northWest, area3D.southEast);
-            // y 座標は奇数のみ
-            const yArray = LocationUtils.makeArray(bv.getMin().y, bv.getMax().y).filter((y) => y & 1);
+            const yArray = LocationUtils.makeArray(bv.getMin().y, bv.getMax().y);
             if (showAreaBorderFlag) {
               collectAreaBorder(bv, yArray).forEach((location) =>
                 locs[player.dimension.id as MinecraftDimensionTypes].add(location)

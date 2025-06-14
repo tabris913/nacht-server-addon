@@ -16,6 +16,7 @@ import releasearea from './releasearea';
 import renamedp from './renamedp';
 import sell from './sell';
 import setdp from './setdp';
+import showgamerules from './showgamerules';
 import transfer from './transfer';
 import withdraw from './withdraw';
 export default () => {
@@ -37,6 +38,7 @@ export default () => {
     renamedp();
     sell();
     setdp();
+    showgamerules();
     transfer();
     withdraw();
 };

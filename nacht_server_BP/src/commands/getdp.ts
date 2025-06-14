@@ -41,7 +41,10 @@ const commandProcess = (origin: CustomCommandOrigin, filter?: string) => {
     .map((dpId) => `${dpId}: ${JSON.stringify(world.getDynamicProperty(dpId))}`)
     .join('\n');
 
-  return { message, status: CustomCommandStatus.Success };
+  return {
+    message: `ダイナミックプロパティ一覧 (フィルター: ${filter || 'なし'})\n${message}`,
+    status: CustomCommandStatus.Success,
+  };
 };
 
 export default () => system.beforeEvents.startup.subscribe(registerCommand(getDynamicPropertyCommand, commandProcess));
