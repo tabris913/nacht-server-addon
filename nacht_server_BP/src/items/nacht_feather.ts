@@ -3,6 +3,7 @@ import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 
 import { Formatting, LOC_ERSTE } from '../const';
 import { NachtServerAddonItemTypes } from '../enums';
+import teleportLogic from '../logic/teleportLogic';
 import { MinecraftDimensionTypes } from '../types/index';
 import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import { Logger } from '../utils/logger';
@@ -79,7 +80,7 @@ export default () =>
               }
             } else {
               system.runTimeout(
-                () => event.source.teleport(target.location, { dimension: world.getDimension(target.dimension) }),
+                () => teleportLogic.teleport(event.source, target.location, target.dimension),
                 TicksPerSecond / 2
               );
             }

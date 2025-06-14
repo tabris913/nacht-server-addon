@@ -20,6 +20,7 @@ Released in 2025-06-14.
 #### Commands
 
 - showgamerules コマンド追加
+- tp コマンド追加
 
 #### System
 

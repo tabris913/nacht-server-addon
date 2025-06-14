@@ -131,4 +131,7 @@ export const LOC_ERSTE: Vector3 = { x: -10, y: 63, z: 0 };
 export const SCOREBOARD_POINT = 'point';
 
 // Tag
+export const TAG_AREA_BASE = 'AREA_BASE';
+export const TAG_AREA_EXPL = 'AREA_EXPL';
+export const TAG_AREA_TOWN = 'AREA_TOWN';
 export const TAG_OPERATOR = 'OP';

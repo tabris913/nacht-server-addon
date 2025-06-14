@@ -1,16 +1,12 @@
-import { type Player, system, TicksPerSecond, type Vector3, world } from '@minecraft/server';
+import { type Player, system, TicksPerSecond, world } from '@minecraft/server';
 
 import { RuleName } from '../commands/gamerule';
-import { Formatting, LOC_ERSTE, PREFIX_GAMERULE } from '../const';
+import { Formatting, LOC_ERSTE, PREFIX_GAMERULE, TAG_AREA_BASE, TAG_AREA_EXPL, TAG_AREA_TOWN } from '../const';
 import { MinecraftDimensionTypes } from '../types/index';
 import AreaUtils from '../utils/AreaUtils';
-import LocationUtils from '../utils/LocationUtils';
 import { Logger } from '../utils/logger';
 import PlayerUtils from '../utils/PlayerUtils';
 
-const tagTownArea = 'AREA_TOWN'; // 街エリアにいる
-const tagExploreArea = 'AREA_EXP'; // 探索エリアにいる
-const tagBaseArea = 'AREA_BASE'; // 拠点エリアにいる
 const tagAreaAlert1 = 'ALERT_AREA1'; // アラート1回目
 const tagAreaAlert2 = 'ALERT_AREA2'; // アラート2回目 (5秒後)
 const tagAreaAlertTimeout = 'ALERT_TIMEOUT';
@@ -34,11 +30,11 @@ const getAreaName = (area: Area) => {
 const getAreaTag = (area: Area) => {
   switch (area) {
     case 'town':
-      return tagTownArea;
+      return TAG_AREA_TOWN;
     case 'base':
-      return tagBaseArea;
+      return TAG_AREA_BASE;
     case 'expr':
-      return tagExploreArea;
+      return TAG_AREA_EXPL;
   }
 };
 
@@ -74,7 +70,7 @@ const tp = (player: Player, tag: string) => {
   // ブロックが存在するので転移可能
   // 先に違反タグを除去
   [tagAreaAlert2, tagAreaAlertTimeout, tag].forEach((t) => player.removeTag(t));
-  player.addTag(tagTownArea);
+  player.addTag(TAG_AREA_TOWN);
   // ブロックの1マス上に転移
   player.teleport(LOC_ERSTE, {
     dimension: world.getDimension(MinecraftDimensionTypes.Overworld),

@@ -208,7 +208,7 @@ export default () => {
                             break;
                         case 3:
                             // アイテム化
-                            event.target.remove();
+                            event.target.kill();
                             if (!InventoryUtils.hasItem(event.player, NachtServerAddonItemTypes.BaseFlag)) {
                                 InventoryUtils.giveItem(event.player, NachtServerAddonItemTypes.BaseFlag, 1);
                             }

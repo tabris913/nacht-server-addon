@@ -16,13 +16,10 @@ import type { BaseAreaInfo } from '../../models/location';
 // ----------------------------------------------------------------------------
 
 export default () => {
-  world.beforeEvents.entityRemove.subscribe((event) => {
-    if (event.removedEntity.typeId !== NachtServerAddonEntityTypes.BaseFlag) return;
+  world.afterEvents.entityDie.subscribe((event) => {
+    if (event.deadEntity.typeId !== NachtServerAddonEntityTypes.BaseFlag) return;
 
-    Logger.debug(
-      `Removed entity was in (${event.removedEntity.location.x} ${event.removedEntity.location.y} ${event.removedEntity.location.z}).`
-    );
-    const entityDp = BaseUtils.findByEntityId(event.removedEntity.id);
+    const entityDp = BaseUtils.findByEntityId(event.deadEntity.id);
     if (entityDp) {
       world.setDynamicProperty(
         entityDp.id,

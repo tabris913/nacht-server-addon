@@ -1,11 +1,14 @@
-import { type Entity, world } from '@minecraft/server';
+import { type DimensionLocation, type Entity, type Player, type Vector3, world } from '@minecraft/server';
 
 import { RuleName } from '../commands/gamerule';
-import { PREFIX_GAMERULE, PREFIX_LOCATION, TAG_OPERATOR } from '../const';
+import { PREFIX_GAMERULE, PREFIX_LOCATION, TAG_AREA_BASE, TAG_AREA_EXPL, TAG_AREA_TOWN, TAG_OPERATOR } from '../const';
 import { NachtServerAddonError } from '../errors/base';
-import { LocationInfo } from '../models/location';
 import { MinecraftDimensionTypes } from '../types/index';
+import AreaUtils from '../utils/AreaUtils';
+import { Logger } from '../utils/logger';
 import StringUtils from '../utils/StringUtils';
+
+import type { LocationInfo } from '../models/location';
 
 /**
  * 登録する
@@ -42,4 +45,45 @@ const registerTeleportTarget = (entity: Entity, name: string, displayName: strin
   );
 };
 
-export default { registerTeleportTarget };
+/**
+ * 転移する。エリアタグの編集も行う。
+ *
+ * @param entity
+ * @param location
+ * @param dimensionId
+ */
+const teleport = (entity: Player, location: Vector3, dimensionId: MinecraftDimensionTypes) => {
+  try {
+    const dimension = world.getDimension(dimensionId);
+    const target: DimensionLocation = { ...location, dimension };
+    let newTag, oldTag;
+    if (AreaUtils.isInBaseArea(target)) {
+      newTag = TAG_AREA_BASE;
+    } else if (AreaUtils.isInExploringArea(target)) {
+      newTag = TAG_AREA_EXPL;
+    } else {
+      newTag = TAG_AREA_TOWN;
+    }
+    if (AreaUtils.existsInBaseArea(entity)) {
+      oldTag = TAG_AREA_BASE;
+    } else if (AreaUtils.existsInExploringArea(entity)) {
+      oldTag = TAG_AREA_EXPL;
+    } else {
+      oldTag = TAG_AREA_TOWN;
+    }
+    if (newTag !== oldTag) {
+      entity.addTag(newTag);
+      entity.removeTag(oldTag);
+    }
+    entity.tryTeleport(location, { dimension });
+  } catch (error) {
+    Logger.error(
+      `Failed to teleport ${entity.nameTag} to (${location.x} ${location.y} ${location.z}) because of`,
+      error
+    );
+
+    throw error;
+  }
+};
+
+export default { registerTeleportTarget, teleport };

@@ -1,7 +1,9 @@
 import { world } from '@minecraft/server';
 import { RuleName } from '../commands/gamerule';
-import { PREFIX_GAMERULE, PREFIX_LOCATION, TAG_OPERATOR } from '../const';
+import { PREFIX_GAMERULE, PREFIX_LOCATION, TAG_AREA_BASE, TAG_AREA_EXPL, TAG_AREA_TOWN, TAG_OPERATOR } from '../const';
 import { NachtServerAddonError } from '../errors/base';
+import AreaUtils from '../utils/AreaUtils';
+import { Logger } from '../utils/logger';
 import StringUtils from '../utils/StringUtils';
 /**
  * 登録する
@@ -33,4 +35,45 @@ const registerTeleportTarget = (entity, name, displayName) => {
         owner: entity.nameTag,
     }));
 };
-export default { registerTeleportTarget };
+/**
+ * 転移する。エリアタグの編集も行う。
+ *
+ * @param entity
+ * @param location
+ * @param dimensionId
+ */
+const teleport = (entity, location, dimensionId) => {
+    try {
+        const dimension = world.getDimension(dimensionId);
+        const target = Object.assign(Object.assign({}, location), { dimension });
+        let newTag, oldTag;
+        if (AreaUtils.isInBaseArea(target)) {
+            newTag = TAG_AREA_BASE;
+        }
+        else if (AreaUtils.isInExploringArea(target)) {
+            newTag = TAG_AREA_EXPL;
+        }
+        else {
+            newTag = TAG_AREA_TOWN;
+        }
+        if (AreaUtils.existsInBaseArea(entity)) {
+            oldTag = TAG_AREA_BASE;
+        }
+        else if (AreaUtils.existsInExploringArea(entity)) {
+            oldTag = TAG_AREA_EXPL;
+        }
+        else {
+            oldTag = TAG_AREA_TOWN;
+        }
+        if (newTag !== oldTag) {
+            entity.addTag(newTag);
+            entity.removeTag(oldTag);
+        }
+        entity.tryTeleport(location, { dimension });
+    }
+    catch (error) {
+        Logger.error(`Failed to teleport ${entity.nameTag} to (${location.x} ${location.y} ${location.z}) because of`, error);
+        throw error;
+    }
+};
+export default { registerTeleportTarget, teleport };

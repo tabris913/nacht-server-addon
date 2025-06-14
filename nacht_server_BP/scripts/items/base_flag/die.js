@@ -11,11 +11,10 @@ import PlayerUtils from '../../utils/PlayerUtils';
 // - 転移先から削除
 // ----------------------------------------------------------------------------
 export default () => {
-    world.beforeEvents.entityRemove.subscribe((event) => {
-        if (event.removedEntity.typeId !== NachtServerAddonEntityTypes.BaseFlag)
+    world.afterEvents.entityDie.subscribe((event) => {
+        if (event.deadEntity.typeId !== NachtServerAddonEntityTypes.BaseFlag)
             return;
-        Logger.debug(`Removed entity was in (${event.removedEntity.location.x} ${event.removedEntity.location.y} ${event.removedEntity.location.z}).`);
-        const entityDp = BaseUtils.findByEntityId(event.removedEntity.id);
+        const entityDp = BaseUtils.findByEntityId(event.deadEntity.id);
         if (entityDp) {
             world.setDynamicProperty(entityDp.id, JSON.stringify(Object.assign(Object.assign({}, entityDp), { entityId: undefined })));
             LocationUtils.findDynamicPropertiesBySuffix(entityDp === null || entityDp === void 0 ? void 0 : entityDp.owner, entityDp.index).forEach((location) => {
