@@ -13,12 +13,13 @@ import {
 } from '@minecraft/server';
 import { MessageFormData, ModalFormData } from '@minecraft/server-ui';
 
-import { PREFIX_BASE, PREFIX_GAMERULE } from '../const';
+import { COUNTER_BASE, PREFIX_BASE, PREFIX_GAMERULE } from '../const';
 import { NachtServerAddonItemTypes } from '../enums';
 import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
 import marketLogic from '../logic/marketLogic';
 import { BaseAreaInfo } from '../models/location';
 import BaseUtils from '../utils/BaseUtils';
+import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import { Logger } from '../utils/logger';
 import PlayerUtils from '../utils/PlayerUtils';
 
@@ -84,11 +85,10 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
         const price =
           (size - 1) ** 2 *
           ((world.getDynamicProperty(PREFIX_GAMERULE + RuleName.baseMarketPrice) as number | undefined) || 20);
-        const count =
-          Math.max(
-            ...Object.keys(baseDps).map((dpid) => parseInt(dpid.replace(`${PREFIX_BASE}${player.nameTag}_`, '')))
-          ) + 1;
+        const counterName = `${COUNTER_BASE}_${player.nameTag}`;
+        const count = DynamicPropertyUtils.getNextCounter(counterName);
         purchase(player, origin.sourceEntity!, size, price, count);
+        DynamicPropertyUtils.countUpCounter(counterName);
       })
       .catch(() => null);
   }, TicksPerSecond);

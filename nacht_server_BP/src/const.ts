@@ -3,6 +3,7 @@ import { MinecraftEffectTypes } from './types/index';
 import type { Vector3 } from '@minecraft/server';
 
 // Counter
+export const COUNTER_BASE = 'base';
 export const COUNTER_TRANSFER = 'point-transfer';
 export const COUNTER_UNEDITABLE = 'uneditable-areas';
 

@@ -36,14 +36,16 @@ export const countUpCounter = (id: string) => {
 };
 
 /**
- * カウンターの次の値を取得する
+ * カウンターの次の値を取得する。未設定の場合は 0 を返す。
  *
- * @param id
+ * @param id カウンター識別子
  * @returns
  */
 export const getNextCounter = (id: string) => {
   try {
-    return ((world.getDynamicProperty(PREFIX_COUNTER + id) as number | undefined) || -1) + 1;
+    const currentValue = world.getDynamicProperty(PREFIX_COUNTER + id) as number | undefined;
+
+    return currentValue === undefined ? 0 : currentValue + 1;
   } catch (error) {
     Logger.error(`Failed to get the next value for counter ${id} because of`, error);
 
