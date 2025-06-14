@@ -25,7 +25,7 @@ const convertToPlayer = (entityOrPlayer?: Entity | Player) => {
     }
 
     return world
-      .getAllPlayers()
+      .getPlayers()
       .filter((player) => player.id === entityOrPlayer.id)
       .at(0);
   } catch (error) {
@@ -44,7 +44,7 @@ const convertToPlayer = (entityOrPlayer?: Entity | Player) => {
 const findPlayer = (condition: { id?: string; nameTag?: string; isValid?: true }) => {
   try {
     return world
-      .getAllPlayers()
+      .getPlayers()
       .filter((player) => (condition.id ? player.id === condition.id : true))
       .filter((player) => (condition.nameTag ? player.nameTag === condition.nameTag : true))
       .filter((player) => (condition.isValid ? player.isValid : true))
@@ -65,7 +65,7 @@ const findPlayer = (condition: { id?: string; nameTag?: string; isValid?: true }
  */
 const getOperators = () => {
   try {
-    return world.getAllPlayers().filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
+    return world.getPlayers().filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
   } catch (error) {
     Logger.warning('Failed to get players who have operator-level permissions because of', error);
 

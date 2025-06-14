@@ -17,6 +17,7 @@ import renamedp from './renamedp';
 import sell from './sell';
 import setdp from './setdp';
 import showgamerules from './showgamerules';
+import tp from './tp';
 import transfer from './transfer';
 import withdraw from './withdraw';
 export default () => {
@@ -39,6 +40,7 @@ export default () => {
     sell();
     setdp();
     showgamerules();
+    tp();
     transfer();
     withdraw();
 };

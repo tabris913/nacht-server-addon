@@ -25,7 +25,7 @@ const changeCoop = (player: Player, dp: BaseAreaInfo) => {
   const form = new ModalFormData();
   form.title('協力者を選択してください');
   const candidates = world
-    .getAllPlayers()
+    .getPlayers()
     .filter((pl) => pl.id !== player.id && !pl.isOp() && !pl.hasTag(TAG_OPERATOR))
     .map((pl) => pl.nameTag)
     .sort();

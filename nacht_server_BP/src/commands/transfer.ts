@@ -44,7 +44,7 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
   const remitter = PlayerUtils.convertToPlayer(origin.initiator);
   if (remitter === undefined || origin.sourceEntity === undefined) throw new UndefinedSourceOrInitiatorError();
 
-  const remittees = world.getAllPlayers(); //.filter((player) => player.id !== remitter.id);
+  const remittees = world.getPlayers().filter((player) => player.id !== remitter.id);
 
   const form = new ModalFormData();
   form.title('');

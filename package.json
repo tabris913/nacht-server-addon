@@ -1,6 +1,6 @@
 {
   "name": "nacht_server_bp",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "",
   "type": "module",
   "main": "scripts/main.js",

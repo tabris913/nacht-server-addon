@@ -29,7 +29,7 @@ const commandProcess = (origin) => {
     const remitter = PlayerUtils.convertToPlayer(origin.initiator);
     if (remitter === undefined || origin.sourceEntity === undefined)
         throw new UndefinedSourceOrInitiatorError();
-    const remittees = world.getAllPlayers(); //.filter((player) => player.id !== remitter.id);
+    const remittees = world.getPlayers().filter((player) => player.id !== remitter.id);
     const form = new ModalFormData();
     form.title('');
     form.dropdown('送金先', remittees.map((player) => player.nameTag));

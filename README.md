@@ -12,6 +12,15 @@ wiki: https://github.com/tabris913/nacht-server-addon/wiki
 |   0.3.1 | 2025-06-09 | マイグレーション用コマンドを追加 |
 |   0.4.0 | 2025-06-13 |                                  |
 |   0.4.1 | 2025-06-14 |                                  |
+|   0.4.2 | 2025-06-14 |                                  |
+
+### 0.4.2
+
+Released in 2025-06-15.
+
+#### Commands
+
+- tp コマンド追加
 
 ### 0.4.1
 
@@ -20,7 +29,6 @@ Released in 2025-06-14.
 #### Commands
 
 - showgamerules コマンド追加
-- tp コマンド追加
 
 #### System
 
