@@ -25,6 +25,7 @@ const buyCommand: CustomCommand = {
     { name: 'point', type: CustomCommandParamType.Integer },
   ],
   optionalParameters: [
+    { name: 'data', type: CustomCommandParamType.Integer },
     { name: 'pointless_msg', type: CustomCommandParamType.String },
     { name: 'after_msg', type: CustomCommandParamType.String },
   ],
@@ -37,6 +38,7 @@ const buyCommand: CustomCommand = {
  * @param item
  * @param amount
  * @param point
+ * @param data
  * @param pointless_msg
  * @param after_msg
  * @returns
@@ -49,6 +51,7 @@ const commandProcess = (
   item: ItemType,
   amount: number,
   point: number,
+  data: number = 0,
   pointless_msg?: string,
   after_msg?: string
 ): CustomCommandResult => {
@@ -57,7 +60,7 @@ const commandProcess = (
     throw new UndefinedSourceOrInitiatorError();
   }
 
-  marketLogic.purchaseItem(player, origin.sourceEntity, item.id, amount, point, pointless_msg, after_msg);
+  marketLogic.purchaseItem(player, origin.sourceEntity, item.id, amount, point, pointless_msg, after_msg, data);
 
   return { status: CustomCommandStatus.Success };
 };

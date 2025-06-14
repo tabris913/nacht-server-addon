@@ -1,4 +1,4 @@
-import { EntityComponentTypes, ItemStack } from '@minecraft/server';
+import { EntityComponentTypes, ItemStack, } from '@minecraft/server';
 import { Logger } from './logger';
 /**
  * 指定されたアイテムの個数をカウントする
@@ -65,11 +65,16 @@ export const gatherSlots = (player, itemId) => {
  * @param playerEntity プレイヤー
  * @param itemType アイテム ID
  * @param quantity 数量
+ * @param data
  * @returns 成否
  */
-const giveItem = (playerEntity, itemType, quantity = 1) => {
+const giveItem = (playerEntity, itemType, quantity = 1, data = 0) => {
     var _a;
     try {
+        if (data) {
+            playerEntity.dimension.runCommand(`give ${playerEntity.nameTag} ${itemType} ${quantity} ${data}`);
+            return true;
+        }
         (_a = playerEntity.getComponent(EntityComponentTypes.Inventory)) === null || _a === void 0 ? void 0 : _a.container.addItem(new ItemStack(itemType, quantity));
         return true;
     }
@@ -112,12 +117,17 @@ export const hasItem = (player, itemId, opt) => {
  * @param player プレイヤー
  * @param itemId アイテム ID
  * @param quantity 削除するアイテムの個数
+ * @param data
  * @returns 成否を表すフラグ
  */
-export const removeItem = (player, itemId, quantity = Infinity) => {
+export const removeItem = (player, itemId, quantity = Infinity, data = 0) => {
     try {
         if (quantity < 0) {
             return false;
+        }
+        if (data) {
+            player.dimension.runCommand(`clear ${player.nameTag} ${itemId} ${data} ${quantity === Infinity ? '' : quantity}`);
+            return true;
         }
         const count = countItem(player, itemId);
         if (count === undefined) {

@@ -28,6 +28,7 @@ const sellCommand: CustomCommand = {
     { name: 'point', type: CustomCommandParamType.Integer },
   ],
   optionalParameters: [
+    { name: 'data', type: CustomCommandParamType.Integer },
     { name: 'itemless_msg', type: CustomCommandParamType.String },
     { name: 'after_msg', type: CustomCommandParamType.String },
   ],
@@ -40,6 +41,7 @@ const sellCommand: CustomCommand = {
  * @param item
  * @param amount
  * @param point
+ * @param data
  * @param itemless_msg
  * @param after_msg
  * @returns
@@ -67,7 +69,7 @@ const commandProcess = (
   }
 
   // called by NPC
-  const score = ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
+  ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
 
   const npcName = origin.sourceEntity?.nameTag || 'NPC';
   if (InventoryUtils.hasItem(player, item.id, { max: amount - 1 })) {

@@ -14,11 +14,12 @@ import ScoreboardUtils from '../utils/ScoreboardUtils';
  * @param price 金額
  * @param pointless_msg
  * @param after_msg
+ * @param data
  * @throws This function can throw error.
  *
  * {@link PointlessError}
  */
-const purchaseItem = (player, sourceEntity, itemType, quantity, price, pointless_msg, after_msg) => {
+const purchaseItem = (player, sourceEntity, itemType, quantity, price, pointless_msg, after_msg, data) => {
     try {
         ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
         const sellerName = sourceEntity.nameTag || 'NPC';
@@ -30,7 +31,7 @@ const purchaseItem = (player, sourceEntity, itemType, quantity, price, pointless
         }
         system.runTimeout(() => {
             ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
-            InventoryUtils.giveItem(player, itemType, quantity);
+            InventoryUtils.giveItem(player, itemType, quantity, data);
             player.sendMessage(`[${sellerName}] ${after_msg || 'まいどあり！'}`);
         }, 1);
     }

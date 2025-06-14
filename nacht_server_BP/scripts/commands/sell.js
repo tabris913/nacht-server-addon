@@ -15,6 +15,7 @@ const sellCommand = {
         { name: 'point', type: CustomCommandParamType.Integer },
     ],
     optionalParameters: [
+        { name: 'data', type: CustomCommandParamType.Integer },
         { name: 'itemless_msg', type: CustomCommandParamType.String },
         { name: 'after_msg', type: CustomCommandParamType.String },
     ],
@@ -26,6 +27,7 @@ const sellCommand = {
  * @param item
  * @param amount
  * @param point
+ * @param data
  * @param itemless_msg
  * @param after_msg
  * @returns
@@ -45,7 +47,7 @@ const commandProcess = (origin, item, amount, point, itemless_msg, after_msg) =>
         throw new UndefinedSourceOrInitiatorError();
     }
     // called by NPC
-    const score = ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
+    ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
     const npcName = ((_a = origin.sourceEntity) === null || _a === void 0 ? void 0 : _a.nameTag) || 'NPC';
     if (InventoryUtils.hasItem(player, item.id, { max: amount - 1 })) {
         player.sendMessage(`[${npcName}] ${itemless_msg || 'アイテムが足りません'}`);

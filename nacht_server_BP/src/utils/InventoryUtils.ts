@@ -1,4 +1,14 @@
-import { type ContainerSlot, type Entity, EntityComponentTypes, ItemStack } from '@minecraft/server';
+import {
+  type ContainerSlot,
+  type Entity,
+  EntityComponentTypes,
+  ItemComponentTypes,
+  ItemStack,
+  ItemType,
+  system,
+} from '@minecraft/server';
+
+import { MinecraftPotionEffectTypes } from '../types';
 
 import { Logger } from './logger';
 
@@ -70,10 +80,15 @@ export const gatherSlots = (player: Entity, itemId?: string) => {
  * @param playerEntity プレイヤー
  * @param itemType アイテム ID
  * @param quantity 数量
+ * @param data
  * @returns 成否
  */
-const giveItem = (playerEntity: Entity, itemType: string, quantity: number = 1) => {
+const giveItem = (playerEntity: Entity, itemType: string, quantity: number = 1, data: number = 0) => {
   try {
+    if (data) {
+      playerEntity.dimension.runCommand(`give ${playerEntity.nameTag} ${itemType} ${quantity} ${data}`);
+      return true;
+    }
     playerEntity.getComponent(EntityComponentTypes.Inventory)?.container.addItem(new ItemStack(itemType, quantity));
 
     return true;
@@ -123,12 +138,17 @@ export const hasItem = (player: Entity, itemId: string, opt?: { max?: number; mi
  * @param player プレイヤー
  * @param itemId アイテム ID
  * @param quantity 削除するアイテムの個数
+ * @param data
  * @returns 成否を表すフラグ
  */
-export const removeItem = (player: Entity, itemId: string, quantity: number = Infinity) => {
+export const removeItem = (player: Entity, itemId: string, quantity: number = Infinity, data: number = 0) => {
   try {
     if (quantity < 0) {
       return false;
+    }
+    if (data) {
+      player.dimension.runCommand(`clear ${player.nameTag} ${itemId} ${data} ${quantity === Infinity ? '' : quantity}`);
+      return true;
     }
     const count = countItem(player, itemId);
     if (count === undefined) {

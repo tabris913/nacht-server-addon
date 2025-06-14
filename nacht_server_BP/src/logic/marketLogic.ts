@@ -16,6 +16,7 @@ import ScoreboardUtils from '../utils/ScoreboardUtils';
  * @param price 金額
  * @param pointless_msg
  * @param after_msg
+ * @param data
  * @throws This function can throw error.
  *
  * {@link PointlessError}
@@ -27,7 +28,8 @@ const purchaseItem = (
   quantity: number,
   price: number,
   pointless_msg?: string,
-  after_msg?: string
+  after_msg?: string,
+  data?: number
 ) => {
   try {
     ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
@@ -44,7 +46,7 @@ const purchaseItem = (
 
     system.runTimeout(() => {
       ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
-      InventoryUtils.giveItem(player, itemType, quantity);
+      InventoryUtils.giveItem(player, itemType, quantity, data);
       player.sendMessage(`[${sellerName}] ${after_msg || 'まいどあり！'}`);
     }, 1);
   } catch (error) {
