@@ -50,6 +50,7 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
     }
 
     world.setDynamicProperty(here.id, undefined);
+    player.sendMessage('編集不可を解除しました。');
   }, 1);
 
   return { status: CustomCommandStatus.Success };
