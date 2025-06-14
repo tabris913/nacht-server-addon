@@ -218,6 +218,9 @@ export default () => {
           | boolean
           | undefined;
         const distance = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderRange) as number | undefined;
+        const yDistance = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderYRange) as
+          | number
+          | undefined;
         const bases = BaseUtils.retrieveBases()
           .filter((base) => base.showBorder)
           .map((base) => {
@@ -248,7 +251,14 @@ export default () => {
           .getAllPlayers()
           .filter((player) => player.isValid)
           .forEach((player) => {
-            const area3D = LocationUtils.make3DArea(player, distance || 101);
+            /**
+             * パーティクル表示範囲
+             */
+            const area3D = LocationUtils.make3DArea(
+              player,
+              distance === undefined ? 101 : distance,
+              yDistance === undefined ? 5 : yDistance
+            );
             if (area3D === undefined) return;
             const bv = new BlockVolume(area3D.northWest, area3D.southEast);
             // y 座標は奇数のみ
