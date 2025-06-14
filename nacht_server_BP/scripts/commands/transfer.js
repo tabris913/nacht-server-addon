@@ -30,6 +30,10 @@ const commandProcess = (origin) => {
     if (remitter === undefined || origin.sourceEntity === undefined)
         throw new UndefinedSourceOrInitiatorError();
     const remittees = world.getPlayers().filter((player) => player.id !== remitter.id);
+    if (remittees.length === 0) {
+        remitter.sendMessage('送金できるプレイヤーが見つかりませんでした。');
+        throw new NachtServerAddonError('送金できるプレイヤーが見つかりませんでした。');
+    }
     const form = new ModalFormData();
     form.title('');
     form.dropdown('送金先', remittees.map((player) => player.nameTag));

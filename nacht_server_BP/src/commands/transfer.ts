@@ -46,6 +46,12 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
 
   const remittees = world.getPlayers().filter((player) => player.id !== remitter.id);
 
+  if (remittees.length === 0) {
+    remitter.sendMessage('送金できるプレイヤーが見つかりませんでした。');
+
+    throw new NachtServerAddonError('送金できるプレイヤーが見つかりませんでした。');
+  }
+
   const form = new ModalFormData();
   form.title('');
   form.dropdown(
