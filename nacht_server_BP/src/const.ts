@@ -1,6 +1,7 @@
-import { MinecraftEffectTypes } from './types/index';
+import { TicksPerSecond, type Vector3 } from '@minecraft/server';
 
-import type { Vector3 } from '@minecraft/server';
+import { RuleName } from './commands/gamerule';
+import { MinecraftEffectTypes } from './types/index';
 
 // Counter
 export const COUNTER_BASE = 'base';
@@ -108,6 +109,20 @@ export const flatFormatting: Record<string, string> = Object.entries(Formatting)
 
 // Game rule
 export const COMMAND_MODIFICATION_BLOCK_LIMIT = 32768;
+export const GAMERULE_DEFAULT = {
+  [RuleName.autoRemoveFortuneEnchant]: true,
+  [RuleName.autoRemoveFortuneEnchantInterval]: TicksPerSecond,
+  [RuleName.baseMarketPrice]: 20,
+  [RuleName.baseMaximumRange]: 501,
+  [RuleName.prayPrice]: 100,
+  [RuleName.showAreaBorder]: true,
+  [RuleName.showAreaBorderInterval]: TicksPerSecond / 2,
+  [RuleName.showAreaBorderRange]: 101,
+  [RuleName.showAreaBorderYRange]: 5,
+  [RuleName.teleportTargets]: 6,
+  [RuleName.watchCrossingArea]: true,
+  [RuleName.watchCrossingAreaInterval]: TicksPerSecond / 5,
+};
 
 // Location
 export const LOC_ERSTE: Vector3 = { x: -10, y: 63, z: 0 };
