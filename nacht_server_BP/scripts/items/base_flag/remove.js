@@ -14,6 +14,7 @@ export default () => {
     world.beforeEvents.entityRemove.subscribe((event) => {
         if (event.removedEntity.typeId !== NachtServerAddonEntityTypes.BaseFlag)
             return;
+        Logger.debug(`Removed entity was in (${event.removedEntity.location.x} ${event.removedEntity.location.y} ${event.removedEntity.location.z}).`);
         const entityDp = BaseUtils.findByEntityId(event.removedEntity.id);
         if (entityDp) {
             world.setDynamicProperty(entityDp.id, JSON.stringify(Object.assign(Object.assign({}, entityDp), { entityId: undefined })));

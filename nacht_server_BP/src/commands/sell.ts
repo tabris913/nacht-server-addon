@@ -55,7 +55,7 @@ const commandProcess = (
   amount: number,
   point: number,
   itemless_msg?: string,
-  after_msg?: string,
+  after_msg?: string
 ): CustomCommandResult => {
   if (origin.sourceType !== CustomCommandSource.NPCDialogue) {
     throw new NonNPCSourceError();

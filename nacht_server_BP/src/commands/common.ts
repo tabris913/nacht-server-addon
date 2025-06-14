@@ -49,7 +49,7 @@ export const registerCommand = (customCommand: CustomCommand, callback: Callback
           Logger.log(
             `[start] ${sourceName} ran command: ${customCommand.name} ${args
               .map((arg) => JSON.stringify(arg))
-              .join(' ')}`,
+              .join(' ')}`
           );
           return callback(origin, ...args);
         } catch (error) {
@@ -73,7 +73,7 @@ export const registerCommand = (customCommand: CustomCommand, callback: Callback
         } finally {
           Logger.log(`[finish] ${sourceName} has run command: ${customCommand.name}`);
         }
-      },
+      }
     );
   } catch (error) {
     Logger.error(`Custom command named ${customCommand.name} registoration failed because of`, error);

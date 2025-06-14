@@ -132,35 +132,38 @@ const isVector3 = (location: VectorXZ | Vector3): location is Vector3 => 'y' in 
  *
  * @param object プレイヤーまたはブロック
  * @param edgeLength 一辺の長さ。偶数の場合は1プラスされる。
+ * @param y
  * @returns
  * @throws This function can throw error.
  *
  * {@link LengthError}
  */
-export const make3DArea = (object: Entity | Block, edgeLength: number): AreaVertices<Vector3> =>
-  make3DAreaFromLoc(object.location, edgeLength);
+export const make3DArea = (object: Entity | Block, edgeLength: number, y?: number): AreaVertices<Vector3> =>
+  make3DAreaFromLoc(object.location, edgeLength, y);
 
 /**
  * 中心座標から一辺`edgeLength`マスの立方体エリアの頂点座標を取得する
  *
  * @param location 中心座標
  * @param edgeLength 一辺の長さ。偶数の場合は1プラスされる。
+ * @param y
  * @returns
  * @throws This function can throw error.
  *
  * {@link LengthError}
  */
-export const make3DAreaFromLoc = (location: Vector3, edgeLength: number): AreaVertices<Vector3> => {
+export const make3DAreaFromLoc = (location: Vector3, edgeLength: number, y?: number): AreaVertices<Vector3> => {
   try {
     if (edgeLength <= 0) {
       throw new LengthError('edgeLength');
     }
     const loc = generateIntegerLocation(location);
     const length = (edgeLength & 1 ? edgeLength - 1 : edgeLength) / 2;
+    const yLength = y === undefined ? length : y;
 
     return {
-      northWest: { x: loc.x - length, y: loc.y - length, z: loc.z - length },
-      southEast: { x: loc.x + length, y: loc.y + length, z: loc.z + length },
+      northWest: { x: loc.x - length, y: loc.y - yLength, z: loc.z - length },
+      southEast: { x: loc.x + length, y: loc.y + yLength, z: loc.z + length },
     };
   } catch (error) {
     Logger.error(`Failed to get vertices because of`, error);

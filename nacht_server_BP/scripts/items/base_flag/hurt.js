@@ -11,8 +11,10 @@ export default () => {
         if (event.hurtEntity.typeId !== NachtServerAddonEntityTypes.BaseFlag)
             return;
         const baseDp = BaseUtils.findByEntityId(event.hurtEntity.id);
+        if (baseDp === undefined)
+            return; // 破壊可能
         const playerEntity = event.damageSource.damagingEntity;
-        if (playerEntity && baseDp) {
+        if (playerEntity) {
             const player = PlayerUtils.convertToPlayer(playerEntity);
             if (player) {
                 if (player.isOp() || player.hasTag(TAG_OPERATOR) || baseDp.owner === player.nameTag) {
@@ -33,7 +35,7 @@ export default () => {
             }
         }
         else {
-            Logger.warning('Either damage source entity or dynamic property of base is undefined.');
+            Logger.warning('Damage source entity is undefined.');
         }
         // 破壊不可能 = 体力を全回復
         (_b = event.hurtEntity.getComponent(EntityComponentTypes.Health)) === null || _b === void 0 ? void 0 : _b.resetToMaxValue();

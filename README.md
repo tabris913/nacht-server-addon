@@ -11,10 +11,23 @@ wiki: https://github.com/tabris913/nacht-server-addon/wiki
 |   0.3.0 | 2025-06-09 |                                  |
 |   0.3.1 | 2025-06-09 | マイグレーション用コマンドを追加 |
 |   0.4.0 | 2025-06-13 |                                  |
+|   0.4.1 | 2025-06-14 |                                  |
+
+### 0.4.1
+
+Released in 2025-06-14.
+
+#### Commands
+
+- showgamerules コマンド追加
+
+#### System
+
+- パーティクルを表示する範囲を、自分を中心とした上下5マスに限定
 
 ### 0.4.0
 
-Released in 2025-06-??.
+Released in 2025-06-13.
 
 #### Commands
 

@@ -50,7 +50,7 @@ const commandProcess = (
   amount: number,
   point: number,
   pointless_msg?: string,
-  after_msg?: string,
+  after_msg?: string
 ): CustomCommandResult => {
   const player = PlayerUtils.convertToPlayer(origin.initiator);
   if (player === undefined || origin.sourceEntity === undefined) {

@@ -7,7 +7,7 @@ import {
   system,
 } from '@minecraft/server';
 
-import { CommandProcessError, UndefinedSourceOrInitiatorError } from '../errors/command';
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import teleportLogic from '../logic/teleportLogic';
 
 import { registerCommand } from './common';

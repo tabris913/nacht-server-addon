@@ -18,12 +18,15 @@ const diceCommand = {
  * @returns
  */
 const commandProcess = (origin, dice) => {
-    if (!/^\d+D\d+$/.test(dice))
+    if (!/^\d+[Dd]\d+$/.test(dice))
         throw new NachtServerAddonError('指示が不正です。');
     const player = PlayerUtils.convertToPlayer(origin.initiator || origin.sourceEntity);
     if (player === undefined)
         throw new UndefinedSourceOrInitiatorError();
-    const [quantity, surface] = dice.split('D').map((v) => parseInt(v));
+    const [quantity, surface] = dice
+        .toUpperCase()
+        .split('D')
+        .map((v) => parseInt(v));
     const rolls = Array(quantity)
         .fill(null)
         .map(() => Math.ceil(Math.random() * surface));

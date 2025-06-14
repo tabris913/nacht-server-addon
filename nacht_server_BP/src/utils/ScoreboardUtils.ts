@@ -42,7 +42,7 @@ const enableScoreboardIfDisabled = (player: Player, scoreName: string, defaultVa
       ScoreboardUtils.setScore(player, scoreName, defaultValue);
 
       player.sendMessage(
-        `スコアボード${scoreName}が有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`,
+        `スコアボード${scoreName}が有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`
       );
     }
   } catch (error) {
@@ -90,7 +90,7 @@ const getScoreOrEnable = (player: Player, scoreName: string, defaultValue: numbe
       ScoreboardUtils.setScore(player, scoreName, defaultValue);
 
       player.sendMessage(
-        `スコアボード${scoreName}が有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`,
+        `スコアボード${scoreName}が有効になっていませんでした。もう一度試しても継続する場合はオペレーターにご連絡ください`
       );
     }
 

@@ -3,7 +3,7 @@ import { registerCommand } from './common';
 import { setAutoRemoveFortuneEnchant, setAutoRemoveFortuneEnchantInterval } from './gameRules/autoRemoveFortuneEnchant';
 import { setBaseMarketPrice, setBaseMaximumRange } from './gameRules/base';
 import { setPrayPrice } from './gameRules/pray';
-import { setShowAreaBorder, setShowAreaBorderInterval, setShowAreaBorderRange } from './gameRules/showAreaBorder';
+import { setShowAreaBorder, setShowAreaBorderInterval, setShowAreaBorderRange, setShowAreaBorderYRange, } from './gameRules/showAreaBorder';
 import { setTeleportTarget } from './gameRules/teleportTarget';
 import { setWatchCrossingArea, setWatchCrossingAreaInterval } from './gameRules/watchCrossingArea';
 export var RuleName;
@@ -16,6 +16,7 @@ export var RuleName;
     RuleName["showAreaBorder"] = "showAreaBorder";
     RuleName["showAreaBorderInterval"] = "showAreaBorderInterval";
     RuleName["showAreaBorderRange"] = "showAreaBorderRange";
+    RuleName["showAreaBorderYRange"] = "showAreaBorderYRange";
     RuleName["teleportTargets"] = "teleportTargets";
     RuleName["watchCrossingArea"] = "watchCrossingArea";
     RuleName["watchCrossingAreaInterval"] = "watchCrossingAreaInterval";
@@ -55,6 +56,8 @@ const commandProcess = (origin, ruleName, value) => {
             return setShowAreaBorderInterval(value);
         case RuleName.showAreaBorderRange:
             return setShowAreaBorderRange(value);
+        case RuleName.showAreaBorderYRange:
+            return setShowAreaBorderYRange(value);
         case RuleName.teleportTargets:
             return setTeleportTarget(value);
         case RuleName.watchCrossingArea:
@@ -76,6 +79,7 @@ export default () => {
             RuleName.showAreaBorder,
             RuleName.showAreaBorderInterval,
             RuleName.showAreaBorderRange,
+            RuleName.showAreaBorderYRange,
             RuleName.teleportTargets,
             RuleName.watchCrossingArea,
             RuleName.watchCrossingAreaInterval,

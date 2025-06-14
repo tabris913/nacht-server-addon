@@ -72,7 +72,7 @@ const commandProcess = (
   tileData?: number,
   oldBlockHandling?: FillMode,
   replaceTileName?: BlockType,
-  replaceDataValue?: number,
+  replaceDataValue?: number
 ): CustomCommandResult => {
   const player = PlayerUtils.convertToPlayer(sourceEntity);
   if (player === undefined) {
@@ -141,7 +141,7 @@ const makeFillCommand = (
   tileData?: number,
   oldBlockHandling?: FillMode,
   replaceTileName?: BlockType,
-  replaceDataValue?: number,
+  replaceDataValue?: number
 ) => {
   const { from, to } = blockVolume;
   const mandatory = `fill ${from.x} ${from.y} ${from.z} ${to.x} ${to.y} ${to.z} ${tileName.id}`;
@@ -171,7 +171,7 @@ function* callFillCommand(
   player: Entity,
   blockVolume: BlockVolume,
   totalBlocks: number,
-  options: [BlockType, number | undefined, FillMode | undefined, BlockType | undefined, number | undefined],
+  options: [BlockType, number | undefined, FillMode | undefined, BlockType | undefined, number | undefined]
 ) {
   const div = Math.floor(COMMAND_MODIFICATION_BLOCK_LIMIT / totalBlocks);
   let start: number = blockVolume.getMin()[dynamicAxis];
@@ -186,9 +186,9 @@ function* callFillCommand(
         {
           ...blockVolume.to,
           [dynamicAxis]: Math.min(start + div - 1, blockVolume.getMax()[dynamicAxis]),
-        },
+        }
       ),
-      ...options,
+      ...options
     );
     const successCount = player.dimension.runCommand(command).successCount;
     totalSuccessCount += successCount;

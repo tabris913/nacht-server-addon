@@ -15,6 +15,7 @@ import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
 import { UneditableAreas } from '../models/location';
 import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
+import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
 
@@ -40,9 +41,10 @@ const fixAreaCommand: CustomCommand = {
  * {@link UndefinedSourceOrInitiatorError}
  */
 const commandProcess = (origin: CustomCommandOrigin, from: Vector3, to: Vector3): CustomCommandResult => {
-  if (origin.sourceEntity === undefined) throw new UndefinedSourceOrInitiatorError();
+  const player = PlayerUtils.convertToPlayer(origin.sourceEntity);
+  if (player === undefined) throw new UndefinedSourceOrInitiatorError();
 
-  const blockVolume = new DimensionBlockVolume(from, to, origin.sourceEntity.dimension);
+  const blockVolume = new DimensionBlockVolume(from, to, player.dimension);
 
   system.runTimeout(() => {
     const index = DynamicPropertyUtils.getNextCounter(COUNTER_UNEDITABLE);
@@ -58,6 +60,7 @@ const commandProcess = (origin: CustomCommandOrigin, from: Vector3, to: Vector3)
       } as UneditableAreas)
     );
     DynamicPropertyUtils.countUpCounter(COUNTER_UNEDITABLE);
+    player.sendMessage('指定された範囲を編集不可に設定しました。');
   }, 1);
 
   return { status: CustomCommandStatus.Success };

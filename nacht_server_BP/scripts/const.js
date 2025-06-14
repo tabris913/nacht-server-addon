@@ -1,5 +1,8 @@
+import { TicksPerSecond } from '@minecraft/server';
+import { RuleName } from './commands/gamerule';
 import { MinecraftEffectTypes } from './types/index';
 // Counter
+export const COUNTER_BASE = 'base';
 export const COUNTER_TRANSFER = 'point-transfer';
 export const COUNTER_UNEDITABLE = 'uneditable-areas';
 // Dynamic Properties
@@ -82,6 +85,20 @@ export const flatFormatting = Object.entries(Formatting).reduce((prev, [curK, cu
     ? Object.assign(Object.assign({}, prev), { [curK.toLowerCase()]: curV }) : Object.assign(Object.assign({}, prev), Object.entries(curV).reduce((prev2, [cur2K, cur2V]) => (Object.assign(Object.assign({}, prev2), { [cur2K.toLowerCase()]: cur2V })), {})), {});
 // Game rule
 export const COMMAND_MODIFICATION_BLOCK_LIMIT = 32768;
+export const GAMERULE_DEFAULT = {
+    [RuleName.autoRemoveFortuneEnchant]: true,
+    [RuleName.autoRemoveFortuneEnchantInterval]: TicksPerSecond,
+    [RuleName.baseMarketPrice]: 20,
+    [RuleName.baseMaximumRange]: 501,
+    [RuleName.prayPrice]: 100,
+    [RuleName.showAreaBorder]: true,
+    [RuleName.showAreaBorderInterval]: TicksPerSecond / 2,
+    [RuleName.showAreaBorderRange]: 101,
+    [RuleName.showAreaBorderYRange]: 5,
+    [RuleName.teleportTargets]: 6,
+    [RuleName.watchCrossingArea]: true,
+    [RuleName.watchCrossingAreaInterval]: TicksPerSecond / 5,
+};
 // Location
 export const LOC_ERSTE = { x: -10, y: 63, z: 0 };
 // Scoreboard

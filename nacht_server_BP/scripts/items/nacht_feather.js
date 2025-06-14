@@ -10,7 +10,11 @@ import PlayerUtils from '../utils/PlayerUtils';
 export default () => world.afterEvents.itemUse.subscribe((event) => {
     try {
         if (event.itemStack.type.id === NachtServerAddonItemTypes.NachtFeather) {
-            event.source.sendMessage(`${event.source.name}は　なはとの羽根を　ほうりなげた！`);
+            event.source.sendMessage([
+                `${event.source.name}は　`,
+                { translate: 'items.nacht_feather.name' },
+                'を　空高く掲げた！',
+            ]);
             const tpTargets = [
                 {
                     dimension: MinecraftDimensionTypes.Overworld,

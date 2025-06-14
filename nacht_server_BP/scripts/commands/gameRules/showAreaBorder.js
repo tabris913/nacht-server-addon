@@ -1,6 +1,6 @@
-import { world, CustomCommandStatus } from "@minecraft/server";
-import { PREFIX_GAMERULE } from "../../const";
-import { RuleName } from "../gamerule";
+import { world, CustomCommandStatus } from '@minecraft/server';
+import { PREFIX_GAMERULE } from '../../const';
+import { RuleName } from '../gamerule';
 /**
  * エリアボーダーオンオフを設定する
  *
@@ -8,7 +8,7 @@ import { RuleName } from "../gamerule";
  * @returns
  */
 export const setShowAreaBorder = (value) => {
-    const converted = value.toLowerCase() === "true";
+    const converted = value.toLowerCase() === 'true';
     world.setDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorder, converted);
     return {
         message: `${RuleName.showAreaBorder}に${converted}を設定しました。`,
@@ -24,7 +24,7 @@ export const setShowAreaBorder = (value) => {
 export const setShowAreaBorderInterval = (value) => {
     if (!/^\d+$/.test(value)) {
         return {
-            message: "設定する値は整数でなければなりません。",
+            message: '設定する値は整数でなければなりません。',
             status: CustomCommandStatus.Failure,
         };
     }
@@ -44,20 +44,46 @@ export const setShowAreaBorderInterval = (value) => {
 export const setShowAreaBorderRange = (value) => {
     if (!/^\d+$/.test(value)) {
         return {
-            message: "設定する値は整数でなければなりません。",
+            message: '設定する値は整数でなければなりません。',
             status: CustomCommandStatus.Failure,
         };
     }
     const interval = parseInt(value);
     if ((interval & 1) === 0) {
         return {
-            message: "設定する値は奇数でなければなりません。",
+            message: '設定する値は奇数でなければなりません。',
             status: CustomCommandStatus.Failure,
         };
     }
     world.setDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderRange, interval);
     return {
         message: `${RuleName.showAreaBorderRange}に${interval}を設定しました。`,
+        status: CustomCommandStatus.Success,
+    };
+};
+/**
+ * エリアボーダーを表示するy軸範囲を設定する
+ *
+ * @param value
+ * @returns
+ */
+export const setShowAreaBorderYRange = (value) => {
+    if (!/^\d+$/.test(value)) {
+        return {
+            message: '設定する値は整数でなければなりません。',
+            status: CustomCommandStatus.Failure,
+        };
+    }
+    const interval = parseInt(value);
+    if ((interval & 1) === 0) {
+        return {
+            message: '設定する値は奇数でなければなりません。',
+            status: CustomCommandStatus.Failure,
+        };
+    }
+    world.setDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderYRange, interval);
+    return {
+        message: `${RuleName.showAreaBorderYRange}に${interval}を設定しました。`,
         status: CustomCommandStatus.Success,
     };
 };

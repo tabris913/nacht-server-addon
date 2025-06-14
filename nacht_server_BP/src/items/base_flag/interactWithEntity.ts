@@ -3,6 +3,7 @@ import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/serve
 
 import { Formatting, TAG_OPERATOR } from '../../const';
 import { NachtServerAddonItemTypes } from '../../enums';
+import { NachtServerAddonError } from '../../errors/base';
 import teleportLogic from '../../logic/teleportLogic';
 import { BaseAreaDimensionBlockVolume } from '../../models/BaseAreaDimensionBlockVolume';
 import { MinecraftDimensionTypes } from '../../types/index';
@@ -22,12 +23,17 @@ import type { BaseAreaInfo, FixedBaseAreaInfo } from '../../models/location';
  */
 const changeCoop = (player: Player, dp: BaseAreaInfo) => {
   const form = new ModalFormData();
-  form.title('同居人を選択してください');
+  form.title('協力者を選択してください');
   const candidates = world
     .getAllPlayers()
     .filter((pl) => pl.id !== player.id && !pl.isOp() && !pl.hasTag(TAG_OPERATOR))
     .map((pl) => pl.nameTag)
     .sort();
+  if (candidates.length === 0) {
+    player.sendMessage('協力者として設定可能なプレイヤーが見つかりませんでした。');
+
+    return;
+  }
   candidates.forEach((nameTag) => form.toggle(nameTag, { defaultValue: dp.participants.includes(nameTag) }));
   form.submitButton('決定');
 
@@ -57,11 +63,6 @@ const fixBaseZone = (player: Player, flag: Entity, dp: BaseAreaInfo) => {
   }
   if (dp.name === undefined) {
     player.sendMessage(`${Formatting.Color.GOLD}先に拠点名を設定してください。確定後でも変更可能です。`);
-
-    return;
-  }
-  if (dp.dimension === undefined) {
-    player.sendMessage(`${Formatting.Color.GOLD}拠点の旗を置き直してください`);
 
     return;
   }
@@ -223,7 +224,7 @@ export default () => {
         const form = new ActionFormData();
         form.button(base.fixed ? '拠点を廃止する' : '範囲を確定する');
         form.button('拠点の設定を変更する');
-        form.button('同居人を登録する');
+        form.button('協力者を登録する');
         form.button('アイテム化する');
         form.button('転移先に登録する');
 

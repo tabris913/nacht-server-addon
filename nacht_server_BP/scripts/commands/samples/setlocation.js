@@ -1,16 +1,16 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, world, } from "@minecraft/server";
-import PlayerUtils from "../../utils/PlayerUtils";
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, world, } from '@minecraft/server';
+import PlayerUtils from '../../utils/PlayerUtils';
 export default () => system.beforeEvents.startup.subscribe((event) => event.customCommandRegistry.registerCommand({
-    name: "nacht:setlocation",
-    description: "名前をつけて座標を保存します",
+    name: 'nacht:setlocation',
+    description: '名前をつけて座標を保存します',
     permissionLevel: CommandPermissionLevel.GameDirectors,
     mandatoryParameters: [
         {
-            name: "name",
+            name: 'name',
             type: CustomCommandParamType.String,
         },
         {
-            name: "location",
+            name: 'location',
             type: CustomCommandParamType.Location,
         },
     ],
@@ -27,7 +27,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => event.cust
         };
     }
     catch (error) {
-        let message = "予期せぬエラーが発生しました";
+        let message = '予期せぬエラーが発生しました';
         if (error instanceof Error) {
             message += `\n${error.message}`;
         }
