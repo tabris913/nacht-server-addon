@@ -27,7 +27,7 @@ const purchaseItem = (
   quantity: number,
   price: number,
   pointless_msg?: string,
-  after_msg?: string,
+  after_msg?: string
 ) => {
   try {
     ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
@@ -45,7 +45,7 @@ const purchaseItem = (
     system.runTimeout(() => {
       ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
       InventoryUtils.giveItem(player, itemType, quantity);
-      player.sendMessage(`${sellerName} ${after_msg || 'まいどあり！'}`);
+      player.sendMessage(`[${sellerName}] ${after_msg || 'まいどあり！'}`);
     }, 1);
   } catch (error) {
     Logger.error(`${player.nameTag} failed to purchase ${quantity} ${itemType}(s) for ${price} points.`);
