@@ -1,6 +1,6 @@
-import { CustomCommandStatus, world } from "@minecraft/server";
-import { RuleName } from "../gamerule";
-import { PREFIX_GAMERULE } from "../../const";
+import { CustomCommandStatus, world } from '@minecraft/server';
+import { RuleName } from '../gamerule';
+import { PREFIX_GAMERULE } from '../../const';
 
 /**
  * 幸運エンチャント自動除去機能のオンオフを設定する
@@ -9,12 +9,9 @@ import { PREFIX_GAMERULE } from "../../const";
  * @returns
  */
 export const setAutoRemoveFortuneEnchant = (value: string) => {
-  const converted = value.toLowerCase() === "true";
+  const converted = value.toLowerCase() === 'true';
 
-  world.setDynamicProperty(
-    PREFIX_GAMERULE + RuleName.autoRemoveFortuneEnchant,
-    converted
-  );
+  world.setDynamicProperty(PREFIX_GAMERULE + RuleName.autoRemoveFortuneEnchant, converted);
 
   return {
     message: `${RuleName.autoRemoveFortuneEnchant}に${converted}を設定しました。`,
@@ -31,16 +28,13 @@ export const setAutoRemoveFortuneEnchant = (value: string) => {
 export const setAutoRemoveFortuneEnchantInterval = (value: string) => {
   if (!/^\d+$/.test(value)) {
     return {
-      message: "設定する値は整数でなければなりません。",
+      message: '設定する値は整数でなければなりません。',
       status: CustomCommandStatus.Failure,
     };
   }
   const interval = parseInt(value);
 
-  world.setDynamicProperty(
-    PREFIX_GAMERULE + RuleName.autoRemoveFortuneEnchantInterval,
-    interval
-  );
+  world.setDynamicProperty(PREFIX_GAMERULE + RuleName.autoRemoveFortuneEnchantInterval, interval);
 
   return {
     message: `${RuleName.autoRemoveFortuneEnchantInterval}に${interval}を設定しました。`,
