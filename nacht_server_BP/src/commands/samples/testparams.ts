@@ -9,6 +9,7 @@ import {
   system,
   type Vector3,
 } from '@minecraft/server';
+
 import { Logger } from '../../utils/logger';
 
 export default () =>

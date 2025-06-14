@@ -1,4 +1,5 @@
 import { world, CustomCommandStatus } from '@minecraft/server';
+
 import { PREFIX_GAMERULE } from '../../const';
 import { RuleName } from '../gamerule';
 

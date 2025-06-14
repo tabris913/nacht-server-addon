@@ -6,6 +6,7 @@ import {
   Vector3,
   world,
 } from '@minecraft/server';
+
 import PlayerUtils from '../../utils/PlayerUtils';
 
 export default () =>
