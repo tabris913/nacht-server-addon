@@ -9,7 +9,8 @@
     // null: None
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     // The number of spaces a tab is equal to. This setting is overridden based on the file contents when #editor.detectIndentation# is on.
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "files.trimTrailingWhitespace": false
   },
   // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
   // null: None
