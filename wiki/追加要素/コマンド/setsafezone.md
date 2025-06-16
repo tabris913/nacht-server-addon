@@ -1,6 +1,6 @@
 Since 0.5.0.
 
-権限レベル: GameDirectors.
+権限レベル: Admin.
 
 安全地帯を設定するコマンド。
 
