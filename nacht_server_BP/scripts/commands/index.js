@@ -17,7 +17,7 @@ import releasearea from './releasearea';
 import renamedp from './renamedp';
 import sell from './sell';
 import setdp from './setdp';
-import setsavezone from './setsavezone';
+import setsafezone from './setsafezone';
 import showgamerules from './showgamerules';
 import tp from './tp';
 import transfer from './transfer';
@@ -42,7 +42,7 @@ export default () => {
     renamedp();
     sell();
     setdp();
-    setsavezone();
+    setsafezone();
     showgamerules();
     tp();
     transfer();
