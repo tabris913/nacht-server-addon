@@ -10,10 +10,11 @@ import {
 } from '@minecraft/server';
 
 import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
+import marketLogic from '../logic/marketLogic';
 import { MinecraftEnchantmentTypes, MinecraftItemTypes } from '../types/index';
 import PlayerUtils from '../utils/PlayerUtils';
+
 import { registerCommand } from './common';
-import marketLogic from '../logic/marketLogic';
 
 const buyEnchantedBookCommand: CustomCommand = {
   name: 'nacht:buyenchantedbook',

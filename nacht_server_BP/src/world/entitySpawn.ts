@@ -1,9 +1,9 @@
 import { EntityInitializationCause, world } from '@minecraft/server';
+
 import { enemies } from '../const';
-import AreaUtils from '../utils/AreaUtils';
-import { Logger } from '../utils/logger';
-import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
+import AreaUtils from '../utils/AreaUtils';
+import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 
 export default () =>
   world.afterEvents.entitySpawn.subscribe((event) => {
@@ -11,7 +11,6 @@ export default () =>
     if (!enemies.includes(event.entity.typeId)) return;
 
     if (AreaUtils.existsInTownArea(event.entity)) {
-      Logger.debug(`${event.entity.nameTag} (${event.entity.typeId}) removed because it spawned in town area.`);
       event.entity.remove();
 
       return;
@@ -25,7 +24,6 @@ export default () =>
       );
     });
     if (here) {
-      Logger.debug(`${event.entity.nameTag} (${event.entity.typeId}) removed because it spawned in safe area.`);
       event.entity.remove();
 
       return;

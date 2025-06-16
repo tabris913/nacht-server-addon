@@ -19,7 +19,7 @@ import ScoreboardUtils from '../utils/ScoreboardUtils';
  *
  * {@link PointlessError}
  */
-const purchaseItem = (player, sourceEntity, itemType, quantity, price, pointless_msg, after_msg, data) => {
+const purchaseItem = (player, sourceEntity, itemType, quantity, price, pointless_msg, after_msg, data = 0, enchant, level) => {
     try {
         ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
         const sellerName = sourceEntity.nameTag || 'NPC';
@@ -31,7 +31,12 @@ const purchaseItem = (player, sourceEntity, itemType, quantity, price, pointless
         }
         system.runTimeout(() => {
             ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
-            InventoryUtils.giveItem(player, itemType, quantity, data);
+            if (enchant) {
+                InventoryUtils.giveEnchantedItem(player, itemType, quantity, enchant, level);
+            }
+            else {
+                InventoryUtils.giveItem(player, itemType, quantity, data);
+            }
             player.sendMessage(`[${sellerName}] ${after_msg || 'まいどあり！'}`);
         }, 1);
     }

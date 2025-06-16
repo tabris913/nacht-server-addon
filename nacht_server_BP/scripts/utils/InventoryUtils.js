@@ -1,4 +1,4 @@
-import { EntityComponentTypes, ItemStack, } from '@minecraft/server';
+import { EnchantmentType, EntityComponentTypes, ItemComponentTypes, ItemStack, } from '@minecraft/server';
 import { Logger } from './logger';
 /**
  * 指定されたアイテムの個数をカウントする
@@ -71,11 +71,34 @@ export const gatherSlots = (player, itemId) => {
 const giveItem = (playerEntity, itemType, quantity = 1, data = 0) => {
     var _a;
     try {
-        if (data) {
+        if (data !== undefined) {
             playerEntity.dimension.runCommand(`give ${playerEntity.nameTag} ${itemType} ${quantity} ${data}`);
             return true;
         }
         (_a = playerEntity.getComponent(EntityComponentTypes.Inventory)) === null || _a === void 0 ? void 0 : _a.container.addItem(new ItemStack(itemType, quantity));
+        return true;
+    }
+    catch (error) {
+        Logger.error();
+        throw error;
+    }
+};
+/**
+ * プレイヤーにアイテムを与える。
+ * インベントリスロットの指定はしない。
+ *
+ * @param playerEntity プレイヤー
+ * @param itemType アイテム ID
+ * @param quantity 数量
+ * @returns 成否
+ */
+const giveEnchantedItem = (playerEntity, itemType, quantity = 1, enchant, level = 1) => {
+    var _a, _b;
+    try {
+        const itemStack = new ItemStack(itemType, quantity);
+        (_a = itemStack
+            .getComponent(ItemComponentTypes.Enchantable)) === null || _a === void 0 ? void 0 : _a.addEnchantment({ level, type: new EnchantmentType(enchant) });
+        (_b = playerEntity.getComponent(EntityComponentTypes.Inventory)) === null || _b === void 0 ? void 0 : _b.container.addItem(itemStack);
         return true;
     }
     catch (error) {
@@ -180,6 +203,7 @@ export const removeItem = (player, itemId, quantity = Infinity, data = 0) => {
 const InventoryUtils = {
     countItem,
     gatherSlots,
+    giveEnchantedItem,
     giveItem,
     hasItem,
     removeItem,

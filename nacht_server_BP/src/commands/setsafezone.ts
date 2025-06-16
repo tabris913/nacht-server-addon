@@ -9,15 +9,18 @@ import {
   type Vector3,
   world,
 } from '@minecraft/server';
-import PlayerUtils from '../utils/PlayerUtils';
-import { UndefinedSourceOrInitiatorError } from '../errors/command';
-import { NachtServerAddonError } from '../errors/base';
-import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
-import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
+
 import { COUNTER_SAFE_AREA, PREFIX_SAFEAREA } from '../const';
-import { UneditableAreas } from '../models/location';
+import { NachtServerAddonError } from '../errors/base';
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
+import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
 import { MinecraftDimensionTypes } from '../types/index';
+import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
+import PlayerUtils from '../utils/PlayerUtils';
+
 import { registerCommand } from './common';
+
+import type { UneditableAreas } from '../models/location';
 
 enum Mode {
   cancel = 'cancel',
