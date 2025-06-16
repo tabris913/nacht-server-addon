@@ -18,6 +18,7 @@ import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
+import { MinecraftDimensionTypes } from '../types/index';
 
 const fixAreaCommand: CustomCommand = {
   name: 'nacht:fixarea',
@@ -52,12 +53,12 @@ const commandProcess = (origin: CustomCommandOrigin, from: Vector3, to: Vector3)
     world.setDynamicProperty(
       id,
       JSON.stringify({
-        dimension: blockVolume.dimension.id,
+        dimension: blockVolume.dimension.id as MinecraftDimensionTypes,
         id,
         index,
         max: blockVolume.getMax(),
         min: blockVolume.getMin(),
-      } as UneditableAreas)
+      } satisfies UneditableAreas)
     );
     DynamicPropertyUtils.countUpCounter(COUNTER_UNEDITABLE);
     player.sendMessage('指定された範囲を編集不可に設定しました。');

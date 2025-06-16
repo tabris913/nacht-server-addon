@@ -2,6 +2,7 @@ import { Logger } from '../utils/logger';
 
 import buy from './buy';
 import buybase from './buybase';
+import buyenchantedbook from './buyenchantedbook';
 import cleardp from './cleardp';
 import dice from './dice';
 import fill from './fill';
@@ -17,6 +18,7 @@ import releasearea from './releasearea';
 import renamedp from './renamedp';
 import sell from './sell';
 import setdp from './setdp';
+import setsavezone from './setsavezone';
 import showgamerules from './showgamerules';
 import tp from './tp';
 import transfer from './transfer';
@@ -27,6 +29,7 @@ export default () => {
 
   buy();
   buybase();
+  buyenchantedbook();
   cleardp();
   dice();
   fill();
@@ -42,6 +45,7 @@ export default () => {
   renamedp();
   sell();
   setdp();
+  setsavezone();
   showgamerules();
   tp();
   transfer();

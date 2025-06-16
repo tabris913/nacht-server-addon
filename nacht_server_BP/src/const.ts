@@ -1,10 +1,11 @@
 import { TicksPerSecond, type Vector3 } from '@minecraft/server';
 
 import { RuleName } from './commands/gamerule';
-import { MinecraftEffectTypes } from './types/index';
+import { MinecraftEffectTypes, MinecraftEntityTypes } from './types/index';
 
 // Counter
 export const COUNTER_BASE = 'base';
+export const COUNTER_SAFE_AREA = 'safe-area';
 export const COUNTER_TRANSFER = 'point-transfer';
 export const COUNTER_UNEDITABLE = 'uneditable-areas';
 
@@ -13,6 +14,7 @@ export const PREFIX_BASE = 'nacht:base_';
 export const PREFIX_COUNTER = 'nacht:counter_';
 export const PREFIX_GAMERULE = 'nacht:gamerule_';
 export const PREFIX_LOCATION = 'nacht:location_';
+export const PREFIX_SAFEAREA = 'nacht:safearea_';
 export const PREFIX_TRANSFER = 'nacht:transfer_';
 export const PREFIX_UNEDITABLEAREA = 'nacht:uneditablearea_';
 
@@ -49,6 +51,48 @@ export const EffectNames: Partial<Record<MinecraftEffectTypes, string>> = {
   [MinecraftEffectTypes.Weakness]: '弱体化',
   [MinecraftEffectTypes.Wither]: '衰弱',
 };
+
+// Entity
+export const enemies: Array<string> = [
+  MinecraftEntityTypes.Blaze,
+  MinecraftEntityTypes.Bogged,
+  MinecraftEntityTypes.Breeze,
+  MinecraftEntityTypes.CaveSpider,
+  MinecraftEntityTypes.Creaking,
+  MinecraftEntityTypes.Creeper,
+  MinecraftEntityTypes.Drowned,
+  MinecraftEntityTypes.ElderGuardian,
+  MinecraftEntityTypes.EnderDragon,
+  MinecraftEntityTypes.Enderman,
+  MinecraftEntityTypes.Endermite,
+  MinecraftEntityTypes.EvocationIllager,
+  MinecraftEntityTypes.Ghast,
+  MinecraftEntityTypes.Guardian,
+  MinecraftEntityTypes.Hoglin,
+  MinecraftEntityTypes.Husk,
+  MinecraftEntityTypes.MagmaCube,
+  MinecraftEntityTypes.Phantom,
+  MinecraftEntityTypes.Piglin,
+  MinecraftEntityTypes.PiglinBrute,
+  MinecraftEntityTypes.Pillager,
+  MinecraftEntityTypes.Ravager,
+  MinecraftEntityTypes.Shulker,
+  MinecraftEntityTypes.Silverfish,
+  MinecraftEntityTypes.Skeleton,
+  MinecraftEntityTypes.Slime,
+  MinecraftEntityTypes.Spider,
+  MinecraftEntityTypes.Stray,
+  MinecraftEntityTypes.Vex,
+  MinecraftEntityTypes.Warden,
+  MinecraftEntityTypes.Witch,
+  MinecraftEntityTypes.Wither,
+  MinecraftEntityTypes.WitherSkeleton,
+  MinecraftEntityTypes.Zoglin,
+  MinecraftEntityTypes.Zombie,
+  MinecraftEntityTypes.ZombiePigman,
+  MinecraftEntityTypes.ZombieVillager,
+  MinecraftEntityTypes.ZombieVillagerV2,
+];
 
 // Formatting
 export const Formatting = {

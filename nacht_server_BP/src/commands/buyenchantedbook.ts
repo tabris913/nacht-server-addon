@@ -1,9 +1,9 @@
 import {
   CommandPermissionLevel,
-  CustomCommand,
-  CustomCommandOrigin,
+  type CustomCommand,
+  type CustomCommandOrigin,
   CustomCommandParamType,
-  CustomCommandResult,
+  type CustomCommandResult,
   CustomCommandSource,
   CustomCommandStatus,
   system,

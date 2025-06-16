@@ -1,6 +1,6 @@
 import { world } from '@minecraft/server';
 
-import { PREFIX_UNEDITABLEAREA, PREFIX_LOCATION, PREFIX_COUNTER, PREFIX_TRANSFER } from '../const';
+import { PREFIX_UNEDITABLEAREA, PREFIX_LOCATION, PREFIX_COUNTER, PREFIX_TRANSFER, PREFIX_SAFEAREA } from '../const';
 import { NachtServerAddonError } from '../errors/base';
 import { TransferHistory } from '../models/point';
 
@@ -80,6 +80,21 @@ export const retrieveLocations = (playerNameTag?: string) => {
   }
 };
 
+export const retrieveSafeAreas = () => {
+  try {
+    return world
+      .getDynamicPropertyIds()
+      .filter((dpid) => dpid.startsWith(PREFIX_SAFEAREA))
+      .map((dpid) => world.getDynamicProperty(dpid) as string | undefined)
+      .filter((dp) => dp !== undefined)
+      .map((dp) => JSON.parse(dp) as UneditableAreas);
+  } catch (error) {
+    Logger.error('Failed to retrieve safe areas because of', error);
+
+    throw error;
+  }
+};
+
 export const retrieveTransferHistories = () => {
   try {
     return world
@@ -119,6 +134,7 @@ const DynamicPropertyUtils = {
   countUpCounter,
   getNextCounter,
   retrieveLocations,
+  retrieveSafeAreas,
   retrieveTransferHistories,
   retrieveUneditableAreas,
 };

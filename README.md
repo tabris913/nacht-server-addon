@@ -23,6 +23,7 @@ Released in 2025-06-??.
 #### Commands
 
 - buyenchantedbook コマンド追加
+- setsafearea コマンド追加
 
 ### 0.4.3
 
