@@ -13,9 +13,9 @@ Since 0.5.0.
 ### Examples
 
 ```
-/nacht:setsafearea set 0 0 0 100 100 100
+/nacht:setsafezone set 0 0 0 100 100 100
 ```
 
 ```
-/nacht:setsafearea cancel
+/nacht:setsafezone cancel
 ```

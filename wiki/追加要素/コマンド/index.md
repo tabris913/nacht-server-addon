@@ -3,6 +3,7 @@
 
 - [[buy]]
 - [[buybase]]
+- [[buyenchantedbook]]
 - [[cleardp]]
 - [[diceroll]] ◯
 - [[fill]]
@@ -18,6 +19,7 @@
 - [[sell]]
 - [[setdp]]
 - [[setlocation]] ×
+- [[setsafezone]]
 - [[showgamerules]]
 - [[tp]]
 - [[transfer]]
