@@ -1,5 +1,6 @@
 import {
   type ContainerSlot,
+  EnchantmentType,
   type Entity,
   EntityComponentTypes,
   ItemComponentTypes,
@@ -8,7 +9,7 @@ import {
   system,
 } from '@minecraft/server';
 
-import { MinecraftPotionEffectTypes } from '../types';
+import { MinecraftEnchantmentTypes, MinecraftPotionEffectTypes } from '../types/index';
 
 import { Logger } from './logger';
 
@@ -85,11 +86,42 @@ export const gatherSlots = (player: Entity, itemId?: string) => {
  */
 const giveItem = (playerEntity: Entity, itemType: string, quantity: number = 1, data: number = 0) => {
   try {
-    if (data) {
+    if (data !== undefined) {
       playerEntity.dimension.runCommand(`give ${playerEntity.nameTag} ${itemType} ${quantity} ${data}`);
       return true;
     }
     playerEntity.getComponent(EntityComponentTypes.Inventory)?.container.addItem(new ItemStack(itemType, quantity));
+
+    return true;
+  } catch (error) {
+    Logger.error();
+
+    throw error;
+  }
+};
+
+/**
+ * プレイヤーにアイテムを与える。
+ * インベントリスロットの指定はしない。
+ *
+ * @param playerEntity プレイヤー
+ * @param itemType アイテム ID
+ * @param quantity 数量
+ * @returns 成否
+ */
+const giveEnchantedItem = (
+  playerEntity: Entity,
+  itemType: string,
+  quantity: number = 1,
+  enchant: MinecraftEnchantmentTypes,
+  level: number = 1
+) => {
+  try {
+    const itemStack = new ItemStack(itemType, quantity);
+    itemStack
+      .getComponent(ItemComponentTypes.Enchantable)
+      ?.addEnchantment({ level, type: new EnchantmentType(enchant) });
+    playerEntity.getComponent(EntityComponentTypes.Inventory)?.container.addItem(itemStack);
 
     return true;
   } catch (error) {
@@ -200,6 +232,7 @@ export const removeItem = (player: Entity, itemId: string, quantity: number = In
 const InventoryUtils = {
   countItem,
   gatherSlots,
+  giveEnchantedItem,
   giveItem,
   hasItem,
   removeItem,

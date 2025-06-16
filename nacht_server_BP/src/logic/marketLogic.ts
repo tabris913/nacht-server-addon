@@ -5,6 +5,7 @@ import { PointlessError } from '../errors/market';
 import InventoryUtils from '../utils/InventoryUtils';
 import { Logger } from '../utils/logger';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
+import { MinecraftEnchantmentTypes } from '../types/index';
 
 /**
  * プレイヤーがアイテムを購入する
@@ -29,7 +30,9 @@ const purchaseItem = (
   price: number,
   pointless_msg?: string,
   after_msg?: string,
-  data?: number
+  data: number = 0,
+  enchant?: MinecraftEnchantmentTypes,
+  level?: number
 ) => {
   try {
     ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
@@ -46,7 +49,11 @@ const purchaseItem = (
 
     system.runTimeout(() => {
       ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
-      InventoryUtils.giveItem(player, itemType, quantity, data);
+      if (enchant) {
+        InventoryUtils.giveEnchantedItem(player, itemType, quantity, enchant, level);
+      } else {
+        InventoryUtils.giveItem(player, itemType, quantity, data);
+      }
       player.sendMessage(`[${sellerName}] ${after_msg || 'まいどあり！'}`);
     }, 1);
   } catch (error) {
