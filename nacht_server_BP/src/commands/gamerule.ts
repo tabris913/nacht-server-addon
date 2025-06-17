@@ -39,7 +39,7 @@ export enum RuleName {
 const gameruleCommand: CustomCommand = {
   name: 'nacht:gamerule',
   description: 'アドオンで追加したゲームルールを変更する',
-  permissionLevel: CommandPermissionLevel.Admin,
+  permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [
     { name: 'nacht:ruleName', type: CustomCommandParamType.Enum },
     { name: 'value', type: CustomCommandParamType.String },

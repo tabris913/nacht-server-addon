@@ -16,7 +16,7 @@ import { registerCommand } from './common';
 const renameDynamicPropertyCommand: CustomCommand = {
   name: 'nacht:renamedp',
   description: 'グローバル変数の名前を変更する',
-  permissionLevel: CommandPermissionLevel.Admin,
+  permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [
     { name: 'before', type: CustomCommandParamType.String },
     { name: 'after', type: CustomCommandParamType.String },

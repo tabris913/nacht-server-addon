@@ -20,7 +20,7 @@ import { RuleName } from './gamerule';
 const showGameRulesCommand: CustomCommand = {
   name: 'nacht:showgamerules',
   description: 'ゲームルールを表示する',
-  permissionLevel: CommandPermissionLevel.Admin,
+  permissionLevel: CommandPermissionLevel.GameDirectors,
   optionalParameters: [{ name: 'nacht:ruleName', type: CustomCommandParamType.Enum }],
 };
 

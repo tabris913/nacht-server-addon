@@ -14,16 +14,16 @@ import { COUNTER_UNEDITABLE, PREFIX_UNEDITABLEAREA } from '../const';
 import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
 import { UneditableAreas } from '../models/location';
+import { MinecraftDimensionTypes } from '../types/index';
 import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
-import { MinecraftDimensionTypes } from '../types/index';
 
 const fixAreaCommand: CustomCommand = {
   name: 'nacht:fixarea',
   description: '範囲を固定する',
-  permissionLevel: CommandPermissionLevel.Admin,
+  permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [
     { name: 'from', type: CustomCommandParamType.Location },
     { name: 'to', type: CustomCommandParamType.Location },

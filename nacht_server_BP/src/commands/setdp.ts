@@ -22,7 +22,7 @@ import { registerCommand } from './common';
 const customCommand: CustomCommand = {
   name: 'nacht:setdp',
   description: 'Dynamic Propertyを設定する',
-  permissionLevel: CommandPermissionLevel.Admin,
+  permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [
     { name: 'id', type: CustomCommandParamType.String },
     { name: 'nacht:CustomCommandParamType', type: CustomCommandParamType.Enum },
@@ -93,7 +93,7 @@ export default () =>
       {
         name: 'nacht:setdpblock',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
           { name: 'id', type: CustomCommandParamType.String },
           { name: 'value', type: CustomCommandParamType.BlockType },
@@ -110,7 +110,7 @@ export default () =>
       {
         name: 'nacht:setdpitem',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
           { name: 'id', type: CustomCommandParamType.String },
           { name: 'value', type: CustomCommandParamType.ItemType },
@@ -127,7 +127,7 @@ export default () =>
       {
         name: 'nacht:setdpentity',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
           { name: 'id', type: CustomCommandParamType.String },
           { name: 'value', type: CustomCommandParamType.EntitySelector },
@@ -144,7 +144,7 @@ export default () =>
       {
         name: 'nacht:setdpplayer',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
           { name: 'id', type: CustomCommandParamType.String },
           { name: 'value', type: CustomCommandParamType.PlayerSelector },
@@ -161,7 +161,7 @@ export default () =>
       {
         name: 'nacht:setdplocation',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
           { name: 'id', type: CustomCommandParamType.String },
           { name: 'value', type: CustomCommandParamType.Location },

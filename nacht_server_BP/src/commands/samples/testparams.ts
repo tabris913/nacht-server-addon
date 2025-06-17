@@ -20,7 +20,7 @@ export default () =>
       {
         name: 'nacht:testparams',
         description: 'コマンドパラメータの確認を行う (デバッグ用)',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
           { name: 'blockType', type: CustomCommandParamType.BlockType },
           {

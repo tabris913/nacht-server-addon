@@ -18,7 +18,7 @@ import { registerCommand } from './common';
 const releaseAreaCommand: CustomCommand = {
   name: 'nacht:releasearea',
   description: '編集不可の範囲を解放する',
-  permissionLevel: CommandPermissionLevel.Admin,
+  permissionLevel: CommandPermissionLevel.GameDirectors,
 };
 
 /**
