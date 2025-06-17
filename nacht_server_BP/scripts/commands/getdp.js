@@ -4,7 +4,7 @@ import { registerCommand } from './common';
 const getDynamicPropertyCommand = {
     name: 'nacht:getdp',
     description: 'Dynamic Propertyを取得する',
-    permissionLevel: CommandPermissionLevel.Admin,
+    permissionLevel: CommandPermissionLevel.GameDirectors,
     optionalParameters: [{ name: 'filter', type: CustomCommandParamType.String }],
 };
 /**

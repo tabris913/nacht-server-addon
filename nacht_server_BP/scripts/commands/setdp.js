@@ -4,7 +4,7 @@ import { registerCommand } from './common';
 const customCommand = {
     name: 'nacht:setdp',
     description: 'Dynamic Propertyを設定する',
-    permissionLevel: CommandPermissionLevel.Admin,
+    permissionLevel: CommandPermissionLevel.GameDirectors,
     mandatoryParameters: [
         { name: 'id', type: CustomCommandParamType.String },
         { name: 'nacht:CustomCommandParamType', type: CustomCommandParamType.Enum },
@@ -64,7 +64,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
     registerCommand({
         name: 'nacht:setdpblock',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             { name: 'id', type: CustomCommandParamType.String },
             { name: 'value', type: CustomCommandParamType.BlockType },
@@ -76,7 +76,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
     registerCommand({
         name: 'nacht:setdpitem',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             { name: 'id', type: CustomCommandParamType.String },
             { name: 'value', type: CustomCommandParamType.ItemType },
@@ -88,7 +88,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
     registerCommand({
         name: 'nacht:setdpentity',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             { name: 'id', type: CustomCommandParamType.String },
             { name: 'value', type: CustomCommandParamType.EntitySelector },
@@ -100,7 +100,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
     registerCommand({
         name: 'nacht:setdpplayer',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             { name: 'id', type: CustomCommandParamType.String },
             { name: 'value', type: CustomCommandParamType.PlayerSelector },
@@ -112,7 +112,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
     registerCommand({
         name: 'nacht:setdplocation',
         description: 'Dynamic Propertyを設定する',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             { name: 'id', type: CustomCommandParamType.String },
             { name: 'value', type: CustomCommandParamType.Location },

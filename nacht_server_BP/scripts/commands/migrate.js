@@ -4,7 +4,7 @@ import { migrateFromV2_0_0 } from './migration/v3.0.0';
 const migrateCommand = {
     name: 'nacht:migrate',
     description: 'アドオン更新によるマイグレートを行う',
-    permissionLevel: CommandPermissionLevel.Admin,
+    permissionLevel: CommandPermissionLevel.GameDirectors,
 };
 const commandProcess = (origin) => {
     system.runTimeout(() => {

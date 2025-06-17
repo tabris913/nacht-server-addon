@@ -14,7 +14,7 @@ export var Mode;
 const setSafeZoneCommand = {
     name: 'nacht:setsafezone',
     description: '安全地帯を設定する',
-    permissionLevel: CommandPermissionLevel.Admin,
+    permissionLevel: CommandPermissionLevel.GameDirectors,
     mandatoryParameters: [{ name: 'nacht:AreaSetMode', type: CustomCommandParamType.Enum }],
     optionalParameters: [
         { name: 'from', type: CustomCommandParamType.Location },

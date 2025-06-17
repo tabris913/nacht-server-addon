@@ -4,7 +4,7 @@ import { registerCommand } from './common';
 const clearDynamicPropertyCommand = {
     name: 'nacht:cleardp',
     description: 'Dynamic Propertyをクリアする',
-    permissionLevel: CommandPermissionLevel.Admin,
+    permissionLevel: CommandPermissionLevel.GameDirectors,
     mandatoryParameters: [
         {
             name: 'nacht:dynamicPropertyIds',

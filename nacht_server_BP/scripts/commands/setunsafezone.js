@@ -10,7 +10,7 @@ import { Mode } from './setsafezone';
 const setUnsafeZoneCommand = {
     name: 'nacht:setunsafezone',
     description: '非安全地帯を設定する',
-    permissionLevel: CommandPermissionLevel.Admin,
+    permissionLevel: CommandPermissionLevel.GameDirectors,
     mandatoryParameters: [{ name: 'nacht:AreaSetMode', type: CustomCommandParamType.Enum }],
     optionalParameters: [
         { name: 'from', type: CustomCommandParamType.Location },

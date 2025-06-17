@@ -8,7 +8,7 @@ import { registerCommand } from './common';
 const fixAreaCommand = {
     name: 'nacht:fixarea',
     description: '範囲を固定する',
-    permissionLevel: CommandPermissionLevel.Admin,
+    permissionLevel: CommandPermissionLevel.GameDirectors,
     mandatoryParameters: [
         { name: 'from', type: CustomCommandParamType.Location },
         { name: 'to', type: CustomCommandParamType.Location },
