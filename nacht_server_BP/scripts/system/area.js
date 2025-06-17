@@ -139,6 +139,7 @@ const checkPlayers = (area) => __awaiter(void 0, void 0, void 0, function* () {
 export default () => {
     system.runTimeout(() => {
         // 範囲チェック
+        const watchCrossingAreaInterval = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingAreaInterval);
         system.runInterval(() => __awaiter(void 0, void 0, void 0, function* () {
             if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingArea)) {
                 // 街エリアから外に出ることは基本的にありえない
@@ -146,7 +147,6 @@ export default () => {
                 checkPlayers('base');
                 checkPlayers('expr');
             }
-        }), world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingAreaInterval) ||
-            TicksPerSecond / 5);
+        }), watchCrossingAreaInterval || TicksPerSecond / 5);
     }, 1);
 };

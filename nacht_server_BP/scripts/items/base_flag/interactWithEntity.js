@@ -208,7 +208,9 @@ export default () => {
                             break;
                         case 3:
                             // アイテム化
-                            event.target.kill();
+                            event.target.remove();
+                            world.setDynamicProperty(base.id, JSON.stringify(Object.assign(Object.assign({}, base), { entityId: undefined })));
+                            BaseUtils.removeFromTeleportTargets(base);
                             if (!InventoryUtils.hasItem(event.player, NachtServerAddonItemTypes.BaseFlag)) {
                                 InventoryUtils.giveItem(event.player, NachtServerAddonItemTypes.BaseFlag, 1);
                             }

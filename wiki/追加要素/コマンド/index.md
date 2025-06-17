@@ -20,6 +20,8 @@
 - [[setdp]]
 - [[setlocation]] ×
 - [[setsafezone]]
+- [[setspawnpoint]]
+- [[setunsafezone]]
 - [[showgamerules]]
 - [[tp]]
 - [[transfer]]

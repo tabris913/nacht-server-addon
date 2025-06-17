@@ -1,11 +1,9 @@
-import command from "./commands/index";
-import item from "./items/index";
-import player from "./players/index";
-import system from "./system/index";
-import world from "./world/index";
+import command from './commands/index';
+import item from './items/index';
+import system from './system/index';
+import world from './world/index';
 
 world();
 system();
-player();
 command();
 item();

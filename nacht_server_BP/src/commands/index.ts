@@ -5,6 +5,7 @@ import buybase from './buybase';
 import buyenchantedbook from './buyenchantedbook';
 import cleardp from './cleardp';
 import dice from './dice';
+import _enum from './enum';
 import fill from './fill';
 import fixarea from './fixarea';
 import gamerule from './gamerule';
@@ -19,13 +20,17 @@ import renamedp from './renamedp';
 import sell from './sell';
 import setdp from './setdp';
 import setsafezone from './setsafezone';
+import setspawnpoint from './setspawnpoint';
+import setunsafezone from './setunsafezone';
 import showgamerules from './showgamerules';
 import tp from './tp';
 import transfer from './transfer';
 import withdraw from './withdraw';
 
 export default () => {
-  Logger.log('set commands');
+  Logger.log('Subscribing original commands...');
+
+  _enum();
 
   buy();
   buybase();
@@ -46,6 +51,8 @@ export default () => {
   sell();
   setdp();
   setsafezone();
+  setspawnpoint();
+  setunsafezone();
   showgamerules();
   tp();
   transfer();

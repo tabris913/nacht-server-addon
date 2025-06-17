@@ -143,6 +143,10 @@ const checkPlayers = async (area: Area) => {
 export default () => {
   system.runTimeout(() => {
     // 範囲チェック
+    const watchCrossingAreaInterval = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingAreaInterval) as
+      | number
+      | undefined;
+
     system.runInterval(
       async () => {
         if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingArea)) {
@@ -152,8 +156,7 @@ export default () => {
           checkPlayers('expr');
         }
       },
-      (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingAreaInterval) as number | undefined) ||
-        TicksPerSecond / 5
+      watchCrossingAreaInterval || TicksPerSecond / 5
     );
   }, 1);
 };

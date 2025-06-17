@@ -4,6 +4,7 @@ import { DynamicPropertyNotFoundError } from '../errors/dp';
 import { BaseAreaDimensionBlockVolume } from '../models/BaseAreaDimensionBlockVolume';
 import LocationUtils from './LocationUtils';
 import { Logger } from './logger';
+import PlayerUtils from './PlayerUtils';
 import { isFixedBase } from './TypeGuards';
 /**
  * Dynamic Property から指定した拠点を取得する
@@ -104,6 +105,28 @@ export const hasOverlappingBlocks = (baseArea) => BaseUtils.retrieveBases()
     const base = new BaseAreaDimensionBlockVolume(baseDp.northWest, LocationUtils.offsetLocation(baseDp.northWest, baseDp.edgeSize - 1), baseDp.dimension);
     return LocationUtils.isOverlapped(baseArea, base);
 });
+export const removeFromTeleportTargets = (baseAreaInfo) => {
+    try {
+        LocationUtils.findDynamicPropertiesBySuffix(baseAreaInfo.owner, baseAreaInfo.index).forEach((location) => {
+            world.setDynamicProperty(location.id, undefined);
+            const player = PlayerUtils.findPlayer({ nameTag: location.owner });
+            if (player) {
+                player.sendMessage([
+                    `${baseAreaInfo.owner}の拠点${baseAreaInfo.name}から`,
+                    { translate: 'items.base_flag.name' },
+                    'が削除されたため、',
+                    { translate: 'items.nacht_feather.name' },
+                    'の転移先から削除しました。',
+                ]);
+                Logger.info(`Removed a teleport target for ${baseAreaInfo.id} from ${player.nameTag}.`);
+            }
+        });
+    }
+    catch (error) {
+        Logger.error('Failed to remove base from teleport targets because of', error);
+        throw error;
+    }
+};
 /**
  * 拠点の Dynamic Property を検索する
  *
@@ -131,6 +154,7 @@ const BaseUtils = {
     findByLocation,
     getById,
     hasOverlappingBlocks,
+    removeFromTeleportTargets,
     retrieveBases,
 };
 export default BaseUtils;

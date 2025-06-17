@@ -14,12 +14,7 @@ import teleportLogic from '../logic/teleportLogic';
 import { MinecraftDimensionTypes } from '../types/index';
 
 import { registerCommand } from './common';
-
-enum DimensionTypes {
-  Overworld = 'overworld',
-  Nether = 'nether',
-  TheEnd = 'the_end',
-}
+import { DimensionTypes } from './enum';
 
 const tpCommand: CustomCommand = {
   name: 'nacht:tp',
@@ -52,13 +47,4 @@ const commandProcess = (
   return { status: CustomCommandStatus.Success };
 };
 
-export default () =>
-  system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum('nacht:DimensionTypes', [
-      DimensionTypes.Nether,
-      DimensionTypes.Overworld,
-      DimensionTypes.TheEnd,
-    ]);
-
-    registerCommand(tpCommand, commandProcess)(event);
-  });
+export default () => system.beforeEvents.startup.subscribe(registerCommand(tpCommand, commandProcess));
