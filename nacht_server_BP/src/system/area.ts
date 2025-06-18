@@ -1,6 +1,6 @@
 import { type Player, system, TicksPerSecond, world } from '@minecraft/server';
 
-import { RuleName } from '../commands/gamerule';
+import { RuleName } from '../commands/enum';
 import { Formatting, LOC_ERSTE, PREFIX_GAMERULE, TAG_AREA_BASE, TAG_AREA_EXPL, TAG_AREA_TOWN } from '../const';
 import { MinecraftDimensionTypes } from '../types/index';
 import AreaUtils from '../utils/AreaUtils';

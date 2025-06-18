@@ -1,6 +1,6 @@
 import { ItemComponentTypes, system, TicksPerSecond, world } from '@minecraft/server';
 
-import { RuleName } from '../commands/gamerule';
+import { RuleName } from '../commands/enum';
 import { PREFIX_GAMERULE } from '../const';
 import InventoryUtils from '../utils/InventoryUtils';
 

@@ -6,11 +6,7 @@ import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
 import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import PlayerUtils from '../utils/PlayerUtils';
 import { registerCommand } from './common';
-export var Mode;
-(function (Mode) {
-    Mode["cancel"] = "cancel";
-    Mode["set"] = "set";
-})(Mode || (Mode = {}));
+import { Mode } from './enum';
 const setSafeZoneCommand = {
     name: 'nacht:setsafezone',
     description: '安全地帯を設定する',
@@ -70,7 +66,4 @@ const commandProcess = (origin, mode, from, to) => {
     }
     return { status: CustomCommandStatus.Success };
 };
-export default () => system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum('nacht:AreaSetMode', [Mode.cancel, Mode.set]);
-    registerCommand(setSafeZoneCommand, commandProcess)(event);
-});
+export default () => system.beforeEvents.startup.subscribe(registerCommand(setSafeZoneCommand, commandProcess));

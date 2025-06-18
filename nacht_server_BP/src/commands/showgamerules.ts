@@ -15,7 +15,7 @@ import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
-import { RuleName } from './gamerule';
+import { RuleName } from './enum';
 
 const showGameRulesCommand: CustomCommand = {
   name: 'nacht:showgamerules',

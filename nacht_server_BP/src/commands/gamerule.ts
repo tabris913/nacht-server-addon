@@ -20,21 +20,7 @@ import {
 } from './gameRules/showAreaBorder';
 import { setTeleportTarget } from './gameRules/teleportTarget';
 import { setWatchCrossingArea, setWatchCrossingAreaInterval } from './gameRules/watchCrossingArea';
-
-export enum RuleName {
-  autoRemoveFortuneEnchant = 'autoRemoveFortuneEnchant',
-  autoRemoveFortuneEnchantInterval = 'autoRemoveFortuneEnchantInterval',
-  baseMarketPrice = 'baseMarketPrice',
-  baseMaximumRange = 'baseMaximumRange',
-  prayPrice = 'prayPrice',
-  showAreaBorder = 'showAreaBorder',
-  showAreaBorderInterval = 'showAreaBorderInterval',
-  showAreaBorderRange = 'showAreaBorderRange',
-  showAreaBorderYRange = 'showAreaBorderYRange',
-  teleportTargets = 'teleportTargets',
-  watchCrossingArea = 'watchCrossingArea',
-  watchCrossingAreaInterval = 'watchCrossingAreaInterval',
-}
+import { RuleName } from './enum';
 
 const gameruleCommand: CustomCommand = {
   name: 'nacht:gamerule',
@@ -85,23 +71,4 @@ const commandProcess = (origin: CustomCommandOrigin, ruleName: RuleName, value: 
   }
 };
 
-export default () => {
-  system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum('nacht:ruleName', [
-      RuleName.autoRemoveFortuneEnchant,
-      RuleName.autoRemoveFortuneEnchantInterval,
-      RuleName.baseMarketPrice,
-      RuleName.baseMaximumRange,
-      RuleName.prayPrice,
-      RuleName.showAreaBorder,
-      RuleName.showAreaBorderInterval,
-      RuleName.showAreaBorderRange,
-      RuleName.showAreaBorderYRange,
-      RuleName.teleportTargets,
-      RuleName.watchCrossingArea,
-      RuleName.watchCrossingAreaInterval,
-    ]);
-
-    registerCommand(gameruleCommand, commandProcess)(event);
-  });
-};
+export default () => system.beforeEvents.startup.subscribe(registerCommand(gameruleCommand, commandProcess));

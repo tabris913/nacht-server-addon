@@ -1,6 +1,6 @@
 import { BlockVolume, BlockVolumeIntersection, system, TicksPerSecond, type Vector3, world } from '@minecraft/server';
 
-import { RuleName } from '../commands/gamerule';
+import { RuleName } from '../commands/enum';
 import { PREFIX_GAMERULE } from '../const';
 import { BaseAreaDimensionBlockVolume } from '../models/BaseAreaDimensionBlockVolume';
 import { MinecraftDimensionTypes } from '../types/index';

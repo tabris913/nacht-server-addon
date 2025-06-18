@@ -1,5 +1,5 @@
 import { world } from '@minecraft/server';
-import { RuleName } from '../commands/gamerule';
+import { RuleName } from '../commands/enum';
 import { PREFIX_GAMERULE, PREFIX_LOCATION, TAG_AREA_BASE, TAG_AREA_EXPL, TAG_AREA_TOWN, TAG_OPERATOR } from '../const';
 import { NachtServerAddonError } from '../errors/base';
 import AreaUtils from '../utils/AreaUtils';

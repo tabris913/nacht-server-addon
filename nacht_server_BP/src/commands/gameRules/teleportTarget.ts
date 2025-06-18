@@ -1,7 +1,7 @@
 import { CustomCommandStatus, world } from '@minecraft/server';
 
 import { PREFIX_GAMERULE } from '../../const';
-import { RuleName } from '../gamerule';
+import { RuleName } from '../enum';
 
 /**
  * テレポート登録先の数を設定する

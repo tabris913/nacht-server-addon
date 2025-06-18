@@ -6,12 +6,7 @@ import { MinecraftEffectTypes } from '../types/index';
 import PlayerUtils from '../utils/PlayerUtils';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
 import { registerCommand } from './common';
-import { RuleName } from './gamerule';
-var PraySubCommand;
-(function (PraySubCommand) {
-    PraySubCommand["Free"] = "free";
-    PraySubCommand["Paid"] = "paid";
-})(PraySubCommand || (PraySubCommand = {}));
+import { PraySubCommand, RuleName } from './enum';
 const prayLootTable = {
     rarity: {
         N: {
@@ -147,9 +142,4 @@ const paidPray = (prayer, effect, rarity) => {
         prayer.sendMessage(`[${rarity}] ${EffectNames[effect]}レベル${level}を180秒間付与しました。`);
     }, 1);
 };
-export default () => {
-    system.beforeEvents.startup.subscribe((event) => {
-        event.customCommandRegistry.registerEnum('nacht:PraySubCommand', [PraySubCommand.Free, PraySubCommand.Paid]);
-        registerCommand(prayCommand, commandProcess)(event);
-    });
-};
+export default () => system.beforeEvents.startup.subscribe(registerCommand(prayCommand, commandProcess));

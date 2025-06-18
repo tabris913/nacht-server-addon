@@ -1,6 +1,6 @@
 import { world, CustomCommandStatus } from '@minecraft/server';
 import { PREFIX_GAMERULE } from '../../const';
-import { RuleName } from '../gamerule';
+import { RuleName } from '../enum';
 /**
  * エリア監視のオンオフを設定する
  *

@@ -19,7 +19,7 @@ import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
-import { Mode } from './setsafezone';
+import { Mode } from './enum';
 
 import type { UneditableAreas } from '../models/location';
 

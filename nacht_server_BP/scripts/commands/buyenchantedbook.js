@@ -1,7 +1,7 @@
 import { CommandPermissionLevel, CustomCommandParamType, CustomCommandSource, CustomCommandStatus, system, } from '@minecraft/server';
 import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
 import marketLogic from '../logic/marketLogic';
-import { MinecraftEnchantmentTypes, MinecraftItemTypes } from '../types/index';
+import { MinecraftItemTypes } from '../types/index';
 import PlayerUtils from '../utils/PlayerUtils';
 import { registerCommand } from './common';
 const buyEnchantedBookCommand = {
@@ -38,49 +38,4 @@ const commandProcess = (origin, enchant, level, quantity, point) => {
     marketLogic.purchaseItem(player, origin.sourceEntity, MinecraftItemTypes.EnchantedBook, quantity, point, undefined, undefined, undefined, enchant, level);
     return { status: CustomCommandStatus.Success };
 };
-export default () => system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum('nacht:EnchantTypes', [
-        MinecraftEnchantmentTypes.AquaAffinity,
-        MinecraftEnchantmentTypes.BaneOfArthropods,
-        MinecraftEnchantmentTypes.Binding,
-        MinecraftEnchantmentTypes.BlastProtection,
-        MinecraftEnchantmentTypes.BowInfinity,
-        MinecraftEnchantmentTypes.Breach,
-        MinecraftEnchantmentTypes.Channeling,
-        MinecraftEnchantmentTypes.Density,
-        MinecraftEnchantmentTypes.DepthStrider,
-        MinecraftEnchantmentTypes.Efficiency,
-        MinecraftEnchantmentTypes.FeatherFalling,
-        MinecraftEnchantmentTypes.FireAspect,
-        MinecraftEnchantmentTypes.FireProtection,
-        MinecraftEnchantmentTypes.Flame,
-        MinecraftEnchantmentTypes.Fortune,
-        MinecraftEnchantmentTypes.FrostWalker,
-        MinecraftEnchantmentTypes.Impaling,
-        MinecraftEnchantmentTypes.Knockback,
-        MinecraftEnchantmentTypes.Looting,
-        MinecraftEnchantmentTypes.Loyalty,
-        MinecraftEnchantmentTypes.LuckOfTheSea,
-        MinecraftEnchantmentTypes.Lure,
-        MinecraftEnchantmentTypes.Mending,
-        MinecraftEnchantmentTypes.Multishot,
-        MinecraftEnchantmentTypes.Piercing,
-        MinecraftEnchantmentTypes.Power,
-        MinecraftEnchantmentTypes.ProjectileProtection,
-        MinecraftEnchantmentTypes.Protection,
-        MinecraftEnchantmentTypes.Punch,
-        MinecraftEnchantmentTypes.QuickCharge,
-        MinecraftEnchantmentTypes.Respiration,
-        MinecraftEnchantmentTypes.Riptide,
-        MinecraftEnchantmentTypes.Sharpness,
-        MinecraftEnchantmentTypes.SilkTouch,
-        MinecraftEnchantmentTypes.Smite,
-        MinecraftEnchantmentTypes.SoulSpeed,
-        MinecraftEnchantmentTypes.SwiftSneak,
-        MinecraftEnchantmentTypes.Thorns,
-        MinecraftEnchantmentTypes.Unbreaking,
-        MinecraftEnchantmentTypes.Vanishing,
-        MinecraftEnchantmentTypes.WindBurst,
-    ]);
-    registerCommand(buyEnchantedBookCommand, commandProcess)(event);
-});
+export default () => system.beforeEvents.startup.subscribe(registerCommand(buyEnchantedBookCommand, commandProcess));

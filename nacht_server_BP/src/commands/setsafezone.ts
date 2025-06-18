@@ -21,11 +21,7 @@ import PlayerUtils from '../utils/PlayerUtils';
 import { registerCommand } from './common';
 
 import type { UneditableAreas } from '../models/location';
-
-export enum Mode {
-  cancel = 'cancel',
-  set = 'set',
-}
+import { Mode } from './enum';
 
 const setSafeZoneCommand: CustomCommand = {
   name: 'nacht:setsafezone',
@@ -100,8 +96,4 @@ const commandProcess = (origin: CustomCommandOrigin, mode: Mode, from?: Vector3,
   return { status: CustomCommandStatus.Success };
 };
 
-export default () =>
-  system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum('nacht:AreaSetMode', [Mode.cancel, Mode.set]);
-    registerCommand(setSafeZoneCommand, commandProcess)(event);
-  });
+export default () => system.beforeEvents.startup.subscribe(registerCommand(setSafeZoneCommand, commandProcess));

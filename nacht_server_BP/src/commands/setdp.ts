@@ -75,18 +75,6 @@ const commandProcess = (
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum('nacht:CustomCommandParamType', [
-      'BlockType',
-      'Boolean',
-      'EntitySelector',
-      'Float',
-      'Integer',
-      'ItemType',
-      'Location',
-      'PlayerSelector',
-      'String',
-    ] satisfies Array<keyof typeof CustomCommandParamType>);
-
     registerCommand(customCommand, commandProcess)(event);
 
     registerCommand(

@@ -19,14 +19,7 @@ import { Logger } from '../utils/logger';
 import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
-
-enum FillMode {
-  destroy = 'destroy',
-  hollow = 'hollow',
-  keep = 'keep',
-  outline = 'outline',
-  replace = 'replace',
-}
+import { FillMode } from './enum';
 
 const fillCommand: CustomCommand = {
   name: 'nacht:fill',
@@ -200,15 +193,4 @@ function* callFillCommand(
   // Logger.log(`Run ${timesToRun} times and successed ${totalSuccessCount}.`);
 }
 
-export default () =>
-  system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum('nacht:oldBlockHandling', [
-      FillMode.destroy,
-      FillMode.hollow,
-      FillMode.keep,
-      FillMode.outline,
-      FillMode.replace,
-    ]);
-
-    registerCommand(fillCommand, commandProcess)(event);
-  });
+export default () => system.beforeEvents.startup.subscribe(registerCommand(fillCommand, commandProcess));

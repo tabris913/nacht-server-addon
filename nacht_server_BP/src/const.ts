@@ -1,6 +1,6 @@
 import { TicksPerSecond, type Vector3 } from '@minecraft/server';
 
-import { RuleName } from './commands/gamerule';
+import { RuleName } from './commands/enum';
 import { MinecraftEffectTypes, MinecraftEntityTypes } from './types/index';
 
 // Counter

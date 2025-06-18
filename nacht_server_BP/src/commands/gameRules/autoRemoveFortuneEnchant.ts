@@ -1,7 +1,7 @@
 import { CustomCommandStatus, world } from '@minecraft/server';
 
 import { PREFIX_GAMERULE } from '../../const';
-import { RuleName } from '../gamerule';
+import { RuleName } from '../enum';
 
 /**
  * 幸運エンチャント自動除去機能のオンオフを設定する

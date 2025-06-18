@@ -9,7 +9,7 @@ import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import { Logger } from '../utils/logger';
 import PlayerUtils from '../utils/PlayerUtils';
 import { registerCommand } from './common';
-import { RuleName } from './gamerule';
+import { RuleName } from './enum';
 const buybaseCommand = {
     name: 'nacht:buybase',
     description: '拠点用地を購入する',

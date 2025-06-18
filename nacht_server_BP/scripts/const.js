@@ -1,5 +1,5 @@
 import { TicksPerSecond } from '@minecraft/server';
-import { RuleName } from './commands/gamerule';
+import { RuleName } from './commands/enum';
 import { MinecraftEffectTypes, MinecraftEntityTypes } from './types/index';
 // Counter
 export const COUNTER_BASE = 'base';

@@ -1,6 +1,6 @@
 import { CustomCommandStatus, world } from '@minecraft/server';
 import { PREFIX_GAMERULE } from '../../const';
-import { RuleName } from '../gamerule';
+import { RuleName } from '../enum';
 /**
  * 祈願料を設定する
  *

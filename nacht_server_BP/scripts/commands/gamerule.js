@@ -6,21 +6,7 @@ import { setPrayPrice } from './gameRules/pray';
 import { setShowAreaBorder, setShowAreaBorderInterval, setShowAreaBorderRange, setShowAreaBorderYRange, } from './gameRules/showAreaBorder';
 import { setTeleportTarget } from './gameRules/teleportTarget';
 import { setWatchCrossingArea, setWatchCrossingAreaInterval } from './gameRules/watchCrossingArea';
-export var RuleName;
-(function (RuleName) {
-    RuleName["autoRemoveFortuneEnchant"] = "autoRemoveFortuneEnchant";
-    RuleName["autoRemoveFortuneEnchantInterval"] = "autoRemoveFortuneEnchantInterval";
-    RuleName["baseMarketPrice"] = "baseMarketPrice";
-    RuleName["baseMaximumRange"] = "baseMaximumRange";
-    RuleName["prayPrice"] = "prayPrice";
-    RuleName["showAreaBorder"] = "showAreaBorder";
-    RuleName["showAreaBorderInterval"] = "showAreaBorderInterval";
-    RuleName["showAreaBorderRange"] = "showAreaBorderRange";
-    RuleName["showAreaBorderYRange"] = "showAreaBorderYRange";
-    RuleName["teleportTargets"] = "teleportTargets";
-    RuleName["watchCrossingArea"] = "watchCrossingArea";
-    RuleName["watchCrossingAreaInterval"] = "watchCrossingAreaInterval";
-})(RuleName || (RuleName = {}));
+import { RuleName } from './enum';
 const gameruleCommand = {
     name: 'nacht:gamerule',
     description: 'アドオンで追加したゲームルールを変更する',
@@ -68,22 +54,4 @@ const commandProcess = (origin, ruleName, value) => {
             return { status: CustomCommandStatus.Success };
     }
 };
-export default () => {
-    system.beforeEvents.startup.subscribe((event) => {
-        event.customCommandRegistry.registerEnum('nacht:ruleName', [
-            RuleName.autoRemoveFortuneEnchant,
-            RuleName.autoRemoveFortuneEnchantInterval,
-            RuleName.baseMarketPrice,
-            RuleName.baseMaximumRange,
-            RuleName.prayPrice,
-            RuleName.showAreaBorder,
-            RuleName.showAreaBorderInterval,
-            RuleName.showAreaBorderRange,
-            RuleName.showAreaBorderYRange,
-            RuleName.teleportTargets,
-            RuleName.watchCrossingArea,
-            RuleName.watchCrossingAreaInterval,
-        ]);
-        registerCommand(gameruleCommand, commandProcess)(event);
-    });
-};
+export default () => system.beforeEvents.startup.subscribe(registerCommand(gameruleCommand, commandProcess));

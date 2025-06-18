@@ -20,14 +20,9 @@ import PlayerUtils from '../utils/PlayerUtils';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
 
 import { registerCommand } from './common';
-import { RuleName } from './gamerule';
+import { PraySubCommand, RuleName } from './enum';
 
 type Rarity = 'N' | 'R' | 'SR' | 'SSR';
-
-enum PraySubCommand {
-  Free = 'free',
-  Paid = 'paid',
-}
 
 const prayLootTable = {
   rarity: {
@@ -167,10 +162,4 @@ const paidPray = (prayer: Player, effect: MinecraftEffectTypes, rarity: Rarity) 
   }, 1);
 };
 
-export default () => {
-  system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum('nacht:PraySubCommand', [PraySubCommand.Free, PraySubCommand.Paid]);
-
-    registerCommand(prayCommand, commandProcess)(event);
-  });
-};
+export default () => system.beforeEvents.startup.subscribe(registerCommand(prayCommand, commandProcess));

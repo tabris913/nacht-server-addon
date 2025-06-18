@@ -49,17 +49,6 @@ const commandProcess = (origin, id, paramType, value) => {
     return { message: 'Dynamic Propertyを設定しました。', status: CustomCommandStatus.Success };
 };
 export default () => system.beforeEvents.startup.subscribe((event) => {
-    event.customCommandRegistry.registerEnum('nacht:CustomCommandParamType', [
-        'BlockType',
-        'Boolean',
-        'EntitySelector',
-        'Float',
-        'Integer',
-        'ItemType',
-        'Location',
-        'PlayerSelector',
-        'String',
-    ]);
     registerCommand(customCommand, commandProcess)(event);
     registerCommand({
         name: 'nacht:setdpblock',

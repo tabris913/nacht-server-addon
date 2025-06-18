@@ -6,7 +6,7 @@ import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
 import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import PlayerUtils from '../utils/PlayerUtils';
 import { registerCommand } from './common';
-import { Mode } from './setsafezone';
+import { Mode } from './enum';
 const setUnsafeZoneCommand = {
     name: 'nacht:setunsafezone',
     description: '非安全地帯を設定する',
