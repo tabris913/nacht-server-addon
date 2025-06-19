@@ -1,4 +1,4 @@
-※ ◯はオペレーター以外の参加者も利用できるコマンド。
+※ ◯はオペレーター以外の参加者も利用できるコマンド。  
 ※ ×は廃止済みのコマンド。
 
 - [[buy]]
@@ -12,6 +12,7 @@
 - [[getdp]]
 - [[message]]
 - [[messageop]] ◯
+- [[outputdata]]
 - [[pray]]
 - [[registertptarget]]
 - [[releasearea]]
@@ -25,4 +26,5 @@
 - [[showgamerules]]
 - [[tp]]
 - [[transfer]]
+- [[version]]
 - [[withdraw]]

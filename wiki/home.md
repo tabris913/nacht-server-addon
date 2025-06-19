@@ -1,6 +1,6 @@
 Welcome to the nacht-server-addon wiki!
 
-* [[アップデート情報|https://github.com/tabris913/nacht-server-addon/blob/main/README.md]]
+- [[アップデート情報|https://github.com/tabris913/nacht-server-addon/blob/main/README.md]]
 
 ### 目次
 
@@ -13,3 +13,4 @@ Welcome to the nacht-server-addon wiki!
   - [[コマンド]]
   - [[ゲームルール]]
   - [[アイテム・エンティティ・ブロック]]
+- [[アドオン更新方法]]
