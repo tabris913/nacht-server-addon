@@ -13,6 +13,7 @@ import getdp from './getdp';
 import message from './message';
 import messageop from './messageop';
 import migrate from './migrate';
+import outputdata from './outputdata';
 import pray from './pray';
 import registertptarget from './registertptarget';
 import releasearea from './releasearea';
@@ -25,6 +26,7 @@ import setunsafezone from './setunsafezone';
 import showgamerules from './showgamerules';
 import tp from './tp';
 import transfer from './transfer';
+import version from './version';
 import withdraw from './withdraw';
 
 export default () => {
@@ -44,6 +46,7 @@ export default () => {
   migrate();
   message();
   messageop();
+  outputdata();
   pray();
   registertptarget();
   releasearea();
@@ -56,5 +59,6 @@ export default () => {
   showgamerules();
   tp();
   transfer();
+  version();
   withdraw();
 };

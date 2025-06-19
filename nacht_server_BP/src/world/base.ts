@@ -22,7 +22,7 @@ export default () => {
           if (
             dp.owner !== event.player.nameTag &&
             !dp.participants.includes(event.player.nameTag) &&
-            !event.player.isOp() &&
+            !(event.player as any).isOp() &&
             !event.player.hasTag(TAG_OPERATOR)
           ) {
             // 所有者ではなく、同居人でもなく、かつオペレーターではない
@@ -50,7 +50,7 @@ export default () => {
           if (
             dp.owner !== event.player.nameTag &&
             !dp.participants.includes(event.player.nameTag) &&
-            !event.player.isOp() &&
+            !(event.player as any).isOp() &&
             !event.player.hasTag(TAG_OPERATOR)
           ) {
             // 所有者ではなく、同居人でもなく、かつオペレーターではない

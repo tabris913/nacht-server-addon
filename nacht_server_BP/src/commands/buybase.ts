@@ -74,7 +74,7 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
 
   system.runTimeout(() => {
     form
-      .show(player)
+      .show(player as any)
       .then((response) => {
         if (response.canceled) {
           Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
@@ -103,7 +103,7 @@ const purchase = (player: Player, npc: Entity, size: number, price: number, coun
   purchaseForm.button2('いいえ');
 
   purchaseForm
-    .show(player)
+    .show(player as any)
     .then((response) => {
       if (response.canceled) {
         Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);

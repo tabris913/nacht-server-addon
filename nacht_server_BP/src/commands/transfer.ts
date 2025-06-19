@@ -63,7 +63,7 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
 
   system.runTimeout(() => {
     form
-      .show(remitter)
+      .show(remitter as any)
       .then((response) => {
         if (response.canceled) {
           Logger.log(`[${remitter.nameTag}] canceled: ${response.cancelationReason}`);

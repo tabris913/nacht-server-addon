@@ -26,7 +26,7 @@ const changeCoop = (player: Player, dp: BaseAreaInfo) => {
   form.title('協力者を選択してください');
   const candidates = world
     .getPlayers()
-    .filter((pl) => pl.id !== player.id && !pl.isOp() && !pl.hasTag(TAG_OPERATOR))
+    .filter((pl) => pl.id !== player.id && !(pl as any).isOp() && !pl.hasTag(TAG_OPERATOR))
     .map((pl) => pl.nameTag)
     .sort();
   if (candidates.length === 0) {
@@ -37,7 +37,7 @@ const changeCoop = (player: Player, dp: BaseAreaInfo) => {
   candidates.forEach((nameTag) => form.toggle(nameTag, { defaultValue: dp.participants.includes(nameTag) }));
   form.submitButton('決定');
 
-  form.show(player).then((response) => {
+  form.show(player as any).then((response) => {
     if (response.canceled) {
       Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
       return;
@@ -87,7 +87,7 @@ const fixBaseZone = (player: Player, flag: Entity, dp: BaseAreaInfo) => {
   form.button1('はい');
   form.button2('いいえ');
 
-  form.show(player).then((response) => {
+  form.show(player as any).then((response) => {
     if (response.canceled) {
       Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
       return;
@@ -125,7 +125,7 @@ const setConfig = (player: Player, dp: BaseAreaInfo) => {
   form.submitButton('設定');
 
   form
-    .show(player)
+    .show(player as any)
     .then((response) => {
       if (response.canceled) {
         Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
@@ -160,7 +160,7 @@ const releaseBaseZone = (player: Player, dp: BaseAreaInfo) => {
   form.button1('はい');
   form.button2('いいえ');
 
-  form.show(player).then((response) => {
+  form.show(player as any).then((response) => {
     if (response.canceled) {
       Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
       return;
@@ -204,7 +204,7 @@ export default () => {
           system.runTimeout(
             () =>
               form
-                .show(event.player)
+                .show(event.player as any)
                 .then((response) => {
                   if (response.canceled) {
                     Logger.log(`[${event.player.nameTag}] canceled: ${response.cancelationReason}`);
@@ -230,7 +230,7 @@ export default () => {
 
         system.runTimeout(
           () =>
-            form.show(event.player).then((response) => {
+            form.show(event.player as any).then((response) => {
               if (response.canceled) {
                 Logger.log(`[${event.player.nameTag}] canceled: ${response.cancelationReason}`);
                 return;

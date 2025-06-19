@@ -13,7 +13,7 @@ export default () => {
         .map((area) => new DimensionBlockVolume(area.min, area.max, area.dimension))
         .some((bv) => bv.isInside(event.block.location))
     ) {
-      if (event.player.isOp() || event.player.hasTag(TAG_OPERATOR)) {
+      if ((event.player as any).isOp() || event.player.hasTag(TAG_OPERATOR)) {
         Logger.log("The block is in a non-editable area, but it's an operator, so it can be destroyed.");
 
         return;
@@ -30,7 +30,7 @@ export default () => {
         .map((area) => new DimensionBlockVolume(area.min, area.max, area.dimension))
         .some((bv) => bv.isInside(event.block.location))
     ) {
-      if (event.player.isOp() || event.player.hasTag(TAG_OPERATOR)) {
+      if ((event.player as any).isOp() || event.player.hasTag(TAG_OPERATOR)) {
         Logger.log("The block is in a non-editable area, but it's an operator, so it can be destroyed.");
 
         return;

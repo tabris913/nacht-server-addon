@@ -137,7 +137,7 @@ export default () => {
             form.button2('いいえ');
 
             const toReplace = await form
-              .show(event.player)
+              .show(event.player as any)
               .then((response) => {
                 if (response.canceled) {
                   Logger.log(`[${event.player.nameTag}] canceled: ${response.cancelationReason}`);

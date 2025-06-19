@@ -43,7 +43,7 @@ export default () =>
         form.toggle('削除');
         form.submitButton('決定');
 
-        form.show(event.source).then((response) => {
+        form.show(event.source as any).then((response) => {
           if (response.canceled) {
             Logger.log(`[${event.source.nameTag}] canceled: ${response.cancelationReason}`);
             return;
@@ -59,7 +59,7 @@ export default () =>
                 deleteForm.button('はい');
                 deleteForm.button('いいえ');
 
-                deleteForm.show(event.source).then((deleteResponse) => {
+                deleteForm.show(event.source as any).then((deleteResponse) => {
                   if (deleteResponse.canceled) {
                     Logger.log(`[${event.source.nameTag}] canceled: ${deleteResponse.cancelationReason}`);
                     return;
