@@ -28,7 +28,6 @@ const sellCommand: CustomCommand = {
     { name: 'point', type: CustomCommandParamType.Integer },
   ],
   optionalParameters: [
-    { name: 'data', type: CustomCommandParamType.Integer },
     { name: 'itemless_msg', type: CustomCommandParamType.String },
     { name: 'after_msg', type: CustomCommandParamType.String },
   ],
@@ -41,7 +40,6 @@ const sellCommand: CustomCommand = {
  * @param item
  * @param amount
  * @param point
- * @param data
  * @param itemless_msg
  * @param after_msg
  * @returns

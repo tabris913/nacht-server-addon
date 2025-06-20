@@ -17,7 +17,7 @@ export default () =>
         const player = PlayerUtils.convertToPlayer(origin.initiator || origin.sourceEntity);
         if (player === undefined) throw new UndefinedSourceOrInitiatorError();
 
-        player.sendMessage('0.7.0');
+        player.sendMessage('0.7.1');
 
         return { status: CustomCommandStatus.Success };
       }
