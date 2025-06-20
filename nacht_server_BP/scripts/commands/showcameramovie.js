@@ -11,6 +11,7 @@ import { CommandPermissionLevel, CustomCommandParamType, CustomCommandSource, Cu
 import { PREFIX_MOVIE } from '../const';
 import { NachtServerAddonError } from '../errors/base';
 import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
+import teleportLogic from '../logic/teleportLogic';
 import { MinecraftCameraPresetsTypes } from '../types/index';
 import PlayerUtils from '../utils/PlayerUtils';
 import { registerCommand } from './common';
@@ -46,6 +47,9 @@ const commandProcess = (origin, target, moviename) => {
                 if (cmd.waitTime) {
                     yield system.waitTicks(TicksPerSecond * cmd.waitTime);
                 }
+            }
+            else if ('location' in cmd) {
+                target.forEach((t) => teleportLogic.teleport(t, cmd.location, cmd.dimension));
             }
             else {
                 target.forEach((t) => t.onScreenDisplay.setTitle(cmd.title, cmd.options));

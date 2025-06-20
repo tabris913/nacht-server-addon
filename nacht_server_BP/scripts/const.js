@@ -344,7 +344,7 @@ export const GAMERULE_DEFAULT = {
     [RuleName.autoRemoveFortuneEnchantInterval]: TicksPerSecond,
     [RuleName.baseMarketPrice]: 20,
     [RuleName.baseMaximumRange]: 501,
-    [RuleName.prayPrice]: 100,
+    [RuleName.prayPrice]: 300,
     [RuleName.showAreaBorder]: true,
     [RuleName.showAreaBorderInterval]: TicksPerSecond / 2,
     [RuleName.showAreaBorderRange]: 101,

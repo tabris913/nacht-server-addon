@@ -1,6 +1,6 @@
 import { EasingType, TicksPerSecond, world } from '@minecraft/server';
 import { Formatting, GAMERULE_DEFAULT, PREFIX_GAMERULE, PREFIX_MOVIE, SCOREBOARD_POINT } from '../const';
-import { MinecraftCameraPresetsTypes } from '../types/index';
+import { MinecraftCameraPresetsTypes, MinecraftDimensionTypes } from '../types/index';
 import { Logger } from '../utils/logger';
 const RESTORE_DATA = {};
 export default () => world.afterEvents.worldLoad.subscribe((event) => {
@@ -92,6 +92,10 @@ export default () => world.afterEvents.worldLoad.subscribe((event) => {
                         easeOptions: { easeTime: 4, easeType: EasingType.Linear },
                     },
                     waitTime: 5,
+                },
+                {
+                    location: { x: -13, y: 63, z: 0 },
+                    dimension: MinecraftDimensionTypes.Overworld
                 },
             ],
         }));
