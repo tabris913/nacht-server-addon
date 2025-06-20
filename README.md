@@ -18,6 +18,15 @@ wiki: https://github.com/tabris913/nacht-server-addon/wiki
 |   0.6.0 | 2025-06-18 |                                                  |
 |   0.6.1 | 2025-06-19 |                                                  |
 |   0.6.2 | 2025-06-19 | ライブラリバージョンアップ                       |
+|   0.7.0 | 2025-06-20 |                                                  |
+
+### 0.7.0
+
+Released in 2025-06-20.
+
+#### Commands
+
+- showcameramovie コマンド追加
 
 ### 0.6.2
 

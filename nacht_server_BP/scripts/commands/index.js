@@ -22,6 +22,7 @@ import setdp from './setdp';
 import setsafezone from './setsafezone';
 import setspawnpoint from './setspawnpoint';
 import setunsafezone from './setunsafezone';
+import showcameramovie from './showcameramovie';
 import showgamerules from './showgamerules';
 import tp from './tp';
 import transfer from './transfer';
@@ -52,6 +53,7 @@ export default () => {
     setsafezone();
     setspawnpoint();
     setunsafezone();
+    showcameramovie();
     showgamerules();
     tp();
     transfer();

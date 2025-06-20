@@ -12,6 +12,7 @@ export const PREFIX_BASE = 'nacht:base_';
 export const PREFIX_COUNTER = 'nacht:counter_';
 export const PREFIX_GAMERULE = 'nacht:gamerule_';
 export const PREFIX_LOCATION = 'nacht:location_';
+export const PREFIX_MOVIE = 'nacht:movie_';
 export const PREFIX_SAFEAREA = 'nacht:safearea_';
 export const PREFIX_TRANSFER = 'nacht:transfer_';
 export const PREFIX_UNEDITABLEAREA = 'nacht:uneditablearea_';

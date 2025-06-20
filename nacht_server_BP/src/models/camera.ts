@@ -1,15 +1,16 @@
+import type { MinecraftCameraPresetsTypes, MinecraftDimensionTypes } from '../types/index';
 import type {
-  CameraDefaultOptions,
   CameraFixedBoomOptions,
   CameraSetFacingOptions,
   CameraSetLocationOptions,
   CameraSetPosOptions,
   CameraSetRotOptions,
   CameraTargetOptions,
+  DimensionLocation,
+  RawMessage,
+  TitleDisplayOptions,
   Vector3,
 } from '@minecraft/server';
-
-import type { MinecraftCameraPresetsTypes } from '../types/index';
 
 export type Position = {
   location: Vector3;
@@ -18,7 +19,6 @@ export type Position = {
 };
 
 export type CameraCommandOption =
-  | CameraDefaultOptions
   | CameraFixedBoomOptions
   | CameraSetFacingOptions
   | CameraSetLocationOptions
@@ -27,14 +27,24 @@ export type CameraCommandOption =
   | CameraTargetOptions;
 
 // export type Command = { start: Position; duration?: number; preset?: MinecraftCameraPresetsTypes; to?: Position };
-export type Command = {
+export type CameraCommand = {
   cameraPreset?: MinecraftCameraPresetsTypes;
   setOptions: CameraCommandOption;
   waitTime?: number;
 };
 
+export type TitleCommand = {
+  title: Array<RawMessage | string> | RawMessage | string;
+  options?: TitleDisplayOptions;
+};
+
+export type TpCommand = {
+  location: Vector3;
+  dimension: MinecraftDimensionTypes;
+};
+
 export type CameraMovie = {
   clearAfterFinishing?: boolean;
   name: string;
-  commands: Array<Command>;
+  commands: Array<CameraCommand | TitleCommand | TpCommand>;
 };

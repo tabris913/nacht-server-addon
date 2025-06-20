@@ -11,13 +11,17 @@ import {
   type CustomCommandOrigin,
   type CustomCommandResult,
 } from '@minecraft/server';
-import { registerCommand } from './common';
-import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
-import PlayerUtils from '../utils/PlayerUtils';
-import { NachtServerAddonError } from '../errors/base';
-import { MinecraftCameraPresetsTypes } from '../types';
+
 import { PREFIX_MOVIE } from '../const';
-import { CameraMovie } from '../models/camera';
+import { NachtServerAddonError } from '../errors/base';
+import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
+import teleportLogic from '../logic/teleportLogic';
+import { MinecraftCameraPresetsTypes } from '../types/index';
+import PlayerUtils from '../utils/PlayerUtils';
+
+import { registerCommand } from './common';
+
+import type { CameraMovie } from '../models/camera';
 
 const showCameraMovieCommand: CustomCommand = {
   name: 'nacht:showcameramovie',
@@ -49,15 +53,21 @@ const commandProcess = (origin: CustomCommandOrigin, target: Array<Player>, movi
   const cm = JSON.parse(dp) as CameraMovie;
   system.runTimeout(async () => {
     for (const cmd of cm.commands) {
-      player.camera.setCamera(cmd.cameraPreset || MinecraftCameraPresetsTypes.Free, cmd.setOptions);
-      if (cmd.waitTime) {
-        await system.waitTicks(TicksPerSecond * cmd.waitTime);
+      if ('setOptions' in cmd) {
+        target.forEach((t) => t.camera.setCamera(cmd.cameraPreset || MinecraftCameraPresetsTypes.Free, cmd.setOptions));
+        if (cmd.waitTime) {
+          await system.waitTicks(TicksPerSecond * cmd.waitTime);
+        }
+      } else if ('location' in cmd) {
+        target.forEach((t) => teleportLogic.teleport(t, cmd.location, cmd.dimension));
+      } else {
+        target.forEach((t) => t.onScreenDisplay.setTitle(cmd.title, cmd.options));
       }
     }
     if (cm.clearAfterFinishing) {
       player.camera.clear();
+      target.forEach((t) => t.camera.clear());
     }
-    player.camera.clear();
   }, 1);
 
   return { status: CustomCommandStatus.Success };

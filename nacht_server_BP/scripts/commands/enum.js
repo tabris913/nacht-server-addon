@@ -1,4 +1,4 @@
-import { system } from '@minecraft/server';
+import { EasingType, system } from '@minecraft/server';
 import { MinecraftEnchantmentTypes } from '../types/index';
 export var DimensionTypes;
 (function (DimensionTypes) {
@@ -56,6 +56,40 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
         DimensionTypes.Nether,
         DimensionTypes.Overworld,
         DimensionTypes.TheEnd,
+    ]);
+    event.customCommandRegistry.registerEnum('nacht:easeType', [
+        EasingType.InBack,
+        EasingType.InBounce,
+        EasingType.InCirc,
+        EasingType.InCubic,
+        EasingType.InElastic,
+        EasingType.InExpo,
+        EasingType.InOutBack,
+        EasingType.InOutBounce,
+        EasingType.InOutCirc,
+        EasingType.InOutCubic,
+        EasingType.InOutElastic,
+        EasingType.InOutExpo,
+        EasingType.InOutQuad,
+        EasingType.InOutQuart,
+        EasingType.InOutQuint,
+        EasingType.InOutSine,
+        EasingType.InQuad,
+        EasingType.InQuart,
+        EasingType.InQuint,
+        EasingType.InSine,
+        EasingType.Linear,
+        EasingType.OutBack,
+        EasingType.OutBounce,
+        EasingType.OutCirc,
+        EasingType.OutCubic,
+        EasingType.OutElastic,
+        EasingType.OutExpo,
+        EasingType.OutQuad,
+        EasingType.OutQuart,
+        EasingType.OutQuint,
+        EasingType.OutSine,
+        EasingType.Spring,
     ]);
     event.customCommandRegistry.registerEnum('nacht:EnchantTypes', [
         MinecraftEnchantmentTypes.AquaAffinity,
