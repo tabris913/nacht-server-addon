@@ -6,13 +6,13 @@ import {
   type CustomCommandResult,
   CustomCommandSource,
   CustomCommandStatus,
+  type Player,
   system,
 } from '@minecraft/server';
 
 import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
 import marketLogic from '../logic/marketLogic';
 import { MinecraftEnchantmentTypes, MinecraftItemTypes } from '../types/index';
-import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
 
@@ -21,6 +21,7 @@ const buyEnchantedBookCommand: CustomCommand = {
   description: 'エンチャントの本を購入する',
   permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [
+    { name: 'target', type: CustomCommandParamType.PlayerSelector },
     { name: 'nacht:EnchantTypes', type: CustomCommandParamType.Enum },
     { name: 'level', type: CustomCommandParamType.Integer },
     { name: 'quantity', type: CustomCommandParamType.Integer },
@@ -31,6 +32,7 @@ const buyEnchantedBookCommand: CustomCommand = {
 /**
  *
  * @param origin
+ * @param target
  * @param enchant
  * @param level
  * @param quantity
@@ -43,27 +45,29 @@ const buyEnchantedBookCommand: CustomCommand = {
  * {@link UndefinedSourceOrInitiatorError}
  */
 const commandProcess = (
-  origin: CustomCommandOrigin,
+  { sourceEntity, sourceType }: CustomCommandOrigin,
+  target: Array<Player>,
   enchant: MinecraftEnchantmentTypes,
   level: number,
   quantity: number,
   point: number
 ): CustomCommandResult => {
-  if (origin.sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError();
-  const player = PlayerUtils.convertToPlayer(origin.initiator);
-  if (player === undefined || origin.sourceEntity === undefined) throw new UndefinedSourceOrInitiatorError();
+  if (sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError();
+  if (sourceEntity === undefined) throw new UndefinedSourceOrInitiatorError();
 
-  marketLogic.purchaseItem(
-    player,
-    origin.sourceEntity,
-    MinecraftItemTypes.EnchantedBook,
-    quantity,
-    point,
-    undefined,
-    undefined,
-    undefined,
-    enchant,
-    level
+  target.forEach((player) =>
+    marketLogic.purchaseItem(
+      player,
+      sourceEntity,
+      MinecraftItemTypes.EnchantedBook,
+      quantity,
+      point,
+      undefined,
+      undefined,
+      undefined,
+      enchant,
+      level
+    )
   );
 
   return { status: CustomCommandStatus.Success };

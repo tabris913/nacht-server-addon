@@ -7,13 +7,13 @@ import {
   CustomCommandSource,
   CustomCommandStatus,
   type ItemType,
+  type Player,
   system,
 } from '@minecraft/server';
 
 import { SCOREBOARD_POINT } from '../const';
-import { CommandProcessError, NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
+import { CommandProcessError, NonNPCSourceError } from '../errors/command';
 import InventoryUtils from '../utils/InventoryUtils';
-import PlayerUtils from '../utils/PlayerUtils';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
 
 import { registerCommand } from './common';
@@ -23,6 +23,7 @@ const sellCommand: CustomCommand = {
   description: 'アイテム売却コマンド',
   permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [
+    { name: 'target', type: CustomCommandParamType.PlayerSelector },
     { name: 'item', type: CustomCommandParamType.ItemType },
     { name: 'amount', type: CustomCommandParamType.Integer },
     { name: 'point', type: CustomCommandParamType.Integer },
@@ -37,6 +38,7 @@ const sellCommand: CustomCommand = {
  * アイテムを売却するコマンドの処理
  *
  * @param origin
+ * @param target
  * @param item
  * @param amount
  * @param point
@@ -51,6 +53,7 @@ const sellCommand: CustomCommand = {
  */
 const commandProcess = (
   origin: CustomCommandOrigin,
+  target: Array<Player>,
   item: ItemType,
   amount: number,
   point: number,
@@ -61,27 +64,24 @@ const commandProcess = (
     throw new NonNPCSourceError();
   }
 
-  const player = PlayerUtils.convertToPlayer(origin.initiator);
-  if (player === undefined) {
-    throw new UndefinedSourceOrInitiatorError();
-  }
+  target.forEach((player) => {
+    // called by NPC
+    ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
 
-  // called by NPC
-  ScoreboardUtils.getScoreOrEnable(player, SCOREBOARD_POINT);
+    const npcName = origin.sourceEntity?.nameTag || 'NPC';
+    if (InventoryUtils.hasItem(player, item.id, { max: amount - 1 })) {
+      player.sendMessage(`[${npcName}] ${itemless_msg || 'アイテムが足りません'}`);
 
-  const npcName = origin.sourceEntity?.nameTag || 'NPC';
-  if (InventoryUtils.hasItem(player, item.id, { max: amount - 1 })) {
-    player.sendMessage(`[${npcName}] ${itemless_msg || 'アイテムが足りません'}`);
+      throw new CommandProcessError('アイテムが足りません');
+    }
 
-    throw new CommandProcessError('アイテムが足りません');
-  }
-
-  // 必要なポイントを持っている
-  system.runTimeout(() => {
-    InventoryUtils.removeItem(player, item.id, amount);
-    ScoreboardUtils.addScore(player, SCOREBOARD_POINT, point);
-    player.sendMessage(`[${npcName}] ${after_msg || 'まいどあり！'}`);
-  }, 1);
+    // 必要なポイントを持っている
+    system.runTimeout(() => {
+      InventoryUtils.removeItem(player, item.id, amount);
+      ScoreboardUtils.addScore(player, SCOREBOARD_POINT, point);
+      player.sendMessage(`[${npcName}] ${after_msg || 'まいどあり！'}`);
+    }, 1);
+  });
 
   return { status: CustomCommandStatus.Success };
 };

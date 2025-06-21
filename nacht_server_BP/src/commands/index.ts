@@ -1,5 +1,6 @@
 import { Logger } from '../utils/logger';
 
+import addtag from './addtag';
 import buy from './buy';
 import buybase from './buybase';
 import buyenchantedbook from './buyenchantedbook';
@@ -35,6 +36,7 @@ export default () => {
 
   _enum();
 
+  addtag();
   buy();
   buybase();
   buyenchantedbook();

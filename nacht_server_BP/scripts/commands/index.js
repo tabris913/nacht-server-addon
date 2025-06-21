@@ -1,4 +1,5 @@
 import { Logger } from '../utils/logger';
+import addtag from './addtag';
 import buy from './buy';
 import buybase from './buybase';
 import buyenchantedbook from './buyenchantedbook';
@@ -31,6 +32,7 @@ import withdraw from './withdraw';
 export default () => {
     Logger.log('Subscribing original commands...');
     _enum();
+    addtag();
     buy();
     buybase();
     buyenchantedbook();

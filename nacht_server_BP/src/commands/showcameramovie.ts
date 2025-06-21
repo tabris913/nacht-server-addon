@@ -33,6 +33,20 @@ const showCameraMovieCommand: CustomCommand = {
   ],
 };
 
+/**
+ *
+ * @param origin
+ * @param target
+ * @param moviename 映像名
+ * @returns
+ * @throws This function can throw errors.
+ *
+ * {@link NonNPCSourceError}
+ *
+ * {@link UndefinedSourceOrInitiatorError}
+ *
+ * {@link NachtServerAddonError}
+ */
 const commandProcess = (origin: CustomCommandOrigin, target: Array<Player>, moviename: string): CustomCommandResult => {
   if (origin.sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError();
   const player = PlayerUtils.convertToPlayer(origin.initiator);

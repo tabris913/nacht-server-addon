@@ -1,6 +1,7 @@
 ※ ◯はオペレーター以外の参加者も利用できるコマンド。  
 ※ ×は廃止済みのコマンド。
 
+- [[addtag]]
 - [[buy]]
 - [[buybase]]
 - [[buyenchantedbook]]

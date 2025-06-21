@@ -6,12 +6,12 @@ import {
   type CustomCommandResult,
   CustomCommandStatus,
   type ItemType,
+  type Player,
   system,
 } from '@minecraft/server';
 
 import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import marketLogic from '../logic/marketLogic';
-import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
 
@@ -20,6 +20,7 @@ const buyCommand: CustomCommand = {
   description: 'NPCからアイテムを購入する。',
   permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [
+    { name: 'target', type: CustomCommandParamType.PlayerSelector },
     { name: 'item', type: CustomCommandParamType.ItemType },
     { name: 'amount', type: CustomCommandParamType.Integer },
     { name: 'point', type: CustomCommandParamType.Integer },
@@ -35,6 +36,7 @@ const buyCommand: CustomCommand = {
  * アイテム購入コマンドの処理
  *
  * @param origin
+ * @param target
  * @param item
  * @param amount
  * @param point
@@ -47,7 +49,8 @@ const buyCommand: CustomCommand = {
  * {@link UndefinedSourceOrInitiatorError}
  */
 const commandProcess = (
-  origin: CustomCommandOrigin,
+  { sourceEntity }: CustomCommandOrigin,
+  target: Array<Player>,
   item: ItemType,
   amount: number,
   point: number,
@@ -55,12 +58,13 @@ const commandProcess = (
   pointless_msg?: string,
   after_msg?: string
 ): CustomCommandResult => {
-  const player = PlayerUtils.convertToPlayer(origin.initiator);
-  if (player === undefined || origin.sourceEntity === undefined) {
+  if (sourceEntity === undefined) {
     throw new UndefinedSourceOrInitiatorError();
   }
 
-  marketLogic.purchaseItem(player, origin.sourceEntity, item.id, amount, point, pointless_msg, after_msg, data);
+  target.forEach((player) =>
+    marketLogic.purchaseItem(player, sourceEntity, item.id, amount, point, pointless_msg, after_msg, data)
+  );
 
   return { status: CustomCommandStatus.Success };
 };

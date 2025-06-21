@@ -2,6 +2,11 @@ import { CustomCommandParamType, EasingType, system } from '@minecraft/server';
 
 import { MinecraftEnchantmentTypes } from '../types/index';
 
+export enum SuccessOrFailure {
+  Success = 'success',
+  Failure = 'failure',
+}
+
 export enum DimensionTypes {
   Overworld = 'overworld',
   Nether = 'nether',
@@ -43,6 +48,11 @@ export enum RuleName {
 
 export default () =>
   system.beforeEvents.startup.subscribe((event) => {
+    event.customCommandRegistry.registerEnum('nacht:successOrFailure', [
+      SuccessOrFailure.Failure,
+      SuccessOrFailure.Success,
+    ]);
+
     event.customCommandRegistry.registerEnum('nacht:AreaSetMode', [Mode.cancel, Mode.set]);
 
     event.customCommandRegistry.registerEnum('nacht:CustomCommandParamType', [

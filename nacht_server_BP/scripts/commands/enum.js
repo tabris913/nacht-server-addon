@@ -1,5 +1,10 @@
 import { EasingType, system } from '@minecraft/server';
 import { MinecraftEnchantmentTypes } from '../types/index';
+export var SuccessOrFailure;
+(function (SuccessOrFailure) {
+    SuccessOrFailure["Success"] = "success";
+    SuccessOrFailure["Failure"] = "failure";
+})(SuccessOrFailure || (SuccessOrFailure = {}));
 export var DimensionTypes;
 (function (DimensionTypes) {
     DimensionTypes["Overworld"] = "overworld";
@@ -40,6 +45,10 @@ export var RuleName;
     RuleName["watchCrossingAreaInterval"] = "watchCrossingAreaInterval";
 })(RuleName || (RuleName = {}));
 export default () => system.beforeEvents.startup.subscribe((event) => {
+    event.customCommandRegistry.registerEnum('nacht:successOrFailure', [
+        SuccessOrFailure.Failure,
+        SuccessOrFailure.Success,
+    ]);
     event.customCommandRegistry.registerEnum('nacht:AreaSetMode', [Mode.cancel, Mode.set]);
     event.customCommandRegistry.registerEnum('nacht:CustomCommandParamType', [
         'BlockType',

@@ -24,6 +24,20 @@ const showCameraMovieCommand = {
         { name: 'moviename', type: CustomCommandParamType.String },
     ],
 };
+/**
+ *
+ * @param origin
+ * @param target
+ * @param moviename 映像名
+ * @returns
+ * @throws This function can throw errors.
+ *
+ * {@link NonNPCSourceError}
+ *
+ * {@link UndefinedSourceOrInitiatorError}
+ *
+ * {@link NachtServerAddonError}
+ */
 const commandProcess = (origin, target, moviename) => {
     if (origin.sourceType !== CustomCommandSource.NPCDialogue)
         throw new NonNPCSourceError();
