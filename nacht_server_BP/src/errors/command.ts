@@ -1,5 +1,7 @@
 import { NachtServerAddonError } from './base';
 
+import type { CustomCommandSource } from '@minecraft/server';
+
 export class CommandProcessError extends NachtServerAddonError {}
 
 export class UndefinedSourceOrInitiatorError extends CommandProcessError {
@@ -10,8 +12,8 @@ export class UndefinedSourceOrInitiatorError extends CommandProcessError {
 
 export class CommandSourceError extends CommandProcessError {}
 export class NonNPCSourceError extends CommandSourceError {
-  constructor() {
-    super('このコマンドはNPCのみ実行できます。');
+  constructor(source?: CustomCommandSource) {
+    super(`このコマンドはNPCのみ実行できます。${source ? `${source}によって実行されました。` : ''}`);
   }
 }
 export class NonAdminSourceError extends CommandSourceError {

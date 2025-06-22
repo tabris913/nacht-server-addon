@@ -1,6 +1,6 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandSource, CustomCommandStatus, system, } from '@minecraft/server';
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from '@minecraft/server';
 import { SCOREBOARD_POINT } from '../const';
-import { CommandProcessError, NonNPCSourceError } from '../errors/command';
+import { CommandProcessError } from '../errors/command';
 import InventoryUtils from '../utils/InventoryUtils';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
 import { registerCommand } from './common';
@@ -30,16 +30,11 @@ const sellCommand = {
  * @param itemless_msg
  * @param after_msg
  * @returns
- * @throws This function can throw errors.
- *
- * {@link NonNPCSourceError}
+ * @throws This function can throw error.
  *
  * {@link UndefinedSourceOrInitiatorError}
  */
 const commandProcess = (origin, target, item, amount, point, itemless_msg, after_msg) => {
-    if (origin.sourceType !== CustomCommandSource.NPCDialogue) {
-        throw new NonNPCSourceError();
-    }
     target.forEach((player) => {
         var _a;
         // called by NPC

@@ -40,7 +40,7 @@ const showCameraMovieCommand = {
  */
 const commandProcess = (origin, target, moviename) => {
     if (origin.sourceType !== CustomCommandSource.NPCDialogue)
-        throw new NonNPCSourceError();
+        throw new NonNPCSourceError(origin.sourceType);
     const player = PlayerUtils.convertToPlayer(origin.initiator);
     if (player === undefined)
         throw new UndefinedSourceOrInitiatorError();

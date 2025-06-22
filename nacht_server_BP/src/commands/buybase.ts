@@ -45,7 +45,7 @@ const buybaseCommand: CustomCommand = {
  */
 const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
   if (origin.sourceType !== CustomCommandSource.NPCDialogue) {
-    throw new NonNPCSourceError();
+    throw new NonNPCSourceError(origin.sourceType);
   }
 
   const player = PlayerUtils.convertToPlayer(origin.initiator);

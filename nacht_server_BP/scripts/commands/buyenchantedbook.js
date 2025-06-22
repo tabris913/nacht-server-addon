@@ -1,5 +1,5 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandSource, CustomCommandStatus, system, } from '@minecraft/server';
-import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, } from '@minecraft/server';
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import marketLogic from '../logic/marketLogic';
 import { MinecraftItemTypes } from '../types/index';
 import { registerCommand } from './common';
@@ -14,6 +14,10 @@ const buyEnchantedBookCommand = {
         { name: 'quantity', type: CustomCommandParamType.Integer },
         { name: 'point', type: CustomCommandParamType.Integer },
     ],
+    optionalParameters: [
+        { name: 'pointless_msg', type: CustomCommandParamType.String },
+        { name: 'after_msg', type: CustomCommandParamType.String },
+    ],
 };
 /**
  *
@@ -23,19 +27,17 @@ const buyEnchantedBookCommand = {
  * @param level
  * @param quantity
  * @param point
+ * @param pointless_msg
+ * @param after_msg
  * @returns
- * @throws This function can throw errors.
- *
- * {@link NonNPCSourceError}
+ * @throws This function can throw error.
  *
  * {@link UndefinedSourceOrInitiatorError}
  */
-const commandProcess = ({ sourceEntity, sourceType }, target, enchant, level, quantity, point) => {
-    if (sourceType !== CustomCommandSource.NPCDialogue)
-        throw new NonNPCSourceError();
+const commandProcess = ({ sourceEntity }, target, enchant, level, quantity, point, pointless_msg, after_msg) => {
     if (sourceEntity === undefined)
         throw new UndefinedSourceOrInitiatorError();
-    target.forEach((player) => marketLogic.purchaseItem(player, sourceEntity, MinecraftItemTypes.EnchantedBook, quantity, point, undefined, undefined, undefined, enchant, level));
+    target.forEach((player) => marketLogic.purchaseItem(player, sourceEntity, MinecraftItemTypes.EnchantedBook, quantity, point, pointless_msg, after_msg, undefined, enchant, level));
     return { status: CustomCommandStatus.Success };
 };
 export default () => system.beforeEvents.startup.subscribe(registerCommand(buyEnchantedBookCommand, commandProcess));

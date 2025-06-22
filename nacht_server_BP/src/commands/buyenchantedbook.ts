@@ -4,13 +4,12 @@ import {
   type CustomCommandOrigin,
   CustomCommandParamType,
   type CustomCommandResult,
-  CustomCommandSource,
   CustomCommandStatus,
   type Player,
   system,
 } from '@minecraft/server';
 
-import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
+import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import marketLogic from '../logic/marketLogic';
 import { MinecraftEnchantmentTypes, MinecraftItemTypes } from '../types/index';
 
@@ -27,6 +26,10 @@ const buyEnchantedBookCommand: CustomCommand = {
     { name: 'quantity', type: CustomCommandParamType.Integer },
     { name: 'point', type: CustomCommandParamType.Integer },
   ],
+  optionalParameters: [
+    { name: 'pointless_msg', type: CustomCommandParamType.String },
+    { name: 'after_msg', type: CustomCommandParamType.String },
+  ],
 };
 
 /**
@@ -37,22 +40,23 @@ const buyEnchantedBookCommand: CustomCommand = {
  * @param level
  * @param quantity
  * @param point
+ * @param pointless_msg
+ * @param after_msg
  * @returns
- * @throws This function can throw errors.
- *
- * {@link NonNPCSourceError}
+ * @throws This function can throw error.
  *
  * {@link UndefinedSourceOrInitiatorError}
  */
 const commandProcess = (
-  { sourceEntity, sourceType }: CustomCommandOrigin,
+  { sourceEntity }: CustomCommandOrigin,
   target: Array<Player>,
   enchant: MinecraftEnchantmentTypes,
   level: number,
   quantity: number,
-  point: number
+  point: number,
+  pointless_msg?: string,
+  after_msg?: string
 ): CustomCommandResult => {
-  if (sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError();
   if (sourceEntity === undefined) throw new UndefinedSourceOrInitiatorError();
 
   target.forEach((player) =>
@@ -62,8 +66,8 @@ const commandProcess = (
       MinecraftItemTypes.EnchantedBook,
       quantity,
       point,
-      undefined,
-      undefined,
+      pointless_msg,
+      after_msg,
       undefined,
       enchant,
       level

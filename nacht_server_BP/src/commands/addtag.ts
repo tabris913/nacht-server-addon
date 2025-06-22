@@ -57,7 +57,7 @@ const commandProcess = (
   successOrFailure2?: SuccessOrFailure,
   tag2?: string
 ): CustomCommandResult => {
-  if (sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError();
+  if (sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError(sourceType);
   if (sourceEntity === undefined || initiator === undefined) throw new UndefinedSourceOrInitiatorError();
 
   target.forEach((entity) => {

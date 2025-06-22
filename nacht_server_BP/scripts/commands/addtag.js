@@ -35,7 +35,7 @@ const addTagCommand = {
  */
 const commandProcess = ({ initiator, sourceEntity, sourceType }, target, command, successOrFailure1, tag1, successOrFailure2, tag2) => {
     if (sourceType !== CustomCommandSource.NPCDialogue)
-        throw new NonNPCSourceError();
+        throw new NonNPCSourceError(sourceType);
     if (sourceEntity === undefined || initiator === undefined)
         throw new UndefinedSourceOrInitiatorError();
     target.forEach((entity) => {

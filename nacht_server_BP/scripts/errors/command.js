@@ -9,8 +9,8 @@ export class UndefinedSourceOrInitiatorError extends CommandProcessError {
 export class CommandSourceError extends CommandProcessError {
 }
 export class NonNPCSourceError extends CommandSourceError {
-    constructor() {
-        super('このコマンドはNPCのみ実行できます。');
+    constructor(source) {
+        super(`このコマンドはNPCのみ実行できます。${source ? `${source}によって実行されました。` : ''}`);
     }
 }
 export class NonAdminSourceError extends CommandSourceError {

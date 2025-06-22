@@ -87,7 +87,7 @@ const prayCommand: CustomCommand = {
  * {@link PointlessError}
  */
 const commandProcess = (origin: CustomCommandOrigin, subCommand: PraySubCommand): CustomCommandResult => {
-  if (origin.sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError();
+  if (origin.sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError(origin.sourceType);
 
   const prayer = PlayerUtils.convertToPlayer(origin.initiator);
   if (prayer === undefined) throw new UndefinedSourceOrInitiatorError();

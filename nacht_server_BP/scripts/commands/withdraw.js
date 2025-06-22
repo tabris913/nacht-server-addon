@@ -23,7 +23,7 @@ const withdrawCommand = {
  */
 const commandProcess = (origin) => {
     if (origin.sourceType !== CustomCommandSource.NPCDialogue)
-        throw new NonNPCSourceError();
+        throw new NonNPCSourceError(origin.sourceType);
     const player = PlayerUtils.convertToPlayer(origin.initiator);
     if (player === undefined)
         throw new UndefinedSourceOrInitiatorError();

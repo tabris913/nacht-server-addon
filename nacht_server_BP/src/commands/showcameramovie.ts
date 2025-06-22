@@ -48,7 +48,7 @@ const showCameraMovieCommand: CustomCommand = {
  * {@link NachtServerAddonError}
  */
 const commandProcess = (origin: CustomCommandOrigin, target: Array<Player>, moviename: string): CustomCommandResult => {
-  if (origin.sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError();
+  if (origin.sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError(origin.sourceType);
   const player = PlayerUtils.convertToPlayer(origin.initiator);
   if (player === undefined) throw new UndefinedSourceOrInitiatorError();
   if (target.some((p) => !p.camera.isValid)) {

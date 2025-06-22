@@ -20,11 +20,21 @@ wiki: https://github.com/tabris913/nacht-server-addon/wiki
 |   0.6.2 | 2025-06-19 | ライブラリバージョンアップ                       |
 |   0.7.0 | 2025-06-20 |                                                  |
 |   0.7.1 | 2025-06-21 | sell コマンドのバグを修正                        |
-|   0.7.2 | 2025-06-21 |                                                  |
+|   0.7.2 | 2025-06-22 |                                                  |
+|   0.7.3 | 2025-06-22 |                                                  |
+
+### 0.7.3
+
+Released in 2025-06-22.
+
+#### Commands
+
+- buyenchantedbook コマンド仕様変更
+- sell コマンド仕様変更
 
 ### 0.7.2
 
-Released in 2025-06-21.
+Released in 2025-06-22.
 
 #### Commands
 
