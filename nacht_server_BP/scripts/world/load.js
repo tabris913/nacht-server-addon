@@ -95,7 +95,7 @@ export default () => world.afterEvents.worldLoad.subscribe((event) => {
                 },
                 {
                     location: { x: -13, y: 63, z: 0 },
-                    dimension: MinecraftDimensionTypes.Overworld
+                    dimension: MinecraftDimensionTypes.Overworld,
                 },
             ],
         }));

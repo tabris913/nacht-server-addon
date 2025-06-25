@@ -104,7 +104,7 @@ export default () =>
             },
             {
               location: { x: -13, y: 63, z: 0 },
-              dimension: MinecraftDimensionTypes.Overworld
+              dimension: MinecraftDimensionTypes.Overworld,
             },
           ],
         } satisfies CameraMovie)

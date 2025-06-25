@@ -3,7 +3,7 @@
   "header": {
     "name": "Nacht Server AddOn BP",
     "description": "Behavior pack of Nacht Server AddOn v0.8.0",
-    "uuid": "c8f5155c-52a4-48a0-9034-fa0f7086b041",
+    "uuid": "3b2b3629-0e99-4396-ba6b-cc78b1389e35",
     "version": [
       0,
       8,
@@ -28,7 +28,7 @@
     {
       "type": "script",
       "language": "Javascript",
-      "uuid": "91ee9e6f-a7f7-492c-b482-5f3cd731986e",
+      "uuid": "81cf6dd0-713f-4630-953e-3ed08ded5e4c",
       "entry": "scripts/main.js",
       "version": [
         0,
@@ -47,7 +47,7 @@
       "version": "2.1.0-beta"
     },
     {
-      "uuid": "1784cef2-47dc-4d0d-9e61-4e4c0deb8d27",
+      "uuid": "18398f94-2b32-4e0b-8997-8925ff2d4e25",
       "version": [
         0,
         8,
