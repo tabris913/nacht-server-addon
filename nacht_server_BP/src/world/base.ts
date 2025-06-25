@@ -1,4 +1,4 @@
-import { world } from '@minecraft/server';
+import { PlayerPermissionLevel, world } from '@minecraft/server';
 
 import { TAG_OPERATOR } from '../const';
 import AreaUtils from '../utils/AreaUtils';
@@ -22,7 +22,7 @@ export default () => {
           if (
             dp.owner !== event.player.nameTag &&
             !dp.participants.includes(event.player.nameTag) &&
-            !(event.player as any).isOp() &&
+            event.player.playerPermissionLevel !== PlayerPermissionLevel.Operator &&
             !event.player.hasTag(TAG_OPERATOR)
           ) {
             // 所有者ではなく、同居人でもなく、かつオペレーターではない
@@ -50,7 +50,7 @@ export default () => {
           if (
             dp.owner !== event.player.nameTag &&
             !dp.participants.includes(event.player.nameTag) &&
-            !(event.player as any).isOp() &&
+            event.player.playerPermissionLevel !== PlayerPermissionLevel.Operator &&
             !event.player.hasTag(TAG_OPERATOR)
           ) {
             // 所有者ではなく、同居人でもなく、かつオペレーターではない

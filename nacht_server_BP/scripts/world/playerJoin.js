@@ -1,5 +1,5 @@
 import { world } from '@minecraft/server';
-import { SCOREBOARD_POINT } from '../const';
+import { SCOREBOARD_POINT, TAG_AREA_BASE, TAG_AREA_EXPL, TAG_AREA_TOWN } from '../const';
 import { Logger } from '../utils/logger';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
 export default () => world.afterEvents.playerJoin.subscribe((event) => {
@@ -14,6 +14,9 @@ export default () => world.afterEvents.playerJoin.subscribe((event) => {
         }
         else {
             Logger.log(`${entity.nameTag}'s scoreboard ${SCOREBOARD_POINT} has already enabled.`);
+        }
+        if (!(entity.hasTag(TAG_AREA_BASE) || entity.hasTag(TAG_AREA_EXPL) || entity.hasTag(TAG_AREA_TOWN))) {
+            entity.addTag(TAG_AREA_TOWN);
         }
     }
     else {

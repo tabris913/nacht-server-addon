@@ -1,4 +1,4 @@
-import { Player, world } from '@minecraft/server';
+import { Player, PlayerPermissionLevel, world } from '@minecraft/server';
 import { TAG_OPERATOR } from '../const';
 import { Logger } from './logger';
 /**
@@ -56,7 +56,9 @@ const findPlayer = (condition) => {
  */
 const getOperators = () => {
     try {
-        return world.getPlayers().filter((player) => player.isOp() || player.hasTag(TAG_OPERATOR));
+        return world
+            .getPlayers()
+            .filter((player) => player.playerPermissionLevel === PlayerPermissionLevel.Operator || player.hasTag(TAG_OPERATOR));
     }
     catch (error) {
         Logger.warning('Failed to get players who have operator-level permissions because of', error);

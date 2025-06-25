@@ -1,6 +1,6 @@
 {
   "name": "nacht_server_addon",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "description": "",
   "type": "module",
   "main": "scripts/main.js",

@@ -1,4 +1,4 @@
-import { EntityComponentTypes, world } from '@minecraft/server';
+import { EntityComponentTypes, PlayerPermissionLevel, world } from '@minecraft/server';
 
 import { TAG_OPERATOR } from '../../const';
 import { NachtServerAddonEntityTypes, NachtServerAddonItemTypes } from '../../enums';
@@ -27,7 +27,11 @@ export default () => {
 
             return;
           }
-          if ((player as any).isOp() || player.hasTag(TAG_OPERATOR) || baseDp.owner === player.nameTag) {
+          if (
+            player.playerPermissionLevel === PlayerPermissionLevel.Operator ||
+            player.hasTag(TAG_OPERATOR) ||
+            baseDp.owner === player.nameTag
+          ) {
             // オペレーターまたは拠点の所有者
             if (!InventoryUtils.hasItem(playerEntity, NachtServerAddonItemTypes.BaseFlag)) {
               // 拠点の旗を所持していない

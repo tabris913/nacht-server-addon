@@ -23,16 +23,17 @@ export const countItem = (player, itemId) => {
  *
  * @param player プレイヤー
  * @param itemId アイテム ID
+ * @param onlyContained
  * @returns 指定したアイテムのスロットの配列
  */
-export const gatherSlots = (player, itemId) => {
+export const gatherSlots = (player, itemId, onlyContained = true) => {
     try {
         return Array(36)
             .fill(null)
             .map((_, index) => {
             var _a;
             try {
-                const slot = (_a = player.getComponent('inventory')) === null || _a === void 0 ? void 0 : _a.container.getSlot(index);
+                const slot = (_a = player.getComponent(EntityComponentTypes.Inventory)) === null || _a === void 0 ? void 0 : _a.container.getSlot(index);
                 return slot;
             }
             catch (error) {
@@ -40,17 +41,10 @@ export const gatherSlots = (player, itemId) => {
                 return undefined;
             }
         })
-            .filter((slot) => {
-            const commonCond = slot !== undefined && slot.isValid && slot.hasItem();
-            if (itemId === undefined) {
-                // スロットのみ取得
-                return commonCond;
-            }
-            else {
-                // アイテムでフィルタ
-                return commonCond && slot.typeId === itemId;
-            }
-        });
+            .filter((slot) => slot !== undefined &&
+            slot.isValid &&
+            (onlyContained ? slot.hasItem() : true) &&
+            (itemId === undefined ? true : slot.typeId === itemId));
     }
     catch (error) {
         Logger.error(`Failed to get slots of ${itemId} in ${player.nameTag}'s inventory.`);
@@ -134,6 +128,15 @@ export const hasItem = (player, itemId, opt) => {
         return false;
     }
 };
+const isFull = (player) => {
+    try {
+        return gatherSlots(player, undefined, false).every((slot) => slot.hasItem());
+    }
+    catch (error) {
+        Logger.error(`Failed to judge whether every slots has item because of`, error);
+        throw error;
+    }
+};
 /**
  * アイテムをインベントリから削除する
  *
@@ -206,6 +209,7 @@ const InventoryUtils = {
     giveEnchantedItem,
     giveItem,
     hasItem,
+    isFull,
     removeItem,
 };
 export default InventoryUtils;

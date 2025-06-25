@@ -1,4 +1,4 @@
-import { system, world, type Entity, type Player } from '@minecraft/server';
+import { PlayerPermissionLevel, system, world, type Entity, type Player } from '@minecraft/server';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
 
 import { Formatting, TAG_OPERATOR } from '../../const';
@@ -26,7 +26,10 @@ const changeCoop = (player: Player, dp: BaseAreaInfo) => {
   form.title('協力者を選択してください');
   const candidates = world
     .getPlayers()
-    .filter((pl) => pl.id !== player.id && !(pl as any).isOp() && !pl.hasTag(TAG_OPERATOR))
+    .filter(
+      (pl) =>
+        pl.id !== player.id && pl.playerPermissionLevel !== PlayerPermissionLevel.Operator && !pl.hasTag(TAG_OPERATOR)
+    )
     .map((pl) => pl.nameTag)
     .sort();
   if (candidates.length === 0) {

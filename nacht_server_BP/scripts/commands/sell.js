@@ -42,7 +42,7 @@ const commandProcess = (origin, target, item, amount, point, itemless_msg, after
         const npcName = ((_a = origin.sourceEntity) === null || _a === void 0 ? void 0 : _a.nameTag) || 'NPC';
         if (InventoryUtils.hasItem(player, item.id, { max: amount - 1 })) {
             player.sendMessage(`[${npcName}] ${itemless_msg || 'アイテムが足りません'}`);
-            throw new CommandProcessError('アイテムが足りません');
+            throw new CommandProcessError('アイテムが足りません。');
         }
         // 必要なポイントを持っている
         system.runTimeout(() => {

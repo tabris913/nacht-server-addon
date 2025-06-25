@@ -1,11 +1,12 @@
 import { type Entity, type Player, system } from '@minecraft/server';
 
 import { SCOREBOARD_POINT } from '../const';
+import { NachtServerAddonError } from '../errors/base';
 import { PointlessError } from '../errors/market';
+import { MinecraftEnchantmentTypes } from '../types/index';
 import InventoryUtils from '../utils/InventoryUtils';
 import { Logger } from '../utils/logger';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
-import { MinecraftEnchantmentTypes } from '../types/index';
 
 /**
  * プレイヤーがアイテムを購入する
@@ -45,6 +46,11 @@ const purchaseItem = (
       player.sendMessage(`[${sellerName}] ${pointless_msg || 'ポイントが足りません。'}`);
 
       throw new PointlessError();
+    }
+    if (InventoryUtils.isFull(player)) {
+      player.sendMessage(`[${sellerName}] 荷物がいっぱいです。`);
+
+      throw new NachtServerAddonError('インベントリがいっぱいです。');
     }
 
     system.runTimeout(() => {

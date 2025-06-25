@@ -11,6 +11,7 @@ import {
 } from '@minecraft/server';
 
 import { SCOREBOARD_POINT } from '../const';
+import { NachtServerAddonError } from '../errors/base';
 import { CommandProcessError } from '../errors/command';
 import InventoryUtils from '../utils/InventoryUtils';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
@@ -65,7 +66,7 @@ const commandProcess = (
     if (InventoryUtils.hasItem(player, item.id, { max: amount - 1 })) {
       player.sendMessage(`[${npcName}] ${itemless_msg || 'アイテムが足りません'}`);
 
-      throw new CommandProcessError('アイテムが足りません');
+      throw new CommandProcessError('アイテムが足りません。');
     }
 
     // 必要なポイントを持っている

@@ -38,15 +38,16 @@ export const countItem = (player: Entity, itemId: string) => {
  *
  * @param player プレイヤー
  * @param itemId アイテム ID
+ * @param onlyContained
  * @returns 指定したアイテムのスロットの配列
  */
-export const gatherSlots = (player: Entity, itemId?: string) => {
+export const gatherSlots = (player: Entity, itemId?: string, onlyContained: boolean = true) => {
   try {
     return Array(36)
       .fill(null)
       .map((_, index) => {
         try {
-          const slot = player.getComponent('inventory')?.container.getSlot(index);
+          const slot = player.getComponent(EntityComponentTypes.Inventory)?.container.getSlot(index);
 
           return slot;
         } catch (error) {
@@ -55,17 +56,13 @@ export const gatherSlots = (player: Entity, itemId?: string) => {
           return undefined;
         }
       })
-      .filter((slot) => {
-        const commonCond = slot !== undefined && slot.isValid && slot.hasItem();
-
-        if (itemId === undefined) {
-          // スロットのみ取得
-          return commonCond;
-        } else {
-          // アイテムでフィルタ
-          return commonCond && slot.typeId === itemId;
-        }
-      }) as Array<ContainerSlot>;
+      .filter(
+        (slot) =>
+          slot !== undefined &&
+          slot.isValid &&
+          (onlyContained ? slot.hasItem() : true) &&
+          (itemId === undefined ? true : slot.typeId === itemId)
+      ) as Array<ContainerSlot>;
   } catch (error) {
     Logger.error(`Failed to get slots of ${itemId} in ${player.nameTag}'s inventory.`);
     Logger.error(error);
@@ -164,6 +161,16 @@ export const hasItem = (player: Entity, itemId: string, opt?: { max?: number; mi
   }
 };
 
+const isFull = (player: Entity) => {
+  try {
+    return gatherSlots(player, undefined, false).every((slot) => slot.hasItem());
+  } catch (error) {
+    Logger.error(`Failed to judge whether every slots has item because of`, error);
+
+    throw error;
+  }
+};
+
 /**
  * アイテムをインベントリから削除する
  *
@@ -235,6 +242,7 @@ const InventoryUtils = {
   giveEnchantedItem,
   giveItem,
   hasItem,
+  isFull,
   removeItem,
 };
 
