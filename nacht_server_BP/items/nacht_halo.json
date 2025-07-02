@@ -1,0 +1,40 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:nacht_halo",
+      "menu_category": {
+        "category": "items",
+        "group": "minecraft:itemGroup.name.natureMisc"
+      }
+    },
+    "components": {
+      "minecraft:allow_offhand": {
+        "value": true
+      },
+      "minecraft:display_name": {
+        "value": "items.nacht_halo.name"
+      },
+      "minecraft:duration": {
+        "damage_change": {
+          "min": 0,
+          "max": 0
+        }
+      },
+      "minecraft:glint": {
+        "value": true
+      },
+      "minecraft:hand_equipped": true,
+      "minecraft:icon": "nacht_feather",
+      "minecraft:max_stack_size": 1,
+      "minecraft:stacked_by_data": false,
+      "minecraft:rarity": {
+        "value": "uncommon"
+      },
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      }
+    }
+  }
+}

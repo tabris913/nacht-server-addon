@@ -26,6 +26,11 @@ export enum Mode {
   set = 'set',
 }
 
+export enum OpGameMode {
+  development = 'development',
+  play = 'play',
+}
+
 export enum PraySubCommand {
   Free = 'free',
   Paid = 'paid',
@@ -159,6 +164,8 @@ export default () =>
       FillMode.outline,
       FillMode.replace,
     ]);
+
+    event.customCommandRegistry.registerEnum('nacht:OpGameMode', [OpGameMode.development, OpGameMode.play]);
 
     event.customCommandRegistry.registerEnum('nacht:PraySubCommand', [PraySubCommand.Free, PraySubCommand.Paid]);
 

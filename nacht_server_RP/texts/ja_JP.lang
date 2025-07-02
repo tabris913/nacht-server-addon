@@ -1,4 +1,8 @@
 items.base_flag.name=拠点の旗	##
 items.nacht_feather.name=なはとの羽根	##
+items.nacht_halo.name=なはとの輪っか	##
+items.nacht_left_wing.name=なはとの片翼(左)	##
+items.nacht_right_wing.name=なはとの片翼(右)	##
+items.nacht_tail.name=なはとのしっぽ	##
 
 tile.nacht:base_flag.name=拠点の旗	##
