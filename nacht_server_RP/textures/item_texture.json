@@ -5,6 +5,18 @@
     "nacht_feather": {
       "textures": "textures/items/nacht_feather"
     },
+    "nacht_halo": {
+      "textures": "textures/items/nacht_feather"
+    },
+    "nacht_left_wing": {
+      "textures": "textures/items/nacht_feather"
+    },
+    "nacht_right_wing": {
+      "textures": "textures/items/nacht_feather"
+    },
+    "nacht_tail": {
+      "textures": "textures/items/nacht_feather"
+    },
     "base_flag": {
       "textures": "textures/items/base_flag"
     }
