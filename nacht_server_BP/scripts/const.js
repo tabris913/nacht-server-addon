@@ -17,6 +17,8 @@ export const PREFIX_SAFEAREA = 'nacht:safearea_';
 export const PREFIX_TRANSFER = 'nacht:transfer_';
 export const PREFIX_UNEDITABLEAREA = 'nacht:uneditablearea_';
 export const PREFIX_UNSAFEAREA = 'nacht:unsafearea_';
+export const PREFIX_OPGAMEMODE = 'nacht:opgamemode_';
+export const PREFIX_TICKING = 'nacht:ticking?';
 // Effect
 export const EffectNames = {
     [MinecraftEffectTypes.Absorption]: '衝撃吸収',
@@ -362,3 +364,5 @@ export const TAG_AREA_BASE = 'AREA_BASE';
 export const TAG_AREA_EXPL = 'AREA_EXPL';
 export const TAG_AREA_TOWN = 'AREA_TOWN';
 export const TAG_OPERATOR = 'OP';
+export const TAG_OP_DEV = 'OP_DEVELOPMENT';
+export const TAG_OP_PLAY = 'OP_PLAY';

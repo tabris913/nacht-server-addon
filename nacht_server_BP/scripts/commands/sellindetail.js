@@ -1,11 +1,11 @@
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, ItemStack, system, } from '@minecraft/server';
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, ItemStack, system, TicksPerSecond, } from '@minecraft/server';
 import { MessageFormData, ModalFormData } from '@minecraft/server-ui';
+import { SCOREBOARD_POINT } from '../const';
 import { CommandProcessError, UndefinedSourceOrInitiatorError } from '../errors/command';
 import InventoryUtils from '../utils/InventoryUtils';
 import { Logger } from '../utils/logger';
-import { registerCommand } from './common';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
-import { SCOREBOARD_POINT } from '../const';
+import { registerCommand } from './common';
 const sellInDetailCommand = {
     name: 'nacht:sellindetail',
     description: '',
@@ -51,7 +51,7 @@ const commandProcess = (origin, target, item, point, itemless_msg, after_msg) =>
         modal.title({ rawtext: [{ translate: itemStack.localizationKey }, { text: `売却 (1単位 ${point}P)` }] });
         modal.slider('数量', 1, count, { defaultValue: count, valueStep: 1 });
         modal.submitButton('決定');
-        system.run(() => modal
+        system.runTimeout(() => modal
             .show(player)
             .then((response) => {
             var _a;
@@ -83,13 +83,13 @@ const commandProcess = (origin, target, item, point, itemless_msg, after_msg) =>
                 if (response2.selection === 0) {
                     // OK
                     InventoryUtils.removeItem(player, item.id, amount);
-                    ScoreboardUtils.addScore(player, SCOREBOARD_POINT, point);
+                    ScoreboardUtils.addScore(player, SCOREBOARD_POINT, point * amount);
                     player.sendMessage(`[${buyerName}] ${after_msg || 'まいどあり！'}`);
                 }
             })
                 .catch(() => null);
         })
-            .catch(() => null));
+            .catch(() => null), TicksPerSecond);
     });
     return { status: CustomCommandStatus.Success };
 };

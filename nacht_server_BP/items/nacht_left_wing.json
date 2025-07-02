@@ -5,7 +5,7 @@
       "identifier": "nacht:nacht_left_wing",
       "menu_category": {
         "category": "items",
-        "group": "minecraft:itemGroup.name.natureMisc"
+        "group": "nacht:itemGroup.name.nacht"
       }
     },
     "components": {

@@ -1,5 +1,6 @@
 import {
-  type BlockType,
+  BlockPermutation,
+  BlockType,
   BlockVolume,
   CommandPermissionLevel,
   type CustomCommand,
@@ -8,13 +9,20 @@ import {
   type CustomCommandResult,
   CustomCommandStatus,
   type Entity,
+  ItemComponentTypes,
+  LocationInUnloadedChunkError,
   system,
+  TicksPerSecond,
   type Vector3,
+  world,
 } from '@minecraft/server';
 
 import { COMMAND_MODIFICATION_BLOCK_LIMIT } from '../const';
 import { NachtServerAddonError } from '../errors/base';
-import { UndefinedSourceOrInitiatorError } from '../errors/command';
+import { CommandProcessError, UndefinedSourceOrInitiatorError } from '../errors/command';
+import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
+import { BlockStateSuperset, MinecraftBlockTypes } from '../types/index';
+import LocationUtils from '../utils/LocationUtils';
 import { Logger } from '../utils/logger';
 import PlayerUtils from '../utils/PlayerUtils';
 
@@ -31,14 +39,205 @@ const fillCommand: CustomCommand = {
     { name: 'tileName', type: CustomCommandParamType.BlockType },
   ],
   optionalParameters: [
-    { name: 'tileData', type: CustomCommandParamType.Integer },
+    { name: 'blockStates', type: CustomCommandParamType.String },
     {
       name: 'nacht:oldBlockHandling',
       type: CustomCommandParamType.Enum,
     },
-    { name: 'replaceTileName', type: CustomCommandParamType.BlockType },
-    { name: 'replaceDataValue', type: CustomCommandParamType.Integer },
+    { name: 'secondaryTileName', type: CustomCommandParamType.BlockType },
+    { name: 'secondaryBlockStates', type: CustomCommandParamType.String },
   ],
+};
+
+const parseBlockStates = (blockStates: string) => {
+  if (!/^\[.*\]$/.test(blockStates)) throw new NachtServerAddonError('ブロック状態が不正です。');
+
+  const parsed: Record<string, string | number | boolean> = {};
+  for (const stateItem of blockStates.slice(1, -1).split(/,\s*/)) {
+    if (!/^.+=.+$/.test(stateItem)) throw new NachtServerAddonError('ブロック状態が不正です。');
+
+    const [key, value] = stateItem.split('=');
+    Object.assign(parsed, { [key]: value });
+  }
+
+  return parsed;
+};
+
+const commandProcessNew = (
+  origin: CustomCommandOrigin,
+  from: Vector3,
+  to: Vector3,
+  tileName: BlockType,
+  blockStates?: string,
+  oldBlockHandling?: FillMode,
+  secondaryTileName?: BlockType,
+  secondaryBlockStates?: string
+): CustomCommandResult => {
+  const player = PlayerUtils.convertToPlayer(origin.sourceEntity);
+  if (player === undefined) throw new UndefinedSourceOrInitiatorError();
+  if (oldBlockHandling === FillMode.replace && secondaryTileName === undefined) {
+    Logger.error('replaceTileName was not given.');
+
+    throw new NachtServerAddonError('置換対象ブロックが指定されていません。');
+  }
+
+  /**
+   * 適用範囲
+   */
+  const blockVolume = new DimensionBlockVolume(from, to, player.dimension);
+  const { max, min } = blockVolume.getBoundingBox();
+  const blockPermutation = BlockPermutation.resolve(
+    tileName.id,
+    blockStates ? parseBlockStates(blockStates) : undefined
+  );
+  // const chunkIndices = {
+  //   x: { min: Math.floor(min.x / 16), max: Math.floor(max.x / 16) },
+  //   z: { min: Math.floor(min.z / 16), max: Math.floor(max.z / 16) },
+  // };
+  // const chunkDistances = {
+  //   x: LocationUtils.calcDistance(chunkIndices.x.min, chunkIndices.x.max),
+  //   z: LocationUtils.calcDistance(chunkIndices.z.min, chunkIndices.z.max),
+  // };
+  // if (chunkDistances.x > 100 && chunkDistances.z > 100) throw new CommandProcessError('範囲が広すぎます。');
+  // const mod = { x: 100 % chunkDistances.x, z: 100 % chunkDistances.z };
+  // if (mod.x <= mod.z) {
+  //   // x
+  //   const step = Math.floor(100 / chunkDistances.x);
+  // } else {
+  //   // z
+  //   const step = Math.floor(100 / chunkDistances.z);
+  // }
+
+  let counter = 0;
+  let failedCounter = 0;
+  switch (oldBlockHandling) {
+    case undefined:
+      // 適用範囲を指定されたブロックですべて埋める
+      system.runJob(
+        (function* () {
+          // player.dimension.fillBlocks(blockVolume, blockPermutation);
+          for (const blockLocation of blockVolume.getBlockLocationIterator()) {
+            try {
+              try {
+                player.dimension.setBlockPermutation(blockLocation, blockPermutation);
+              } catch (error) {
+                if (error instanceof LocationInUnloadedChunkError) {
+                  try {
+                    player.dimension.runCommand(`tickingarea remove FILL`);
+                  } catch {
+                    //
+                  }
+                  player.dimension.runCommand(
+                    `tickingarea add circle ${blockLocation.x} ${blockLocation.y} ${blockLocation.z} 1 FILL true`
+                  );
+                  player.dimension.setBlockPermutation(blockLocation, blockPermutation);
+                }
+              }
+              counter++;
+              // if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) await system.waitTicks(TicksPerSecond / 2);
+            } catch {
+              failedCounter++;
+            }
+
+            try {
+              player.dimension.runCommand(`tickingarea remove FILL`);
+            } catch {
+              //
+            }
+
+            yield;
+          }
+        })()
+      );
+
+      break;
+    case FillMode.hollow:
+      // 適用範囲の表面のみを指定されたブロックで埋め、内側を空気で満たす
+      for (const blockLocation of blockVolume.getBlockLocationIterator()) {
+        try {
+          if (
+            [max.x, min.x].includes(blockLocation.x) ||
+            [max.y, min.y].includes(blockLocation.y) ||
+            [max.z, min.z].includes(blockLocation.z)
+          ) {
+            system.run(() => player.dimension.setBlockPermutation(blockLocation, blockPermutation));
+            counter++;
+            if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) system.waitTicks(TicksPerSecond / 2);
+          } else {
+            player.dimension.setBlockType(blockLocation, MinecraftBlockTypes.Air);
+          }
+        } catch {
+          failedCounter++;
+        }
+      }
+      break;
+    case FillMode.keep:
+      // 適用範囲の空気ブロックのみを指定されたブロックで置き換える
+      for (const blockLocation of blockVolume.getBlockLocationIterator()) {
+        try {
+          const thisBlock = player.dimension.getBlock(blockLocation);
+          if (thisBlock === undefined) {
+            failedCounter++;
+            continue;
+          }
+          if (thisBlock.isAir) {
+            system.run(() => player.dimension.setBlockPermutation(blockLocation, blockPermutation));
+            counter++;
+            if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) system.waitTicks(TicksPerSecond / 2);
+          }
+        } catch {
+          failedCounter++;
+        }
+      }
+      break;
+    case FillMode.outline:
+      // 適用範囲の表面のみを指定されたブロックで埋め、内側は維持する
+      for (const blockLocation of blockVolume.getBlockLocationIterator()) {
+        try {
+          if (
+            [max.x, min.x].includes(blockLocation.x) ||
+            [max.y, min.y].includes(blockLocation.y) ||
+            [max.z, min.z].includes(blockLocation.z)
+          ) {
+            system.run(() => player.dimension.setBlockPermutation(blockLocation, blockPermutation));
+            counter++;
+            if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) system.waitTicks(TicksPerSecond / 2);
+          }
+        } catch {
+          failedCounter++;
+        }
+      }
+      break;
+    case FillMode.replace:
+      // 適用範囲のうち指定されたブロックで置換対象ブロックを置き換える
+      for (const blockLocation of blockVolume.getBlockLocationIterator()) {
+        try {
+          const thisBlock = player.dimension.getBlock(blockLocation)?.permutation;
+          if (thisBlock === undefined) {
+            failedCounter++;
+            continue;
+          }
+          if (thisBlock.type.id === secondaryTileName!.id) {
+            const states = secondaryBlockStates ? parseBlockStates(secondaryBlockStates) : undefined;
+            if (
+              states
+                ? !Object.entries(states).some(([k, v]) => thisBlock.getState(k as keyof BlockStateSuperset) !== v)
+                : true
+            ) {
+              system.run(() => player.dimension.setBlockPermutation(blockLocation, blockPermutation));
+              counter++;
+              if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) system.waitTicks(TicksPerSecond / 2);
+            }
+          }
+        } catch {
+          failedCounter++;
+        }
+      }
+  }
+
+  player.sendMessage(`${counter}/${blockVolume.getCapacity()} を置き換えました (失敗: ${failedCounter} ブロック)。`);
+
+  return { status: CustomCommandStatus.Success };
 };
 
 /**
@@ -173,17 +372,18 @@ function* callFillCommand(
   let count = timesToRun;
 
   while (count--) {
-    const command = makeFillCommand(
-      new BlockVolume(
-        { ...blockVolume.from, [dynamicAxis]: start },
-        {
-          ...blockVolume.to,
-          [dynamicAxis]: Math.min(start + div - 1, blockVolume.getMax()[dynamicAxis]),
-        }
-      ),
-      ...options
+    const bv = new BlockVolume(
+      { ...blockVolume.from, [dynamicAxis]: start },
+      {
+        ...blockVolume.to,
+        [dynamicAxis]: Math.min(start + div - 1, blockVolume.getMax()[dynamicAxis]),
+      }
     );
+    const command = makeFillCommand(bv, ...options);
+    player.dimension.runCommand(`tickingarea add ${bv.from.x} 0 ${bv.from.z} ${bv.to.x} 0 ${bv.to.z} FILL true`);
+    Logger.log(`/tickingarea add ${bv.from.x} 0 ${bv.from.z} ${bv.to.x} 0 ${bv.to.z} FILL true`);
     const successCount = player.dimension.runCommand(command).successCount;
+    player.dimension.runCommand('tickingarea remove FILL');
     totalSuccessCount += successCount;
     start += div;
     Logger.log(`nacht:fill ${timesToRun - count}/${timesToRun} (${successCount}): ${command}`);

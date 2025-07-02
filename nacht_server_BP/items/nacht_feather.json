@@ -5,7 +5,7 @@
       "identifier": "nacht:nacht_feather",
       "menu_category": {
         "category": "items",
-        "group": "minecraft:itemGroup.name.natureMisc"
+        "group": "nacht:itemGroup.name.nacht"
       }
     },
     "components": {

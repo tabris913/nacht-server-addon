@@ -10,8 +10,8 @@ import {
   TAG_OPERATOR,
 } from '../const';
 import { Logger } from '../utils/logger';
-import ScoreboardUtils from '../utils/ScoreboardUtils';
 import PlayerUtils from '../utils/PlayerUtils';
+import ScoreboardUtils from '../utils/ScoreboardUtils';
 
 export default () =>
   world.afterEvents.playerJoin.subscribe((event) => {
@@ -36,7 +36,7 @@ export default () =>
       }
 
       // オペレーターゲームモード
-      if (entity.hasTag(TAG_OPERATOR) && !(entity.hasTag(TAG_OP_DEV) && entity.hasTag(TAG_OP_PLAY))) {
+      if (entity.hasTag(TAG_OPERATOR) && !(entity.hasTag(TAG_OP_DEV) || entity.hasTag(TAG_OP_PLAY))) {
         switch (player?.getGameMode()) {
           case GameMode.Adventure:
           case GameMode.Survival:

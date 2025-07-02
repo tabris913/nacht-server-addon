@@ -3,26 +3,26 @@
   "minecraft:recipe_shaped": {
     "description": {
       "identifier": "nacht:nacht_halo"
-    }
-  },
-  "tags": [
-    "crafting_table"
-  ],
-  "pattern": [
-    "#F#",
-    "F F",
-    "#F#"
-  ],
-  "key": {
-    "F": {
-      "item": "nacht:nacht_feather"
     },
-    "#": {
-      "item": "minecraft:nether_star"
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "#F#",
+      "F F",
+      "#F#"
+    ],
+    "key": {
+      "F": {
+        "item": "nacht:nacht_feather"
+      },
+      "#": {
+        "item": "minecraft:nether_star"
+      }
+    },
+    "unlock": [],
+    "result": {
+      "item": "nacht:nacht_halo"
     }
-  },
-  "unlock": [],
-  "result": {
-    "item": "nacht:nacht_halo"
   }
 }

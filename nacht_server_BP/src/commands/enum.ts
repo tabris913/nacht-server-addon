@@ -7,10 +7,27 @@ export enum SuccessOrFailure {
   Failure = 'failure',
 }
 
+export enum DiagonalTypes {
+  Line = 'line',
+  Section = 'section',
+}
+
 export enum DimensionTypes {
   Overworld = 'overworld',
   Nether = 'nether',
   TheEnd = 'the_end',
+}
+
+export enum Direction {
+  West = 'west',
+  East = 'east',
+  North = 'north',
+  South = 'south',
+
+  NorthWest = 'north_west',
+  NorthEast = 'north_east',
+  SouthWest = 'south_west',
+  SouthEast = 'south_east',
 }
 
 export enum FillMode {
@@ -72,10 +89,23 @@ export default () =>
       'String',
     ] satisfies Array<keyof typeof CustomCommandParamType>);
 
+    event.customCommandRegistry.registerEnum('nacht:DiagonalTypes', [DiagonalTypes.Line, DiagonalTypes.Section]);
+
     event.customCommandRegistry.registerEnum('nacht:DimensionTypes', [
       DimensionTypes.Nether,
       DimensionTypes.Overworld,
       DimensionTypes.TheEnd,
+    ]);
+
+    event.customCommandRegistry.registerEnum('nacht:Direction', [
+      Direction.East,
+      Direction.North,
+      Direction.South,
+      Direction.West,
+      Direction.NorthEast,
+      Direction.NorthWest,
+      Direction.SouthEast,
+      Direction.SouthWest,
     ]);
 
     event.customCommandRegistry.registerEnum('nacht:easeType', [

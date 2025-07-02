@@ -24,6 +24,11 @@ export var Mode;
     Mode["cancel"] = "cancel";
     Mode["set"] = "set";
 })(Mode || (Mode = {}));
+export var OpGameMode;
+(function (OpGameMode) {
+    OpGameMode["development"] = "development";
+    OpGameMode["play"] = "play";
+})(OpGameMode || (OpGameMode = {}));
 export var PraySubCommand;
 (function (PraySubCommand) {
     PraySubCommand["Free"] = "free";
@@ -150,6 +155,7 @@ export default () => system.beforeEvents.startup.subscribe((event) => {
         FillMode.outline,
         FillMode.replace,
     ]);
+    event.customCommandRegistry.registerEnum('nacht:OpGameMode', [OpGameMode.development, OpGameMode.play]);
     event.customCommandRegistry.registerEnum('nacht:PraySubCommand', [PraySubCommand.Free, PraySubCommand.Paid]);
     event.customCommandRegistry.registerEnum('nacht:ruleName', [
         RuleName.autoRemoveFortuneEnchant,

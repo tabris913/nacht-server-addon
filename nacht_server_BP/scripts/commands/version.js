@@ -10,6 +10,6 @@ export default () => system.beforeEvents.startup.subscribe(registerCommand({
     const player = PlayerUtils.convertToPlayer(origin.initiator || origin.sourceEntity);
     if (player === undefined)
         throw new UndefinedSourceOrInitiatorError();
-    player.sendMessage('0.8.0');
+    player.sendMessage('1.0.0');
     return { status: CustomCommandStatus.Success };
 }));

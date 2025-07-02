@@ -2,11 +2,11 @@
   "format_version": 2,
   "header": {
     "name": "Nacht Server AddOn RP",
-    "description": "Resource pack of Nacht Server AddOn v0.8.0",
+    "description": "Resource pack of Nacht Server AddOn v1.0.0",
     "uuid": "18398f94-2b32-4e0b-8997-8925ff2d4e25",
     "version": [
+      1,
       0,
-      8,
       0
     ],
     "min_engine_version": [
@@ -20,8 +20,8 @@
       "type": "resources",
       "uuid": "c56e0202-608a-41b9-a5ae-7b3230c0e49b",
       "version": [
+        1,
         0,
-        8,
         0
       ]
     }
@@ -30,8 +30,8 @@
     {
       "uuid": "3b2b3629-0e99-4396-ba6b-cc78b1389e35",
       "version": [
+        1,
         0,
-        8,
         0
       ]
     }

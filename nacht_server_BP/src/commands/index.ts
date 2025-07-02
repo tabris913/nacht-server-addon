@@ -9,6 +9,7 @@ import dice from './dice';
 import _enum from './enum';
 import fill from './fill';
 import fixarea from './fixarea';
+import gamemodeop from './gamemodeop';
 import gamerule from './gamerule';
 import getdp from './getdp';
 import message from './message';
@@ -45,6 +46,7 @@ export default () => {
   dice();
   fill();
   fixarea();
+  gamemodeop();
   gamerule();
   getdp();
   migrate();

@@ -9,17 +9,17 @@ import {
   type ItemType,
   type Player,
   system,
+  TicksPerSecond,
 } from '@minecraft/server';
-
 import { MessageFormData, ModalFormData } from '@minecraft/server-ui';
 
+import { SCOREBOARD_POINT } from '../const';
 import { CommandProcessError, UndefinedSourceOrInitiatorError } from '../errors/command';
 import InventoryUtils from '../utils/InventoryUtils';
 import { Logger } from '../utils/logger';
+import ScoreboardUtils from '../utils/ScoreboardUtils';
 
 import { registerCommand } from './common';
-import ScoreboardUtils from '../utils/ScoreboardUtils';
-import { SCOREBOARD_POINT } from '../const';
 
 const sellInDetailCommand: CustomCommand = {
   name: 'nacht:sellindetail',
@@ -78,50 +78,52 @@ const commandProcess = (
     modal.slider('数量', 1, count, { defaultValue: count, valueStep: 1 });
     modal.submitButton('決定');
 
-    system.run(() =>
-      modal
-        .show(player as any)
-        .then((response) => {
-          if (response.canceled) {
-            Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
+    system.runTimeout(
+      () =>
+        modal
+          .show(player as any)
+          .then((response) => {
+            if (response.canceled) {
+              Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
 
-            return;
-          }
+              return;
+            }
 
-          const amount = response.formValues?.[0] as number | undefined;
-          if (amount === undefined) {
-            return;
-          }
+            const amount = response.formValues?.[0] as number | undefined;
+            if (amount === undefined) {
+              return;
+            }
 
-          const confirm = new MessageFormData();
-          confirm.title('売却確認');
-          confirm.body({
-            rawtext: [
-              { translate: itemStack.localizationKey },
-              { text: `${amount}単位を${amount * point}ポイントで売却してもよろしいですか？` },
-            ],
-          });
-          confirm.button1('OK');
-          confirm.button2('キャンセル');
-          confirm
-            .show(player as any)
-            .then((response2) => {
-              if (response2.canceled) {
-                Logger.log(`[${player.nameTag}] canceled: ${response2.cancelationReason}`);
+            const confirm = new MessageFormData();
+            confirm.title('売却確認');
+            confirm.body({
+              rawtext: [
+                { translate: itemStack.localizationKey },
+                { text: `${amount}単位を${amount * point}ポイントで売却してもよろしいですか？` },
+              ],
+            });
+            confirm.button1('OK');
+            confirm.button2('キャンセル');
+            confirm
+              .show(player as any)
+              .then((response2) => {
+                if (response2.canceled) {
+                  Logger.log(`[${player.nameTag}] canceled: ${response2.cancelationReason}`);
 
-                return;
-              }
+                  return;
+                }
 
-              if (response2.selection === 0) {
-                // OK
-                InventoryUtils.removeItem(player, item.id, amount);
-                ScoreboardUtils.addScore(player, SCOREBOARD_POINT, point);
-                player.sendMessage(`[${buyerName}] ${after_msg || 'まいどあり！'}`);
-              }
-            })
-            .catch(() => null);
-        })
-        .catch(() => null)
+                if (response2.selection === 0) {
+                  // OK
+                  InventoryUtils.removeItem(player, item.id, amount);
+                  ScoreboardUtils.addScore(player, SCOREBOARD_POINT, point * amount);
+                  player.sendMessage(`[${buyerName}] ${after_msg || 'まいどあり！'}`);
+                }
+              })
+              .catch(() => null);
+          })
+          .catch(() => null),
+      TicksPerSecond
     );
   });
 

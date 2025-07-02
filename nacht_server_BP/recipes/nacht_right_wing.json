@@ -3,26 +3,27 @@
   "minecraft:recipe_shaped": {
     "description": {
       "identifier": "nacht:nacht_right_wing"
-    }
-  },
-  "tags": [
-    "crafting_table"
-  ],
-  "pattern": [
-    "FF ",
-    "F#F",
-    "  F"
-  ],
-  "key": {
-    "F": {
-      "item": "nacht:nacht_feather"
     },
-    "#": {
-      "item": "minecraft:nether_star"
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FF ",
+      "F#F",
+      "  F"
+    ],
+    "key": {
+      "F": {
+        "item": "nacht:nacht_feather"
+      },
+      "#": {
+        "item": "minecraft:nether_star"
+      }
+    },
+    "assume_symmetry": false,
+    "unlock": [],
+    "result": {
+      "item": "nacht:nacht_right_wing"
     }
-  },
-  "unlock": [],
-  "result": {
-    "item": "nacht:nacht_right_wing"
   }
 }

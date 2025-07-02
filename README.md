@@ -23,6 +23,16 @@ wiki: https://github.com/tabris913/nacht-server-addon/wiki
 |   0.7.2 | 2025-06-22 |                                                  |
 |   0.7.3 | 2025-06-22 |                                                  |
 |   0.8.0 | 2025-06-26 |                                                  |
+|   1.0.0 | 2025-07-03 |                                                  |
+
+### 1.0.0
+
+Released in 2025-07-03.
+
+#### Commands
+
+- gamemodeop コマンド追加
+- sellindetail コマンド追加
 
 ### 0.8.0
 
