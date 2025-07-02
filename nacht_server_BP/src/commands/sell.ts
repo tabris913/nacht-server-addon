@@ -11,7 +11,6 @@ import {
 } from '@minecraft/server';
 
 import { SCOREBOARD_POINT } from '../const';
-import { NachtServerAddonError } from '../errors/base';
 import { CommandProcessError } from '../errors/command';
 import InventoryUtils from '../utils/InventoryUtils';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
