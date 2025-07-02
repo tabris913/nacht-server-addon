@@ -20,6 +20,7 @@ import registertptarget from './registertptarget';
 import releasearea from './releasearea';
 import renamedp from './renamedp';
 import sell from './sell';
+import sellindetail from './sellindetail';
 import setdp from './setdp';
 import setsafezone from './setsafezone';
 import setspawnpoint from './setspawnpoint';
@@ -55,6 +56,7 @@ export default () => {
   releasearea();
   renamedp();
   sell();
+  sellindetail();
   setdp();
   setsafezone();
   setspawnpoint();
