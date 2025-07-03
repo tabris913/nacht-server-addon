@@ -7,6 +7,12 @@ export enum SuccessOrFailure {
   Failure = 'failure',
 }
 
+export enum CloneMode {
+  Force = 'force',
+  Move = 'move',
+  Normal = 'normal',
+}
+
 export enum DiagonalTypes {
   Line = 'line',
   Section = 'section',
@@ -30,12 +36,23 @@ export enum Direction {
   SouthEast = 'south_east',
 }
 
+export enum ExpandMode {
+  Expand = 'expand',
+  Shrink = 'shrink',
+}
+
 export enum FillMode {
   destroy = 'destroy',
   hollow = 'hollow',
   keep = 'keep',
   outline = 'outline',
   replace = 'replace',
+}
+
+export enum MaskMode {
+  // Filtered = 'filtered',
+  Replace = 'replace',
+  Masked = 'masked',
 }
 
 export enum Mode {
@@ -53,6 +70,13 @@ export enum PraySubCommand {
   Paid = 'paid',
 }
 
+export enum Rotate {
+  _0 = '0',
+  _90 = '90',
+  _180 = '180',
+  __90 = '-90',
+}
+
 export enum RuleName {
   autoRemoveFortuneEnchant = 'autoRemoveFortuneEnchant',
   autoRemoveFortuneEnchantInterval = 'autoRemoveFortuneEnchantInterval',
@@ -68,6 +92,11 @@ export enum RuleName {
   watchCrossingAreaInterval = 'watchCrossingAreaInterval',
 }
 
+export enum VerticalDirection {
+  UP = 'up',
+  DOWN = 'down',
+}
+
 export default () =>
   system.beforeEvents.startup.subscribe((event) => {
     event.customCommandRegistry.registerEnum('nacht:successOrFailure', [
@@ -76,6 +105,8 @@ export default () =>
     ]);
 
     event.customCommandRegistry.registerEnum('nacht:AreaSetMode', [Mode.cancel, Mode.set]);
+
+    event.customCommandRegistry.registerEnum('nacht:CloneMode', [CloneMode.Force, CloneMode.Move, CloneMode.Normal]);
 
     event.customCommandRegistry.registerEnum('nacht:CustomCommandParamType', [
       'BlockType',
@@ -187,6 +218,14 @@ export default () =>
       MinecraftEnchantmentTypes.WindBurst,
     ]);
 
+    event.customCommandRegistry.registerEnum('nacht:ExpandMode', [ExpandMode.Expand, ExpandMode.Shrink]);
+
+    event.customCommandRegistry.registerEnum('nacht:MaskMode', [
+      // MaskMode.Filtered,
+      MaskMode.Masked,
+      MaskMode.Replace,
+    ]);
+
     event.customCommandRegistry.registerEnum('nacht:oldBlockHandling', [
       FillMode.destroy,
       FillMode.hollow,
@@ -198,6 +237,8 @@ export default () =>
     event.customCommandRegistry.registerEnum('nacht:OpGameMode', [OpGameMode.development, OpGameMode.play]);
 
     event.customCommandRegistry.registerEnum('nacht:PraySubCommand', [PraySubCommand.Free, PraySubCommand.Paid]);
+
+    event.customCommandRegistry.registerEnum('nacht:Rotate', [Rotate._0, Rotate._180, Rotate._90, Rotate.__90]);
 
     event.customCommandRegistry.registerEnum('nacht:ruleName', [
       RuleName.autoRemoveFortuneEnchant,
@@ -213,4 +254,6 @@ export default () =>
       RuleName.watchCrossingArea,
       RuleName.watchCrossingAreaInterval,
     ]);
+
+    event.customCommandRegistry.registerEnum('nacht:VerticalDirection', [VerticalDirection.DOWN, VerticalDirection.UP]);
   });

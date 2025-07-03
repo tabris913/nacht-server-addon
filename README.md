@@ -31,6 +31,9 @@ Released in 2025-07-03.
 
 #### Commands
 
+- clonerotate コマンド追加
+- clonsrotatefiltered コマンド追加
+- filldiagonal コマンド追加
 - gamemodeop コマンド追加
 - sellindetail コマンド追加
 

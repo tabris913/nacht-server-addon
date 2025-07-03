@@ -9,6 +9,7 @@ import {
 
 import { NachtServerAddonError } from '../errors/base';
 import { Logger } from '../utils/logger';
+import { CommandProcessError } from '../errors/command';
 
 type CallbackType = (origin: CustomCommandOrigin, ...args: Array<any>) => CustomCommandResult;
 
@@ -80,4 +81,18 @@ export const registerCommand = (customCommand: CustomCommand, callback: Callback
 
     throw error;
   }
+};
+
+export const parseBlockStates = (blockStates: string) => {
+  if (!/^\[.*\]$/.test(blockStates)) throw new CommandProcessError('ブロック状態が不正です。');
+
+  const parsed: Record<string, string | number | boolean> = {};
+  for (const stateItem of blockStates.slice(1, -1).split(/,\s*/)) {
+    if (!/^.+=.+$/.test(stateItem)) throw new CommandProcessError('ブロック状態が不正です。');
+
+    const [key, value] = stateItem.split('=');
+    Object.assign(parsed, { [key]: value });
+  }
+
+  return parsed;
 };

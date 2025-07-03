@@ -1,3 +1,4 @@
+import { Rotate } from '../commands/enum';
 import { MinecraftDimensionTypes } from '../types/index';
 
 import type { Vector3, VectorXZ } from '@minecraft/server';
@@ -46,3 +47,44 @@ export type UneditableAreas = {
   max: Vector3;
   min: Vector3;
 };
+
+export class Location implements Vector3 {
+  x;
+  y;
+  z;
+
+  constructor(location: Vector3) {
+    this.x = location.x;
+    this.y = location.y;
+    this.z = location.z;
+  }
+
+  diff = (origin: Vector3) => new Location({ x: this.x - origin.x, y: this.y - origin.y, z: this.z - origin.z });
+
+  offset = (other: Vector3) => {
+    this.x += other.x;
+    this.y += other.y;
+    this.z += other.z;
+
+    return this;
+  };
+
+  rotate = (deg: Rotate) => {
+    switch (deg) {
+      case Rotate._90:
+        this.x = this.z;
+        this.z = -this.x;
+        break;
+      case Rotate._180:
+        this.x *= -1;
+        this.z *= -1;
+        break;
+      case Rotate.__90:
+        this.x = -this.z;
+        this.z = this.x;
+        break;
+    }
+
+    return this;
+  };
+}

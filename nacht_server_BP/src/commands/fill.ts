@@ -9,6 +9,7 @@ import {
   type CustomCommandResult,
   CustomCommandStatus,
   type Entity,
+  HudVisibility,
   ItemComponentTypes,
   LocationInUnloadedChunkError,
   system,
@@ -26,7 +27,7 @@ import LocationUtils from '../utils/LocationUtils';
 import { Logger } from '../utils/logger';
 import PlayerUtils from '../utils/PlayerUtils';
 
-import { registerCommand } from './common';
+import { parseBlockStates, registerCommand } from './common';
 import { FillMode } from './enum';
 
 const fillCommand: CustomCommand = {
@@ -49,20 +50,6 @@ const fillCommand: CustomCommand = {
   ],
 };
 
-const parseBlockStates = (blockStates: string) => {
-  if (!/^\[.*\]$/.test(blockStates)) throw new NachtServerAddonError('ブロック状態が不正です。');
-
-  const parsed: Record<string, string | number | boolean> = {};
-  for (const stateItem of blockStates.slice(1, -1).split(/,\s*/)) {
-    if (!/^.+=.+$/.test(stateItem)) throw new NachtServerAddonError('ブロック状態が不正です。');
-
-    const [key, value] = stateItem.split('=');
-    Object.assign(parsed, { [key]: value });
-  }
-
-  return parsed;
-};
-
 const commandProcessNew = (
   origin: CustomCommandOrigin,
   from: Vector3,
@@ -78,7 +65,7 @@ const commandProcessNew = (
   if (oldBlockHandling === FillMode.replace && secondaryTileName === undefined) {
     Logger.error('replaceTileName was not given.');
 
-    throw new NachtServerAddonError('置換対象ブロックが指定されていません。');
+    throw new CommandProcessError('置換対象ブロックが指定されていません。');
   }
 
   /**
@@ -90,65 +77,62 @@ const commandProcessNew = (
     tileName.id,
     blockStates ? parseBlockStates(blockStates) : undefined
   );
-  // const chunkIndices = {
-  //   x: { min: Math.floor(min.x / 16), max: Math.floor(max.x / 16) },
-  //   z: { min: Math.floor(min.z / 16), max: Math.floor(max.z / 16) },
-  // };
-  // const chunkDistances = {
-  //   x: LocationUtils.calcDistance(chunkIndices.x.min, chunkIndices.x.max),
-  //   z: LocationUtils.calcDistance(chunkIndices.z.min, chunkIndices.z.max),
-  // };
-  // if (chunkDistances.x > 100 && chunkDistances.z > 100) throw new CommandProcessError('範囲が広すぎます。');
-  // const mod = { x: 100 % chunkDistances.x, z: 100 % chunkDistances.z };
-  // if (mod.x <= mod.z) {
-  //   // x
-  //   const step = Math.floor(100 / chunkDistances.x);
-  // } else {
-  //   // z
-  //   const step = Math.floor(100 / chunkDistances.z);
-  // }
+  const chunkIndices = {
+    x: { min: Math.floor(min.x / 16), max: Math.floor(max.x / 16) },
+    z: { min: Math.floor(min.z / 16), max: Math.floor(max.z / 16) },
+  };
+  const chunkDistances = {
+    x: LocationUtils.calcDistance(chunkIndices.x.min, chunkIndices.x.max),
+    z: LocationUtils.calcDistance(chunkIndices.z.min, chunkIndices.z.max),
+  };
+  if (chunkDistances.x > 100 && chunkDistances.z > 100) throw new CommandProcessError('範囲が広すぎます。');
+  const mod = { x: 100 % chunkDistances.x, z: 100 % chunkDistances.z };
+  if (mod.x <= mod.z) {
+    // x
+    const step = Math.floor(100 / chunkDistances.x);
+  } else {
+    // z
+    const step = Math.floor(100 / chunkDistances.z);
+  }
 
   let counter = 0;
   let failedCounter = 0;
   switch (oldBlockHandling) {
     case undefined:
       // 適用範囲を指定されたブロックですべて埋める
-      system.runJob(
-        (function* () {
-          // player.dimension.fillBlocks(blockVolume, blockPermutation);
-          for (const blockLocation of blockVolume.getBlockLocationIterator()) {
+      system.runTimeout(async () => {
+        // player.dimension.fillBlocks(blockVolume, blockPermutation);
+        for (const blockLocation of blockVolume.getBlockLocationIterator()) {
+          try {
             try {
-              try {
-                player.dimension.setBlockPermutation(blockLocation, blockPermutation);
-              } catch (error) {
-                if (error instanceof LocationInUnloadedChunkError) {
-                  try {
-                    player.dimension.runCommand(`tickingarea remove FILL`);
-                  } catch {
-                    //
-                  }
-                  player.dimension.runCommand(
-                    `tickingarea add circle ${blockLocation.x} ${blockLocation.y} ${blockLocation.z} 1 FILL true`
-                  );
-                  player.dimension.setBlockPermutation(blockLocation, blockPermutation);
+              player.dimension.setBlockPermutation(blockLocation, blockPermutation);
+            } catch (error) {
+              if (error instanceof LocationInUnloadedChunkError) {
+                try {
+                  player.dimension.runCommand(`tickingarea remove FILL`);
+                } catch {
+                  //
                 }
+                player.dimension.runCommand(
+                  `tickingarea add circle ${blockLocation.x} ${blockLocation.y} ${blockLocation.z} 1 FILL true`
+                );
+                await system.waitTicks(1);
+                player.dimension.setBlockPermutation(blockLocation, blockPermutation);
               }
-              counter++;
-              // if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) await system.waitTicks(TicksPerSecond / 2);
-            } catch {
-              failedCounter++;
             }
-
-            try {
-              player.dimension.runCommand(`tickingarea remove FILL`);
-            } catch {
-              //
-            }
-
-            yield;
+            counter++;
+            if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) await system.waitTicks(TicksPerSecond / 2);
+          } catch {
+            failedCounter++;
           }
-        })()
-      );
+
+          try {
+            player.dimension.runCommand(`tickingarea remove FILL`);
+          } catch {
+            //
+          }
+        }
+      }, 1);
 
       break;
     case FillMode.hollow:
@@ -306,7 +290,7 @@ const commandProcess = (
         generator = callFillCommand('y', player, blockVolume, zx, options);
         break;
       default:
-        throw new NachtServerAddonError();
+        throw new CommandProcessError();
     }
     system.runJob(generator);
   }
