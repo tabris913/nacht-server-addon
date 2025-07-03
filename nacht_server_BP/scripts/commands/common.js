@@ -1,5 +1,6 @@
 import { CustomCommandSource, CustomCommandStatus, } from '@minecraft/server';
 import { NachtServerAddonError } from '../errors/base';
+import { CommandProcessError } from '../errors/command';
 import { Logger } from '../utils/logger';
 /**
  * 共通エラー処理を組み込んだカスタムコマンド登録
@@ -66,4 +67,16 @@ export const registerCommand = (customCommand, callback) => (arg0) => {
         Logger.error(`Custom command named ${customCommand.name} registoration failed because of`, error);
         throw error;
     }
+};
+export const parseBlockStates = (blockStates) => {
+    if (!/^\[.*\]$/.test(blockStates))
+        throw new CommandProcessError('ブロック状態が不正です。');
+    const parsed = {};
+    for (const stateItem of blockStates.slice(1, -1).split(/,\s*/)) {
+        if (!/^.+=.+$/.test(stateItem))
+            throw new CommandProcessError('ブロック状態が不正です。');
+        const [key, value] = stateItem.split('=');
+        Object.assign(parsed, { [key]: value });
+    }
+    return parsed;
 };

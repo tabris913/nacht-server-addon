@@ -8,8 +8,8 @@ import {
 } from '@minecraft/server';
 
 import { NachtServerAddonError } from '../errors/base';
-import { Logger } from '../utils/logger';
 import { CommandProcessError } from '../errors/command';
+import { Logger } from '../utils/logger';
 
 type CallbackType = (origin: CustomCommandOrigin, ...args: Array<any>) => CustomCommandResult;
 

@@ -1,0 +1,37 @@
+{
+  "announce": {
+    "type": "panel",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "controls": [
+      {
+        "background": {
+          "type": "image",
+          "anchor_from": "top_middle",
+          "anchor_to": "top_middle",
+          "offset": [
+            "0px",
+            "32px"
+          ],
+          "$atext": "$actionbar_text",
+          "controls": [
+            {
+              "actionbar_msg": {
+                "type": "label",
+                "layer": 31,
+                "anchor_from": "center",
+                "anchor_to": "center",
+                "$atext": "$actionbar_text",
+                "$actionbar": "$atext",
+                "text": "$actionbar",
+                "localize": true
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

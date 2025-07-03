@@ -69,19 +69,29 @@ export class Location implements Vector3 {
     return this;
   };
 
+  offsetNega = (other: Vector3) => {
+    this.x -= other.x;
+    this.y -= other.y;
+    this.z -= other.z;
+
+    return this;
+  };
+
   rotate = (deg: Rotate) => {
     switch (deg) {
       case Rotate._90:
+        const _x = this.x;
         this.x = this.z;
-        this.z = -this.x;
+        this.z = -_x;
         break;
       case Rotate._180:
         this.x *= -1;
         this.z *= -1;
         break;
-      case Rotate.__90:
-        this.x = -this.z;
+      case Rotate._270:
+        const _z = this.z;
         this.z = this.x;
+        this.x = -_z;
         break;
     }
 

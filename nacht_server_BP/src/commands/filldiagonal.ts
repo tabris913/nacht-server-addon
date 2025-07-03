@@ -2,7 +2,6 @@ import {
   type Block,
   BlockPermutation,
   type BlockType,
-  BlockVolume,
   CommandPermissionLevel,
   type CustomCommand,
   type CustomCommandOrigin,
@@ -10,20 +9,19 @@ import {
   type CustomCommandResult,
   CustomCommandStatus,
   system,
-  type Vector3,
+  type Vector3
 } from '@minecraft/server';
 
 import { NonAdminSourceError, ParameterError } from '../errors/command';
 
 import { parseBlockStates, registerCommand } from './common';
-import { DiagonalTypes, Direction, ExpandMode, VerticalDirection } from './enum';
+import { Direction, ExpandMode, VerticalDirection } from './enum';
 
 const fillDiagonalCommand: CustomCommand = {
   name: 'nacht:filldiagonal',
   description: '対角線上にブロックを設置する',
   permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [
-    { name: 'nacht:DiagonalTypes', type: CustomCommandParamType.Enum },
     { name: 'from', type: CustomCommandParamType.Location },
     { name: 'hight', type: CustomCommandParamType.Integer },
     { name: 'nacht:Direction', type: CustomCommandParamType.Enum },
@@ -40,7 +38,6 @@ const fillDiagonalCommand: CustomCommand = {
 /**
  *
  * @param origin
- * @param diagonalTypes 配置種別
  * @param from 起点
  * @param hight 高さ
  * @param direction 方向
@@ -58,7 +55,6 @@ const fillDiagonalCommand: CustomCommand = {
  */
 const commandProcess = (
   origin: CustomCommandOrigin,
-  diagonalTypes: DiagonalTypes,
   from: Vector3,
   hight: number,
   direction: Direction,
@@ -73,140 +69,84 @@ const commandProcess = (
 
   const blockPermutation = BlockPermutation.resolve(block.id, blockStates ? parseBlockStates(blockStates) : undefined);
 
-  switch (diagonalTypes) {
-    case DiagonalTypes.Line:
-      const startingBlock = player.dimension.getBlock(from);
-      const blockLocations: Array<Block | undefined> = [];
+  const startingBlock = player.dimension.getBlock(from);
+  const blockLocations: Array<Block | undefined> = [];
 
-      switch (direction) {
-        case Direction.North:
-          Array.from({ length: hight }).forEach((_, index) =>
-            blockLocations.push(
-              startingBlock?.offset({ x: 0, y: verticalDirection === VerticalDirection.UP ? index : -index, z: -index })
-            )
-          );
-          break;
-        case Direction.NorthEast:
-          Array.from({ length: hight }).forEach((_, index) =>
-            blockLocations.push(
-              startingBlock?.offset({
-                x: index,
-                y: verticalDirection === VerticalDirection.UP ? index : -index,
-                z: -index,
-              })
-            )
-          );
-          break;
-        case Direction.East:
-          Array.from({ length: hight }).forEach((_, index) =>
-            blockLocations.push(
-              startingBlock?.offset({ x: index, y: verticalDirection === VerticalDirection.UP ? index : -index, z: 0 })
-            )
-          );
-          break;
-        case Direction.SouthEast:
-          Array.from({ length: hight }).forEach((_, index) =>
-            blockLocations.push(
-              startingBlock?.offset({
-                x: index,
-                y: verticalDirection === VerticalDirection.UP ? index : -index,
-                z: index,
-              })
-            )
-          );
-          break;
-        case Direction.South:
-          Array.from({ length: hight }).forEach((_, index) =>
-            blockLocations.push(
-              startingBlock?.offset({ x: 0, y: verticalDirection === VerticalDirection.UP ? index : -index, z: index })
-            )
-          );
-          break;
-        case Direction.SouthWest:
-          Array.from({ length: hight }).forEach((_, index) =>
-            blockLocations.push(
-              startingBlock?.offset({
-                x: -index,
-                y: verticalDirection === VerticalDirection.UP ? index : -index,
-                z: index,
-              })
-            )
-          );
-          break;
-        case Direction.West:
-          Array.from({ length: hight }).forEach((_, index) =>
-            blockLocations.push(
-              startingBlock?.offset({ x: -index, y: verticalDirection === VerticalDirection.UP ? index : -index, z: 0 })
-            )
-          );
-          break;
-        case Direction.NorthWest:
-          Array.from({ length: hight }).forEach((_, index) =>
-            blockLocations.push(
-              startingBlock?.offset({
-                x: -index,
-                y: verticalDirection === VerticalDirection.UP ? index : -index,
-                z: -index,
-              })
-            )
-          );
-          break;
-      }
-      system.runTimeout(() => blockLocations.forEach((bl) => bl?.setPermutation(blockPermutation)), 1);
+  switch (direction) {
+    case Direction.North:
+      Array.from({ length: hight }).forEach((_, index) =>
+        blockLocations.push(
+          startingBlock?.offset({ x: 0, y: verticalDirection === VerticalDirection.UP ? index : -index, z: -index })
+        )
+      );
       break;
-    case DiagonalTypes.Section:
-      if ([Direction.NorthEast, Direction.NorthWest, Direction.SouthEast, Direction.SouthWest].includes(direction)) {
-        throw new ParameterError('direction', '配置種別がSectionの場合、方向は東西南北でなければなりません');
-      }
-      if (width === undefined) throw new ParameterError('width', '配置種別がSectionの場合，widthは必須です');
-      ParameterError.validatePositive('width', width, '幅');
-
-      const blockVolumes: Array<BlockVolume> = [];
-
-      switch (direction) {
-        case Direction.North:
-          Array.from({ length: hight }).forEach((_, index) => {
-            blockVolumes.push(
-              new BlockVolume(
-                { ...from, z: from.z + (expand === ExpandMode.Expand ? index : -index) },
-                { ...from, z: from.z - width + 1 + (expand === ExpandMode.Expand ? -index : index) }
-              )
-            );
-          });
-          break;
-        case Direction.East:
-          Array.from({ length: hight }).forEach((_, index) => {
-            blockVolumes.push(
-              new BlockVolume(
-                { ...from, x: from.x + (expand === ExpandMode.Expand ? -index : index) },
-                { ...from, x: from.x + width - 1 + (expand === ExpandMode.Expand ? index : -index) }
-              )
-            );
-          });
-          break;
-        case Direction.South:
-          Array.from({ length: hight }).forEach((_, index) => {
-            blockVolumes.push(
-              new BlockVolume(
-                { ...from, z: from.z + (expand === ExpandMode.Expand ? -index : index) },
-                { ...from, z: from.z + width - 1 + (expand === ExpandMode.Expand ? index : -index) }
-              )
-            );
-          });
-          break;
-        case Direction.West:
-          Array.from({ length: hight }).forEach((_, index) => {
-            blockVolumes.push(
-              new BlockVolume(
-                { ...from, x: from.x + (expand === ExpandMode.Expand ? index : -index) },
-                { ...from, x: from.x - width + 1 + (expand === ExpandMode.Expand ? -index : index) }
-              )
-            );
-          });
-          break;
-      }
-      system.runTimeout(() => blockVolumes.forEach((bv) => player.dimension.fillBlocks(bv, blockPermutation)), 1);
+    case Direction.NorthEast:
+      Array.from({ length: hight }).forEach((_, index) =>
+        blockLocations.push(
+          startingBlock?.offset({
+            x: index,
+            y: verticalDirection === VerticalDirection.UP ? index : -index,
+            z: -index,
+          })
+        )
+      );
+      break;
+    case Direction.East:
+      Array.from({ length: hight }).forEach((_, index) =>
+        blockLocations.push(
+          startingBlock?.offset({ x: index, y: verticalDirection === VerticalDirection.UP ? index : -index, z: 0 })
+        )
+      );
+      break;
+    case Direction.SouthEast:
+      Array.from({ length: hight }).forEach((_, index) =>
+        blockLocations.push(
+          startingBlock?.offset({
+            x: index,
+            y: verticalDirection === VerticalDirection.UP ? index : -index,
+            z: index,
+          })
+        )
+      );
+      break;
+    case Direction.South:
+      Array.from({ length: hight }).forEach((_, index) =>
+        blockLocations.push(
+          startingBlock?.offset({ x: 0, y: verticalDirection === VerticalDirection.UP ? index : -index, z: index })
+        )
+      );
+      break;
+    case Direction.SouthWest:
+      Array.from({ length: hight }).forEach((_, index) =>
+        blockLocations.push(
+          startingBlock?.offset({
+            x: -index,
+            y: verticalDirection === VerticalDirection.UP ? index : -index,
+            z: index,
+          })
+        )
+      );
+      break;
+    case Direction.West:
+      Array.from({ length: hight }).forEach((_, index) =>
+        blockLocations.push(
+          startingBlock?.offset({ x: -index, y: verticalDirection === VerticalDirection.UP ? index : -index, z: 0 })
+        )
+      );
+      break;
+    case Direction.NorthWest:
+      Array.from({ length: hight }).forEach((_, index) =>
+        blockLocations.push(
+          startingBlock?.offset({
+            x: -index,
+            y: verticalDirection === VerticalDirection.UP ? index : -index,
+            z: -index,
+          })
+        )
+      );
+      break;
   }
+  system.runTimeout(() => blockLocations.forEach((bl) => bl?.setPermutation(blockPermutation)), 1);
 
   return { status: CustomCommandStatus.Success };
 };

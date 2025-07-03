@@ -29,7 +29,7 @@
       "minecraft:max_stack_size": 1,
       "minecraft:stacked_by_data": false,
       "minecraft:rarity": {
-        "value": "uncommon"
+        "value": "rare"
       },
       "minecraft:use_modifiers": {
         "use_duration": 1.6,

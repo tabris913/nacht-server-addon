@@ -89,10 +89,10 @@ const commandProcessNew = (
   const mod = { x: 100 % chunkDistances.x, z: 100 % chunkDistances.z };
   if (mod.x <= mod.z) {
     // x
-    const step = Math.floor(100 / chunkDistances.x);
+    const zStep = Math.floor(100 / chunkDistances.x);
   } else {
     // z
-    const step = Math.floor(100 / chunkDistances.z);
+    const xStep = Math.floor(100 / chunkDistances.z);
   }
 
   let counter = 0;

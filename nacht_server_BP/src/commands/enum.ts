@@ -74,7 +74,7 @@ export enum Rotate {
   _0 = '0',
   _90 = '90',
   _180 = '180',
-  __90 = '-90',
+  _270 = '270',
 }
 
 export enum RuleName {
@@ -238,7 +238,7 @@ export default () =>
 
     event.customCommandRegistry.registerEnum('nacht:PraySubCommand', [PraySubCommand.Free, PraySubCommand.Paid]);
 
-    event.customCommandRegistry.registerEnum('nacht:Rotate', [Rotate._0, Rotate._180, Rotate._90, Rotate.__90]);
+    event.customCommandRegistry.registerEnum('nacht:Rotate', [Rotate._0, Rotate._180, Rotate._90, Rotate._270]);
 
     event.customCommandRegistry.registerEnum('nacht:ruleName', [
       RuleName.autoRemoveFortuneEnchant,

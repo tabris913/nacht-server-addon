@@ -18,7 +18,8 @@ export const PREFIX_TRANSFER = 'nacht:transfer_';
 export const PREFIX_UNEDITABLEAREA = 'nacht:uneditablearea_';
 export const PREFIX_UNSAFEAREA = 'nacht:unsafearea_';
 export const PREFIX_OPGAMEMODE = 'nacht:opgamemode_';
-export const PREFIX_TICKING = 'nacht:ticking?';
+export const PREFIX_TICKING = 'nacht:ticking_';
+export const PREFIX_PLAYERNAME = 'nacht:playername_';
 // Effect
 export const EffectNames = {
     [MinecraftEffectTypes.Absorption]: '衝撃吸収',

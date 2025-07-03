@@ -15,8 +15,8 @@ import { NonAdminSourceError } from '../errors/command';
 import { Location } from '../models/location';
 import { MinecraftBlockTypes } from '../types/index';
 
-import { CloneMode, MaskMode, Rotate } from './enum';
 import { registerCommand } from './common';
+import { CloneMode, MaskMode, Rotate } from './enum';
 
 const cloneRotateCommand: CustomCommand = {
   name: 'nacht:clonerotate',
@@ -48,14 +48,17 @@ const commandProcess = (
   const blockVolume = new BlockVolume(begin, end);
   const { min } = blockVolume.getBoundingBox();
 
-  const offset = { x: destination.x - min.x, y: destination.y - min.y, z: destination.z - min.z };
+  const offset = new Location(destination).offsetNega(min);
   system.runTimeout(() => {
     for (const blockLocation of blockVolume.getBlockLocationIterator()) {
       const block = player.dimension.getBlock(blockLocation);
       if (block === undefined) continue;
       if (maskMode === MaskMode.Masked && block.isAir) continue;
       const moved = new Location(blockLocation).offset(offset);
-      player.dimension.setBlockPermutation(moved.offset(moved.diff(destination).rotate(rotate)), block.permutation);
+      player.dimension.setBlockPermutation(
+        new Location(destination).offset(moved.diff(destination).rotate(rotate)),
+        block.permutation
+      );
       if (cloneMode === CloneMode.Move) player.dimension.setBlockType(blockLocation, MinecraftBlockTypes.Air);
     }
   }, 1);
