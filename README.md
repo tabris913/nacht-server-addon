@@ -34,8 +34,23 @@ Released in 2025-07-04.
 - clonerotate コマンド追加
 - clonsrotatefiltered コマンド追加
 - filldiagonal コマンド追加
+- filldiagonalsection コマンド追加
 - gamemodeop コマンド追加
 - sellindetail コマンド追加
+- setname コマンド追加
+
+#### Items
+
+- 額縁を透明化
+- 輝く額縁を非透明化
+- なはとの輪っかを追加 (試作)
+- なはとの片翼(左)を追加 (試作)
+- なはとの片翼(右)を追加 (試作)
+- なはとのしっぽを追加 (試作)
+
+#### System
+
+- アクションバーに現在いるエリアと、フォーカスを当てた対象の情報が表示されるように変更
 
 ### 0.8.0
 
@@ -47,7 +62,7 @@ Released in 2025-06-26.
 
 #### Items
 
-- 光る額縁を透明化
+- 輝く額縁を透明化
 
 #### System
 
