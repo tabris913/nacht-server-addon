@@ -1,5 +1,4 @@
 import {
-  BlockPermutation,
   BlockVolume,
   CommandPermissionLevel,
   type CustomCommand,

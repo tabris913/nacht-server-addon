@@ -1,14 +1,20 @@
 ※ ◯はオペレーター以外の参加者も利用できるコマンド。  
 ※ ×は廃止済みのコマンド。
+※ △は非推奨のコマンド。
 
 - [[addtag]]
 - [[buy]]
 - [[buybase]]
 - [[buyenchantedbook]]
 - [[cleardp]]
+- [[clonerotate]]
+- [[clonerotatefiltered]]
 - [[diceroll]] ◯
-- [[fill]]
+- [[fill]] △
+- [[filldiagonal]]
+- [[filldiagonalsection]]
 - [[fixarea]]
+- [[gamemodeop]]
 - [[gamerule]]
 - [[getdp]]
 - [[message]]
@@ -19,8 +25,10 @@
 - [[releasearea]]
 - [[renamedp]]
 - [[sell]]
+- [[sellindetail]]
 - [[setdp]]
 - [[setlocation]] ×
+- [[setname]]
 - [[setsafezone]]
 - [[setspawnpoint]]
 - [[setunsafezone]]

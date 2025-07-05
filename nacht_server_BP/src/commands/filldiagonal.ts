@@ -9,13 +9,13 @@ import {
   type CustomCommandResult,
   CustomCommandStatus,
   system,
-  type Vector3
+  type Vector3,
 } from '@minecraft/server';
 
 import { NonAdminSourceError, ParameterError } from '../errors/command';
 
 import { parseBlockStates, registerCommand } from './common';
-import { Direction, ExpandMode, VerticalDirection } from './enum';
+import { Direction, VerticalDirection } from './enum';
 
 const fillDiagonalCommand: CustomCommand = {
   name: 'nacht:filldiagonal',
@@ -28,11 +28,7 @@ const fillDiagonalCommand: CustomCommand = {
     { name: 'nacht:VerticalDirection', type: CustomCommandParamType.Enum },
     { name: 'block', type: CustomCommandParamType.BlockType },
   ],
-  optionalParameters: [
-    { name: 'width', type: CustomCommandParamType.Integer },
-    { name: 'nacht:ExpandMode', type: CustomCommandParamType.Enum },
-    { name: 'blockStates', type: CustomCommandParamType.String },
-  ],
+  optionalParameters: [{ name: 'blockStates', type: CustomCommandParamType.String }],
 };
 
 /**
@@ -60,8 +56,6 @@ const commandProcess = (
   direction: Direction,
   verticalDirection: VerticalDirection,
   block: BlockType,
-  width?: number,
-  expand?: ExpandMode,
   blockStates?: string
 ): CustomCommandResult => {
   const player = NonAdminSourceError.validate(origin);
