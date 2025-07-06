@@ -4,6 +4,7 @@ import { PREFIX_PLAYERNAME } from '../const';
 import { MinecraftEntityTypes } from '../types/index';
 import AreaUtils from '../utils/AreaUtils';
 import BaseUtils from '../utils/BaseUtils';
+import { getTranslation } from '../utils/LocaleUtils';
 
 const show = (player: Player) => {
   const entity = player.getEntitiesFromViewDirection({ maxDistance: 10 })[0]?.entity;
@@ -37,7 +38,7 @@ const show = (player: Player) => {
   } else {
     const block = player.getBlockFromViewDirection({ maxDistance: 10 })?.block;
     if (block !== undefined && block.isValid) {
-      content.push({ text: '\nView at ' }, { translate: block.localizationKey });
+      content.push({ text: '\nView at ' }, { translate: getTranslation(block.typeId) });
     }
   }
 

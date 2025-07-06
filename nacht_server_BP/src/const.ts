@@ -1,4 +1,14 @@
-import { TicksPerSecond, type Vector3 } from '@minecraft/server';
+import {
+  BiomeTypes,
+  BlockTypes,
+  DimensionTypes,
+  EffectTypes,
+  EnchantmentTypes,
+  EntityTypes,
+  ItemTypes,
+  TicksPerSecond,
+  type Vector3,
+} from '@minecraft/server';
 
 import { RuleName } from './commands/enum';
 import { MinecraftEffectTypes, MinecraftEntityTypes } from './types/index';
@@ -22,6 +32,7 @@ export const PREFIX_PLAYERNAME = 'nacht:playername_';
 export const PREFIX_SAFEAREA = 'nacht:safearea_';
 export const PREFIX_TELEPORTRUNID = 'nacht:teleportRunId_';
 export const PREFIX_TICKING = 'nacht:ticking_';
+export const PREFIX_TITLE = 'nacht:title_';
 export const PREFIX_TRANSFER = 'nacht:transfer_';
 export const PREFIX_UNEDITABLEAREA = 'nacht:uneditablearea_';
 export const PREFIX_UNSAFEAREA = 'nacht:unsafearea_';
@@ -389,6 +400,15 @@ export const GAMERULE_DEFAULT = {
   [RuleName.watchCrossingAreaInterval]: TicksPerSecond / 5,
 };
 
+// Items
+export const BIOME_TYPES = BiomeTypes.getAll().map((bt) => bt.id);
+export const BLOCK_TYPES = BlockTypes.getAll().map((bt) => bt.id);
+export const DIMENSION_TYPES = DimensionTypes.getAll().map((dt) => dt.typeId);
+export const EFFECT_TYPES = EffectTypes.getAll().map((et) => et.getName);
+export const ENCHANTMENT_TYPES = EnchantmentTypes.getAll().map((et) => et.id);
+export const ENTITY_TYPES = EntityTypes.getAll().map((et) => et.id);
+export const ITEM_TYPES = ItemTypes.getAll().map((it) => it.id);
+
 // Location
 export const LOC_ERSTE: Vector3 = { x: -10, y: 63, z: 0 };
 
@@ -402,3 +422,15 @@ export const TAG_AREA_TOWN = 'AREA_TOWN';
 export const TAG_OPERATOR = 'OP';
 export const TAG_OP_DEV = 'OP_DEVELOPMENT';
 export const TAG_OP_PLAY = 'OP_PLAY';
+
+/// Title
+export const TAG_TITLE_BILLIONAIRE = 'TITLE_BILLIONAIRE';
+export const TAG_TITLE_FIRST_BILLIONAIRE = 'TITLE_FIRST_BILLIONAIRE';
+export const TAG_TITLE_FIRST_MILLIONAIRE = 'TITLE_FIRST_MILLIONAIRE';
+export const TAG_TITLE_MILLIONAIRE = 'TITLE_MILLIONAIRE';
+export const Titles = {
+  [TAG_TITLE_BILLIONAIRE]: '億万長者',
+  [TAG_TITLE_FIRST_BILLIONAIRE]: 'はじめての億万長者',
+  [TAG_TITLE_FIRST_MILLIONAIRE]: 'はじめての大富豪',
+  [TAG_TITLE_MILLIONAIRE]: '大富豪',
+};
