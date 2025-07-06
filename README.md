@@ -32,6 +32,7 @@ Released in 2025-07-??.
 #### Commands
 
 - checkstashstatus コマンド追加
+- setname コマンド仕様変更
 
 ### 1.0.0
 
