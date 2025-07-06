@@ -25,6 +25,14 @@ wiki: https://github.com/tabris913/nacht-server-addon/wiki
 |   0.8.0 | 2025-06-26 |                                                  |
 |   1.0.0 | 2025-07-04 |                                                  |
 
+### 1.1.0
+
+Released in 2025-07-??.
+
+#### Commands
+
+- checkstashstatus コマンド追加
+
 ### 1.0.0
 
 Released in 2025-07-04.

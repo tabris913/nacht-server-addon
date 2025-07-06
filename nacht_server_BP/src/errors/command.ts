@@ -1,4 +1,4 @@
-import { CustomCommandOrigin, CustomCommandSource, Entity } from '@minecraft/server';
+import { type CustomCommandOrigin, CustomCommandSource, type Entity, type Player } from '@minecraft/server';
 
 import { TAG_OPERATOR } from '../const';
 import PlayerUtils from '../utils/PlayerUtils';
@@ -61,7 +61,14 @@ export class NonNPCSourceError extends CommandSourceError {
    * @param origin
    */
   static validate = (origin: CustomCommandOrigin) => {
-    if (origin.sourceType !== CustomCommandSource.NPCDialogue) throw new this(origin.sourceType);
+    if (origin.sourceType !== CustomCommandSource.NPCDialogue) {
+      throw new this(origin.sourceType);
+    }
+
+    const player = PlayerUtils.convertToPlayer(origin.initiator);
+    UndefinedSourceOrInitiatorError.validate(player);
+
+    return player as Player;
   };
 }
 

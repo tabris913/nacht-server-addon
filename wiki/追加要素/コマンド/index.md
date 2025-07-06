@@ -6,6 +6,7 @@
 - [[buy]]
 - [[buybase]]
 - [[buyenchantedbook]]
+- [[checkstashstatus]]
 - [[cleardp]]
 - [[clonerotate]]
 - [[clonerotatefiltered]]

@@ -3,26 +3,30 @@ import { TicksPerSecond, type Vector3 } from '@minecraft/server';
 import { RuleName } from './commands/enum';
 import { MinecraftEffectTypes, MinecraftEntityTypes } from './types/index';
 
-// Counter
+// Dynamic Properties
+/// Counter
 export const COUNTER_BASE = 'base';
 export const COUNTER_SAFE_AREA = 'safe-area';
 export const COUNTER_TRANSFER = 'point-transfer';
 export const COUNTER_UNEDITABLE = 'uneditable-areas';
 export const COUNTER_UNSAFE_AREA = 'unsafe-area';
 
-// Dynamic Properties
+/// prefix
 export const PREFIX_BASE = 'nacht:base_';
 export const PREFIX_COUNTER = 'nacht:counter_';
 export const PREFIX_GAMERULE = 'nacht:gamerule_';
 export const PREFIX_LOCATION = 'nacht:location_';
 export const PREFIX_MOVIE = 'nacht:movie_';
+export const PREFIX_OPGAMEMODE = 'nacht:opgamemode_';
+export const PREFIX_PLAYERNAME = 'nacht:playername_';
 export const PREFIX_SAFEAREA = 'nacht:safearea_';
+export const PREFIX_TICKING = 'nacht:ticking_';
 export const PREFIX_TRANSFER = 'nacht:transfer_';
 export const PREFIX_UNEDITABLEAREA = 'nacht:uneditablearea_';
 export const PREFIX_UNSAFEAREA = 'nacht:unsafearea_';
-export const PREFIX_OPGAMEMODE = 'nacht:opgamemode_';
-export const PREFIX_TICKING = 'nacht:ticking_';
-export const PREFIX_PLAYERNAME = 'nacht:playername_';
+
+/// variables
+export const VAR_STASH = 'nacht:var_stash';
 
 // Effect
 export const EffectNames: Partial<Record<MinecraftEffectTypes, string>> = {
