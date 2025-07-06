@@ -20,6 +20,7 @@ export const PREFIX_MOVIE = 'nacht:movie_';
 export const PREFIX_OPGAMEMODE = 'nacht:opgamemode_';
 export const PREFIX_PLAYERNAME = 'nacht:playername_';
 export const PREFIX_SAFEAREA = 'nacht:safearea_';
+export const PREFIX_TELEPORTRUNID = 'nacht:teleportRunId_';
 export const PREFIX_TICKING = 'nacht:ticking_';
 export const PREFIX_TRANSFER = 'nacht:transfer_';
 export const PREFIX_UNEDITABLEAREA = 'nacht:uneditablearea_';
@@ -383,6 +384,7 @@ export const GAMERULE_DEFAULT = {
   [RuleName.showAreaBorderRange]: 101,
   [RuleName.showAreaBorderYRange]: 5,
   [RuleName.teleportTargets]: 6,
+  [RuleName.teleportTimeout]: 5,
   [RuleName.watchCrossingArea]: true,
   [RuleName.watchCrossingAreaInterval]: TicksPerSecond / 5,
 };

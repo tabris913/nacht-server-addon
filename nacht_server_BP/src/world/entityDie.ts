@@ -1,6 +1,6 @@
-import { world } from '@minecraft/server';
+import { system, world } from '@minecraft/server';
 
-import { TAG_AREA_BASE, TAG_AREA_EXPL, TAG_AREA_TOWN } from '../const';
+import { PREFIX_TELEPORTRUNID, TAG_AREA_BASE, TAG_AREA_EXPL, TAG_AREA_TOWN } from '../const';
 import { MinecraftDimensionTypes, MinecraftEntityTypes } from '../types/index';
 import AreaUtils from '../utils/AreaUtils';
 import PlayerUtils from '../utils/PlayerUtils';
@@ -13,6 +13,11 @@ export default () =>
       return;
     }
     // Logger.debug(`Player (${event.deadEntity.nameTag}) died.`);
+
+    const dpid = PREFIX_TELEPORTRUNID + event.deadEntity.nameTag;
+    const runId = world.getDynamicProperty(dpid) as number | undefined;
+    if (runId !== undefined) system.clearRun(runId);
+    world.setDynamicProperty(dpid, undefined);
 
     const player = PlayerUtils.convertToPlayer(event.deadEntity);
     if (player === undefined) {

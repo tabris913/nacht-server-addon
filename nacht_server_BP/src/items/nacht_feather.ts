@@ -1,7 +1,8 @@
 import { system, TicksPerSecond, world } from '@minecraft/server';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 
-import { Formatting, LOC_ERSTE } from '../const';
+import { RuleName } from '../commands/enum';
+import { Formatting, LOC_ERSTE, PREFIX_GAMERULE, PREFIX_TELEPORTRUNID } from '../const';
 import { NachtServerAddonItemTypes } from '../enums';
 import teleportLogic from '../logic/teleportLogic';
 import { MinecraftDimensionTypes } from '../types/index';
@@ -36,9 +37,11 @@ export default () =>
           tpTargets.push(locationInfo)
         );
         const choices = tpTargets.map((tt) => tt.displayName);
+        const timeout = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.teleportTimeout) as number | undefined;
 
         const form = new ModalFormData();
         form.title('テレポート');
+        form.label(`${timeout}秒後にテレポートします。一度決定するとキャンセルはできません。`);
         form.dropdown('転移先', choices, { defaultValueIndex: 0 });
         form.toggle('削除');
         form.submitButton('決定');
@@ -79,10 +82,15 @@ export default () =>
                 event.source.sendMessage(`${Formatting.Color.RED}${target.displayName}は削除できません`);
               }
             } else {
-              system.runTimeout(
-                () => teleportLogic.teleport(event.source, target.location, target.dimension),
-                TicksPerSecond / 2
+              const dpid = PREFIX_TELEPORTRUNID + event.source.nameTag;
+              const runId = system.runTimeout(
+                () => {
+                  teleportLogic.teleport(event.source, target.location, target.dimension);
+                  world.setDynamicProperty(dpid, undefined);
+                },
+                TicksPerSecond * (timeout || 5)
               );
+              world.setDynamicProperty(dpid, runId);
             }
           } else {
             // みつからないよ

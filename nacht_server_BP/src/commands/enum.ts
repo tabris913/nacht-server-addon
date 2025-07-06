@@ -88,6 +88,7 @@ export enum RuleName {
   showAreaBorderRange = 'showAreaBorderRange',
   showAreaBorderYRange = 'showAreaBorderYRange',
   teleportTargets = 'teleportTargets',
+  teleportTimeout = 'teleportTimeout',
   watchCrossingArea = 'watchCrossingArea',
   watchCrossingAreaInterval = 'watchCrossingAreaInterval',
 }
@@ -251,6 +252,7 @@ export default () =>
       RuleName.showAreaBorderRange,
       RuleName.showAreaBorderYRange,
       RuleName.teleportTargets,
+      RuleName.teleportTimeout,
       RuleName.watchCrossingArea,
       RuleName.watchCrossingAreaInterval,
     ]);

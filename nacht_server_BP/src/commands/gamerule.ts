@@ -9,6 +9,7 @@ import {
 } from '@minecraft/server';
 
 import { registerCommand } from './common';
+import { RuleName } from './enum';
 import { setAutoRemoveFortuneEnchant, setAutoRemoveFortuneEnchantInterval } from './gameRules/autoRemoveFortuneEnchant';
 import { setBaseMarketPrice, setBaseMaximumRange } from './gameRules/base';
 import { setPrayPrice } from './gameRules/pray';
@@ -18,9 +19,8 @@ import {
   setShowAreaBorderRange,
   setShowAreaBorderYRange,
 } from './gameRules/showAreaBorder';
-import { setTeleportTarget } from './gameRules/teleportTarget';
+import { setTeleportTarget, setTeleportTimeout } from './gameRules/teleportTarget';
 import { setWatchCrossingArea, setWatchCrossingAreaInterval } from './gameRules/watchCrossingArea';
-import { RuleName } from './enum';
 
 const gameruleCommand: CustomCommand = {
   name: 'nacht:gamerule',
@@ -62,6 +62,8 @@ const commandProcess = (origin: CustomCommandOrigin, ruleName: RuleName, value: 
       return setShowAreaBorderYRange(value);
     case RuleName.teleportTargets:
       return setTeleportTarget(value);
+    case RuleName.teleportTimeout:
+      return setTeleportTimeout(value);
     case RuleName.watchCrossingArea:
       return setWatchCrossingArea(value);
     case RuleName.watchCrossingAreaInterval:
