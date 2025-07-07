@@ -52,7 +52,7 @@ const commandProcess = (origin: CustomCommandOrigin, dice: string): CustomComman
     world.sendMessage(
       `[${player.nameTag}] ${dice} = ${rolls.reduce((prev, cur) => prev + cur, 0)} ( ${formatted.join(' ')} )`
     );
-    if (!player.hasTag(TAG_TITLE_LUCK) && surface === 100 && rolls.every((roll) => roll <= 5)) {
+    if (!player.hasTag(TAG_TITLE_LUCK) && surface === 100 && rolls.length >= 10 && rolls.every((roll) => roll <= 5)) {
       player.addTag(TAG_TITLE_LUCK);
       player.onScreenDisplay.setTitle(
         `称号「${Formatting.Color.AQUA}${Titles[TAG_TITLE_LUCK]}${Formatting.Reset}」獲得`

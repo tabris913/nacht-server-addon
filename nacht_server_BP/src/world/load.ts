@@ -7,7 +7,6 @@ import { Logger } from '../utils/logger';
 import type { CameraMovie } from '../models/camera';
 
 const RESTORE_DATA = {};
-
 export default () =>
   world.afterEvents.worldLoad.subscribe((event) => {
     // ポイント準備

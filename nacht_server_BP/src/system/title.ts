@@ -25,7 +25,7 @@ import ScoreboardUtils from '../utils/ScoreboardUtils';
 const score = (player: Player) => {
   const score = ScoreboardUtils.getScore(player, SCOREBOARD_POINT);
   if (score !== undefined) {
-    if (score > 1_000_000) {
+    if (score >= 1_000_000) {
       // 大富豪
       if (!player.hasTag(TAG_TITLE_MILLIONAIRE)) {
         player.addTag(TAG_TITLE_MILLIONAIRE);
@@ -50,7 +50,7 @@ const score = (player: Player) => {
         });
       }
     }
-    if (score > 1_000_000_000) {
+    if (score >= 1_000_000_000) {
       // 億万長者
       if (!player.hasTag(TAG_TITLE_BILLIONAIRE)) {
         player.addTag(TAG_TITLE_BILLIONAIRE);
