@@ -30,10 +30,12 @@ const commandProcess = (origin: CustomCommandOrigin, targets: Array<Player>): Cu
   const _jobId = system.runJob(
     (function* () {
       for (const target of targets) {
+        const name = world.getDynamicProperty(PREFIX_PLAYERNAME + target.nameTag) as string | undefined;
+
         const form = new ModalFormData();
         form.title('表示名変更');
         form.label('※公序良俗に反する名前の場合、オペレーターにより解除される場合があります');
-        form.textField('表示名', '表示名');
+        form.textField('表示名', '表示名', { defaultValue: name });
         form.submitButton('決定');
 
         form.show(target as any).then((response) => {
@@ -43,7 +45,7 @@ const commandProcess = (origin: CustomCommandOrigin, targets: Array<Player>): Cu
             return;
           }
 
-          world.setDynamicProperty(`${PREFIX_PLAYERNAME}${target.nameTag}`, response.formValues?.[0]);
+          world.setDynamicProperty(`${PREFIX_PLAYERNAME}${target.nameTag}`, response.formValues?.[1]);
         });
 
         yield;

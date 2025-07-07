@@ -104,15 +104,16 @@ const purchase = (player: Player, npc: Entity, size: number, price: number, coun
 
   purchaseForm
     .show(player as any)
-    .then((response) => {
+    .then(async (response) => {
       if (response.canceled) {
         Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
+
         return;
       }
 
       if (response.selection === 0) {
         // はい
-        marketLogic.purchaseItem(player, npc, NachtServerAddonItemTypes.BaseFlag, 1, price);
+        await marketLogic.purchaseItem(player, npc, NachtServerAddonItemTypes.BaseFlag, 1, price);
         const id = `${PREFIX_BASE}${player.nameTag}_${count}`;
         world.setDynamicProperty(
           id,

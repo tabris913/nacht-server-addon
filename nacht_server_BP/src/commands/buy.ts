@@ -50,11 +50,11 @@ const buyCommand: CustomCommand = {
  */
 const commandProcess = (
   { sourceEntity }: CustomCommandOrigin,
-  target: Array<Player>,
+  targets: Array<Player>,
   item: ItemType,
   amount: number,
   point: number,
-  data: number = 0,
+  data?: number,
   pointless_msg?: string,
   after_msg?: string
 ): CustomCommandResult => {
@@ -62,8 +62,14 @@ const commandProcess = (
     throw new UndefinedSourceOrInitiatorError();
   }
 
-  target.forEach((player) =>
-    marketLogic.purchaseItem(player, sourceEntity, item.id, amount, point, pointless_msg, after_msg, data)
+  system.runJob(
+    (function* () {
+      for (const target of targets) {
+        marketLogic.purchaseItem(target, sourceEntity, item.id, amount, point, pointless_msg, after_msg, data);
+
+        yield;
+      }
+    })()
   );
 
   return { status: CustomCommandStatus.Success };

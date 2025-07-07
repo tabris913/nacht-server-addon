@@ -1,12 +1,11 @@
-import { DimensionLocation, Player, RawMessage, system, world } from '@minecraft/server';
+import { BlockTypes, DimensionLocation, Player, RawMessage, system, world } from '@minecraft/server';
 
 import { PREFIX_PLAYERNAME } from '../const';
 import { MinecraftEntityTypes } from '../types/index';
 import AreaUtils from '../utils/AreaUtils';
 import BaseUtils from '../utils/BaseUtils';
-import { getTranslation } from '../utils/LocaleUtils';
 
-const show = (player: Player) => {
+const show = (player: Player, blocks: Array<string>) => {
   const entity = player.getEntitiesFromViewDirection({ maxDistance: 10 })[0]?.entity;
   const dimLoc: DimensionLocation = { ...player.location, dimension: player.dimension };
   const base = BaseUtils.findByLocation(dimLoc);
@@ -38,21 +37,24 @@ const show = (player: Player) => {
   } else {
     const block = player.getBlockFromViewDirection({ maxDistance: 10 })?.block;
     if (block !== undefined && block.isValid) {
-      content.push({ text: '\nView at ' }, { translate: getTranslation(block.typeId) });
+      content.push({ text: '\nView at ' }, { translate: block.localizationKey });
     }
   }
 
   player.onScreenDisplay.setActionBar(content);
 };
 
-export default () => {
-  system.runInterval(() => {
-    system.runJob(
-      (function* () {
-        for (const player of world.getAllPlayers()) {
-          yield show(player);
-        }
-      })()
-    );
+export default () =>
+  system.run(() => {
+    const BLOCK_TYPES = BlockTypes.getAll().map((bt) => bt.id);
+
+    system.runInterval(() => {
+      system.runJob(
+        (function* () {
+          for (const player of world.getAllPlayers()) {
+            yield show(player, BLOCK_TYPES);
+          }
+        })()
+      );
+    });
   });
-};

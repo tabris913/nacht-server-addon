@@ -5,6 +5,7 @@ import area from './area';
 import base from './base';
 import border from './border';
 import fortune from './fortune';
+import title from './title';
 
 export default () => {
   Logger.log('Subscribing original game systems...');
@@ -14,4 +15,5 @@ export default () => {
   base();
   border();
   fortune();
+  title();
 };

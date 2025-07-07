@@ -81,18 +81,42 @@ const commandProcessNew = (
     x: { min: Math.floor(min.x / 16), max: Math.floor(max.x / 16) },
     z: { min: Math.floor(min.z / 16), max: Math.floor(max.z / 16) },
   };
+  Logger.debug(
+    `Chunk from (${chunkIndices.x.min} ${chunkIndices.z.min}) to (${chunkIndices.x.max} ${chunkIndices.z.max})`
+  );
   const chunkDistances = {
     x: LocationUtils.calcDistance(chunkIndices.x.min, chunkIndices.x.max),
     z: LocationUtils.calcDistance(chunkIndices.z.min, chunkIndices.z.max),
   };
+  Logger.debug(`Chunk range (${chunkDistances.x} ${chunkDistances.z})`);
   if (chunkDistances.x > 100 && chunkDistances.z > 100) throw new CommandProcessError('範囲が広すぎます。');
-  const mod = { x: 100 % chunkDistances.x, z: 100 % chunkDistances.z };
-  if (mod.x <= mod.z) {
-    // x
-    const zStep = Math.floor(100 / chunkDistances.x);
+  const xInterval = Math.floor(100 / chunkDistances.z);
+  const zInterval = Math.floor(100 / chunkDistances.x);
+  Logger.debug(`Interval x: ${xInterval} z: ${zInterval}`);
+  const xStep = Math.ceil(chunkDistances.x / xInterval);
+  const zStep = Math.ceil(chunkDistances.z / zInterval);
+  Logger.debug(`Step x: ${xStep} z: ${zStep}`);
+  const chunkRanges: Array<DimensionBlockVolume> = [];
+  if (xStep < zStep) {
+    for (let i = 1; i <= xStep; i++) {
+      chunkRanges.push(
+        new DimensionBlockVolume(
+          { x: min.x + xInterval * (i - 1), y: min.y, z: min.z },
+          { x: Math.min(min.x - 1 + xInterval * i, max.x), y: max.y, z: min.z - 1 + chunkDistances.z },
+          player.dimension
+        )
+      );
+    }
   } else {
-    // z
-    const xStep = Math.floor(100 / chunkDistances.z);
+    for (let i = 1; i <= zStep; i++) {
+      chunkRanges.push(
+        new DimensionBlockVolume(
+          { x: min.x, y: min.y, z: min.z + zInterval * (i - 1) },
+          { x: min.x - 1 + chunkDistances.x, y: max.y, z: Math.min(min.z - 1 + zInterval * i, max.z) },
+          player.dimension
+        )
+      );
+    }
   }
 
   let counter = 0;
@@ -100,39 +124,24 @@ const commandProcessNew = (
   switch (oldBlockHandling) {
     case undefined:
       // 適用範囲を指定されたブロックですべて埋める
-      system.runTimeout(async () => {
-        // player.dimension.fillBlocks(blockVolume, blockPermutation);
-        for (const blockLocation of blockVolume.getBlockLocationIterator()) {
-          try {
-            try {
-              player.dimension.setBlockPermutation(blockLocation, blockPermutation);
-            } catch (error) {
-              if (error instanceof LocationInUnloadedChunkError) {
-                try {
-                  player.dimension.runCommand(`tickingarea remove FILL`);
-                } catch {
-                  //
-                }
-                player.dimension.runCommand(
-                  `tickingarea add circle ${blockLocation.x} ${blockLocation.y} ${blockLocation.z} 1 FILL true`
-                );
-                await system.waitTicks(1);
-                player.dimension.setBlockPermutation(blockLocation, blockPermutation);
-              }
-            }
-            counter++;
-            if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) await system.waitTicks(TicksPerSecond / 2);
-          } catch {
-            failedCounter++;
+      system.runJob(
+        (function* () {
+          let index = 1;
+          for (const chunkRange of chunkRanges) {
+            const { max: cMax, min: cMin } = chunkRange.getBoundingBox();
+            player.dimension.runCommand(
+              `tickingarea add ${cMin.x} ${cMin.y} ${cMin.z} ${cMax.x} ${cMax.y} ${cMax.z} FILL true`
+            );
+            yield;
+            player.dimension.fillBlocks(chunkRange, blockPermutation);
+            yield;
+            player.dimension.runCommand('tickingarea remove FILL');
+            player.sendMessage(`${index} / ${chunkRanges.length}`);
+            index++;
+            yield;
           }
-
-          try {
-            player.dimension.runCommand(`tickingarea remove FILL`);
-          } catch {
-            //
-          }
-        }
-      }, 1);
+        })()
+      );
 
       break;
     case FillMode.hollow:

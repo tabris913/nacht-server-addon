@@ -4,6 +4,7 @@ import addtag from './addtag';
 import buy from './buy';
 import buybase from './buybase';
 import buyenchantedbook from './buyenchantedbook';
+import checkstashstatus from './checkstashstatus';
 import cleardp from './cleardp';
 import clonerotate from './clonerotate';
 import clonerotatefiltered from './clonerotatefiltered';
@@ -47,6 +48,7 @@ export default () => {
   buy();
   buybase();
   buyenchantedbook();
+  checkstashstatus();
   cleardp();
   clonerotate();
   clonerotatefiltered();

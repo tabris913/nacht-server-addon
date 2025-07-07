@@ -35,7 +35,7 @@ const buyEnchantedBookCommand: CustomCommand = {
 /**
  *
  * @param origin
- * @param target
+ * @param targets
  * @param enchant
  * @param level
  * @param quantity
@@ -49,7 +49,7 @@ const buyEnchantedBookCommand: CustomCommand = {
  */
 const commandProcess = (
   { sourceEntity }: CustomCommandOrigin,
-  target: Array<Player>,
+  targets: Array<Player>,
   enchant: MinecraftEnchantmentTypes,
   level: number,
   quantity: number,
@@ -59,19 +59,24 @@ const commandProcess = (
 ): CustomCommandResult => {
   if (sourceEntity === undefined) throw new UndefinedSourceOrInitiatorError();
 
-  target.forEach((player) =>
-    marketLogic.purchaseItem(
-      player,
-      sourceEntity,
-      MinecraftItemTypes.EnchantedBook,
-      quantity,
-      point,
-      pointless_msg,
-      after_msg,
-      undefined,
-      enchant,
-      level
-    )
+  system.runJob(
+    (function* () {
+      for (const target of targets) {
+        void marketLogic.purchaseItem(
+          target,
+          sourceEntity,
+          MinecraftItemTypes.EnchantedBook,
+          quantity,
+          point,
+          pointless_msg,
+          after_msg,
+          undefined,
+          enchant,
+          level
+        );
+        yield;
+      }
+    })()
   );
 
   return { status: CustomCommandStatus.Success };

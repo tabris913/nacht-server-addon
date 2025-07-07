@@ -24,6 +24,7 @@ wiki: https://github.com/tabris913/nacht-server-addon/wiki
 |   0.7.3 | 2025-06-22 |                                                  |
 |   0.8.0 | 2025-06-26 |                                                  |
 |   1.0.0 | 2025-07-04 |                                                  |
+|   1.1.0 | 2025-07-07 | アイテム販売のバグ修正                           |
 
 ### 1.1.0
 
@@ -31,8 +32,13 @@ Released in 2025-07-??.
 
 #### Commands
 
+- buy コマンド修正
 - checkstashstatus コマンド追加
 - setname コマンド仕様変更
+
+#### System
+
+- 称号システム追加
 
 ### 1.0.0
 

@@ -23,7 +23,7 @@ import ScoreboardUtils from '../utils/ScoreboardUtils';
  *
  * {@link PointlessError}
  */
-const purchaseItem = (
+const purchaseItem = async (
   player: Player,
   sourceEntity: Entity,
   itemType: string,
@@ -31,7 +31,7 @@ const purchaseItem = (
   price: number,
   pointless_msg?: string,
   after_msg?: string,
-  data: number = 0,
+  data?: number,
   enchant?: MinecraftEnchantmentTypes,
   level?: number
 ) => {
@@ -53,15 +53,18 @@ const purchaseItem = (
       throw new NachtServerAddonError('インベントリがいっぱいです。');
     }
 
-    system.runTimeout(() => {
-      ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
-      if (enchant) {
-        InventoryUtils.giveEnchantedItem(player, itemType, quantity, enchant, level);
-      } else {
-        InventoryUtils.giveItem(player, itemType, quantity, data);
-      }
+    ScoreboardUtils.addScore(player, SCOREBOARD_POINT, -price);
+    let result;
+    if (enchant) {
+      result = InventoryUtils.giveEnchantedItem(player, itemType, quantity, enchant, level);
+    } else {
+      result = InventoryUtils.giveItem(player, itemType, quantity, data);
+    }
+    if (result) {
       player.sendMessage(`[${sellerName}] ${after_msg || 'まいどあり！'}`);
-    }, 1);
+    } else {
+      ScoreboardUtils.addScore(player, SCOREBOARD_POINT, price);
+    }
   } catch (error) {
     Logger.error(`${player.nameTag} failed to purchase ${quantity} ${itemType}(s) for ${price} points.`);
 

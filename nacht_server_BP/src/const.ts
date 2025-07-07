@@ -1,14 +1,4 @@
-import {
-  BiomeTypes,
-  BlockTypes,
-  DimensionTypes,
-  EffectTypes,
-  EnchantmentTypes,
-  EntityTypes,
-  ItemTypes,
-  TicksPerSecond,
-  type Vector3,
-} from '@minecraft/server';
+import { TicksPerSecond, type Vector3 } from '@minecraft/server';
 
 import { RuleName } from './commands/enum';
 import { MinecraftEffectTypes, MinecraftEntityTypes } from './types/index';
@@ -401,13 +391,13 @@ export const GAMERULE_DEFAULT = {
 };
 
 // Items
-export const BIOME_TYPES = BiomeTypes.getAll().map((bt) => bt.id);
-export const BLOCK_TYPES = BlockTypes.getAll().map((bt) => bt.id);
-export const DIMENSION_TYPES = DimensionTypes.getAll().map((dt) => dt.typeId);
-export const EFFECT_TYPES = EffectTypes.getAll().map((et) => et.getName);
-export const ENCHANTMENT_TYPES = EnchantmentTypes.getAll().map((et) => et.id);
-export const ENTITY_TYPES = EntityTypes.getAll().map((et) => et.id);
-export const ITEM_TYPES = ItemTypes.getAll().map((it) => it.id);
+// export const BIOME_TYPES = BiomeTypes.getAll().map((bt) => bt.id);
+// export const BLOCK_TYPES = BlockTypes.getAll().map((bt) => bt.id);
+// export const DIMENSION_TYPES = DimensionTypes.getAll().map((dt) => dt.typeId);
+// export const EFFECT_TYPES = EffectTypes.getAll().map((et) => et.getName);
+// export const ENCHANTMENT_TYPES = EnchantmentTypes.getAll().map((et) => et.id);
+// export const ENTITY_TYPES = EntityTypes.getAll().map((et) => et.id);
+// export const ITEM_TYPES = ItemTypes.getAll().map((it) => it.id);
 
 // Location
 export const LOC_ERSTE: Vector3 = { x: -10, y: 63, z: 0 };
@@ -427,10 +417,20 @@ export const TAG_OP_PLAY = 'OP_PLAY';
 export const TAG_TITLE_BILLIONAIRE = 'TITLE_BILLIONAIRE';
 export const TAG_TITLE_FIRST_BILLIONAIRE = 'TITLE_FIRST_BILLIONAIRE';
 export const TAG_TITLE_FIRST_MILLIONAIRE = 'TITLE_FIRST_MILLIONAIRE';
+export const TAG_TITLE_LUCK = 'TITLE_LUCK';
 export const TAG_TITLE_MILLIONAIRE = 'TITLE_MILLIONAIRE';
+export const TAG_TITLE_NACHT_HALO = 'TITLE_NACHT_HALO';
+export const TAG_TITLE_NACHT_LEFT_WING = 'TITLE_NACHT_LEFT_WING';
+export const TAG_TITLE_NACHT_RIGHT_WING = 'TITLE_NACHT_RIGHT_WING';
+export const TAG_TITLE_NACHT_TAIL = 'TITLE_NACHT_TAIL';
 export const Titles = {
   [TAG_TITLE_BILLIONAIRE]: '億万長者',
   [TAG_TITLE_FIRST_BILLIONAIRE]: 'はじめての億万長者',
   [TAG_TITLE_FIRST_MILLIONAIRE]: 'はじめての大富豪',
+  [TAG_TITLE_LUCK]: '豪運',
   [TAG_TITLE_MILLIONAIRE]: '大富豪',
+  [TAG_TITLE_NACHT_HALO]: '光輪を見つけし者',
+  [TAG_TITLE_NACHT_LEFT_WING]: '自由の翼を得たもの',
+  [TAG_TITLE_NACHT_RIGHT_WING]: '誓約の翼を得たもの',
+  [TAG_TITLE_NACHT_TAIL]: '尾を掴みし者',
 };

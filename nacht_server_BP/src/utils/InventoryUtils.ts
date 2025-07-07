@@ -81,10 +81,10 @@ export const gatherSlots = (player: Entity, itemId?: string, onlyContained: bool
  * @param data
  * @returns 成否
  */
-const giveItem = (playerEntity: Entity, itemType: string, quantity: number = 1, data: number = 0) => {
+const giveItem = (playerEntity: Entity, itemType: string, quantity: number = 1, data?: number) => {
   try {
     if (data !== undefined) {
-      playerEntity.dimension.runCommand(`give ${playerEntity.nameTag} ${itemType} ${quantity} ${data}`);
+      playerEntity.dimension.runCommand(`give "${playerEntity.nameTag}" ${itemType} ${quantity} ${data}`);
       return true;
     }
     playerEntity.getComponent(EntityComponentTypes.Inventory)?.container.addItem(new ItemStack(itemType, quantity));

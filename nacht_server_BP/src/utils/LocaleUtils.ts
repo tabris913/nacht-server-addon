@@ -1,6 +1,4 @@
-import { BLOCK_TYPES } from '../const';
-
-export const getTranslation = (name: string) => {
+export const getTranslation = (name: string, BLOCK_TYPES: Array<string>) => {
   const namespace = name.split(':')[0];
   const identifier = namespace === 'minecraft' ? name.split(':')[1] : name;
 

@@ -2,7 +2,14 @@ import { system, TicksPerSecond, world } from '@minecraft/server';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 
 import { RuleName } from '../commands/enum';
-import { Formatting, LOC_ERSTE, PREFIX_GAMERULE, PREFIX_TELEPORTRUNID } from '../const';
+import {
+  Formatting,
+  LOC_ERSTE,
+  PREFIX_GAMERULE,
+  PREFIX_PLAYERNAME,
+  PREFIX_TELEPORTRUNID,
+  TAG_OPERATOR,
+} from '../const';
 import { NachtServerAddonItemTypes } from '../enums';
 import teleportLogic from '../logic/teleportLogic';
 import { MinecraftDimensionTypes } from '../types/index';
@@ -19,9 +26,9 @@ export default () =>
     try {
       if (event.itemStack.type.id === NachtServerAddonItemTypes.NachtFeather) {
         event.source.sendMessage([
-          `${event.source.name}は　`,
+          `${world.getDynamicProperty(PREFIX_PLAYERNAME + event.source.name) || event.source.name}は `,
           { translate: 'items.nacht_feather.name' },
-          'を　空高く掲げた！',
+          'を 空高く掲げた！',
         ]);
         const tpTargets: Array<LocationInfo> = [
           {
@@ -51,8 +58,8 @@ export default () =>
             Logger.log(`[${event.source.nameTag}] canceled: ${response.cancelationReason}`);
             return;
           }
-          const selectedIndex = response.formValues?.[0] as number;
-          const deleteFlag = response.formValues?.[1] as boolean;
+          const selectedIndex = response.formValues?.[1] as number;
+          const deleteFlag = response.formValues?.[2] as boolean;
           const target = tpTargets[selectedIndex];
           if (target) {
             if (deleteFlag) {
@@ -81,6 +88,10 @@ export default () =>
               } else {
                 event.source.sendMessage(`${Formatting.Color.RED}${target.displayName}は削除できません`);
               }
+            } else if (event.source.hasTag(TAG_OPERATOR)) {
+              system.runTimeout(() => {
+                teleportLogic.teleport(event.source, target.location, target.dimension);
+              }, 1);
             } else {
               const dpid = PREFIX_TELEPORTRUNID + event.source.nameTag;
               const runId = system.runTimeout(
