@@ -113,3 +113,17 @@ export class NonAdminSourceError extends NonPlayerSourceError {
     return player;
   };
 }
+
+export class SelectorNotFoundError extends CommandProcessError {}
+
+export class EntitySelectorNotFoundError extends SelectorNotFoundError {
+  constructor() {
+    super('エンティティが見つかりませんでした。');
+  }
+}
+
+export class PlayerSelectorNotFoundError extends SelectorNotFoundError {
+  constructor() {
+    super('プレイヤーが見つかりませんでした。');
+  }
+}

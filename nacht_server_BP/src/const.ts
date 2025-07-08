@@ -1,7 +1,7 @@
 import { TicksPerSecond, type Vector3 } from '@minecraft/server';
 
 import { RuleName } from './commands/enum';
-import { MinecraftEffectTypes, MinecraftEntityTypes } from './types/index';
+import { MinecraftEffectTypes, MinecraftEnchantmentTypes, MinecraftEntityTypes } from './types/index';
 
 // Dynamic Properties
 /// Counter
@@ -62,6 +62,51 @@ export const EffectNames: Partial<Record<MinecraftEffectTypes, string>> = {
   [MinecraftEffectTypes.WaterBreathing]: '水中呼吸',
   [MinecraftEffectTypes.Weakness]: '弱体化',
   [MinecraftEffectTypes.Wither]: '衰弱',
+};
+
+// Enchantment
+export const EnchantmentNames: Record<MinecraftEnchantmentTypes, string> = {
+  [MinecraftEnchantmentTypes.AquaAffinity]: 'enchantment.waterWorker',
+  [MinecraftEnchantmentTypes.BaneOfArthropods]: 'enchantment.damage.arthropods',
+  [MinecraftEnchantmentTypes.Binding]: 'enchantment.curse.binding',
+  [MinecraftEnchantmentTypes.BlastProtection]: 'enchantment.protect.explosion',
+  [MinecraftEnchantmentTypes.BowInfinity]: 'enchantment.arrowInfinite',
+  [MinecraftEnchantmentTypes.Breach]: 'enchantment.heavy_weapon.breach',
+  [MinecraftEnchantmentTypes.Channeling]: 'enchantment.tridentChanneling',
+  [MinecraftEnchantmentTypes.Density]: 'enchantment.heavy_weapon.density',
+  [MinecraftEnchantmentTypes.DepthStrider]: 'enchantment.waterWalker',
+  [MinecraftEnchantmentTypes.Efficiency]: 'enchantment.digging',
+  [MinecraftEnchantmentTypes.FeatherFalling]: 'enchantment.protect.fall',
+  [MinecraftEnchantmentTypes.FireAspect]: 'enchantment.fire',
+  [MinecraftEnchantmentTypes.FireProtection]: 'enchantment.protect.fire',
+  [MinecraftEnchantmentTypes.Flame]: 'enchantment.arrowFire',
+  [MinecraftEnchantmentTypes.Fortune]: 'enchantment.lootBonusDigger',
+  [MinecraftEnchantmentTypes.FrostWalker]: 'enchantment.frostwalker',
+  [MinecraftEnchantmentTypes.Impaling]: 'enchantment.tridentImpaling',
+  [MinecraftEnchantmentTypes.Knockback]: 'enchantment.knockback',
+  [MinecraftEnchantmentTypes.Looting]: 'enchantment.lootBonus',
+  [MinecraftEnchantmentTypes.Loyalty]: 'enchantment.tridentLoyalty',
+  [MinecraftEnchantmentTypes.LuckOfTheSea]: 'enchantment.lootBonusFishing',
+  [MinecraftEnchantmentTypes.Lure]: 'enchantment.fishingSpeed',
+  [MinecraftEnchantmentTypes.Mending]: 'enchantment.mending',
+  [MinecraftEnchantmentTypes.Multishot]: 'enchantment.crossbowMultishot',
+  [MinecraftEnchantmentTypes.Piercing]: 'enchantment.crossbowPiercing',
+  [MinecraftEnchantmentTypes.Power]: 'enchantment.arrowDamage',
+  [MinecraftEnchantmentTypes.ProjectileProtection]: 'enchantment.protect.projectile',
+  [MinecraftEnchantmentTypes.Protection]: 'enchantment.protect.all',
+  [MinecraftEnchantmentTypes.Punch]: 'enchantment.arrowKnockback',
+  [MinecraftEnchantmentTypes.QuickCharge]: 'enchantment.crossbowQuickCharge',
+  [MinecraftEnchantmentTypes.Respiration]: 'enchantment.oxygen',
+  [MinecraftEnchantmentTypes.Riptide]: 'enchantment.tridentRiptide',
+  [MinecraftEnchantmentTypes.Sharpness]: 'enchantment.damage.all',
+  [MinecraftEnchantmentTypes.SilkTouch]: 'enchantment.untouching',
+  [MinecraftEnchantmentTypes.Smite]: 'enchantment.damage.undead',
+  [MinecraftEnchantmentTypes.SoulSpeed]: 'enchantment.soul_speed',
+  [MinecraftEnchantmentTypes.SwiftSneak]: 'enchantment.swift_sneak',
+  [MinecraftEnchantmentTypes.Thorns]: 'enchantment.thorns',
+  [MinecraftEnchantmentTypes.Unbreaking]: 'enchantment.durability',
+  [MinecraftEnchantmentTypes.Vanishing]: 'enchantment.curse.vanishing',
+  [MinecraftEnchantmentTypes.WindBurst]: 'enchantment.heavy_weapon.windburst',
 };
 
 // Entity

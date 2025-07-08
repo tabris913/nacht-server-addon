@@ -7,12 +7,13 @@ import {
   CustomCommandStatus,
   type Player,
   system,
+  TicksPerSecond,
   world,
 } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 
 import { PREFIX_PLAYERNAME } from '../const';
-import { CommandProcessError } from '../errors/command';
+import { PlayerSelectorNotFoundError } from '../errors/command';
 import { Logger } from '../utils/logger';
 
 import { registerCommand } from './common';
@@ -24,8 +25,14 @@ const setNameCommand: CustomCommand = {
   mandatoryParameters: [{ name: 'target', type: CustomCommandParamType.PlayerSelector }],
 };
 
+/**
+ *
+ * @param origin
+ * @param targets
+ * @returns
+ */
 const commandProcess = (origin: CustomCommandOrigin, targets: Array<Player>): CustomCommandResult => {
-  if (targets.length === 0) throw new CommandProcessError('ターゲットが見つかりませんでした。');
+  if (targets.length === 0) throw new PlayerSelectorNotFoundError();
 
   const _jobId = system.runJob(
     (function* () {
@@ -38,15 +45,19 @@ const commandProcess = (origin: CustomCommandOrigin, targets: Array<Player>): Cu
         form.textField('表示名', '表示名', { defaultValue: name });
         form.submitButton('決定');
 
-        form.show(target as any).then((response) => {
-          if (response.canceled) {
-            Logger.log(`[${target.nameTag}] canceled: ${response.cancelationReason}`);
+        system.runTimeout(
+          () =>
+            form.show(target as any).then((response) => {
+              if (response.canceled) {
+                Logger.log(`[${target.nameTag}] canceled: ${response.cancelationReason}`);
 
-            return;
-          }
+                return;
+              }
 
-          world.setDynamicProperty(`${PREFIX_PLAYERNAME}${target.nameTag}`, response.formValues?.[1]);
-        });
+              world.setDynamicProperty(`${PREFIX_PLAYERNAME}${target.nameTag}`, response.formValues?.[1]);
+            }),
+          TicksPerSecond
+        );
 
         yield;
       }

@@ -89,18 +89,23 @@ export default () =>
                 event.source.sendMessage(`${Formatting.Color.RED}${target.displayName}は削除できません`);
               }
             } else if (event.source.hasTag(TAG_OPERATOR)) {
+              // オペレーターは即時転移
+              // ※ 動作確認できるように event.source.playerPermissionLevel は条件にしない
               system.runTimeout(() => {
                 teleportLogic.teleport(event.source, target.location, target.dimension);
               }, 1);
             } else {
               const dpid = PREFIX_TELEPORTRUNID + event.source.nameTag;
-              const runId = system.runTimeout(
-                () => {
+              let seconds = timeout || 5;
+              event.source.sendMessage(`${seconds--} 秒後に転移します`);
+              const runId = system.runInterval(() => {
+                if (seconds === 0) {
                   teleportLogic.teleport(event.source, target.location, target.dimension);
                   world.setDynamicProperty(dpid, undefined);
-                },
-                TicksPerSecond * (timeout || 5)
-              );
+                  system.clearRun(runId);
+                }
+                event.source.sendMessage(`${seconds--} 秒後に転移します`);
+              }, TicksPerSecond);
               world.setDynamicProperty(dpid, runId);
             }
           } else {

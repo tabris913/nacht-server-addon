@@ -6,6 +6,7 @@ import {
   ItemComponentTypes,
   ItemStack,
   ItemType,
+  Player,
   system,
 } from '@minecraft/server';
 
@@ -128,6 +129,16 @@ const giveEnchantedItem = (
   }
 };
 
+const getSelected = (player: Player) => {
+  try {
+    return player.getComponent(EntityComponentTypes.Inventory)?.container.getSlot(player.selectedSlotIndex);
+  } catch (error) {
+    Logger.error(error);
+
+    throw error;
+  }
+};
+
 /**
  * アイテムを持っているか判定する
  *
@@ -239,6 +250,7 @@ export const removeItem = (player: Entity, itemId: string, quantity: number = In
 const InventoryUtils = {
   countItem,
   gatherSlots,
+  getSelected,
   giveEnchantedItem,
   giveItem,
   hasItem,

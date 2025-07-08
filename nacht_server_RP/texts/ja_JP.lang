@@ -1,14 +1,11 @@
 pack.name=Nacht Server Addon	##
 
-tips.game.1=幸運エンチャントは自動除去されます	##
-tips.game.2=自動化は原則禁止です	##
-
 items.base_flag.name=拠点の旗	##
 items.nacht_feather.name=なはとの羽根	##
 items.nacht_halo.name=なはとの輪っか	##
 items.nacht_left_wing.name=なはとの片翼(左)	##
 items.nacht_right_wing.name=なはとの片翼(右)	##
 items.nacht_tail.name=なはとのしっぽ	##
-itemGroup.name.nacht=なはと	##
+nacht:nacht_items_name=なはと	##
 
 tile.nacht:base_flag.name=拠点の旗	##

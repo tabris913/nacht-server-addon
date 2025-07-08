@@ -7,6 +7,7 @@ import {
   CustomCommandStatus,
   type Player,
   system,
+  TicksPerSecond,
   world,
 } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
@@ -23,6 +24,12 @@ const checkStashStatusCommand: CustomCommand = {
   mandatoryParameters: [{ name: 'target', type: CustomCommandParamType.PlayerSelector }],
 };
 
+/**
+ *
+ * @param origin
+ * @param targets
+ * @returns
+ */
 const commandProcess = (origin: CustomCommandOrigin, targets: Array<Player>): CustomCommandResult => {
   const number_of_stashes = (world.getDynamicProperty(VAR_STASH) as number | undefined) || 0;
 
@@ -49,17 +56,22 @@ const commandProcess = (origin: CustomCommandOrigin, targets: Array<Player>): Cu
         form.body(`発見状況 [${counter} / ${number_of_stashes}]\n${messages.join('\n')}`);
         form.button('閉じる');
 
-        // 完了を待つ必要なし
-        yield void form
-          .show(target as any)
-          .then((response) => {
-            if (response.canceled) {
-              Logger.log(`[${target.nameTag}] canceled: ${response.cancelationReason}`);
+        system.runTimeout(
+          () =>
+            form
+              .show(target as any)
+              .then((response) => {
+                if (response.canceled) {
+                  Logger.log(`[${target.nameTag}] canceled: ${response.cancelationReason}`);
 
-              return;
-            }
-          })
-          .catch(() => null);
+                  return;
+                }
+              })
+              .catch(() => null),
+          TicksPerSecond
+        );
+
+        yield;
       }
     })()
   );

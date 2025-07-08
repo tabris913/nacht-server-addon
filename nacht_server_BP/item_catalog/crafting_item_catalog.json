@@ -1,0 +1,30 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:crafting_items_catalog": {
+    "categories": [
+      {
+        "category_name": "items",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "nacht:nacht_feather",
+              "name": "nacht:nacht_items_name"
+            },
+            "items": [
+              "nacht:nacht_feather",
+              "nacht:nacht_halo",
+              "nacht:nacht_left_wing",
+              "nacht:nacht_right_wing",
+              "nacht:nacht_tail"
+            ]
+          },
+          {
+            "items": [
+              "nacht:base_flag"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
