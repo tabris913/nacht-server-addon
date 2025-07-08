@@ -10,11 +10,13 @@ import {
   TicksPerSecond,
   world,
 } from '@minecraft/server';
-import { registerCommand } from './common';
-import { PlayerSelectorNotFoundError } from '../errors/command';
 import { ModalFormData } from '@minecraft/server-ui';
+
 import { PREFIX_TITLE } from '../const';
+import { PlayerSelectorNotFoundError } from '../errors/command';
 import { Logger } from '../utils/logger';
+
+import { registerCommand } from './common';
 
 const setTitleCommand: CustomCommand = {
   name: 'nacht:settitle',

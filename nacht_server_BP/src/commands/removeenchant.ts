@@ -10,7 +10,6 @@ import {
   system,
   TicksPerSecond,
 } from '@minecraft/server';
-
 import { MessageFormData, ModalFormData } from '@minecraft/server-ui';
 
 import { EnchantmentNames, Formatting, SCOREBOARD_POINT } from '../const';
@@ -18,9 +17,9 @@ import { PlayerSelectorNotFoundError } from '../errors/command';
 import { MinecraftEnchantmentTypes } from '../types/index';
 import InventoryUtils from '../utils/InventoryUtils';
 import { Logger } from '../utils/logger';
+import ScoreboardUtils from '../utils/ScoreboardUtils';
 
 import { registerCommand } from './common';
-import ScoreboardUtils from '../utils/ScoreboardUtils';
 
 const removeEnchantCommand: CustomCommand = {
   name: 'nacht:removeenchant',

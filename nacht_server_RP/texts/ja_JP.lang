@@ -9,3 +9,96 @@ items.nacht_tail.name=なはとのしっぽ	##
 nacht:nacht_items_name=なはと	##
 
 tile.nacht:base_flag.name=拠点の旗	##
+
+tile.oak_standing_sign.name=オークの看板	##
+tile.spruce_standing_sign.name=トウヒの看板	##
+tile.birch_standing_sign.name=シラカバの看板	##
+tile.jungle_standing_sign.name=ジャングルの看板	##
+tile.acacia_standing_sign.name=アカシアの看板	##
+tile.dark_oak_standing_sign.name=ダークオークの看板	##
+tile.mangrove_standing_sign.name=マングローブの看板	##
+tile.cherry_standing_sign.name=サクラの看板	##
+tile.bamboo_standing_sign.name=竹の看板	##
+tile.pale_oak_standing_sign.name=ペールオークの看板	##
+tile.crimson_standing_sign.name=真紅の看板	##
+tile.warped_standing_sign.name=歪んだ看板	##
+
+tile.oak_wall_sign.name=オークの看板	##
+tile.spruce_wall_sign.name=トウヒの看板	##
+tile.birch_wall_sign.name=シラカバの看板	##
+tile.jungle_wall_sign.name=ジャングルの看板	##
+tile.acacia_wall_sign.name=アカシアの看板	##
+tile.dark_oak_wall_sign.name=ダークオークの看板	##
+tile.mangrove_wall_sign.name=マングローブの看板	##
+tile.cherry_wall_sign.name=サクラの看板	##
+tile.bamboo_wall_sign.name=竹の看板	##
+tile.pale_oak_wall_sign.name=ペールオークの看板	##
+tile.crimson_wall_sign.name=真紅の看板	##
+tile.warped_wall_sign.name=歪んだ看板	##
+
+tile.oak_hanging_sign.name=オークの吊り看板	##
+tile.spruce_hanging_sign.name=トウヒの吊り看板	##
+tile.birch_hanging_sign.name=シラカバの吊り看板	##
+tile.jungle_hanging_sign.name=ジャングルの吊り看板	##
+tile.acacia_hanging_sign.name=アカシアの吊り看板	##
+tile.dark_oak_hanging_sign.name=ダークオークの吊り看板	##
+tile.mangrove_hanging_sign.name=マングローブの吊り看板	##
+tile.cherry_hanging_sign.name=サクラの吊り看板	##
+tile.bamboo_hanging_sign.name=竹の吊り看板	##
+tile.pale_oak_hanging_sign.name=ペールオークの吊り看板	##
+tile.crimson_hanging_sign.name=真紅の吊り看板	##
+tile.warped_hanging_sign.name=歪んだ吊り看板	##
+
+tile.pitcher_crop.name=ウツボカズラの苗	##
+tile.torchflower_crop.name=トーチフラワーの苗	##
+
+tile.double_stone_slab4.stone.name=石のダブルハーフブロック	##
+tile.double_stone_slab2.mossy_cobblestone.name=苔むした丸石のダブルハーフブロック	##
+
+tile.double_wooden_slab.oak.name=オークのダブルハーフブロック	##
+tile.double_wooden_slab.spruce.name=トウヒのダブルハーフブロック	##
+tile.double_wooden_slab.birch.name=シラカバのダブルハーフブロック	##
+tile.double_wooden_slab.jungle.name=ジャングルのダブルハーフブロック	##
+tile.double_wooden_slab.acacia.name=アカシアのダブルハーフブロック	##
+tile.double_wooden_slab.big_oak.name=ダークオークのダブルハーフブロック	##
+tile.mangrove_double_slab.name=マングローブのダブルハーフブロック	##
+tile.bamboo_double_slab.name=竹のダブルハーフブロック	##
+
+title.bamboo_mosaic_double_stab.name=竹細工のダブルハーフブロック	##
+tile.double_stone_slab4.mossy_stone_brick.name=苔むした石レンガのダブルハーフブロック	##
+tile.double_stone_slab4.cut_sandstone.name=研がれた砂岩のダブルハーフブロック	##
+tile.double_stone_slab2.sandstone.smooth.name=滑らかな砂岩のダブルハーフブロック	##
+tile.double_stone_slab4.cut_red_sandstone.name=研がれた赤い砂岩のダブルハーフブロック	##
+tile.double_stone_slab3.red_sandstone.smooth.name=滑らかな赤い砂岩のダブルハーフブロック	##
+tile.double_stone_slab3.granite.name=花崗岩のダブルハーフブロック	##
+tile.double_stone_slab3.granite.smooth.name=磨かれた花崗岩のダブルハーフブロック	##
+tile.double_stone_slab3.diorite.name=閃緑岩のダブルハーフブロック	##
+tile.double_stone_slab3.diorite.smooth.name=磨かれた閃緑岩のダブルハーフブロック	##
+tile.double_stone_slab3.andesite.name=安山岩のダブルハーフブロック	##
+tile.double_stone_slab3.andesite.smooth.name=磨かれた安山岩のダブルハーフブロック	##
+tile.double_stone_slab2.red_nether_brick.name=赤いネザーレンガのダブルハーフブロック	##
+tile.double_stone_slab3.end_brick.name=エンドストーンレンガのダブルハーフブロック	##
+tile.double_stone_slab4.smooth_quartz.name=滑らかなクォーツのダブルハーフブロック	##
+tile.double_stone_slab2.purpur.name=プルプァのダブルハーフブロック	##
+tile.double_stone_slab2.prismarine.rough.name=プリズマリンのダブルハーフブロック	##
+tile.double_stone_slab2.prismarine.dark.name=ダークプリズマリンのダブルハーフブロック	##
+tile.double_stone_slab2.prismarine.bricks.name=プリズマリンレンガのダブルハーフブロック	##
+tile.blackstone_double_slab.name=ブラックストーンのダブルハーフブロック	##
+tile.polished_blackstone_double_slab.name=磨かれたブラックストーンのダブルハーフブロック	##
+tile.polished_blackstone_brick_double_slab.name=磨かれたブラックストーンレンガのダブルハーフブロック	##
+tile.tuff_double_slab.name=磨かれたブラックストーンレンガのダブルハーフブロック	##
+tile.polished_tuff_double_slab.name=磨かれた凝灰岩のダブルハーフブロック	##
+tile.tuff_brick_double_slab.name=凝灰岩レンガのダブルハーフブロック	##
+tile.mud_brick_double_slab.name=泥レンガのダブルハーフブロック	##
+
+tile.double_cut_copper_slab.name=切り込み入りの銅のダブルハーフブロック	##
+tile.exposed_double_cut_copper_slab.name=風化した切り込み入りの銅のダブルハーフブロック	##
+tile.wheathered_double_cut_copper_slab.name=錆びた切り込み入りの銅のダブルハーフブロック	##
+tile.oxidized_double_cut_copper_slab.name=酸化した切り込み入りの銅のダブルハーフブロック	##
+tile.waxed_double_cut_copper_slab.name=錆止めされた切り込み入りの銅のダブルハーフブロック	##
+tile.waxed_exposed_double_cut_copper_slab.name=錆止めされた風化した切り込み入りの銅のダブルハーフブロック	##
+tile.waxed_wheathered_double_cut_copper_slab.name=錆止めされた錆びた切り込み入りの銅のダブルハーフブロック	##
+tile.waxed_oxidized_double_cut_copper_slab.name=錆止めされた酸化した切り込み入りの銅のダブルハーフブロック	##
+
+tile.frame.name=額縁	##
+tile.glow_frame.time=輝く額縁	##

@@ -1,7 +1,15 @@
-import { BlockTypes, type DimensionLocation, type Player, type RawMessage, system, world } from '@minecraft/server';
+import {
+  BlockTypes,
+  type DimensionLocation,
+  type Player,
+  PlayerPermissionLevel,
+  type RawMessage,
+  system,
+  world,
+} from '@minecraft/server';
 
 import { Formatting, PREFIX_PLAYERNAME, PREFIX_TITLE } from '../const';
-import { MinecraftEntityTypes } from '../types/index';
+import { MinecraftBlockTypes, MinecraftEntityTypes } from '../types/index';
 import AreaUtils from '../utils/AreaUtils';
 import BaseUtils from '../utils/BaseUtils';
 
@@ -49,11 +57,25 @@ const show = (player: Player, blocks: Array<string>) => {
         content.push({ text: `\n${Formatting.Color.AQUA}${tagToDisplay}${Formatting.Reset}` });
       }
     }
+
+    if (player.playerPermissionLevel === PlayerPermissionLevel.Operator) {
+      content.push('\nEntity Id: ', entity.typeId);
+      content.push('\nEntity Localization Key: ', entity.localizationKey);
+    }
   } else {
     // Look at a block
     const block = player.getBlockFromViewDirection({ maxDistance: 10 })?.block;
     if (block !== undefined && block.isValid) {
-      content.push({ text: '\nLook at ' }, { translate: block.localizationKey });
+      if (
+        ![MinecraftBlockTypes.Barrier, MinecraftBlockTypes.StructureVoid].includes(block.typeId as MinecraftBlockTypes)
+      ) {
+        content.push({ text: '\nLook at ' }, { translate: block.localizationKey });
+      }
+
+      if (player.playerPermissionLevel === PlayerPermissionLevel.Operator) {
+        content.push('\nBlock Id: ', block.typeId);
+        content.push('\nBlock Localization Key: ', block.localizationKey);
+      }
     }
   }
 

@@ -13,7 +13,7 @@ import {
 } from '@minecraft/server';
 
 import { EffectNames, PREFIX_GAMERULE, SCOREBOARD_POINT } from '../const';
-import { NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
+import { CommandProcessError, NonNPCSourceError, UndefinedSourceOrInitiatorError } from '../errors/command';
 import { PointlessError } from '../errors/market';
 import { MinecraftEffectTypes } from '../types/index';
 import PlayerUtils from '../utils/PlayerUtils';
@@ -87,10 +87,16 @@ const prayCommand: CustomCommand = {
  * {@link PointlessError}
  */
 const commandProcess = (origin: CustomCommandOrigin, subCommand: PraySubCommand): CustomCommandResult => {
-  if (origin.sourceType !== CustomCommandSource.NPCDialogue) throw new NonNPCSourceError(origin.sourceType);
+  NonNPCSourceError.validate(origin);
 
   const prayer = PlayerUtils.convertToPlayer(origin.initiator);
   if (prayer === undefined) throw new UndefinedSourceOrInitiatorError();
+
+  if (prayer.getEffects().length > 0) {
+    prayer.sendMessage('お主にはもう神のご加護がついているようだ。');
+
+    throw new CommandProcessError('エフェクトがついていないときのみ実行できます。');
+  }
 
   let rarity: Rarity;
   let effect: MinecraftEffectTypes;
@@ -136,7 +142,13 @@ const freePray = (prayer: Player, effect: MinecraftEffectTypes, rarity: Rarity) 
 
   system.runTimeout(() => {
     prayer.addEffect(effect, TicksPerSecond * 90, { amplifier: level - 1, showParticles: true });
-    prayer.sendMessage(`[${rarity}] ${EffectNames[effect]}レベル${level}を90秒間付与しました。`);
+    prayer.sendMessage([
+      `[${rarity}] `,
+      { translate: `${EffectNames[effect]}` },
+      'レベル',
+      { translate: `potion.potency.${level - 1}` },
+      'を90秒間付与しました。',
+    ]);
   }, 1);
 };
 
@@ -158,7 +170,13 @@ const paidPray = (prayer: Player, effect: MinecraftEffectTypes, rarity: Rarity) 
     }
 
     prayer.addEffect(effect, TicksPerSecond * 180, { amplifier: level - 1, showParticles: true });
-    prayer.sendMessage(`[${rarity}] ${EffectNames[effect]}レベル${level}を180秒間付与しました。`);
+    prayer.sendMessage([
+      `[${rarity}] `,
+      { translate: `${EffectNames[effect]}` },
+      'レベル',
+      { translate: `potion.potency.${level - 1}` },
+      'を180秒間付与しました。',
+    ]);
   }, 1);
 };
 
