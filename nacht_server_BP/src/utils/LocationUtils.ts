@@ -122,6 +122,21 @@ export const isOverlapped = <T extends BlockVolume>(area1: T, area2: T) => {
   return isOverlappedFlatly;
 };
 
+/**
+ * 指定された座標が領域の表面であるか判別する
+ *
+ * @param location 座標
+ * @param blockVolume 領域
+ * @returns
+ */
+const isSurface = (location: Vector3, blockVolume: BlockVolume) => {
+  const { max, min } = blockVolume.getBoundingBox();
+
+  return (
+    [max.x, min.x].includes(location.x) || [max.y, min.y].includes(location.y) || [max.z, min.z].includes(location.z)
+  );
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isVector = (location: any): location is VectorXZ => 'x' in location && 'z' in location;
 
@@ -251,6 +266,7 @@ const LocationUtils = {
   generateBlockVolume,
   generateIntegerLocation,
   isOverlapped,
+  isSurface,
   isVector,
   isVector3,
   make3DArea,

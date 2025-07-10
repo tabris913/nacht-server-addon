@@ -49,6 +49,9 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
   } else {
     const total = unwithdrawn.reduce((prev, cur) => {
       player.sendMessage(`[${cur.datetime}] ${cur.remitter}から${cur.amount}ポイント届いています。`);
+      if (cur.memo.length > 0) {
+        player.sendMessage(`送金メッセージ: ${cur.memo}`);
+      }
 
       return prev + cur.amount;
     }, 0);

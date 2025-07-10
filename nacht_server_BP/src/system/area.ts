@@ -90,73 +90,67 @@ const checkPlayers = async (area: Area) => {
   const areaTag = getAreaTag(area);
   const msg = `${Formatting.Color.GOLD}${areaName}の外にいます。エリアを移動する際にはアイテムを利用してください${Formatting.Reset}`;
 
-  for (const player of world.getPlayers({ tags: [areaTag] })) {
-    // タグを有したプレイヤーを一人ずつ処理
-    if (isInCorrectArea(player)) {
-      // エリア内にいるのにエリア外にいるタグが付いている場合は外す
-      [tagAreaAlert1, tagAreaAlert2, tagAreaAlertTimeout]
-        .filter((tag) => player.hasTag(tag))
-        .forEach((tag) => {
-          player.removeTag(tag);
-          PlayerUtils.sendMessageToOps(`${player.name} が${areaName}に戻りました`);
-        });
+  system.runJob(
+    (function* () {
+      for (const player of world.getPlayers({ tags: [areaTag] })) {
+        // タグを有したプレイヤーを一人ずつ処理
+        if (isInCorrectArea(player)) {
+          // エリア内にいるのにエリア外にいるタグが付いている場合は外す
+          [tagAreaAlert1, tagAreaAlert2, tagAreaAlertTimeout]
+            .filter((tag) => player.hasTag(tag))
+            .forEach((tag) => {
+              player.removeTag(tag);
+              PlayerUtils.sendMessageToOps(`${player.name} が${areaName}に戻りました`);
+            });
 
-      continue;
-    }
-    if (!player.hasTag(tagAreaAlert1) && !player.hasTag(tagAreaAlert2)) {
-      // 違反タグなし --> 初検出 --> 20 秒猶予を与える (10 秒後に警告)
-      PlayerUtils.sendMessageToOps(
-        `${Formatting.Color.GOLD}${player.name} が${areaName}から脱走しました${Formatting.Reset}`
-      );
-      player.addTag(tagAreaAlert1);
-      player.sendMessage(msg);
-      player.sendMessage(COMMON_MSG_A1);
-      system.runTimeout(() => {
-        player.addTag(tagAreaAlertTimeout);
-      }, TicksPerSecond * 10);
-    } else if (player.hasTag(tagAreaAlert1) && player.hasTag(tagAreaAlertTimeout)) {
-      // 違反タグ1あり --> 二回目の検出 --> 10 秒猶予を与える
-      player.addTag(tagAreaAlert2);
-      player.removeTag(tagAreaAlertTimeout);
-      player.removeTag(tagAreaAlert1);
-      player.sendMessage(msg);
-      player.sendMessage(COMMON_MSG_A2);
-      system.runTimeout(() => {
-        player.addTag(tagAreaAlertTimeout);
-      }, TicksPerSecond * 10);
-    } else if (player.hasTag(tagAreaAlert2) && player.hasTag(tagAreaAlertTimeout)) {
-      // 違反タグ2あり --> 三回目の検出 --> 転移させる
-      if (isInWrongArea) {
-        // town 以外
-        PlayerUtils.sendMessageToOps(`所定の時間内に ${player.name} が${areaName}に戻らなかったため、転移させます`);
-        if (isInWrongArea(player)) {
-          // 対称エリアにいる場合
-          tp(player, areaTag);
-        } else if (AreaUtils.existsInTownArea(player)) {
-          tp(player, areaTag);
+          continue;
         }
+        if (!player.hasTag(tagAreaAlert1) && !player.hasTag(tagAreaAlert2)) {
+          // 違反タグなし --> 初検出 --> 20 秒猶予を与える (10 秒後に警告)
+          PlayerUtils.sendMessageToOps(
+            `${Formatting.Color.GOLD}${player.name} が${areaName}から脱走しました${Formatting.Reset}`
+          );
+          player.addTag(tagAreaAlert1);
+          player.sendMessage(msg);
+          player.sendMessage(COMMON_MSG_A1);
+          system.runTimeout(() => {
+            player.addTag(tagAreaAlertTimeout);
+          }, TicksPerSecond * 10);
+        } else if (player.hasTag(tagAreaAlert1) && player.hasTag(tagAreaAlertTimeout)) {
+          // 違反タグ1あり --> 二回目の検出 --> 10 秒猶予を与える
+          player.addTag(tagAreaAlert2);
+          player.removeTag(tagAreaAlertTimeout);
+          player.removeTag(tagAreaAlert1);
+          player.sendMessage(msg);
+          player.sendMessage(COMMON_MSG_A2);
+          system.runTimeout(() => {
+            player.addTag(tagAreaAlertTimeout);
+          }, TicksPerSecond * 10);
+        } else if (player.hasTag(tagAreaAlert2) && player.hasTag(tagAreaAlertTimeout)) {
+          // 違反タグ2あり --> 三回目の検出 --> 転移させる
+          if (isInWrongArea) {
+            // town 以外
+            PlayerUtils.sendMessageToOps(`所定の時間内に ${player.name} が${areaName}に戻らなかったため、転移させます`);
+            if (isInWrongArea(player)) {
+              // 対称エリアにいる場合
+              tp(player, areaTag);
+            } else if (AreaUtils.existsInTownArea(player)) {
+              tp(player, areaTag);
+            }
+          }
+        }
+
+        yield;
       }
-    }
-  }
+    })()
+  );
 };
 
-export default () => {
-  system.runTimeout(() => {
-    // 範囲チェック
-    const watchCrossingAreaInterval = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingAreaInterval) as
-      | number
-      | undefined;
-
-    system.runInterval(
-      async () => {
-        if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingArea)) {
-          // 街エリアから外に出ることは基本的にありえない
-          // checkPlayers('town');
-          checkPlayers('base');
-          checkPlayers('expr');
-        }
-      },
-      watchCrossingAreaInterval || TicksPerSecond / 5
-    );
-  }, 1);
+export default async () => {
+  if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.watchCrossingArea)) {
+    // 街エリアから外に出ることは基本的にありえない
+    // checkPlayers('town');
+    checkPlayers('base');
+    checkPlayers('expr');
+  }
 };

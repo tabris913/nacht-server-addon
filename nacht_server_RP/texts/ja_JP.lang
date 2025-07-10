@@ -9,6 +9,7 @@ items.nacht_tail.name=なはとのしっぽ	##
 nacht:nacht_items_name=なはと	##
 
 tile.nacht:base_flag.name=拠点の旗	##
+entity.nacht:base_flag.name=拠点の旗	##
 
 tile.oak_standing_sign.name=オークの看板	##
 tile.spruce_standing_sign.name=トウヒの看板	##
@@ -99,6 +100,8 @@ tile.waxed_double_cut_copper_slab.name=錆止めされた切り込み入りの�
 tile.waxed_exposed_double_cut_copper_slab.name=錆止めされた風化した切り込み入りの銅のダブルハーフブロック	##
 tile.waxed_wheathered_double_cut_copper_slab.name=錆止めされた錆びた切り込み入りの銅のダブルハーフブロック	##
 tile.waxed_oxidized_double_cut_copper_slab.name=錆止めされた酸化した切り込み入りの銅のダブルハーフブロック	##
+
+tile.end_portal.name=エンドポータル	##
 
 tile.frame.name=額縁	##
 tile.glow_frame.time=輝く額縁	##

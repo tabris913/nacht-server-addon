@@ -56,7 +56,7 @@ const teleport = (entity: Player, location: Vector3, dimensionId: MinecraftDimen
   try {
     const dimension = world.getDimension(dimensionId);
     const target: DimensionLocation = { ...location, dimension };
-    let newTag, oldTag;
+    let newTag: string, oldTag: Array<string>;
     if (AreaUtils.isInBaseArea(target)) {
       newTag = TAG_AREA_BASE;
     } else if (AreaUtils.isInExploringArea(target)) {
@@ -65,15 +65,21 @@ const teleport = (entity: Player, location: Vector3, dimensionId: MinecraftDimen
       newTag = TAG_AREA_TOWN;
     }
     if (AreaUtils.existsInBaseArea(entity)) {
-      oldTag = TAG_AREA_BASE;
+      oldTag = [TAG_AREA_BASE];
     } else if (AreaUtils.existsInExploringArea(entity)) {
-      oldTag = TAG_AREA_EXPL;
+      oldTag = [TAG_AREA_EXPL];
+    } else if (AreaUtils.existsInTownArea(entity)) {
+      oldTag = [TAG_AREA_TOWN];
     } else {
-      oldTag = TAG_AREA_TOWN;
+      // in the end
+      oldTag = [];
     }
-    if (newTag !== oldTag) {
+    if (!oldTag.includes(newTag)) {
       entity.addTag(newTag);
-      entity.removeTag(oldTag);
+      if (oldTag.length === 0) {
+        oldTag = [TAG_AREA_BASE, TAG_AREA_EXPL, TAG_AREA_TOWN];
+      }
+      oldTag.forEach((tag) => entity.removeTag(tag));
     }
     entity.tryTeleport(location, { dimension });
   } catch (error) {

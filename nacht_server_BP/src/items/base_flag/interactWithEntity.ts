@@ -1,9 +1,15 @@
-import { PlayerPermissionLevel, system, world, type Entity, type Player } from '@minecraft/server';
+import {
+  PlayerPermissionLevel,
+  system,
+  world,
+  type Entity,
+  type Player,
+  type PlayerInteractWithEntityBeforeEvent,
+} from '@minecraft/server';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
 
 import { Formatting, TAG_OPERATOR } from '../../const';
-import { NachtServerAddonItemTypes } from '../../enums';
-import { NachtServerAddonError } from '../../errors/base';
+import { NachtServerAddonEntityTypes, NachtServerAddonItemTypes } from '../../enums';
 import teleportLogic from '../../logic/teleportLogic';
 import { BaseAreaDimensionBlockVolume } from '../../models/BaseAreaDimensionBlockVolume';
 import { MinecraftDimensionTypes } from '../../types/index';
@@ -176,105 +182,109 @@ const releaseBaseZone = (player: Player, dp: BaseAreaInfo) => {
   });
 };
 
+/**
+ * 別のプレイヤーの旗をインタラクト
+ *
+ * @param base
+ * @param eventPlayer
+ */
+const nonOwnerEvent = (base: BaseAreaInfo, eventPlayer: Player) => {
+  // 別の人の旗をインタラクトすると登録ダイアログ
+  const form = new MessageFormData();
+  form.body({
+    rawtext: [{ text: `${base.name}を` }, { translate: 'items.nacht_feather.name' }, { text: 'に登録しますか?' }],
+  });
+  form.button1('はい');
+  form.button2('いいえ');
+
+  system.run(() =>
+    form
+      .show(eventPlayer as any)
+      .then((response) => {
+        if (response.canceled) {
+          Logger.log(`[${eventPlayer.nameTag}] canceled: ${response.cancelationReason}`);
+          return;
+        }
+
+        if (response.selection === 0) {
+          teleportLogic.registerTeleportTarget(eventPlayer, `${base.owner}_${base.index}`, base.name || '');
+        }
+      })
+      .catch(() => null)
+  );
+};
+
+const ownerEvent = (base: BaseAreaInfo, event: PlayerInteractWithEntityBeforeEvent) => {
+  const form = new ActionFormData();
+  form.button(base.fixed ? '拠点を廃止する' : '範囲を確定する');
+  form.button('拠点の設定を変更する');
+  form.button('協力者を登録する');
+  form.button('アイテム化する');
+  form.label('※アイテム化すると転移先が解除されます');
+  form.button('転移先に登録する');
+
+  system.run(() =>
+    form.show(event.player as any).then((response) => {
+      if (response.canceled) {
+        Logger.log(`[${event.player.nameTag}] canceled: ${response.cancelationReason}`);
+        return;
+      }
+      switch (response.selection) {
+        case 0:
+          // 範囲確定
+          if (base.fixed) {
+            releaseBaseZone(event.player, base);
+          } else {
+            fixBaseZone(event.player, event.target, base);
+          }
+          break;
+        case 1:
+          // 設定変更
+          setConfig(event.player, base);
+          break;
+        case 2:
+          // 同居人登録
+          changeCoop(event.player, base);
+          break;
+        case 3:
+          // アイテム化
+          event.target.remove();
+          world.setDynamicProperty(base.id, JSON.stringify({ ...base, entityId: undefined } satisfies BaseAreaInfo));
+          BaseUtils.removeFromTeleportTargets(base);
+          if (!InventoryUtils.hasItem(event.player, NachtServerAddonItemTypes.BaseFlag)) {
+            InventoryUtils.giveItem(event.player, NachtServerAddonItemTypes.BaseFlag, 1);
+          }
+          break;
+        case 5:
+          // 登録
+          teleportLogic.registerTeleportTarget(event.player, `${base.owner}_${base.index}`, base.name || '');
+          break;
+      }
+    })
+  );
+};
+
 export default () => {
   /**
    * playerInteractWithEntity の beforeEvent
    */
   world.beforeEvents.playerInteractWithEntity.subscribe((event) => {
     try {
-      if (event.target.typeId === NachtServerAddonItemTypes.BaseFlag) {
-        if (event.itemStack?.typeId === NachtServerAddonItemTypes.NachtFeather) {
-          return;
-        }
-        const base = BaseUtils.findByEntityId(event.target.id);
-        if (base === undefined) {
-          // 未登録
-          return;
-        }
-        if (base.owner !== event.player.nameTag) {
-          // 別の人の旗をインタラクトすると登録ダイアログ
-          const form = new MessageFormData();
-          form.body({
-            rawtext: [
-              { text: `${base.name}を` },
-              { translate: 'items.nacht_feather.name' },
-              { text: 'に登録しますか?' },
-            ],
-          });
-          form.button1('はい');
-          form.button2('いいえ');
+      if (event.target.typeId !== NachtServerAddonEntityTypes.BaseFlag) return;
+      if (event.itemStack?.typeId === NachtServerAddonItemTypes.NachtFeather) return;
 
-          system.runTimeout(
-            () =>
-              form
-                .show(event.player as any)
-                .then((response) => {
-                  if (response.canceled) {
-                    Logger.log(`[${event.player.nameTag}] canceled: ${response.cancelationReason}`);
-                    return;
-                  }
+      const base = BaseUtils.findByEntityId(event.target.id);
+      if (base === undefined) {
+        // 未登録
+        event.player.sendMessage(`${Formatting.Color.RED}拠点登録されていません。`);
 
-                  if (response.selection === 0) {
-                    teleportLogic.registerTeleportTarget(event.player, `${base.owner}_${base.index}`, base.name || '');
-                  }
-                })
-                .catch(() => null),
-            1
-          );
-          return;
-        }
-
-        const form = new ActionFormData();
-        form.button(base.fixed ? '拠点を廃止する' : '範囲を確定する');
-        form.button('拠点の設定を変更する');
-        form.button('協力者を登録する');
-        form.button('アイテム化する');
-        form.button('転移先に登録する');
-
-        system.runTimeout(
-          () =>
-            form.show(event.player as any).then((response) => {
-              if (response.canceled) {
-                Logger.log(`[${event.player.nameTag}] canceled: ${response.cancelationReason}`);
-                return;
-              }
-              switch (response.selection) {
-                case 0:
-                  // 範囲確定
-                  if (base.fixed) {
-                    releaseBaseZone(event.player, base);
-                  } else {
-                    fixBaseZone(event.player, event.target, base);
-                  }
-                  break;
-                case 1:
-                  // 設定変更
-                  setConfig(event.player, base);
-                  break;
-                case 2:
-                  // 同居人登録
-                  changeCoop(event.player, base);
-                  break;
-                case 3:
-                  // アイテム化
-                  event.target.remove();
-                  world.setDynamicProperty(
-                    base.id,
-                    JSON.stringify({ ...base, entityId: undefined } satisfies BaseAreaInfo)
-                  );
-                  BaseUtils.removeFromTeleportTargets(base);
-                  if (!InventoryUtils.hasItem(event.player, NachtServerAddonItemTypes.BaseFlag)) {
-                    InventoryUtils.giveItem(event.player, NachtServerAddonItemTypes.BaseFlag, 1);
-                  }
-                  break;
-                case 4:
-                  // 登録
-                  teleportLogic.registerTeleportTarget(event.player, `${base.owner}_${base.index}`, base.name || '');
-                  break;
-              }
-            }),
-          1
-        );
+        return;
+      }
+      if (base.owner !== event.player.nameTag) {
+        // 別の人の旗をインタラクトすると登録ダイアログ
+        nonOwnerEvent(base, event.player);
+      } else {
+        ownerEvent(base, event);
       }
     } catch (error) {
       Logger.error(error);

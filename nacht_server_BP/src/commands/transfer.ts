@@ -10,7 +10,7 @@ import {
 } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 
-import { COUNTER_TRANSFER, Formatting, PREFIX_TRANSFER, SCOREBOARD_POINT } from '../const';
+import { COUNTER_TRANSFER, Formatting, PREFIX_PLAYERNAME, PREFIX_TRANSFER, SCOREBOARD_POINT } from '../const';
 import { NachtServerAddonError } from '../errors/base';
 import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import { PointlessError } from '../errors/market';
@@ -59,6 +59,7 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
     remittees.map((player) => player.nameTag)
   );
   form.textField('ポイント数', '');
+  form.textField('メモ', '', { defaultValue: '' });
   form.submitButton('送金する');
 
   system.runTimeout(() => {
@@ -73,6 +74,7 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
 
         const remitteeIndex = response.formValues?.[0] as number;
         const amountString = response.formValues?.[1] as string;
+        const memo = response.formValues?.[2] as string;
 
         if (!/\d+/.test(amountString)) {
           remitter.sendMessage(`${Formatting.Color.RED}ポイント数には整数を入力してください。`);
@@ -104,8 +106,11 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
         ScoreboardUtils.addScore(remitter, SCOREBOARD_POINT, -amount);
         if (remittee.isValid) {
           remittee.sendMessage(
-            `${remitter.nameTag}から${amount}ポイント送られました。受け取るためには銀行の窓口までお越しください。`
+            `${world.getDynamicProperty(PREFIX_PLAYERNAME + remitter.nameTag) || remitter.nameTag}から${amount}ポイント送られました。受け取るためには銀行の窓口までお越しください。`
           );
+          if (memo.length > 0) {
+            remittee.sendMessage(`送金メッセージ: ${memo}`);
+          }
         }
         const index = DynamicPropertyUtils.getNextCounter(COUNTER_TRANSFER);
         const id = `${PREFIX_TRANSFER}${index}`;
@@ -118,6 +123,7 @@ const commandProcess = (origin: CustomCommandOrigin): CustomCommandResult => {
             id,
             index,
             isWithdrawn: false,
+            memo,
             remittee: remittee.nameTag,
             remitter: remitter.nameTag,
           } satisfies TransferHistory)

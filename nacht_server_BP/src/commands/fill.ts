@@ -9,26 +9,24 @@ import {
   type CustomCommandResult,
   CustomCommandStatus,
   type Entity,
-  HudVisibility,
-  ItemComponentTypes,
-  LocationInUnloadedChunkError,
   system,
-  TicksPerSecond,
   type Vector3,
-  world,
 } from '@minecraft/server';
 
 import { COMMAND_MODIFICATION_BLOCK_LIMIT } from '../const';
-import { NachtServerAddonError } from '../errors/base';
 import { CommandProcessError, UndefinedSourceOrInitiatorError } from '../errors/command';
 import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
-import { BlockStateSuperset, MinecraftBlockTypes } from '../types/index';
 import LocationUtils from '../utils/LocationUtils';
 import { Logger } from '../utils/logger';
 import PlayerUtils from '../utils/PlayerUtils';
 
 import { parseBlockStates, registerCommand } from './common';
 import { FillMode } from './enum';
+import { fillDefault } from './fill/default';
+import { fillHollow } from './fill/hollow';
+import { fillKeep } from './fill/keep';
+import { fillOutline } from './fill/outline';
+import { fillReplace } from './fill/replace';
 
 const fillCommand: CustomCommand = {
   name: 'nacht:fill',
@@ -71,15 +69,12 @@ const commandProcessNew = (
   /**
    * 適用範囲
    */
-  const blockVolume = new DimensionBlockVolume(from, to, player.dimension);
-  const { max, min } = blockVolume.getBoundingBox();
-  const blockPermutation = BlockPermutation.resolve(
-    tileName.id,
-    blockStates ? parseBlockStates(blockStates) : undefined
-  );
+  const fillAreaBV = new DimensionBlockVolume(from, to, player.dimension);
+  const { max: fillAreaMaxPoint, min: fillAreaMinPoint } = fillAreaBV.getBoundingBox();
+  const fillBP = BlockPermutation.resolve(tileName.id, blockStates ? parseBlockStates(blockStates) : undefined);
   const chunkIndices = {
-    x: { min: Math.floor(min.x / 16), max: Math.floor(max.x / 16) },
-    z: { min: Math.floor(min.z / 16), max: Math.floor(max.z / 16) },
+    x: { min: Math.floor(fillAreaMinPoint.x / 16), max: Math.floor(fillAreaMaxPoint.x / 16) },
+    z: { min: Math.floor(fillAreaMinPoint.z / 16), max: Math.floor(fillAreaMaxPoint.z / 16) },
   };
   Logger.debug(
     `Chunk from (${chunkIndices.x.min} ${chunkIndices.z.min}) to (${chunkIndices.x.max} ${chunkIndices.z.max})`
@@ -96,139 +91,67 @@ const commandProcessNew = (
   const xStep = Math.ceil(chunkDistances.x / xInterval);
   const zStep = Math.ceil(chunkDistances.z / zInterval);
   Logger.debug(`Step x: ${xStep} z: ${zStep}`);
-  const chunkRanges: Array<DimensionBlockVolume> = [];
+  const chunksBlockVolumes: Array<DimensionBlockVolume> = [];
   if (xStep < zStep) {
     for (let i = 1; i <= xStep; i++) {
-      chunkRanges.push(
+      chunksBlockVolumes.push(
         new DimensionBlockVolume(
-          { x: min.x + xInterval * (i - 1), y: min.y, z: min.z },
-          { x: Math.min(min.x - 1 + xInterval * i, max.x), y: max.y, z: min.z - 1 + chunkDistances.z },
+          { x: fillAreaMinPoint.x + xInterval * (i - 1), y: fillAreaMinPoint.y, z: fillAreaMinPoint.z },
+          {
+            x: Math.min(fillAreaMinPoint.x - 1 + xInterval * i, fillAreaMaxPoint.x),
+            y: fillAreaMaxPoint.y,
+            z: fillAreaMinPoint.z - 1 + chunkDistances.z,
+          },
           player.dimension
         )
       );
     }
   } else {
     for (let i = 1; i <= zStep; i++) {
-      chunkRanges.push(
+      chunksBlockVolumes.push(
         new DimensionBlockVolume(
-          { x: min.x, y: min.y, z: min.z + zInterval * (i - 1) },
-          { x: min.x - 1 + chunkDistances.x, y: max.y, z: Math.min(min.z - 1 + zInterval * i, max.z) },
+          { x: fillAreaMinPoint.x, y: fillAreaMinPoint.y, z: fillAreaMinPoint.z + zInterval * (i - 1) },
+          {
+            x: fillAreaMinPoint.x - 1 + chunkDistances.x,
+            y: fillAreaMaxPoint.y,
+            z: Math.min(fillAreaMinPoint.z - 1 + zInterval * i, fillAreaMaxPoint.z),
+          },
           player.dimension
         )
       );
     }
   }
 
-  let counter = 0;
-  let failedCounter = 0;
   switch (oldBlockHandling) {
     case undefined:
       // 適用範囲を指定されたブロックですべて埋める
-      system.runJob(
-        (function* () {
-          let index = 1;
-          for (const chunkRange of chunkRanges) {
-            const { max: cMax, min: cMin } = chunkRange.getBoundingBox();
-            player.dimension.runCommand(
-              `tickingarea add ${cMin.x} ${cMin.y} ${cMin.z} ${cMax.x} ${cMax.y} ${cMax.z} FILL true`
-            );
-            yield;
-            player.dimension.fillBlocks(chunkRange, blockPermutation);
-            yield;
-            player.dimension.runCommand('tickingarea remove FILL');
-            player.sendMessage(`${index} / ${chunkRanges.length}`);
-            index++;
-            yield;
-          }
-        })()
-      );
-
+      fillDefault(player, fillAreaBV, chunksBlockVolumes, fillBP);
       break;
     case FillMode.hollow:
       // 適用範囲の表面のみを指定されたブロックで埋め、内側を空気で満たす
-      for (const blockLocation of blockVolume.getBlockLocationIterator()) {
-        try {
-          if (
-            [max.x, min.x].includes(blockLocation.x) ||
-            [max.y, min.y].includes(blockLocation.y) ||
-            [max.z, min.z].includes(blockLocation.z)
-          ) {
-            system.run(() => player.dimension.setBlockPermutation(blockLocation, blockPermutation));
-            counter++;
-            if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) system.waitTicks(TicksPerSecond / 2);
-          } else {
-            player.dimension.setBlockType(blockLocation, MinecraftBlockTypes.Air);
-          }
-        } catch {
-          failedCounter++;
-        }
-      }
+      fillHollow(player, fillAreaBV, chunksBlockVolumes, fillBP);
       break;
     case FillMode.keep:
       // 適用範囲の空気ブロックのみを指定されたブロックで置き換える
-      for (const blockLocation of blockVolume.getBlockLocationIterator()) {
-        try {
-          const thisBlock = player.dimension.getBlock(blockLocation);
-          if (thisBlock === undefined) {
-            failedCounter++;
-            continue;
-          }
-          if (thisBlock.isAir) {
-            system.run(() => player.dimension.setBlockPermutation(blockLocation, blockPermutation));
-            counter++;
-            if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) system.waitTicks(TicksPerSecond / 2);
-          }
-        } catch {
-          failedCounter++;
-        }
-      }
+      fillKeep(player, fillAreaBV, chunksBlockVolumes, fillBP);
       break;
     case FillMode.outline:
       // 適用範囲の表面のみを指定されたブロックで埋め、内側は維持する
-      for (const blockLocation of blockVolume.getBlockLocationIterator()) {
-        try {
-          if (
-            [max.x, min.x].includes(blockLocation.x) ||
-            [max.y, min.y].includes(blockLocation.y) ||
-            [max.z, min.z].includes(blockLocation.z)
-          ) {
-            system.run(() => player.dimension.setBlockPermutation(blockLocation, blockPermutation));
-            counter++;
-            if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) system.waitTicks(TicksPerSecond / 2);
-          }
-        } catch {
-          failedCounter++;
-        }
-      }
+      fillOutline(player, fillAreaBV, chunksBlockVolumes, fillBP);
       break;
     case FillMode.replace:
       // 適用範囲のうち指定されたブロックで置換対象ブロックを置き換える
-      for (const blockLocation of blockVolume.getBlockLocationIterator()) {
-        try {
-          const thisBlock = player.dimension.getBlock(blockLocation)?.permutation;
-          if (thisBlock === undefined) {
-            failedCounter++;
-            continue;
-          }
-          if (thisBlock.type.id === secondaryTileName!.id) {
-            const states = secondaryBlockStates ? parseBlockStates(secondaryBlockStates) : undefined;
-            if (
-              states
-                ? !Object.entries(states).some(([k, v]) => thisBlock.getState(k as keyof BlockStateSuperset) !== v)
-                : true
-            ) {
-              system.run(() => player.dimension.setBlockPermutation(blockLocation, blockPermutation));
-              counter++;
-              if (counter % COMMAND_MODIFICATION_BLOCK_LIMIT === 0) system.waitTicks(TicksPerSecond / 2);
-            }
-          }
-        } catch {
-          failedCounter++;
-        }
-      }
+      fillReplace(
+        player,
+        fillAreaBV,
+        chunksBlockVolumes,
+        fillBP,
+        BlockPermutation.resolve(
+          secondaryTileName!.id,
+          secondaryBlockStates ? parseBlockStates(secondaryBlockStates) : undefined
+        )
+      );
   }
-
-  player.sendMessage(`${counter}/${blockVolume.getCapacity()} を置き換えました (失敗: ${failedCounter} ブロック)。`);
 
   return { status: CustomCommandStatus.Success };
 };

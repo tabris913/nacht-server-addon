@@ -80,7 +80,8 @@ export const existsInExploringArea = (object: Entity | Block) =>
  * @param dimension ディメンション
  * @returns
  */
-export const isInBaseArea = (location: DimensionLocation) => !isInTownArea(location) && 0 < location.z;
+export const isInBaseArea = (location: DimensionLocation) =>
+  location.dimension.id === MinecraftDimensionTypes.TheEnd ? false : !isInTownArea(location) && 0 < location.z;
 
 /**
  * 与えられた座標が探索エリアに含まれるかどうか判定する
@@ -89,7 +90,8 @@ export const isInBaseArea = (location: DimensionLocation) => !isInTownArea(locat
  * @param dimension ディメンション
  * @returns
  */
-export const isInExploringArea = (location: DimensionLocation) => !isInTownArea(location) && location.z < 0;
+export const isInExploringArea = (location: DimensionLocation) =>
+  location.dimension.id === MinecraftDimensionTypes.TheEnd ? false : !isInTownArea(location) && location.z < 0;
 
 /**
  * 与えられた座標が街エリアに含まれるかどうか判定する

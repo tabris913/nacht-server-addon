@@ -5,6 +5,7 @@ export type TransferHistory = {
   id: string; // transfer_{index}
   index: number;
   isWithdrawn: boolean;
+  memo: string;
   remittee: string;
   remitter: string;
   withdrawnDatetime?: string;

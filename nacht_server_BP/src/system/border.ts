@@ -1,4 +1,4 @@
-import { BlockVolume, BlockVolumeIntersection, system, TicksPerSecond, type Vector3, world } from '@minecraft/server';
+import { BlockVolume, BlockVolumeIntersection, system, type Vector3, world } from '@minecraft/server';
 
 import { RuleName } from '../commands/enum';
 import { PREFIX_GAMERULE } from '../const';
@@ -206,93 +206,81 @@ const collectBaseBorder = (playerBV: BlockVolume, yArray: Array<number>, bases: 
   }
 };
 
-export default () => {
-  system.runTimeout(() => {
-    const showAreaBorderInterval = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderInterval) as
-      | number
-      | undefined;
+export default async () => {
+  const showAreaBorderFlag = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorder) as boolean | undefined;
+  const distance = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderRange) as number | undefined;
+  const yDistance = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderYRange) as number | undefined;
+  const bases = BaseUtils.retrieveBases()
+    .filter((base) => base.showBorder)
+    .map((base) => {
+      if (isFixedBase(base)) {
+        // 保存された座標を利用できる
+        return new BaseAreaDimensionBlockVolume(
+          base.northWest,
+          LocationUtils.offsetLocation(base.northWest, base.edgeSize),
+          base.dimension
+        );
+      } else if (base.entityId) {
+        // 旗の座標を利用する
+        const entity = world.getEntity(base.entityId);
+        if (entity) {
+          return LocationUtils.generateBlockVolume(entity.location, base.edgeSize);
+        }
+      }
+    })
+    .filter((bv) => bv !== undefined);
 
-    system.runInterval(
-      () => {
-        const showAreaBorderFlag = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorder) as
-          | boolean
-          | undefined;
-        const distance = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderRange) as number | undefined;
-        const yDistance = world.getDynamicProperty(PREFIX_GAMERULE + RuleName.showAreaBorderYRange) as
-          | number
-          | undefined;
-        const bases = BaseUtils.retrieveBases()
-          .filter((base) => base.showBorder)
-          .map((base) => {
-            if (isFixedBase(base)) {
-              // 保存された座標を利用できる
-              return new BaseAreaDimensionBlockVolume(
-                base.northWest,
-                LocationUtils.offsetLocation(base.northWest, base.edgeSize),
-                base.dimension
-              );
-            } else if (base.entityId) {
-              // 旗の座標を利用する
-              const entity = world.getEntity(base.entityId);
-              if (entity) {
-                return LocationUtils.generateBlockVolume(entity.location, base.edgeSize);
-              }
-            }
-          })
-          .filter((bv) => bv !== undefined);
+  const locs: Record<MinecraftDimensionTypes, Set<Vector3>> = {
+    [MinecraftDimensionTypes.Overworld]: new Set(),
+    [MinecraftDimensionTypes.Nether]: new Set(),
+    [MinecraftDimensionTypes.TheEnd]: new Set(),
+  };
 
-        const locs: Record<MinecraftDimensionTypes, Set<Vector3>> = {
-          [MinecraftDimensionTypes.Overworld]: new Set(),
-          [MinecraftDimensionTypes.Nether]: new Set(),
-          [MinecraftDimensionTypes.TheEnd]: new Set(),
-        };
+  system.runJob(
+    (function* () {
+      for (const player of world.getAllPlayers().filter((player) => player.isValid)) {
+        /**
+         * パーティクル表示範囲
+         */
+        const area3D = LocationUtils.make3DArea(
+          player,
+          distance === undefined ? 101 : distance,
+          yDistance === undefined ? 5 : yDistance
+        );
+        if (area3D === undefined) continue;
+        const bv = new BlockVolume(area3D.northWest, area3D.southEast);
+        const yArray = LocationUtils.makeArray(bv.getMin().y, bv.getMax().y);
+        if (showAreaBorderFlag) {
+          collectAreaBorder(bv, yArray).forEach((location) =>
+            locs[player.dimension.id as MinecraftDimensionTypes].add(location)
+          );
+        }
+        collectBaseBorder(bv, yArray, bases).forEach((location) =>
+          locs[player.dimension.id as MinecraftDimensionTypes].add(location)
+        );
 
-        world
-          .getAllPlayers()
-          .filter((player) => player.isValid)
-          .forEach((player) => {
-            /**
-             * パーティクル表示範囲
-             */
-            const area3D = LocationUtils.make3DArea(
-              player,
-              distance === undefined ? 101 : distance,
-              yDistance === undefined ? 5 : yDistance
-            );
-            if (area3D === undefined) return;
-            const bv = new BlockVolume(area3D.northWest, area3D.southEast);
-            const yArray = LocationUtils.makeArray(bv.getMin().y, bv.getMax().y);
-            if (showAreaBorderFlag) {
-              collectAreaBorder(bv, yArray).forEach((location) =>
-                locs[player.dimension.id as MinecraftDimensionTypes].add(location)
-              );
-            }
-            collectBaseBorder(bv, yArray, bases).forEach((location) =>
-              locs[player.dimension.id as MinecraftDimensionTypes].add(location)
-            );
-          });
+        yield;
+      }
 
-        Object.entries(locs)
-          .filter(([_, locations]) => locations.size > 0)
-          .forEach(([dimensionId, locations]) => {
-            const dimension = world.getDimension(dimensionId);
+      for (const [dimensionId, locations] of Object.entries(locs).filter(([_, locations]) => locations.size > 0)) {
+        const dimension = world.getDimension(dimensionId);
 
-            try {
-              Array.from(locations)
-                .map((location) => dimension.getBlock(location))
-                .filter((block) => block !== undefined)
-                .filter((block) => block.isValid && (block.isAir || block.isLiquid))
-                .forEach((block) => {
-                  dimension.spawnParticle('minecraft:small_flame_particle', block.location);
-                });
-            } catch (error) {
-              Logger.error(`Failed to spawn particles (${locations.size}).`);
+        try {
+          Array.from(locations)
+            .map((location) => dimension.getBlock(location))
+            .filter((block) => block !== undefined)
+            .filter((block) => block.isValid && (block.isAir || block.isLiquid))
+            .forEach((block) => {
+              dimension.spawnParticle('minecraft:small_flame_particle', block.location);
+            });
+        } catch (error) {
+          Logger.error(`Failed to spawn particles (${locations.size}).`);
 
-              throw error;
-            }
-          });
-      },
-      showAreaBorderInterval || TicksPerSecond / 2
-    );
-  }, 1);
+          throw error;
+        }
+
+        yield;
+      }
+    })()
+  );
 };

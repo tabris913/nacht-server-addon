@@ -1,5 +1,4 @@
 import {
-  BlockTypes,
   type DimensionLocation,
   type Player,
   PlayerPermissionLevel,
@@ -9,20 +8,30 @@ import {
 } from '@minecraft/server';
 
 import { Formatting, PREFIX_PLAYERNAME, PREFIX_TITLE } from '../const';
-import { MinecraftBlockTypes, MinecraftEntityTypes } from '../types/index';
+import { MinecraftBlockTypes, MinecraftDimensionTypes, MinecraftEntityTypes } from '../types/index';
 import AreaUtils from '../utils/AreaUtils';
 import BaseUtils from '../utils/BaseUtils';
 
-const show = (player: Player, blocks: Array<string>) => {
+const show = async (player: Player) => {
   const dimLoc: DimensionLocation = { ...player.location, dimension: player.dimension };
   const content: Array<RawMessage | string> = [];
 
   // Area info
-  content.push({
-    text:
-      '現在地: ' +
-      (AreaUtils.isInBaseArea(dimLoc) ? '拠点エリア' : AreaUtils.isInExploringArea(dimLoc) ? '探索エリア' : '街エリア'),
-  });
+  const area = AreaUtils.isInBaseArea(dimLoc)
+    ? '拠点エリア'
+    : AreaUtils.isInExploringArea(dimLoc)
+      ? '探索エリア'
+      : '街エリア';
+  switch (player.dimension.id) {
+    case MinecraftDimensionTypes.Nether:
+      content.push(`現在地: ネザー (${area})`);
+      break;
+    case MinecraftDimensionTypes.Overworld:
+      content.push(`現在地: オーバーワールド (${area})`);
+      break;
+    case MinecraftDimensionTypes.TheEnd:
+      content.push('現在地: エンド');
+  }
 
   // Base info
   const base = BaseUtils.findByLocation(dimLoc);
@@ -82,17 +91,14 @@ const show = (player: Player, blocks: Array<string>) => {
   player.onScreenDisplay.setActionBar(content);
 };
 
-export default () =>
-  system.run(() => {
-    const BLOCK_TYPES = BlockTypes.getAll().map((bt) => bt.id);
+export default async () => {
+  system.runJob(
+    (function* () {
+      for (const player of world.getAllPlayers()) {
+        show(player);
 
-    system.runInterval(() => {
-      system.runJob(
-        (function* () {
-          for (const player of world.getAllPlayers()) {
-            yield show(player, BLOCK_TYPES);
-          }
-        })()
-      );
-    });
-  });
+        yield;
+      }
+    })()
+  );
+};

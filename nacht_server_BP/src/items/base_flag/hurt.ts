@@ -1,4 +1,5 @@
-import { EntityComponentTypes, PlayerPermissionLevel, world } from '@minecraft/server';
+import { EntityComponentTypes, PlayerPermissionLevel, system, world } from '@minecraft/server';
+import { MessageFormData } from '@minecraft/server-ui';
 
 import { TAG_OPERATOR } from '../../const';
 import { NachtServerAddonEntityTypes, NachtServerAddonItemTypes } from '../../enums';
@@ -35,10 +36,39 @@ export default () => {
             // オペレーターまたは拠点の所有者
             if (!InventoryUtils.hasItem(playerEntity, NachtServerAddonItemTypes.BaseFlag)) {
               // 拠点の旗を所持していない
-              event.hurtEntity.getComponent(EntityComponentTypes.Health)?.setCurrentValue(0);
-              return; // 破壊可能
+              const form = new MessageFormData();
+              form.title('拠点の旗を破壊する');
+              form.body('拠点の旗をアイテム化すると転移先から解除されます。');
+              form.button1('OK');
+              form.button2('キャンセル');
+
+              system.run(() =>
+                form
+                  .show(player as any)
+                  .then((response) => {
+                    if (response.canceled) {
+                      Logger.log(`[${player.nameTag}] canceled: ${response.cancelationReason}`);
+                      return;
+                    }
+
+                    switch (response.selection) {
+                      case 0:
+                        event.hurtEntity.getComponent(EntityComponentTypes.Health)?.setCurrentValue(0);
+                        world.setDynamicProperty(baseDp.id, JSON.stringify({ ...baseDp, entityId: undefined }));
+                        BaseUtils.removeFromTeleportTargets(baseDp);
+                        InventoryUtils.giveItem(player, NachtServerAddonItemTypes.BaseFlag, 1);
+                        break;
+                      default:
+                        event.hurtEntity.getComponent(EntityComponentTypes.Health)?.resetToMaxValue();
+                    }
+                  })
+                  .catch(() => null)
+              );
+
+              return;
+            } else {
+              player.sendMessage([{ translate: 'items.base_flag.name' }, 'を所持している状態では破壊できません。']);
             }
-            player.sendMessage([{ translate: 'items.base_flag.name' }, 'を所持している状態では破壊できません。']);
           } else {
             player.sendMessage('所有者しか破壊できません。');
           }

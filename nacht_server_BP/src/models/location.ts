@@ -61,18 +61,46 @@ export class Location implements Vector3 {
 
   diff = (origin: Vector3) => new Location({ x: this.x - origin.x, y: this.y - origin.y, z: this.z - origin.z });
 
-  offset = (other: Vector3) => {
-    this.x += other.x;
-    this.y += other.y;
-    this.z += other.z;
+  max = (other: Vector3) => {
+    this.x = Math.max(this.x, other.x);
+    this.y = Math.max(this.y, other.y);
+    this.z = Math.max(this.z, other.z);
 
     return this;
   };
 
-  offsetNega = (other: Vector3) => {
-    this.x -= other.x;
-    this.y -= other.y;
-    this.z -= other.z;
+  min = (other: Vector3) => {
+    this.x = Math.min(this.x, other.x);
+    this.y = Math.min(this.y, other.y);
+    this.z = Math.min(this.z, other.z);
+
+    return this;
+  };
+
+  offset = (offsetSpan: number | Vector3) => {
+    if (typeof offsetSpan === 'number') {
+      this.x += offsetSpan;
+      this.y += offsetSpan;
+      this.z += offsetSpan;
+    } else {
+      this.x += offsetSpan.x;
+      this.y += offsetSpan.y;
+      this.z += offsetSpan.z;
+    }
+
+    return this;
+  };
+
+  offsetNega = (offsetSpan: number | Vector3) => {
+    if (typeof offsetSpan === 'number') {
+      this.x -= offsetSpan;
+      this.y -= offsetSpan;
+      this.z -= offsetSpan;
+    } else {
+      this.x -= offsetSpan.x;
+      this.y -= offsetSpan.y;
+      this.z -= offsetSpan.z;
+    }
 
     return this;
   };

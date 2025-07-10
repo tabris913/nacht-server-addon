@@ -1,4 +1,4 @@
-import { system, TicksPerSecond, world } from '@minecraft/server';
+import { system, world } from '@minecraft/server';
 
 import { BaseAreaDimensionBlockVolume } from '../models/BaseAreaDimensionBlockVolume';
 import BaseUtils from '../utils/BaseUtils';
@@ -7,16 +7,18 @@ import PlayerUtils from '../utils/PlayerUtils';
 
 import type { FixedBaseAreaInfo } from '../models/location';
 
-export default () =>
-  system.runInterval(() => {
-    const players = world.getAllPlayers();
+export default async () => {
+  const players = world.getAllPlayers();
 
-    BaseUtils.retrieveBases()
-      .filter((base): base is FixedBaseAreaInfo => base.fixed)
-      .filter((base) =>
-        players.some((player) => BaseAreaDimensionBlockVolume.fromFixedDynamicProperty(base).isInside(player.location))
-      )
-      .forEach((base) => {
+  system.runJob(
+    (function* () {
+      for (const base of BaseUtils.retrieveBases()
+        .filter((base): base is FixedBaseAreaInfo => base.fixed)
+        .filter((base) =>
+          players.some((player) =>
+            BaseAreaDimensionBlockVolume.fromFixedDynamicProperty(base).isInside(player.location)
+          )
+        )) {
         if (base.entityId === undefined) {
           // 未設置ということになっている
         } else {
@@ -34,5 +36,9 @@ export default () =>
             );
           }
         }
-      });
-  }, TicksPerSecond);
+
+        yield;
+      }
+    })()
+  );
+};

@@ -19,7 +19,6 @@ import {
 } from '../const';
 import { NachtServerAddonItemTypes } from '../enums';
 import InventoryUtils from '../utils/InventoryUtils';
-import { Logger } from '../utils/logger';
 import ScoreboardUtils from '../utils/ScoreboardUtils';
 
 const score = (player: Player) => {
@@ -123,17 +122,16 @@ const item = (player: Player) => {
   }
 };
 
-export default () =>
-  system.runInterval(() => {
-    system.runJob(
-      (function* () {
-        for (const player of world
-          .getAllPlayers()
-          .filter((player) => !(player.hasTag(TAG_OPERATOR) && player.hasTag(TAG_OP_DEV)))) {
-          score(player);
-          item(player);
-          yield;
-        }
-      })()
-    );
-  }, TicksPerSecond);
+export default async () => {
+  system.runJob(
+    (function* () {
+      for (const player of world
+        .getAllPlayers()
+        .filter((player) => !(player.hasTag(TAG_OPERATOR) && player.hasTag(TAG_OP_DEV)))) {
+        score(player);
+        item(player);
+        yield;
+      }
+    })()
+  );
+};
