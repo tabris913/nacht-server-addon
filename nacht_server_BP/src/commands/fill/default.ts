@@ -1,7 +1,9 @@
-import { BlockVolume, system, type BlockPermutation, type Player } from '@minecraft/server';
+import { BlockVolume, ListBlockVolume, system, type BlockPermutation, type Player } from '@minecraft/server';
 
+import { COMMAND_MODIFICATION_BLOCK_LIMIT } from '../../const';
 import { Location } from '../../models/location';
 import CommandUtils from '../../utils/CommandUtils';
+import { Logger } from '../../utils/logger';
 
 import type { DimensionBlockVolume } from '../../models/DimensionBlockVolume';
 
@@ -19,6 +21,7 @@ export const fillDefault = (
   chunks: Array<DimensionBlockVolume>,
   fillBlock: BlockPermutation
 ) => {
+  Logger.debug('default mode');
   const { max: fillAreaMaxPoint, min: fillAreaMinPoint } = fillArea.getBoundingBox();
 
   system.runJob(
@@ -29,24 +32,45 @@ export const fillDefault = (
         const { max: chunksMaxPoint, min: chunksMinPoint } = chunksBV.getBoundingBox();
         CommandUtils.buildCommand(player.dimension, 'tickingarea', 'add', chunksMinPoint, chunksMaxPoint, 'FILL', true);
         yield;
-        const replaced = player.dimension.fillBlocks(
-          new BlockVolume(
-            new Location(chunksMinPoint).max(fillAreaMinPoint),
-            new Location(chunksMaxPoint).min(fillAreaMaxPoint)
-          ),
-          fillBlock,
-          { blockFilter: { excludePermutations: [fillBlock] }, ignoreChunkBoundErrors: true }
+        const bv = new BlockVolume(
+          new Location(chunksMinPoint).max(fillAreaMinPoint),
+          new Location(chunksMaxPoint).min(fillAreaMaxPoint)
         );
-        yield;
+        let volume = new ListBlockVolume([]);
+        let capacity = 0;
+        for (const blockLocation of bv.getBlockLocationIterator()) {
+          volume.add([blockLocation]);
+
+          if (volume.getCapacity() >= COMMAND_MODIFICATION_BLOCK_LIMIT) {
+            const replaced = player.dimension.fillBlocks(volume, fillBlock, {
+              blockFilter: { excludePermutations: [fillBlock] },
+              ignoreChunkBoundErrors: true,
+            });
+            player.sendMessage(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+            Logger.debug(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+            index++;
+            capacity += replaced.getCapacity();
+            volume = new ListBlockVolume([]);
+          }
+          yield;
+        }
+        if (volume.getCapacity() > 0) {
+          const replaced = player.dimension.fillBlocks(volume, fillBlock, {
+            blockFilter: { excludePermutations: [fillBlock] },
+            ignoreChunkBoundErrors: true,
+          });
+          player.sendMessage(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+          Logger.debug(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+          index++;
+          capacity += replaced.getCapacity();
+          yield;
+        }
         player.dimension.runCommand('tickingarea remove FILL');
-        const capacity = replaced.getCapacity();
-        player.sendMessage(`step: ${index} / ${chunks.length}; blocks: ${capacity} / ${chunksBV.getCapacity()}`);
-        index++;
         total += capacity;
         yield;
       }
 
-      player.sendMessage(`${total} / ${fillArea.getCapacity()} を置き換えました。`);
+      player.sendMessage(`${total} / ${fillArea.getCapacity()} ブロックを置き換えました。`);
     })()
   );
 };

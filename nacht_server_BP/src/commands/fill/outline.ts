@@ -1,10 +1,12 @@
 import { BlockVolume, ListBlockVolume, system, type BlockPermutation, type Player } from '@minecraft/server';
 
+import { COMMAND_MODIFICATION_BLOCK_LIMIT } from '../../const';
 import { Location } from '../../models/location';
 import CommandUtils from '../../utils/CommandUtils';
+import LocationUtils from '../../utils/LocationUtils';
+import { Logger } from '../../utils/logger';
 
 import type { DimensionBlockVolume } from '../../models/DimensionBlockVolume';
-import LocationUtils from '../../utils/LocationUtils';
 
 /**
  * 適用範囲の表面のみを指定されたブロックで埋め、内側は維持する
@@ -20,6 +22,7 @@ export const fillOutline = (
   chunks: Array<DimensionBlockVolume>,
   fillBlock: BlockPermutation
 ) => {
+  Logger.debug('outline mode');
   const { max: fillAreaMaxPoint, min: fillAreaMinPoint } = fillArea.getBoundingBox();
 
   system.runJob(
@@ -34,21 +37,41 @@ export const fillOutline = (
           new Location(chunksMinPoint).max(fillAreaMinPoint),
           new Location(chunksMaxPoint).min(fillAreaMaxPoint)
         );
-        const list = new ListBlockVolume([]);
+        let volume = new ListBlockVolume([]);
+        let capacity = 0;
         for (const blockLocation of area.getBlockLocationIterator()) {
           if (LocationUtils.isSurface(blockLocation, fillArea)) {
-            list.add([blockLocation]);
+            volume.add([blockLocation]);
+
+            if (volume.getCapacity() >= COMMAND_MODIFICATION_BLOCK_LIMIT) {
+              const replaced = player.dimension.fillBlocks(volume, fillBlock, {
+                blockFilter: { excludePermutations: [fillBlock] },
+                ignoreChunkBoundErrors: true,
+              });
+              player.sendMessage(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+              Logger.debug(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+              index++;
+
+              capacity += replaced.getCapacity();
+              volume = new ListBlockVolume([]);
+            }
           }
+          yield;
         }
-        const replaced = player.dimension.fillBlocks(list, fillBlock, {
-          blockFilter: { excludePermutations: [fillBlock] },
-          ignoreChunkBoundErrors: true,
-        });
+        if (volume.getCapacity() > 0) {
+          const replaced = player.dimension.fillBlocks(volume, fillBlock, {
+            blockFilter: { excludePermutations: [fillBlock] },
+            ignoreChunkBoundErrors: true,
+          });
+          player.sendMessage(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+          Logger.debug(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+          index++;
+
+          capacity += replaced.getCapacity();
+          yield;
+        }
         yield;
         player.dimension.runCommand('tickingarea remove FILL');
-        const capacity = replaced.getCapacity();
-        player.sendMessage(`step: ${index} / ${chunks.length}; blocks: ${capacity} / ${chunksBV.getCapacity()}`);
-        index++;
         total += capacity;
         yield;
       }

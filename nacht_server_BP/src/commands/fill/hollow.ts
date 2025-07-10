@@ -1,11 +1,13 @@
 import { BlockVolume, ListBlockVolume, system, type BlockPermutation, type Player } from '@minecraft/server';
 
+import { COMMAND_MODIFICATION_BLOCK_LIMIT } from '../../const';
 import { Location } from '../../models/location';
 import { MinecraftBlockTypes } from '../../types/index';
 import CommandUtils from '../../utils/CommandUtils';
+import LocationUtils from '../../utils/LocationUtils';
+import { Logger } from '../../utils/logger';
 
 import type { DimensionBlockVolume } from '../../models/DimensionBlockVolume';
-import LocationUtils from '../../utils/LocationUtils';
 
 /**
  * 適用範囲の表面のみを指定されたブロックで埋め、内側を空気で満たす
@@ -21,6 +23,7 @@ export const fillHollow = (
   chunks: Array<DimensionBlockVolume>,
   fillBlock: BlockPermutation
 ) => {
+  Logger.debug('hollow mode');
   const { max: fillAreaMaxPoint, min: fillAreaMinPoint } = fillArea.getBoundingBox();
 
   system.runJob(
@@ -35,62 +38,69 @@ export const fillHollow = (
           new Location(chunksMinPoint).max(fillAreaMinPoint),
           new Location(chunksMaxPoint).min(fillAreaMaxPoint)
         );
-        const list = new ListBlockVolume([]);
-        const airList = new ListBlockVolume([]);
+        let list = new ListBlockVolume([]);
+        let airList = new ListBlockVolume([]);
+        let capacity = 0;
         for (const blockLocation of area.getBlockLocationIterator()) {
           if (LocationUtils.isSurface(blockLocation, fillArea)) {
             list.add([blockLocation]);
+
+            if (list.getCapacity() >= COMMAND_MODIFICATION_BLOCK_LIMIT) {
+              const replaced = player.dimension.fillBlocks(list, fillBlock, {
+                blockFilter: { excludePermutations: [fillBlock] },
+                ignoreChunkBoundErrors: true,
+              });
+              player.sendMessage(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+              Logger.debug(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+              index++;
+              capacity += replaced.getCapacity();
+              list = new ListBlockVolume([]);
+            }
           } else {
             airList.add([blockLocation]);
+
+            if (airList.getCapacity() >= COMMAND_MODIFICATION_BLOCK_LIMIT) {
+              const replaced = player.dimension.fillBlocks(airList, MinecraftBlockTypes.Air, {
+                blockFilter: { excludeTypes: [MinecraftBlockTypes.Air] },
+                ignoreChunkBoundErrors: true,
+              });
+              player.sendMessage(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+              Logger.debug(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+              index++;
+              capacity += replaced.getCapacity();
+              airList = new ListBlockVolume([]);
+            }
           }
+          yield;
         }
-        const replaced = player.dimension.fillBlocks(list, fillBlock, {
-          blockFilter: { excludePermutations: [fillBlock] },
-          ignoreChunkBoundErrors: true,
-        });
-        yield;
-        const replacedAir = player.dimension.fillBlocks(airList, MinecraftBlockTypes.Air, {
-          blockFilter: { excludeTypes: [MinecraftBlockTypes.Air] },
-          ignoreChunkBoundErrors: true,
-        });
-        yield;
-        // /**
-        //  * 内側の領域
-        //  */
-        // const insideArea = new BlockVolume(
-        //   new Location(chunksMinPoint).max(new Location(fillAreaMinPoint).offset(1)),
-        //   new Location(chunksMaxPoint).min(new Location(fillAreaMaxPoint).offsetNega(1))
-        // );
-        // // 内側を空気で置換
-        // const replacedAir = player.dimension.fillBlocks(insideArea, MinecraftBlockTypes.Air, {
-        //   blockFilter: { excludeTypes: [MinecraftBlockTypes.Air] },
-        //   ignoreChunkBoundErrors: true,
-        // });
-        // yield;
-        // // 全領域を埋める (内側も)
-        // // --> 空気以外を置換するようにすると表面の空気が埋められないため
-        // const replaced = player.dimension.fillBlocks(
-        //   new BlockVolume(
-        //     new Location(chunksMinPoint).max(fillAreaMinPoint),
-        //     new Location(chunksMaxPoint).min(fillAreaMaxPoint)
-        //   ),
-        //   fillBlock,
-        //   { blockFilter: { excludePermutations: [fillBlock] }, ignoreChunkBoundErrors: true }
-        // );
-        // yield;
-        // // 内側を再度空気で置換
-        // player.dimension.fillBlocks(insideArea, MinecraftBlockTypes.Air, { ignoreChunkBoundErrors: true });
-        // yield;
+        if (list.getCapacity() > 0) {
+          const replaced = player.dimension.fillBlocks(list, fillBlock, {
+            blockFilter: { excludePermutations: [fillBlock] },
+            ignoreChunkBoundErrors: true,
+          });
+          player.sendMessage(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+          Logger.debug(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+          index++;
+          capacity += replaced.getCapacity();
+          yield;
+        }
+        if (airList.getCapacity() > 0) {
+          const replaced = player.dimension.fillBlocks(airList, MinecraftBlockTypes.Air, {
+            blockFilter: { excludeTypes: [MinecraftBlockTypes.Air] },
+            ignoreChunkBoundErrors: true,
+          });
+          player.sendMessage(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+          Logger.debug(`${index}: ${replaced.getCapacity()}ブロックを置き換えました。`);
+          index++;
+          capacity += replaced.getCapacity();
+          yield;
+        }
         player.dimension.runCommand('tickingarea remove FILL');
-        // const capacity = replaced.getCapacity() - insideArea.getCapacity() + replacedAir.getCapacity();
-        const capacity = replaced.getCapacity() + replacedAir.getCapacity();
-        player.sendMessage(`step: ${index} / ${chunks.length}; blocks: ${capacity} / ${chunksBV.getCapacity()}`);
-        index++;
         total += capacity;
         yield;
       }
 
-      player.sendMessage(`${total} / ${fillArea.getCapacity()} を置き換えました。`);
+      player.sendMessage(`${total} / ${fillArea.getCapacity()} ブロックを置き換えました。`);
     })()
   );
 };

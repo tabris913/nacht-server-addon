@@ -72,6 +72,8 @@ const commandProcessNew = (
   const fillAreaBV = new DimensionBlockVolume(from, to, player.dimension);
   const { max: fillAreaMaxPoint, min: fillAreaMinPoint } = fillAreaBV.getBoundingBox();
   const fillBP = BlockPermutation.resolve(tileName.id, blockStates ? parseBlockStates(blockStates) : undefined);
+  if (blockStates) Logger.debug('blockStates is given.');
+  else Logger.debug('blockStates is undefined.');
   const chunkIndices = {
     x: { min: Math.floor(fillAreaMinPoint.x / 16), max: Math.floor(fillAreaMaxPoint.x / 16) },
     z: { min: Math.floor(fillAreaMinPoint.z / 16), max: Math.floor(fillAreaMaxPoint.z / 16) },
@@ -96,11 +98,15 @@ const commandProcessNew = (
     for (let i = 1; i <= xStep; i++) {
       chunksBlockVolumes.push(
         new DimensionBlockVolume(
-          { x: fillAreaMinPoint.x + xInterval * (i - 1), y: fillAreaMinPoint.y, z: fillAreaMinPoint.z },
           {
-            x: Math.min(fillAreaMinPoint.x - 1 + xInterval * i, fillAreaMaxPoint.x),
+            x: 16 * (chunkIndices.x.min + chunkDistances.x * (i - 1)),
+            y: fillAreaMinPoint.y,
+            z: 16 * chunkIndices.z.min,
+          },
+          {
+            x: 16 * (chunkIndices.x.min + chunkDistances.x * i) - 1,
             y: fillAreaMaxPoint.y,
-            z: fillAreaMinPoint.z - 1 + chunkDistances.z,
+            z: 16 * (chunkIndices.z.max + 1) - 1,
           },
           player.dimension
         )
@@ -110,16 +116,24 @@ const commandProcessNew = (
     for (let i = 1; i <= zStep; i++) {
       chunksBlockVolumes.push(
         new DimensionBlockVolume(
-          { x: fillAreaMinPoint.x, y: fillAreaMinPoint.y, z: fillAreaMinPoint.z + zInterval * (i - 1) },
           {
-            x: fillAreaMinPoint.x - 1 + chunkDistances.x,
+            x: 16 * chunkIndices.x.min,
+            y: fillAreaMinPoint.y,
+            z: 16 * (chunkIndices.z.min + chunkDistances.z * (i - 1)),
+          },
+          {
+            x: 16 * (chunkIndices.x.max + 1) - 1,
             y: fillAreaMaxPoint.y,
-            z: Math.min(fillAreaMinPoint.z - 1 + zInterval * i, fillAreaMaxPoint.z),
+            z: 16 * (chunkIndices.z.min + chunkDistances.z * i) - 1,
           },
           player.dimension
         )
       );
     }
+  }
+
+  for (const c of chunksBlockVolumes) {
+    Logger.debug(c.toString());
   }
 
   switch (oldBlockHandling) {
@@ -309,4 +323,4 @@ function* callFillCommand(
   // Logger.log(`Run ${timesToRun} times and successed ${totalSuccessCount}.`);
 }
 
-export default () => system.beforeEvents.startup.subscribe(registerCommand(fillCommand, commandProcess));
+export default () => system.beforeEvents.startup.subscribe(registerCommand(fillCommand, commandProcessNew));

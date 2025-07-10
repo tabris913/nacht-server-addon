@@ -94,5 +94,7 @@ export const parseBlockStates = (blockStates: string) => {
     Object.assign(parsed, { [key]: value });
   }
 
+  Logger.debug(`parsed state: ${JSON.stringify(parsed)}`);
+
   return parsed;
 };
