@@ -48,10 +48,12 @@ export const fillHollow = (
           blockFilter: { excludePermutations: [fillBlock] },
           ignoreChunkBoundErrors: true,
         });
+        yield;
         const replacedAir = player.dimension.fillBlocks(airList, MinecraftBlockTypes.Air, {
           blockFilter: { excludeTypes: [MinecraftBlockTypes.Air] },
           ignoreChunkBoundErrors: true,
         });
+        yield;
         // /**
         //  * 内側の領域
         //  */
