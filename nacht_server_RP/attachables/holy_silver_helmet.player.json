@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "nacht:holy_silver_helmet.player",
+      "item": {
+        "nacht:holy_silver_helmet": "query.owner_identifier == 'minecraft:player'"
+      },
+      "materials": {
+        "default": "armor",
+        "enchanted": "armor_enchanted"
+      },
+      "textures": {
+        "default": "textures/models/armor/holy_silver_main",
+        "enchanted": "textures/misc/enchanted_actor_glint"
+      },
+      "geometry": {
+        "default": "geometry.player.armor.helmet"
+      },
+      "scripts": {
+        // -s
+        "parent_setup": "variable.helmet_layer_visible = 0.0;",
+        "animate": [
+          "offset"
+        ]
+      },
+      "animations": {
+        "offset": "animation.armor.helmet.offset"
+      },
+      "render_controllers": [
+        "controller.render.armor"
+      ]
+    }
+  }
+}

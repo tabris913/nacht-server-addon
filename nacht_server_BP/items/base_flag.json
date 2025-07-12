@@ -15,7 +15,7 @@
       "minecraft:glint": {
         "value": true
       },
-      "minecraft:icon": "base_flag",
+      "minecraft:icon": "nacht:base_flag",
       "minecraft:max_stack_size": 1,
       "minecraft:stacked_by_data": false,
       "minecraft:rarity": {

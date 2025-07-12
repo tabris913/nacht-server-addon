@@ -2,23 +2,65 @@
   "resource_pack_name": "Nacht Server Resource Pack",
   "texture_name": "atlas.items",
   "texture_data": {
-    "nacht_feather": {
+    "nacht:nacht_feather": {
       "textures": "textures/items/nacht_feather"
     },
-    "nacht_halo": {
-      "textures": "textures/items/nacht_feather"
+    "nacht:nacht_halo": {
+      "textures": "textures/items/nacht_halo"
     },
-    "nacht_left_wing": {
-      "textures": "textures/items/nacht_feather"
+    "nacht:nacht_left_wing": {
+      "textures": "textures/items/nacht_left_wing"
     },
-    "nacht_right_wing": {
-      "textures": "textures/items/nacht_feather"
+    "nacht:nacht_right_wing": {
+      "textures": "textures/items/nacht_right_wing"
     },
-    "nacht_tail": {
-      "textures": "textures/items/nacht_feather"
+    "nacht:nacht_tail": {
+      "textures": "textures/items/nacht_tail"
     },
-    "base_flag": {
+    "nacht:base_flag": {
       "textures": "textures/items/base_flag"
+    },
+    "nacht:holy_water": {
+      "textures": "textures/items/holy_water"
+    },
+    "nacht:chest_key": {
+      "textures": "textures/items/chest_key"
+    },
+    "nacht:silver_ingot": {
+      "textures": "textures/items/metal/silver_ingot"
+    },
+    "nacht:raw_silver": {
+      "textures": "textures/items/metal/raw_silver"
+    },
+    "nacht:silver_knife": {
+      "textures": "textures/items/tools/silver_knife"
+    },
+    "nacht:holy_silver_knife": {
+      "textures": "textures/items/tools/holy_silver_knife"
+    },
+    "nacht:silver_boots": {
+      "textures": "textures/items/armor/silver_boots"
+    },
+    "nacht:silver_chestplate": {
+      "textures": "textures/items/armor/silver_chestplate"
+    },
+    "nacht:silver_helmet": {
+      "textures": "textures/items/armor/silver_helmet"
+    },
+    "nacht:silver_leggings": {
+      "textures": "textures/items/armor/silver_leggings"
+    },
+    "nacht:holy_silver_boots": {
+      "textures": "textures/items/armor/holy_silver_boots"
+    },
+    "nacht:holy_silver_chestplate": {
+      "textures": "textures/items/armor/holy_silver_chestplate"
+    },
+    "nacht:holy_silver_helmet": {
+      "textures": "textures/items/armor/holy_silver_helmet"
+    },
+    "nacht:holy_silver_leggings": {
+      "textures": "textures/items/armor/holy_silver_leggings"
     }
   }
 }

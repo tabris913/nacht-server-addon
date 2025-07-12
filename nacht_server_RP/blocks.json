@@ -4,5 +4,21 @@
     "blockshape": "invisible",
     "textures": "itemframe_background",
     "sound": "itemframe"
+  },
+  "nacht:silver_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/silver_ore"
+  },
+  "nacht:deepslate_silver_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/deepslate_silver_ore"
+  },
+  "nacht:silver_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/silver_block"
+  },
+  "nacht:raw_silver_block": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/raw_silver_block"
   }
 }

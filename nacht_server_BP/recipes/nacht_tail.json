@@ -20,7 +20,11 @@
         "item": "minecraft:nether_star"
       }
     },
-    "unlock": [],
+    "unlock": [
+      {
+        "item": "nacht:nacht_tail"
+      }
+    ],
     "result": {
       "item": "nacht:nacht_tail"
     }

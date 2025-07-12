@@ -1,0 +1,48 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nacht:holy_silver_knife"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:silver_knife"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "nacht:silver_knife"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      }
+    ],
+    "result": {
+      "item": "nacht:holy_silver_knife"
+    }
+  }
+}

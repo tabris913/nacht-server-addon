@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "nacht:ores/silver_ore"
+    },
+    "count": 10,
+    "replace_rules": [
+      {
+        "places_block": "nacht:silver_ore",
+        "may_replace": [
+          {
+            "name": "minecraft:stone"
+          }
+        ]
+      },
+      {
+        "places_block": "nacht:deepslate_silver_ore",
+        "may_replace": [
+          {
+            "name": "minecraft:deepslate"
+          }
+        ]
+      }
+    ]
+  }
+}

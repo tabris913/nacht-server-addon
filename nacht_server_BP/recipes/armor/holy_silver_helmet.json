@@ -1,0 +1,48 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nacht:holy_silver_helmet"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:silver_helmet"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "nacht:silver_helmet"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      }
+    ],
+    "result": {
+      "item": "nacht:holy_silver_helmet"
+    }
+  }
+}

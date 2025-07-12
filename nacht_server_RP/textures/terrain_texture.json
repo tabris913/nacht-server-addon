@@ -1,0 +1,20 @@
+{
+  "resource_pack_name": "Nacht Server Resource Pack",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "nacht:silver_ore": {
+      "textures": "textures/blocks/ores/silver_ore"
+    },
+    "nacht:deepslate_silver_ore": {
+      "textures": "textures/blocks/ores/deepslate_silver_ore"
+    },
+    "nacht:silver_block": {
+      "textures": "textures/blocks/ores/silver_block"
+    },
+    "nacht:raw_silver_block": {
+      "textures": "textures/blocks/ores/raw_silver_block"
+    }
+  }
+}

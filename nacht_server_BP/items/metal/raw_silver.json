@@ -1,0 +1,17 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:raw_silver",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:raw_silver",
+      "minecraft:display_name": {
+        "value": "item.nacht:raw_silver.name"
+      }
+    }
+  }
+}

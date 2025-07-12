@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:silver_ingot_from_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:silver_block"
+      }
+    ],
+    "pattern": [
+      "#"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:silver_block"
+      }
+    },
+    "result": {
+      "item": "nacht:silver_ingot"
+    }
+  }
+}

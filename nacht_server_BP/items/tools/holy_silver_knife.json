@@ -1,0 +1,84 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:holy_silver_knife",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.sword"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:holy_silver_knife",
+      "minecraft:display_name": {
+        "value": "item.nacht:holy_silver_knife.name"
+      },
+      "minecraft:rarity": {
+        "value": "uncommon"
+      },
+      "minecraft:glint": {
+        "value": true
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:stacked_by_data": false,
+      "minecraft:can_destroy_in_creative": false,
+      "minecraft:hand_equipped": true,
+      "minecraft:damage": {
+        "value": 9
+      },
+      "minecraft:enchantable": {
+        "slot": "sword",
+        "value": 12
+      },
+      "minecraft:durability": {
+        "max_durability": 251
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:silver_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:silver_knife"
+            ],
+            "repair_amount": "c.other->query.remaining_durability + (0.12 * c.other->query.max_durability)"
+          },
+          {
+            "items": [
+              "nacht:holy_water"
+            ],
+            "repair_amount": "query.max_durability * 0.5"
+          },
+          {
+            "items": [
+              "nacht:holy_silver_knife"
+            ],
+            "repair_amount": "c.other->query.remaining_durability + (0.24 * c.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:digger": {
+        "destroy_speeds": [
+          {
+            "speed": 7,
+            "block": "minecraft:web"
+          },
+          {
+            "speed": 7,
+            "block": "minecraft:bamboo"
+          }
+        ]
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_sword",
+          "nacht:silver_tier"
+        ]
+      }
+    }
+  }
+}

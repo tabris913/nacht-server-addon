@@ -1,16 +1,40 @@
 pack.name=Nacht Server Addon	##
 
 items.base_flag.name=拠点の旗	##
+tile.nacht:base_flag.name=拠点の旗	##
+entity.nacht:base_flag.name=拠点の旗	##
+
+nacht:nacht_items_name=なはと	##
 items.nacht_feather.name=なはとの羽根	##
 items.nacht_halo.name=なはとの輪っか	##
 items.nacht_left_wing.name=なはとの片翼(左)	##
 items.nacht_right_wing.name=なはとの片翼(右)	##
 items.nacht_tail.name=なはとのしっぽ	##
-nacht:nacht_items_name=なはと	##
 
-tile.nacht:base_flag.name=拠点の旗	##
-entity.nacht:base_flag.name=拠点の旗	##
+item.nacht:holy_water.name=聖水	##
 
+item.nacht:raw_silver.name=銀の原石	##
+item.nacht:silver_ingot.name=銀のインゴット	##
+tile.nacht:silver_ore.name=銀鉱石	##
+tile.nacht:deepslate_silver_ore.name=深層岩銀鉱石	##
+tile.nacht:silver_block.name=銀ブロック	##
+tile.nacht:raw_silver_block.name=銀の原石ブロック	##
+item.nacht:silver_boots.name=銀のブーツ	##
+item.nacht:silver_chestplate.name=銀のチェストプレート	##
+item.nacht:silver_helmet.name=銀のヘルメット	##
+item.nacht:silver_leggings.name=銀のレギンス	##
+item.nacht:silver_knife.name=銀のナイフ	##
+item.nacht:holy_silver_knife.name=霊銀のナイフ	##
+item.nacht:silver_boots.name=銀のブーツ	##
+item.nacht:silver_chestplate.name=銀のチェストプレート	##
+item.nacht:silver_helmet.name=銀のヘルメット	##
+item.nacht:silver_leggings.name=銀のレギンス	##
+item.nacht:holy_silver_boots.name=霊銀のブーツ	##
+item.nacht:holy_silver_chestplate.name=霊銀のチェストプレート	##
+item.nacht:holy_silver_helmet.name=霊銀のヘルメット	##
+item.nacht:holy_silver_leggings.name=霊銀のレギンス	##
+
+## 正しく表示できないもの
 tile.oak_standing_sign.name=オークの看板	##
 tile.spruce_standing_sign.name=トウヒの看板	##
 tile.birch_standing_sign.name=シラカバの看板	##
@@ -104,4 +128,4 @@ tile.waxed_oxidized_double_cut_copper_slab.name=錆止めされた酸化した�
 tile.end_portal.name=エンドポータル	##
 
 tile.frame.name=額縁	##
-tile.glow_frame.time=輝く額縁	##
+tile.glow_frame.name=輝く額縁	##

@@ -21,7 +21,11 @@
       }
     },
     "assume_symmetry": false,
-    "unlock": [],
+    "unlock": [
+      {
+        "item": "nacht:nacht_right_wing"
+      }
+    ],
     "result": {
       "item": "nacht:nacht_right_wing"
     }
