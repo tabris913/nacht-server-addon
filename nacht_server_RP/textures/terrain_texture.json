@@ -5,16 +5,25 @@
   "num_mip_levels": 4,
   "texture_data": {
     "nacht:silver_ore": {
-      "textures": "textures/blocks/ores/silver_ore"
+      "textures": "textures/blocks/ores/silver/silver_ore"
     },
     "nacht:deepslate_silver_ore": {
-      "textures": "textures/blocks/ores/deepslate_silver_ore"
+      "textures": "textures/blocks/ores/silver/deepslate_silver_ore"
     },
     "nacht:silver_block": {
-      "textures": "textures/blocks/ores/silver_block"
+      "textures": "textures/blocks/ores/silver/silver_block"
     },
     "nacht:raw_silver_block": {
-      "textures": "textures/blocks/ores/raw_silver_block"
+      "textures": "textures/blocks/ores/silver/raw_silver_block"
+    },
+    "deepslate_orichalcum_ore": {
+      "textures": "textures/blocks/ores/orichalcum/deepslate_orichalcum_ore"
+    },
+    "raw_orichalcum_block": {
+      "textures": "textures/blocks/ores/orichalcum/raw_orichalcum_block"
+    },
+    "orichalcum_block": {
+      "textures": "textures/blocks/ores/orichalcum/orichalcum_block"
     }
   }
 }

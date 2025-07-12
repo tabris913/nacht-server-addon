@@ -27,10 +27,10 @@
       "textures": "textures/items/chest_key"
     },
     "nacht:silver_ingot": {
-      "textures": "textures/items/metal/silver_ingot"
+      "textures": "textures/items/metal/silver/silver_ingot"
     },
     "nacht:raw_silver": {
-      "textures": "textures/items/metal/raw_silver"
+      "textures": "textures/items/metal/silver/raw_silver"
     },
     "nacht:silver_knife": {
       "textures": "textures/items/tools/silver_knife"
@@ -39,28 +39,61 @@
       "textures": "textures/items/tools/holy_silver_knife"
     },
     "nacht:silver_boots": {
-      "textures": "textures/items/armor/silver_boots"
+      "textures": "textures/items/armor/silver/silver_boots"
     },
     "nacht:silver_chestplate": {
-      "textures": "textures/items/armor/silver_chestplate"
+      "textures": "textures/items/armor/silver/silver_chestplate"
     },
     "nacht:silver_helmet": {
-      "textures": "textures/items/armor/silver_helmet"
+      "textures": "textures/items/armor/silver/silver_helmet"
     },
     "nacht:silver_leggings": {
-      "textures": "textures/items/armor/silver_leggings"
+      "textures": "textures/items/armor/silver/silver_leggings"
     },
     "nacht:holy_silver_boots": {
-      "textures": "textures/items/armor/holy_silver_boots"
+      "textures": "textures/items/armor/holy_silver/holy_silver_boots"
     },
     "nacht:holy_silver_chestplate": {
-      "textures": "textures/items/armor/holy_silver_chestplate"
+      "textures": "textures/items/armor/holy_silver/holy_silver_chestplate"
     },
     "nacht:holy_silver_helmet": {
-      "textures": "textures/items/armor/holy_silver_helmet"
+      "textures": "textures/items/armor/holy_silver/holy_silver_helmet"
     },
     "nacht:holy_silver_leggings": {
-      "textures": "textures/items/armor/holy_silver_leggings"
+      "textures": "textures/items/armor/holy_silver/holy_silver_leggings"
+    },
+    "nacht:raw_orichalcum": {
+      "textures": "textures/items/metal/orichalcum/raw_orichalcum"
+    },
+    "nacht:orichalcum_ingot": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_ingot"
+    },
+    "nacht:orichalcum_sword": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_sword"
+    },
+    "nacht:orichalcum_axe": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_axe"
+    },
+    "nacht:orichalcum_pickaxe": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_pickaxe"
+    },
+    "nacht:orichalcum_shovel": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_shovel"
+    },
+    "nacht:orichalcum_hoe": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_hoe"
+    },
+    "nacht:orichalcum_boots": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_boots"
+    },
+    "nacht:orichalcum_chestplate": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_chestplate"
+    },
+    "nacht:orichalcum_helmet": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_helmet"
+    },
+    "nacht:orichalcum_leggings": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_leggings"
     }
   }
 }

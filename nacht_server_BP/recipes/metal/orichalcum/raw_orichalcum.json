@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:raw_orichalcum"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:raw_orichalcum_block"
+      }
+    ],
+    "pattern": [
+      "#"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:raw_orichalcum_block"
+      }
+    },
+    "result": {
+      "item": "nacht:raw_orichalcum",
+      "count": 9
+    }
+  }
+}

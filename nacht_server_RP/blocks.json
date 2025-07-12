@@ -7,18 +7,30 @@
   },
   "nacht:silver_ore": {
     "sound": "stone",
-    "carried_textures": "textures/blocks/ores/silver_ore"
+    "carried_textures": "textures/blocks/ores/silver/silver_ore"
   },
   "nacht:deepslate_silver_ore": {
     "sound": "stone",
-    "carried_textures": "textures/blocks/ores/deepslate_silver_ore"
+    "carried_textures": "textures/blocks/ores/silver/deepslate_silver_ore"
   },
   "nacht:silver_block": {
     "sound": "metal",
-    "carried_textures": "textures/blocks/ores/silver_block"
+    "carried_textures": "textures/blocks/ores/silver/silver_block"
   },
   "nacht:raw_silver_block": {
     "sound": "stone",
-    "carried_textures": "textures/blocks/ores/raw_silver_block"
+    "carried_textures": "textures/blocks/ores/silver/raw_silver_block"
+  },
+  "deepslate_orichalcum_ore": {
+    "sound": "stone",
+    "textures": "textures/blocks/ores/orichalcum/deepslate_orichalcum_ore"
+  },
+  "raw_orichalcum_block": {
+    "sound": "stone",
+    "textures": "textures/blocks/ores/orichalcum/raw_orichalcum_block"
+  },
+  "orichalcum_block": {
+    "sound": "metal",
+    "textures": "textures/blocks/ores/orichalcum/orichalcum_block"
   }
 }

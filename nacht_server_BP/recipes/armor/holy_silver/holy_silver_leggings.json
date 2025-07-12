@@ -1,0 +1,48 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nacht:holy_silver_leggings"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:silver_leggings"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "nacht:silver_leggings"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      },
+      {
+        "item": "nacht:holy_water"
+      }
+    ],
+    "result": {
+      "item": "nacht:holy_silver_leggings"
+    }
+  }
+}

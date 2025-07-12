@@ -1,0 +1,87 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:orichalcum_axe",
+      "menu_category": {
+        "category": "equipment",
+        "menu_category": "minecraft:itemGroup.name.axe"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:orichalcum_axe",
+      "minecraft:display_name": {
+        "value": "item.nacht:orichalcum_axe.name"
+      },
+      "minecraft:rarity": {
+        "value": "common"
+      },
+      "minecraft:glint": {
+        "value": false
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:stacked_by_data": false,
+      "minecraft:enchantable": {
+        "value": 10,
+        "slot": "axe"
+      },
+      "minecraft:durability": {
+        "max_durability": 0
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht::orichalcum_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht::orichalcum_axe"
+            ],
+            "repair_amount": "c.other->query.remaining_durability + (0.12 * c.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:damage": 0,
+      "minecraft:hand_equipped": true,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_axe",
+          "nacht:orichalcum_tier",
+          "minecraft:digger"
+        ]
+      },
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "query.any_tag('minecraft:is_axe_item_destructible') && !q.all_tags('minecraft:_tier_destructible')"
+            },
+            "speed": 5
+          },
+          {
+            "block": {
+              "tags": "query.any_tag('minecraft:is_axe_item_destructible') && !q.all_tags('nacht:orichalcum_tier_destructible')"
+            },
+            "speed": 5
+          },
+          {
+            "speed": 7,
+            "block": {
+              "tags": "query.any_tag('log')"
+            }
+          },
+          {
+            "speed": 7,
+            "block": {
+              "tags": "query.any_tag('wood')"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

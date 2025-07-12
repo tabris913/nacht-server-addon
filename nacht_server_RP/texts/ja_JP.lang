@@ -1,5 +1,8 @@
 pack.name=Nacht Server Addon	##
 
+## -----------------------------------------------------------------------------
+## オリジナルアイテム
+## -----------------------------------------------------------------------------
 items.base_flag.name=拠点の旗	##
 tile.nacht:base_flag.name=拠点の旗	##
 entity.nacht:base_flag.name=拠点の旗	##
@@ -13,6 +16,7 @@ items.nacht_tail.name=なはとのしっぽ	##
 
 item.nacht:holy_water.name=聖水	##
 
+## silver
 item.nacht:raw_silver.name=銀の原石	##
 item.nacht:silver_ingot.name=銀のインゴット	##
 tile.nacht:silver_ore.name=銀鉱石	##
@@ -34,7 +38,30 @@ item.nacht:holy_silver_chestplate.name=霊銀のチェストプレート	##
 item.nacht:holy_silver_helmet.name=霊銀のヘルメット	##
 item.nacht:holy_silver_leggings.name=霊銀のレギンス	##
 
+## orichalcum
+item.nacht:raw_orichalcum.name=オリハルコンの原石	##
+item.nacht:orichalcum_ingot.name=オリハルコンのインゴット	##
+tile.nacht:deepslate_orichalcum_ore.name=深層岩オリハルコン鉱石	##
+tile.nacht:orichalcum_block.name=オリハルコンブロック	##
+tile.nacht:raw_orichalcum_block.name=オリハルコンの原石ブロック	##
+item.nacht:orichalcum_boots.name=オリハルコンのブーツ	##
+item.nacht:orichalcum_chestplate.name=オリハルコンのチェストプレート	##
+item.nacht:orichalcum_helmet.name=オリハルコンのヘルメット	##
+item.nacht:orichalcum_leggings.name=オリハルコンのレギンス	##
+item.nacht:orichalcum_sword.name=オリハルコンの剣	##
+item.nacht:orichalcum_axe.name=オリハルコンの斧	##
+item.nacht:orichalcum_pickaxe.name=オリハルコンのピッケル	##
+item.nacht:orichalcum_shovel.name=オリハルコンのシャベル	##
+item.nacht:orichalcum_hoe.name=オリハルコンのクワ	##
+item.nacht:orichalcum_boots.name=オリハルコンのブーツ	##
+item.nacht:orichalcum_chestplate.name=オリハルコンのチェストプレート	##
+item.nacht:orichalcum_helmet.name=オリハルコンのヘルメット	##
+item.nacht:orichalcum_leggings.name=オリハルコンのレギンス	##
+
+
+## -----------------------------------------------------------------------------
 ## 正しく表示できないもの
+## -----------------------------------------------------------------------------
 tile.oak_standing_sign.name=オークの看板	##
 tile.spruce_standing_sign.name=トウヒの看板	##
 tile.birch_standing_sign.name=シラカバの看板	##

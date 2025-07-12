@@ -1,0 +1,70 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:holy_silver_helmet",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.helmet"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:holy_silver_helmet",
+      "minecraft:display_name": {
+        "value": "item.nacht:holy_silver_helmet.name"
+      },
+      "minecraft:rarity": {
+        "value": "uncommon"
+      },
+      "minecraft:glint": {
+        "value": true
+      },
+      "minecraft:stacked_by_data": false,
+      "minecraft:wearable": {
+        "protection": 4,
+        "slot": "slot.armor.head"
+      },
+      "minecraft:enchantable": {
+        "value": 10,
+        "slot": "armor_head"
+      },
+      "minecraft:durability": {
+        "max_durability": 165
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:silver_ingot"
+            ],
+            "repair_amount": "q.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:silver_helmet"
+            ],
+            "repair_amount": "c.other->q.remaining_durability + (0.12 * c.other->q.max_durability)"
+          },
+          {
+            "items": [
+              "nacht:holy_water"
+            ],
+            "repair_amount": "q.max_durability * 0.5"
+          },
+          {
+            "items": [
+              "nacht:holy_silver_helmet"
+            ],
+            "repair_amount": "c.other->q.remaining_durability + (0.24 * c.other->q.max_durability)"
+          }
+        ]
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor"
+        ]
+      }
+    }
+  }
+}
