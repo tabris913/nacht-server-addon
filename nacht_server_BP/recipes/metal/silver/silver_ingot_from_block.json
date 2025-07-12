@@ -21,7 +21,8 @@
       }
     },
     "result": {
-      "item": "nacht:silver_ingot"
+      "item": "nacht:silver_ingot",
+      "count": 9
     }
   }
 }

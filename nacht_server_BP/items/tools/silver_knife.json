@@ -64,8 +64,7 @@
       "minecraft:tags": {
         "tags": [
           "minecraft:is_sword",
-          "nacht:silver_tier",
-          "minecraft:transformable_items"
+          "nacht:silver_tier"
         ]
       }
     }
