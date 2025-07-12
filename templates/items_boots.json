@@ -1,0 +1,59 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:$ITEM_NAME_boots",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.boots"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:$ITEM_NAME_boots",
+      "minecraft:display_name": {
+        "value": "item.nacht:$ITEM_NAME_boots.name"
+      },
+      "minecraft:rarity": {
+        "value": "common"
+      },
+      "minecraft:glint": {
+        "value": false
+      },
+      "minecraft:stacked_by_data": false,
+      "minecraft:wearable": {
+        "protection": 0,
+        "slot": "slot.armor.feet"
+      },
+      "minecraft:enchantable": {
+        "value": 10,
+        "slot": "armor_feet"
+      },
+      "minecraft:durability": {
+        "max_durability": 0
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:$ITEM_NAME_ingot"
+            ],
+            "repair_amount": "q.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:$ITEM_NAME_boots"
+            ],
+            "repair_amount": "c.other->q.remaining_durability + (0.12 * c.other->q.max_durability)"
+          }
+        ]
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor",
+          "minecraft:trimmable_armors"
+        ]
+      }
+    }
+  }
+}

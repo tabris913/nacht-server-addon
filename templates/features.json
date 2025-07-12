@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "nacht:ores/$ITEM_NAME"
+    },
+    "count": 8,
+    "replace_rules": [
+      {
+        "places_block": "nacht:$ITEM_NAME",
+        "may_replace": [
+          {
+            "name": "minecraft:stone"
+          }
+        ]
+      },
+      {
+        "places_block": "nacht:deepslate_$ITEM_NAME",
+        "may_replace": [
+          {
+            "name": "minecraft:deepslate"
+          }
+        ]
+      }
+    ]
+  }
+}
