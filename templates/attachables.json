@@ -15,7 +15,7 @@
         "default": "geometry.humanoid.armor.$PART"
       },
       "scripts": {
-        // -s
+        // boot chest helmet leg
         "parent_setup": "variable.$PART_layer_visible = 0.0;"
       },
       "render_controllers": [

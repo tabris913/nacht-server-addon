@@ -2,7 +2,7 @@
   "format_version": "1.21.80",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "nacht:$ITEM_NAME"
+      "identifier": "nacht:$ITEM_NAME_boots"
     },
     "tags": [
       "crafting_table"
@@ -12,14 +12,17 @@
         "item": "nacht:$ITEM_NAME_ingot"
       }
     ],
-    "pattern": [],
+    "pattern": [
+      "# #",
+      "# #"
+    ],
     "key": {
       "#": {
         "item": "nacht:$ITEM_NAME_ingot"
       }
     },
     "result": {
-      "item": "nacht:$ITEM_NAME"
+      "item": "nacht:$ITEM_NAME_boots"
     }
   }
 }

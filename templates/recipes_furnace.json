@@ -2,13 +2,13 @@
   "format_version": "1.21.80",
   "minecraft:recipe_furnace": {
     "description": {
-      "identifier": "nacht:$ITEM_NAME_from_raw"
+      "identifier": "nacht:$ITEM_NAME_ingot_from_raw"
     },
     "tags": [
       "furnace",
       "blast_furnace"
     ],
-    "input": "nacht:",
-    "output": "nacht:$ITEM_NAME"
+    "input": "nacht:raw_$ITEM_NAME",
+    "output": "nacht:$ITEM_NAME_ingot"
   }
 }

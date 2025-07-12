@@ -2,24 +2,27 @@
   "format_version": "1.21.80",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "nacht:$ITEM_NAME"
+      "identifier": "nacht:raw_$ITEM_NAME"
     },
     "tags": [
       "crafting_table"
     ],
     "unlock": [
       {
-        "item": "nacht:$ITEM_NAME_ingot"
+        "item": "nacht:raw_$ITEM_NAME_block"
       }
     ],
-    "pattern": [],
+    "pattern": [
+      "#"
+    ],
     "key": {
       "#": {
-        "item": "nacht:$ITEM_NAME_ingot"
+        "item": "nacht:raw_$ITEM_NAME_block"
       }
     },
     "result": {
-      "item": "nacht:$ITEM_NAME"
+      "item": "nacht:raw_$ITEM_NAME",
+      "count": 9
     }
   }
 }

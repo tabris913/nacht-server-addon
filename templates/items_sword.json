@@ -1,0 +1,71 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:$ITEM_NAME_sword",
+      "menu_category": {
+        "category": "equipment",
+        "menu_category": "minecraft:itemGroup.name.sword"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:$ITEM_NAME_sword",
+      "minecraft:display_name": {
+        "value": "item.nacht:$ITEM_NAME_sword.name"
+      },
+      "minecraft:rarity": {
+        "value": "common"
+      },
+      "minecraft:glint": {
+        "value": false
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:stacked_by_data": false,
+      "minecraft:enchantable": {
+        "value": 10,
+        "slot": "sword"
+      },
+      "minecraft:durability": {
+        "max_durability": 100
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:$ITEM_NAME_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:$ITEM_NAME_sword"
+            ],
+            "repair_amount": "c.other->query.remaining_durability + (0.12 * c.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:damage": 5,
+      "minecraft:hand_equipped": true,
+      "minecraft:can_destroy_in_creative": false,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_sword",
+          "nacht:$ITEM_NAME_tier",
+          "minecraft:digger"
+        ]
+      },
+      "minecraft:digger": {
+        "destroy_speeds": [
+          {
+            "speed": 7,
+            "block": "minecraft:web"
+          },
+          {
+            "speed": 7,
+            "block": "minecraft:bamboo"
+          }
+        ]
+      }
+    }
+  }
+}
