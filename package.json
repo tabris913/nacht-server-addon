@@ -1,15 +1,15 @@
 {
   "name": "nacht_server_addon",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "",
   "type": "module",
   "main": "scripts/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "archive": "sh archive.sh",
-    "build": "sh build.sh",
+    "archive": "bash archive.sh",
+    "build": "bash build.sh",
     "package": "sh copy.sh && sh build.sh && sh archive.sh",
-    "copy": "sh copy.sh",
+    "copy": "bash copy.sh",
     "prettier": "npx prettier --write nacht_server_BP/src/**/*.ts",
     "eslint": "npx eslint --fix --format=stylish nacht_server_BP/src/**/*.ts"
   },
