@@ -14,7 +14,7 @@ import BaseUtils from '../utils/BaseUtils';
 
 const show = async (player: Player) => {
   const dimLoc: DimensionLocation = { ...player.location, dimension: player.dimension };
-  const content: Array<RawMessage | string> = [];
+  const content: Array<RawMessage | string> = ['announce;'];
 
   // Area info
   const area = AreaUtils.isInBaseArea(dimLoc)
