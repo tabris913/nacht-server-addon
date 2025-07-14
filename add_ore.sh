@@ -49,15 +49,15 @@ cat templates/recipes_raw.json | sed s/\$ITEM_NAME/${METAL_NAME}/g > $BP/recipes
 
 # blocks
 mkdir -p $RP/textures/blocks/ores/${METAL_NAME}
-cp templates/_16.png $RP/textures/blocks/ores/${METAL_NAME}/deepslate_${METAL_NAME}_ore.png
-cp templates/_16.png $RP/textures/blocks/ores/${METAL_NAME}/${METAL_NAME}_ore.png
-cp templates/_16.png $RP/textures/blocks/ores/${METAL_NAME}/${METAL_NAME}_block.png
-cp templates/_16.png $RP/textures/blocks/ores/${METAL_NAME}/raw_${METAL_NAME}_block.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/blocks/deepslate/deepslate_iron_ore.png $RP/textures/blocks/ores/${METAL_NAME}/deepslate_${METAL_NAME}_ore.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/blocks/iron_ore.png $RP/textures/blocks/ores/${METAL_NAME}/${METAL_NAME}_ore.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/blocks/iron_block.png $RP/textures/blocks/ores/${METAL_NAME}/${METAL_NAME}_block.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/blocks/raw_iron_block.png $RP/textures/blocks/ores/${METAL_NAME}/raw_${METAL_NAME}_block.png
 
 # item
 mkdir -p $RP/textures/items/metal/${METAL_NAME}
-cp templates/_16.png $RP/textures/items/metal/${METAL_NAME}/raw_${METAL_NAME}.png
-cp templates/_16.png $RP/textures/items/metal/${METAL_NAME}/${METAL_NAME}_ingot.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/blocks/raw_iron.png $RP/textures/items/metal/${METAL_NAME}/raw_${METAL_NAME}.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/blocks/iron_ingot.png $RP/textures/items/metal/${METAL_NAME}/${METAL_NAME}_ingot.png
 
 # armor, tool
 mkdir -p $BP/items/armor/${METAL_NAME}
@@ -86,15 +86,15 @@ done
 
 mkdir -p $RP/textures/items/armor/${METAL_NAME}
 for part in _boots _chestplate _helmet _leggings; do
-  cp templates/_16.png $RP/textures/items/armor/${METAL_NAME}/${METAL_NAME}$part.png
+  cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/items/iron$part.png $RP/textures/items/armor/${METAL_NAME}/${METAL_NAME}$part.png
 done
 mkdir -p $RP/textures/items/tools/${METAL_NAME}
 for part in _sword _axe _pickaxe _shovel _hoe; do
-  cp templates/_16.png $RP/textures/items/tools/${METAL_NAME}/${METAL_NAME}$part.png
+  cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/items/iron$part.png $RP/textures/items/tools/${METAL_NAME}/${METAL_NAME}$part.png
 done
 
-cp templates/_64_32.png $RP/textures/models/armor/${METAL_NAME}_leggings.png
-cp templates/_64_32.png $RP/textures/models/armor/${METAL_NAME}_main.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/models/armor/iron_2.png $RP/textures/models/armor/${METAL_NAME}_leggings.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/models/armor/iron_1.png $RP/textures/models/armor/${METAL_NAME}_main.png
 
 echo Don\'t forget to add to below files
 echo $BP/item_catalog/crafting_item_catalog.json

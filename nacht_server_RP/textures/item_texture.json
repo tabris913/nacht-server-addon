@@ -2,6 +2,9 @@
   "resource_pack_name": "Nacht Server Resource Pack",
   "texture_name": "atlas.items",
   "texture_data": {
+    "nacht:base_flag": {
+      "textures": "textures/items/base_flag"
+    },
     "nacht:nacht_feather": {
       "textures": "textures/items/nacht_feather"
     },
@@ -17,32 +20,140 @@
     "nacht:nacht_tail": {
       "textures": "textures/items/nacht_tail"
     },
-    "nacht:base_flag": {
-      "textures": "textures/items/base_flag"
-    },
     "nacht:holy_water": {
       "textures": "textures/items/holy_water"
     },
     "nacht:chest_key": {
       "textures": "textures/items/chest_key"
     },
-    "nacht:silver_ingot": {
-      "textures": "textures/items/metal/silver/silver_ingot"
+    "nacht:aether": {
+      "textures": "textures/items/aether"
+    },
+    "nacht:condensed_aether": {
+      "textures": "textures/items/condensed_aether"
+    },
+    "nacht:poor_elixir": {
+      "textures": "textures/items/poor_elixir"
+    },
+    "nacht:elixir": {
+      "textures": "textures/items/elixir"
+    },
+    "nacht:unrefined_lapis_philosophorum": {
+      "textures": "textures/items/unrefined_lapis_philosophorum"
+    },
+    "nacht:lapis_philosophorum": {
+      "textures": "textures/items/lapis_philosophorum"
+    },
+    "nacht:invertia_core": {
+      "textures": "textures/items/invertia_core"
+    },
+    "nacht:anti_wither_core": {
+      "textures": "textures/items/anti_wither_core"
+    },
+    "nacht:anti_ender_core": {
+      "textures": "textures/items/anti_ender_core"
+    },
+    "nacht:stellavita": {
+      "textures": "textures/items/stellavita"
+    },
+    "nacht:stellavita_ring": {
+      "textures": "textures/items/stellavita_ring"
     },
     "nacht:raw_silver": {
       "textures": "textures/items/metal/silver/raw_silver"
     },
+    "nacht:silver_ingot": {
+      "textures": "textures/items/metal/silver/silver_ingot"
+    },
+    "nacht:blazered_steel_shard": {
+      "textures": "textures/items/metal/blazered_steel/blazered_steel_shard"
+    },
+    "nacht:blazered_steel": {
+      "textures": "textures/items/metal/blazered_steel/blazered_steel"
+    },
+    "nacht:hollow_crystal_shard": {
+      "textures": "textures/items/metal/hollow_crystal/hollow_crystal_shard"
+    },
+    "nacht:hollow_crystal": {
+      "textures": "textures/items/metal/hollow_crystal/hollow_crystal"
+    },
+    "nacht:raw_nocturium": {
+      "textures": "textures/items/metal/nocturium/raw_nocturium"
+    },
+    "nacht:nocturium_ingot": {
+      "textures": "textures/items/metal/nocturium/nocturium_ingot"
+    },
+    "nacht:raw_luminarium": {
+      "textures": "textures/items/metal/luminarium/raw_luminarium"
+    },
+    "nacht:luminarium_ingot": {
+      "textures": "textures/items/metal/luminarium/luminarium_ingot"
+    },
+    "nacht:raw_terramagnite": {
+      "textures": "textures/items/metal/terramagnite/raw_terramagnite"
+    },
+    "nacht:terramagnite_ingot": {
+      "textures": "textures/items/metal/terramagnite/terramagnite_ingot"
+    },
+    "nacht:raw_electrum": {
+      "textures": "textures/items/metal/electrum/raw_electrum"
+    },
+    "nacht:electrum_ingot": {
+      "textures": "textures/items/metal/electrum/electrum_ingot"
+    },
+    "nacht:magnos_shard": {
+      "textures": "textures/items/metal/magnos/magnos_shard"
+    },
+    "nacht:magnos_ingot": {
+      "textures": "textures/items/metal/magnos/magnos_ingot"
+    },
+    "nacht:aedrium_shard": {
+      "textures": "textures/items/metal/aedrium/aedrium_shard"
+    },
+    "nacht:aedrium_ingot": {
+      "textures": "textures/items/metal/aedrium/aedrium_ingot"
+    },
+    "nacht:raw_scarlet_orichalcum": {
+      "textures": "textures/items/metal/scarlet_orichalcum/raw_scarlet_orichalcum"
+    },
+    "nacht:scarlet_orichalcum_ingot": {
+      "textures": "textures/items/metal/scarlet_orichalcum/scarlet_orichalcum_ingot"
+    },
+    "nacht:star_iron_ingot": {
+      "textures": "textures/items/metal/star_iron/star_iron_ingot"
+    },
+    "nacht:raw_orichalcum": {
+      "textures": "textures/items/metal/orichalcum/raw_orichalcum"
+    },
+    "nacht:orichalcum_ingot": {
+      "textures": "textures/items/metal/orichalcum/orichalcum_ingot"
+    },
+    "nacht:magradis_shard": {
+      "textures": "textures/items/metal/magradis/magradis_shard"
+    },
+    "nacht:magradis_ingot": {
+      "textures": "textures/items/metal/magradis/magradis_ingot"
+    },
+    "nacht:nexiatite_shard": {
+      "textures": "textures/items/metal/nexiatite/nexiatite_shard"
+    },
+    "nacht:nexiatite_ingot": {
+      "textures": "textures/items/metal/nexiatite/nexiatite_ingot"
+    },
+    "nacht:solistite_ingot": {
+      "textures": "textures/items/metal/solistite/solistite_ingot"
+    },
+    "nacht:raw_adamantium": {
+      "textures": "textures/items/metal/adamantium/raw_adamantium"
+    },
+    "nacht:adamantium_ingot": {
+      "textures": "textures/items/metal/adamantium/adamantium_ingot"
+    },
     "nacht:silver_knife": {
-      "textures": "textures/items/tools/silver_knife"
+      "textures": "textures/items/tools/silver/silver_knife"
     },
     "nacht:silver_pickaxe": {
-      "textures": "textures/items/tools/silver_pickaxe"
-    },
-    "nacht:holy_silver_knife": {
-      "textures": "textures/items/tools/holy_silver_knife"
-    },
-    "nacht:holy_silver_pickaxe": {
-      "textures": "textures/items/tools/holy_silver_pickaxe"
+      "textures": "textures/items/tools/silver/silver_pickaxe"
     },
     "nacht:silver_boots": {
       "textures": "textures/items/armor/silver/silver_boots"
@@ -56,6 +167,12 @@
     "nacht:silver_leggings": {
       "textures": "textures/items/armor/silver/silver_leggings"
     },
+    "nacht:holy_silver_knife": {
+      "textures": "textures/items/tools/holy_silver/holy_silver_knife"
+    },
+    "nacht:holy_silver_pickaxe": {
+      "textures": "textures/items/tools/holy_silver/holy_silver_pickaxe"
+    },
     "nacht:holy_silver_boots": {
       "textures": "textures/items/armor/holy_silver/holy_silver_boots"
     },
@@ -68,38 +185,290 @@
     "nacht:holy_silver_leggings": {
       "textures": "textures/items/armor/holy_silver/holy_silver_leggings"
     },
-    "nacht:raw_orichalcum": {
-      "textures": "textures/items/metal/orichalcum/raw_orichalcum"
+    "nacht:blazered_steel_sword": {
+      "textures": "textures/items/tools/blazered_steel/blazered_steel_sword"
     },
-    "nacht:orichalcum_ingot": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_ingot"
+    "nacht:blazered_steel_boots": {
+      "textures": "textures/items/armor/blazered_steel/blazered_steel_boots"
+    },
+    "nacht:blazered_steel_chestplate": {
+      "textures": "textures/items/armor/blazered_steel/blazered_steel_chestplate"
+    },
+    "nacht:blazered_steel_helmet": {
+      "textures": "textures/items/armor/blazered_steel/blazered_steel_helmet"
+    },
+    "nacht:blazered_steel_leggings": {
+      "textures": "textures/items/armor/blazered_steel/blazered_steel_leggings"
+    },
+    "nacht:hollow_crystal_sword": {
+      "textures": "textures/items/tools/hollow_crystal/hollow_crystal_sword"
+    },
+    "nacht:hollow_crystal_boots": {
+      "textures": "textures/items/armor/hollow_crystal/hollow_crystal_boots"
+    },
+    "nacht:hollow_crystal_chestplate": {
+      "textures": "textures/items/armor/hollow_crystal/hollow_crystal_chestplate"
+    },
+    "nacht:hollow_crystal_helmet": {
+      "textures": "textures/items/armor/hollow_crystal/hollow_crystal_helmet"
+    },
+    "nacht:hollow_crystal_leggings": {
+      "textures": "textures/items/armor/hollow_crystal/hollow_crystal_leggings"
+    },
+    "nacht:nocturium_sword": {
+      "textures": "textures/items/tools/nocturium/nocturium_sword"
+    },
+    "nacht:nocturium_boots": {
+      "textures": "textures/items/armor/nocturium/nocturium_boots"
+    },
+    "nacht:nocturium_chestplate": {
+      "textures": "textures/items/armor/nocturium/nocturium_chestplate"
+    },
+    "nacht:nocturium_helmet": {
+      "textures": "textures/items/armor/nocturium/nocturium_helmet"
+    },
+    "nacht:nocturium_leggings": {
+      "textures": "textures/items/armor/nocturium/nocturium_leggings"
+    },
+    "nacht:luminarium_sword": {
+      "textures": "textures/items/tools/luminarium/luminarium_sword"
+    },
+    "nacht:luminarium_boots": {
+      "textures": "textures/items/armor/luminarium/luminarium_boots"
+    },
+    "nacht:luminarium_chestplate": {
+      "textures": "textures/items/armor/luminarium/luminarium_chestplate"
+    },
+    "nacht:luminarium_helmet": {
+      "textures": "textures/items/armor/luminarium/luminarium_helmet"
+    },
+    "nacht:luminarium_leggings": {
+      "textures": "textures/items/armor/luminarium/luminarium_leggings"
+    },
+    "nacht:terramagnite_sword": {
+      "textures": "textures/items/tools/terramagnite/terramagnite_sword"
+    },
+    "nacht:terramagnite_boots": {
+      "textures": "textures/items/armor/terramagnite/terramagnite_boots"
+    },
+    "nacht:terramagnite_chestplate": {
+      "textures": "textures/items/armor/terramagnite/terramagnite_chestplate"
+    },
+    "nacht:terramagnite_helmet": {
+      "textures": "textures/items/armor/terramagnite/terramagnite_helmet"
+    },
+    "nacht:terramagnite_leggings": {
+      "textures": "textures/items/armor/terramagnite/terramagnite_leggings"
+    },
+    "nacht:electrum_sword": {
+      "textures": "textures/items/tools/electrum/electrum_sword"
+    },
+    "nacht:electrum_axe": {
+      "textures": "textures/items/tools/electrum/electrum_axe"
+    },
+    "nacht:electrum_pickaxe": {
+      "textures": "textures/items/tools/electrum/electrum_pickaxe"
+    },
+    "nacht:electrum_shovel": {
+      "textures": "textures/items/tools/electrum/electrum_shovel"
+    },
+    "nacht:electrum_hoe": {
+      "textures": "textures/items/tools/electrum/electrum_hoe"
+    },
+    "nacht:electrum_boots": {
+      "textures": "textures/items/armor/electrum/electrum_boots"
+    },
+    "nacht:electrum_chestplate": {
+      "textures": "textures/items/armor/electrum/electrum_chestplate"
+    },
+    "nacht:electrum_helmet": {
+      "textures": "textures/items/armor/electrum/electrum_helmet"
+    },
+    "nacht:electrum_leggings": {
+      "textures": "textures/items/armor/electrum/electrum_leggings"
+    },
+    "nacht:magnos_sword": {
+      "textures": "textures/items/tools/magnos/magnos_sword"
+    },
+    "nacht:magnos_boots": {
+      "textures": "textures/items/armor/magnos/magnos_boots"
+    },
+    "nacht:magnos_chestplate": {
+      "textures": "textures/items/armor/magnos/magnos_chestplate"
+    },
+    "nacht:magnos_helmet": {
+      "textures": "textures/items/armor/magnos/magnos_helmet"
+    },
+    "nacht:magnos_leggings": {
+      "textures": "textures/items/armor/magnos/magnos_leggings"
+    },
+    "nacht:aedrium_sword": {
+      "textures": "textures/items/tools/aedrium/aedrium_sword"
+    },
+    "nacht:aedrium_boots": {
+      "textures": "textures/items/armor/aedrium/aedrium_boots"
+    },
+    "nacht:aedrium_chestplate": {
+      "textures": "textures/items/armor/aedrium/aedrium_chestplate"
+    },
+    "nacht:aedrium_helmet": {
+      "textures": "textures/items/armor/aedrium/aedrium_helmet"
+    },
+    "nacht:aedrium_leggings": {
+      "textures": "textures/items/armor/aedrium/aedrium_leggings"
+    },
+    "nacht:scarlet_orichalcum_sword": {
+      "textures": "textures/items/tools/scarlet_orichalcum/scarlet_orichalcum_sword"
+    },
+    "nacht:scarlet_orichalcum_axe": {
+      "textures": "textures/items/tools/scarlet_orichalcum/scarlet_orichalcum_axe"
+    },
+    "nacht:scarlet_orichalcum_pickaxe": {
+      "textures": "textures/items/tools/scarlet_orichalcum/scarlet_orichalcum_pickaxe"
+    },
+    "nacht:scarlet_orichalcum_shovel": {
+      "textures": "textures/items/tools/scarlet_orichalcum/scarlet_orichalcum_shovel"
+    },
+    "nacht:scarlet_orichalcum_hoe": {
+      "textures": "textures/items/tools/scarlet_orichalcum/scarlet_orichalcum_hoe"
+    },
+    "nacht:scarlet_orichalcum_boots": {
+      "textures": "textures/items/armor/scarlet_orichalcum/scarlet_orichalcum_boots"
+    },
+    "nacht:scarlet_orichalcum_chestplate": {
+      "textures": "textures/items/armor/scarlet_orichalcum/scarlet_orichalcum_chestplate"
+    },
+    "nacht:scarlet_orichalcum_helmet": {
+      "textures": "textures/items/armor/scarlet_orichalcum/scarlet_orichalcum_helmet"
+    },
+    "nacht:scarlet_orichalcum_leggings": {
+      "textures": "textures/items/armor/scarlet_orichalcum/scarlet_orichalcum_leggings"
+    },
+    "nacht:star_iron_sword": {
+      "textures": "textures/items/tools/star_iron/star_iron_sword"
+    },
+    "nacht:star_iron_axe": {
+      "textures": "textures/items/tools/star_iron/star_iron_axe"
+    },
+    "nacht:star_iron_pickaxe": {
+      "textures": "textures/items/tools/star_iron/star_iron_pickaxe"
+    },
+    "nacht:star_iron_shovel": {
+      "textures": "textures/items/tools/star_iron/star_iron_shovel"
+    },
+    "nacht:star_iron_hoe": {
+      "textures": "textures/items/tools/star_iron/star_iron_hoe"
+    },
+    "nacht:star_iron_boots": {
+      "textures": "textures/items/armor/star_iron/star_iron_boots"
+    },
+    "nacht:star_iron_chestplate": {
+      "textures": "textures/items/armor/star_iron/star_iron_chestplate"
+    },
+    "nacht:star_iron_helmet": {
+      "textures": "textures/items/armor/star_iron/star_iron_helmet"
+    },
+    "nacht:star_iron_leggings": {
+      "textures": "textures/items/armor/star_iron/star_iron_leggings"
     },
     "nacht:orichalcum_sword": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_sword"
+      "textures": "textures/items/tools/orichalcum/orichalcum_sword"
     },
     "nacht:orichalcum_axe": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_axe"
+      "textures": "textures/items/tools/orichalcum/orichalcum_axe"
     },
     "nacht:orichalcum_pickaxe": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_pickaxe"
+      "textures": "textures/items/tools/orichalcum/orichalcum_pickaxe"
     },
     "nacht:orichalcum_shovel": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_shovel"
+      "textures": "textures/items/tools/orichalcum/orichalcum_shovel"
     },
     "nacht:orichalcum_hoe": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_hoe"
+      "textures": "textures/items/tools/orichalcum/orichalcum_hoe"
     },
     "nacht:orichalcum_boots": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_boots"
+      "textures": "textures/items/armor/orichalcum/orichalcum_boots"
     },
     "nacht:orichalcum_chestplate": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_chestplate"
+      "textures": "textures/items/armor/orichalcum/orichalcum_chestplate"
     },
     "nacht:orichalcum_helmet": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_helmet"
+      "textures": "textures/items/armor/orichalcum/orichalcum_helmet"
     },
     "nacht:orichalcum_leggings": {
-      "textures": "textures/items/metal/orichalcum/orichalcum_leggings"
+      "textures": "textures/items/armor/orichalcum/orichalcum_leggings"
+    },
+    "nacht:magradis_sword": {
+      "textures": "textures/items/tools/magradis/magradis_sword"
+    },
+    "nacht:magradis_boots": {
+      "textures": "textures/items/armor/magradis/magradis_boots"
+    },
+    "nacht:magradis_chestplate": {
+      "textures": "textures/items/armor/magradis/magradis_chestplate"
+    },
+    "nacht:magradis_helmet": {
+      "textures": "textures/items/armor/magradis/magradis_helmet"
+    },
+    "nacht:magradis_leggings": {
+      "textures": "textures/items/armor/magradis/magradis_leggings"
+    },
+    "nacht:nexiatite_sword": {
+      "textures": "textures/items/tools/nexiatite/nexiatite_sword"
+    },
+    "nacht:nexiatite_boots": {
+      "textures": "textures/items/armor/nexiatite/nexiatite_boots"
+    },
+    "nacht:nexiatite_chestplate": {
+      "textures": "textures/items/armor/nexiatite/nexiatite_chestplate"
+    },
+    "nacht:nexiatite_helmet": {
+      "textures": "textures/items/armor/nexiatite/nexiatite_helmet"
+    },
+    "nacht:nexiatite_leggings": {
+      "textures": "textures/items/armor/nexiatite/nexiatite_leggings"
+    },
+    "nacht:solistite_sword": {
+      "textures": "textures/items/tools/solistite/solistite_sword"
+    },
+    "nacht:solistite_boots": {
+      "textures": "textures/items/armor/solistite/solistite_boots"
+    },
+    "nacht:solistite_chestplate": {
+      "textures": "textures/items/armor/solistite/solistite_chestplate"
+    },
+    "nacht:solistite_helmet": {
+      "textures": "textures/items/armor/solistite/solistite_helmet"
+    },
+    "nacht:solistite_leggings": {
+      "textures": "textures/items/armor/solistite/solistite_leggings"
+    },
+    "nacht:adamantium_sword": {
+      "textures": "textures/items/tools/adamantium/adamantium_sword"
+    },
+    "nacht:adamantium_axe": {
+      "textures": "textures/items/tools/adamantium/adamantium_axe"
+    },
+    "nacht:adamantium_pickaxe": {
+      "textures": "textures/items/tools/adamantium/adamantium_pickaxe"
+    },
+    "nacht:adamantium_shovel": {
+      "textures": "textures/items/tools/adamantium/adamantium_shovel"
+    },
+    "nacht:adamantium_hoe": {
+      "textures": "textures/items/tools/adamantium/adamantium_hoe"
+    },
+    "nacht:adamantium_boots": {
+      "textures": "textures/items/armor/adamantium/adamantium_boots"
+    },
+    "nacht:adamantium_chestplate": {
+      "textures": "textures/items/armor/adamantium/adamantium_chestplate"
+    },
+    "nacht:adamantium_helmet": {
+      "textures": "textures/items/armor/adamantium/adamantium_helmet"
+    },
+    "nacht:adamantium_leggings": {
+      "textures": "textures/items/armor/adamantium/adamantium_leggings"
     }
   }
 }

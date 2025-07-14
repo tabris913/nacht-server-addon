@@ -9,13 +9,13 @@
     ],
     "unlock": [
       {
-        "item": "nacht:$ITEM_NAME_ingot"
+        "item": "nacht:"
       }
     ],
     "pattern": [],
     "key": {
       "#": {
-        "item": "nacht:$ITEM_NAME_ingot"
+        "item": "nacht:"
       }
     },
     "result": {

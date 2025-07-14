@@ -71,7 +71,7 @@
           },
           {
             "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tags('nacht:orichalcum_tier', 'nacht:adamantium_tier')"
+              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:orichalcum_tier', 'nacht:adamantium_tier')"
             },
             "destroy_speed": 0.5
           }

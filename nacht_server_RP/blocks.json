@@ -13,6 +13,78 @@
     "sound": "stone",
     "carried_textures": "textures/blocks/ores/silver/deepslate_silver_ore"
   },
+  "nacht:blazered_steel_stone": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/blazered_steel/blazered_steel_stone"
+  },
+  "nacht:hollow_crystal_stone": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/hollow_crystal/hollow_crystal_stone"
+  },
+  "nacht:nocturium_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/nocturium/nocturium_ore"
+  },
+  "nacht:deepslate_nocturium_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/nocturium/deepslate_nocturium_ore"
+  },
+  "nacht:luminarium_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/luminarium/luminarium_ore"
+  },
+  "nacht:deepslate_luminarium_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/luminarium/deepslate_luminarium_ore"
+  },
+  "nacht:terramagnite_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/terramagnite/terramagnite_ore"
+  },
+  "nacht:deepslate_terramagnite_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/terramagnite/deepslate_terramagnite_ore"
+  },
+  "nacht:electrum_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/electrum/electrum_ore"
+  },
+  "nacht:deepslate_electrum_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/electrum/deepslate_electrum_ore"
+  },
+  "nacht:magnos_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/magnos/magnos_ore"
+  },
+  "nacht:aedrium_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/aedrium/aedrium_ore"
+  },
+  "nacht:scarlet_orichalcum_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/scarlet_orichalcum/scarlet_orichalcum_ore"
+  },
+  "nacht:deepslate_scarlet_orichalcum_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/scarlet_orichalcum/deepslate_scarlet_orichalcum_ore"
+  },
+  "nacht:deepslate_orichalcum_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/orichalcum/deepslate_orichalcum_ore"
+  },
+  "nacht:ruin_lump": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/ruin_lump"
+  },
+  "nacht:endrift_lump": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/endrift_lump"
+  },
+  "nacht:deepslate_adamantium_ore": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/adamantium/deepslate_adamantium_ore"
+  },
   "nacht:silver_block": {
     "sound": "metal",
     "carried_textures": "textures/blocks/ores/silver/silver_block"
@@ -21,16 +93,92 @@
     "sound": "stone",
     "carried_textures": "textures/blocks/ores/silver/raw_silver_block"
   },
-  "deepslate_orichalcum_ore": {
-    "sound": "stone",
-    "textures": "textures/blocks/ores/orichalcum/deepslate_orichalcum_ore"
-  },
-  "raw_orichalcum_block": {
-    "sound": "stone",
-    "textures": "textures/blocks/ores/orichalcum/raw_orichalcum_block"
-  },
-  "orichalcum_block": {
+  "nacht:blazered_steel_block": {
     "sound": "metal",
-    "textures": "textures/blocks/ores/orichalcum/orichalcum_block"
+    "carried_textures": "textures/blocks/ores/blazered_steel/blazered_steel_block"
+  },
+  "nacht:hollow_crystal_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/hollow_crystal/hollow_crystal_block"
+  },
+  "nacht:nocturium_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/nocturium/nocturium_block"
+  },
+  "nacht:raw_nocturium_block": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/nocturium/raw_nocturium_block"
+  },
+  "nacht:luminarium_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/luminarium/luminarium_block"
+  },
+  "nacht:raw_luminarium_block": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/luminarium/raw_luminarium_block"
+  },
+  "nacht:terramagnite_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/terramagnite/terramagnite_block"
+  },
+  "nacht:raw_terramagnite_block": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/terramagnite/raw_terramagnite_block"
+  },
+  "nacht:electrum_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/electrum/electrum_block"
+  },
+  "nacht:raw_electrum_block": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/electrum/raw_electrum_block"
+  },
+  "nacht:magnos_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/magnos/magnos_block"
+  },
+  "nacht:aedrium_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/aedrium/aedrium_block"
+  },
+  "nacht:scarlet_orichalcum_lump": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/scarlet_orichalcum/scarlet_orichalcum_lump"
+  },
+  "nacht:raw_scarlet_orichalcum_block": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/scarlet_orichalcum/raw_scarlet_orichalcum_block"
+  },
+  "nacht:star_iron_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/star_iron/star_iron_block"
+  },
+  "nacht:orichalcum_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/orichalcum/orichalcum_block"
+  },
+  "nacht:raw_orichalcum_block": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/orichalcum/raw_orichalcum_block"
+  },
+  "nacht:magradis_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/magradis/magradis_block"
+  },
+  "nacht:nexiatite_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/nexiatite/nexiatite_block"
+  },
+  "nacht:solistite_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/solistite/solistite_block"
+  },
+  "nacht:adamantium_block": {
+    "sound": "metal",
+    "carried_textures": "textures/blocks/ores/adamantium/adamantium_block"
+  },
+  "nacht:raw_adamantium_block": {
+    "sound": "stone",
+    "carried_textures": "textures/blocks/ores/adamantium/raw_adamantium_block"
   }
 }

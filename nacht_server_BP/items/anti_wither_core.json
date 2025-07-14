@@ -2,21 +2,22 @@
   "format_version": "1.21.80",
   "minecraft:item": {
     "description": {
-      "identifier": "nacht:$ITEM_NAME",
+      "identifier": "nacht:anti_wither_core",
       "menu_category": {
-        "category": "items"
+        "category": "items",
+        "group": "nacht:invertia_items_name"
       }
     },
     "components": {
-      "minecraft:icon": "nacht:$ITEM_NAME",
+      "minecraft:icon": "nacht:anti_wither_core",
       "minecraft:display_name": {
-        "value": "item.nacht:$ITEM_NAME.name"
+        "value": "item.nacht:anti_wither_core.name"
       },
       "minecraft:rarity": {
-        "value": "common"
+        "value": "rare"
       },
       "minecraft:glint": {
-        "value": false
+        "value": true
       },
       "minecraft:max_stack_size": 64,
       "minecraft:stacked_by_data": false

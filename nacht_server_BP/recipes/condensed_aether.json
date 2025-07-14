@@ -2,14 +2,14 @@
   "format_version": "1.21.80",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "nacht:orichalcum_block"
+      "identifier": "nacht:condensed_aether"
     },
     "tags": [
       "crafting_table"
     ],
     "unlock": [
       {
-        "item": "nacht:orichalcum_ingot"
+        "item": "nacht:aether"
       }
     ],
     "pattern": [
@@ -19,11 +19,11 @@
     ],
     "key": {
       "#": {
-        "item": "nacht:orichalcum_ingot"
+        "item": "nacht:aether"
       }
     },
     "result": {
-      "item": "nacht:orichalcum_block"
+      "item": "nacht:condensed_aether"
     }
   }
 }

@@ -2,31 +2,34 @@
   "format_version": "1.21.80",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "nacht:orichalcum_hoe"
+      "identifier": "nacht:stellavita_ring"
     },
     "tags": [
       "crafting_table"
     ],
     "unlock": [
       {
-        "item": "nacht:orichalcum_ingot"
+        "item": "nacht:stellavita"
       }
     ],
     "pattern": [
-      "##",
-      " S",
-      " S"
+      "S#S",
+      "SHS",
+      "SSS"
     ],
     "key": {
       "#": {
-        "item": "nacht:orichalcum_ingot"
+        "item": "nacht:stellavita"
       },
       "S": {
-        "item": "minecraft:stick"
+        "item": "nacht:silver_ingot"
+      },
+      "H": {
+        "item": "nacht:holy_water"
       }
     },
     "result": {
-      "item": "nacht:orichalcum_hoe"
+      "item": "nacht:stellavita_ring"
     }
   }
 }

@@ -2,15 +2,15 @@
   "format_version": "1.21.80",
   "minecraft:item": {
     "description": {
-      "identifier": "nacht:$ITEM_NAME",
+      "identifier": "nacht:condensed_aether",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "nacht:$ITEM_NAME",
+      "minecraft:icon": "nacht:condensed_aether",
       "minecraft:display_name": {
-        "value": "item.nacht:$ITEM_NAME.name"
+        "value": "item.nacht:condensed_aether.name"
       },
       "minecraft:rarity": {
         "value": "common"

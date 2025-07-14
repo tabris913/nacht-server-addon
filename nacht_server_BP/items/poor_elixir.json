@@ -2,15 +2,16 @@
   "format_version": "1.21.80",
   "minecraft:item": {
     "description": {
-      "identifier": "nacht:$ITEM_NAME",
+      "identifier": "nacht:poor_elixir",
       "menu_category": {
-        "category": "items"
+        "category": "items",
+        "group": "nacht:alchemy_items_name"
       }
     },
     "components": {
-      "minecraft:icon": "nacht:$ITEM_NAME",
+      "minecraft:icon": "nacht:poor_elixir",
       "minecraft:display_name": {
-        "value": "item.nacht:$ITEM_NAME.name"
+        "value": "item.nacht:poor_elixir.name"
       },
       "minecraft:rarity": {
         "value": "common"

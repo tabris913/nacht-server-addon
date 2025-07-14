@@ -14,6 +14,12 @@
         "category_name": "items",
         "groups": [
           {
+            "items": [
+              "nacht:base_flag",
+              "nacht:chest_key"
+            ]
+          },
+          {
             "group_identifier": {
               "icon": "nacht:nacht_feather",
               "name": "nacht:nacht_items_name"
@@ -23,21 +29,89 @@
               "nacht:nacht_halo",
               "nacht:nacht_left_wing",
               "nacht:nacht_right_wing",
-              "nacht:nacht_tail"
+              "nacht:nacht_tail",
+              "nacht:holy_water"
             ]
           },
           {
             "items": [
-              "nacht:base_flag",
               "nacht:raw_silver",
-              "nacht:silver_ingot"
+              "nacht:silver_ingot",
+              "nacht:blazered_steel_shard",
+              "nacht:blazered_steel",
+              "nacht:hollow_crystal_shard",
+              "nacht:hollow_crystal",
+              "nacht:raw_nocturium",
+              "nacht:nocturium_ingot",
+              "nacht:raw_luminarium",
+              "nacht:luminarium_ingot",
+              "nacht:raw_terramagnite",
+              "nacht:terramagnite_ingot",
+              "nacht:raw_electrum",
+              "nacht:electrum_ingot",
+              "nacht:magnos_shard",
+              "nacht:magnos_ingot",
+              "nacht:aedrium_shard",
+              "nacht:aedrium_ingot",
+              "nacht:raw_scarlet_orichalcum",
+              "nacht:scarlet_orichalcum_ingot",
+              "nacht:star_iron_ingot",
+              "nacht:raw_orichalcum",
+              "nacht:orichalcum_ingot",
+              "nacht:magradis_shard",
+              "nacht:magradis_ingot",
+              "nacht:nexiatite_shard",
+              "nacht:nexiatite_ingot",
+              "nacht:solistite_ingot",
+              "nacht:raw_adamantium",
+              "nacht:adamantium_ingot"
+            ]
+          },
+          {
+            "items": [
+              "nacht:condensed_aether"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:lapis_philosophorum",
+              "name": "nacht:alchemy_items_name"
+            },
+            "items": [
+              "nacht:poor_elixir",
+              "nacht:elixir",
+              "nacht:unrefined_lapis_philosophorum",
+              "nacht:lapis_philosophorum"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:invertia_core",
+              "name": "nacht:invertia_items_name"
+            },
+            "items": [
+              "nacht:invertia_core",
+              "nacht:anti_wither_core",
+              "nacht:anti_ender_core"
+            ]
+          },
+          {
+            "items": [
+              "nacht:stellavita_ring"
             ]
           }
         ]
       },
       {
         "category_name": "nature",
-        "groups": []
+        "groups": [
+          {
+            "items": [
+              "nacht:aether",
+              "nacht:stellavita"
+            ]
+          }
+        ]
       }
     ]
   }

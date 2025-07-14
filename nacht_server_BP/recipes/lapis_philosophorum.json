@@ -1,0 +1,48 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nacht:lapis_philosophorum"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:unrefined_lapis_philosophorum"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "nacht:unrefined_lapis_philosophorum"
+      },
+      {
+        "item": "nacht:magnos_block"
+      },
+      {
+        "item": "nacht:magnos_block"
+      },
+      {
+        "item": "nacht:aedrius_block"
+      },
+      {
+        "item": "nacht:aedrius_block"
+      },
+      {
+        "item": "nacht:netherite_block"
+      },
+      {
+        "item": "nacht:netherite_block"
+      },
+      {
+        "item": "nacht:scarlet_orichalcum_block"
+      },
+      {
+        "item": "nacht:scarlet_orichalcum_block"
+      }
+    ],
+    "result": {
+      "item": "nacht:lapis_philosophorum"
+    }
+  }
+}

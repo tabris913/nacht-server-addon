@@ -76,7 +76,8 @@
       "minecraft:tags": {
         "tags": [
           "minecraft:is_sword",
-          "nacht:holy_silver_tier"
+          "nacht:holy_silver_tier",
+          "minecraft:is_tool"
         ]
       }
     }

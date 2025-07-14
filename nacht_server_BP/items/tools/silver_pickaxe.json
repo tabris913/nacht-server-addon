@@ -50,7 +50,8 @@
         "tags": [
           "minecraft:is_pickaxe",
           "nacht:silver_tier",
-          "minecraft:digger"
+          "minecraft:digger",
+          "minecraft:is_tool"
         ]
       },
       "minecraft:digger": {
@@ -69,7 +70,7 @@
           },
           {
             "block": {
-              "tags": "q.any_tag('stone', 'gold_pick_diggable', 'iron_pick_diggable', 'stone_pick_diggable', 'wood_pick_diggable', 'nacht:silver_diggable')"
+              "tags": "q.any_tag('stone')"
             },
             "speed": 7
           }

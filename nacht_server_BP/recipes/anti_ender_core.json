@@ -1,0 +1,36 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nacht:anti_ender_core"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:invertia_core"
+      },
+      {
+        "item": "nacht:nexiatite_shard"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "nacht:invertia_core"
+      },
+      {
+        "item": "nacht:nexiatite_shard"
+      },
+      {
+        "item": "nacht:nexiatite_shard"
+      },
+      {
+        "item": "nacht:nexiatite_shard"
+      }
+    ],
+    "result": {
+      "item": "nacht:anti_ender_core"
+    }
+  }
+}

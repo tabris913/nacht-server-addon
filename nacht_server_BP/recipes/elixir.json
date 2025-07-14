@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_brewing_container": {
+    "description": {
+      "identifier": "nacht:elixir"
+    },
+    "tags": [
+      "brewing_stand"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:poor_elixir"
+      }
+    ],
+    "input": "nacht:poor_elixir",
+    "reagent": "nacht:nacht_feather",
+    "output": "nacht:elixir"
+  }
+}

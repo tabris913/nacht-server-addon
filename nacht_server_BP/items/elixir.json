@@ -2,21 +2,22 @@
   "format_version": "1.21.80",
   "minecraft:item": {
     "description": {
-      "identifier": "nacht:$ITEM_NAME",
+      "identifier": "nacht:elixir",
       "menu_category": {
-        "category": "items"
+        "category": "items",
+        "group": "nacht:alchemy_items_name"
       }
     },
     "components": {
-      "minecraft:icon": "nacht:$ITEM_NAME",
+      "minecraft:icon": "nacht:elixir",
       "minecraft:display_name": {
-        "value": "item.nacht:$ITEM_NAME.name"
+        "value": "item.nacht:elixir.name"
       },
       "minecraft:rarity": {
-        "value": "common"
+        "value": "uncommon"
       },
       "minecraft:glint": {
-        "value": false
+        "value": true
       },
       "minecraft:max_stack_size": 64,
       "minecraft:stacked_by_data": false

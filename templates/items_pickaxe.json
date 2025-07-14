@@ -50,7 +50,8 @@
         "tags": [
           "minecraft:is_pickaxe",
           "nacht:$ITEM_NAME_tier",
-          "minecraft:digger"
+          "minecraft:digger",
+          "minecraft:is_tool"
         ]
       },
       "minecraft:digger": {
@@ -69,13 +70,7 @@
           },
           {
             "block": {
-              "tags": "query.any_tag('_pick_diggable','iron_pick_diggable')"
-            },
-            "speed": 5
-          },
-          {
-            "block": {
-              "tags": "query.any_tag('stone', 'diamond_pick_diggable', 'gold_pick_diggable', 'iron_pick_diggable', 'stone_pick_diggable', 'wood_pick_diggable')"
+              "tags": "query.any_tag('stone')"
             },
             "speed": 8
           }

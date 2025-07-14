@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_brewing_container": {
+    "description": {
+      "identifier": "nacht:poor_elixir"
+    },
+    "tags": [
+      "brewing_stand"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:condensed_aether"
+      }
+    ],
+    "input": "nacht:holy_water",
+    "reagent": "nacht:condensed_aether",
+    "output": "nacht:poor_elixir"
+  }
+}

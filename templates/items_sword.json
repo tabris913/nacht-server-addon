@@ -51,7 +51,8 @@
         "tags": [
           "minecraft:is_sword",
           "nacht:$ITEM_NAME_tier",
-          "minecraft:digger"
+          "minecraft:digger",
+          "minecraft:is_tool"
         ]
       },
       "minecraft:digger": {

@@ -48,19 +48,19 @@
           },
           {
             "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tags('nacht:electrum_tier', 'nacht:holy_silver_tier')"
+              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:electrum_tier', 'nacht:holy_silver_tier')"
             },
             "destroy_speed": 0.45
           },
           {
             "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tags('nacht:scarlet_orichalcum_tier', 'nacht:star_iron_tier')"
+              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:scarlet_orichalcum_tier', 'nacht:star_iron_tier')"
             },
             "destroy_speed": 0.35
           },
           {
             "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tags('nacht:orichalcum_tier', 'nacht:adamantium_tier')"
+              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:orichalcum_tier', 'nacht:adamantium_tier')"
             },
             "destroy_speed": 0.3
           }

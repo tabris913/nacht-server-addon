@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:base_flag",
       "menu_category": {
-        "category": "items",
-        "group": "minecraft:itemGroup.name.constructionMisc"
+        "category": "items"
       }
     },
     "components": {
