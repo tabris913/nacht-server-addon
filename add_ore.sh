@@ -56,8 +56,8 @@ cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/blocks/raw_iron_bloc
 
 # item
 mkdir -p $RP/textures/items/metal/${METAL_NAME}
-cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/blocks/raw_iron.png $RP/textures/items/metal/${METAL_NAME}/raw_${METAL_NAME}.png
-cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/blocks/iron_ingot.png $RP/textures/items/metal/${METAL_NAME}/${METAL_NAME}_ingot.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/items/raw_iron.png $RP/textures/items/metal/${METAL_NAME}/raw_${METAL_NAME}.png
+cp .vscode/bedrock-samples-1.21.90.3/resource_pack/textures/items/iron_ingot.png $RP/textures/items/metal/${METAL_NAME}/${METAL_NAME}_ingot.png
 
 # armor, tool
 mkdir -p $BP/items/armor/${METAL_NAME}

@@ -15,7 +15,11 @@
   },
   "nacht:blazered_steel_stone": {
     "sound": "stone",
-    "carried_textures": "textures/blocks/ores/blazered_steel/blazered_steel_stone"
+    "textures": {
+      "down": "blazered_steel_stone_top",
+      "side": "blazered_steel_stone_side",
+      "up": "blazered_steel_stone_top"
+    }
   },
   "nacht:hollow_crystal_stone": {
     "sound": "stone",

@@ -10,8 +10,11 @@
     "nacht:deepslate_silver_ore": {
       "textures": "textures/blocks/ores/silver/deepslate_silver_ore"
     },
-    "nacht:blazered_steel_stone": {
-      "textures": "textures/blocks/ores/blazered_steel/blazered_steel_stone"
+    "nacht:blazered_steel_stone_side": {
+      "textures": "textures/blocks/ores/blazered_steel/blazered_steel_stone_side"
+    },
+    "nacht:blazered_steel_stone_top": {
+      "textures": "textures/blocks/ores/blazered_steel/blazered_steel_stone_top"
     },
     "nacht:hollow_crystal_stone": {
       "textures": "textures/blocks/ores/hollow_crystal/hollow_crystal_stone"

@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "nacht:blazered_steel_boots.player",
+      "item": {
+        "nacht:blazered_steel_boots": "query.owner_identifier == 'minecraft:player'"
+      },
+      "materials": {
+        "default": "armor",
+        "enchanted": "armor_enchanted"
+      },
+      "textures": {
+        "default": "textures/models/armor/blazered_steel_main",
+        "enchanted": "textures/misc/enchanted_actor_glint"
+      },
+      "geometry": {
+        "default": "geometry.player.armor.boots"
+      },
+      "scripts": {
+        // boot chest helmet leg
+        "parent_setup": "variable.boots_layer_visible = 0.0;",
+        "animate": [
+          "offset"
+        ]
+      },
+      "animations": {
+        "offset": "animation.armor.boots.offset"
+      },
+      "render_controllers": [
+        "controller.render.armor"
+      ]
+    }
+  }
+}

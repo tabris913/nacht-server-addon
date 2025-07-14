@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "nacht:ores/blazered_steel_stone"
+    },
+    "count": 12,
+    "replace_rules": [
+      {
+        "places_block": "nacht:blazered_steel_stone",
+        "may_replace": [
+          {
+            "name": "minecraft:basalt"
+          }
+        ]
+      }
+    ]
+  }
+}

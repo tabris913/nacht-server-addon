@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:blazered_steel_sword"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:blazered_steel_ingot"
+      }
+    ],
+    "pattern": [
+      "#",
+      "#",
+      "S"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:blazered_steel_ingot"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "nacht:blazered_steel_sword"
+    }
+  }
+}

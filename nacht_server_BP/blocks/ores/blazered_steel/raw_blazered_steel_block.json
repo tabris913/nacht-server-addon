@@ -2,10 +2,10 @@
   "format_version": "1.21.60",
   "minecraft:block": {
     "description": {
-      "identifier": "nacht:deepslate_silver_ore",
+      "identifier": "nacht:raw_blazered_steel_block",
       "menu_category": {
         "category": "nature",
-        "group": "minecraft:itemGroup.name.ore"
+        "group": "minecraft:itemGroup.name.oreBlocks"
       }
     },
     "components": {
@@ -14,72 +14,55 @@
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "nacht:deepslate_silver_ore"
+          "texture": "nacht:raw_blazered_steel_block"
         }
       },
-      "minecraft:loot": "loot_tables/ores/silver_ore.json",
+      "minecraft:loot": "loot_tables/ores/raw_blazered_steel_block.json",
       "minecraft:destructible_by_explosion": false,
       "minecraft:destructible_by_mining": {
-        "seconds_to_destroy": 22.5,
+        "seconds_to_destroy": 25,
         "item_specific_speeds": [
-          {
-            "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe', 'minecraft:iron_tier')"
-            },
-            "destroy_speed": 1.15
-          },
-          {
-            "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe','minecraft:diamond_tier')"
-            },
-            "destroy_speed": 0.85
-          },
-          {
-            "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe','minecraft:netherite_tier')"
-            },
-            "destroy_speed": 0.8
-          },
           {
             "item": {
               "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:silver_tier')"
             },
-            "destroy_speed": 1
+            "destroy_speed": 1.1
           },
           {
             "item": {
               "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:holy_silver_tier')"
             },
-            "destroy_speed": 0.7
+            "destroy_speed": 0.75
           },
           {
             "item": {
               "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:electrum_tier')"
             },
-            "destroy_speed": 0.65
+            "destroy_speed": 0.7
           },
           {
             "item": {
               "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:scarlet_orichalcum_tier')"
             },
-            "destroy_speed": 0.55
+            "destroy_speed": 0.6
           },
           {
             "item": {
               "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:star_iron_tier')"
             },
-            "destroy_speed": 0.5
+            "destroy_speed": 0.55
           },
           {
             "item": {
               "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:orichalcum_tier', 'nacht:adamantium_tier')"
             },
-            "destroy_speed": 1.35
+            "destroy_speed": 0.5
           }
         ]
       },
-      "tag:minecraft:iron_tier_destructible": {},
-      "tag:minecraft:is_pickaxe_item_destructible": {}
+      "tag:nacht:silver_tier_destructible": {},
+      "tag:minecraft:is_pickaxe_item_destructible": {},
+      "tag:metal": {}
     }
   }
 }
