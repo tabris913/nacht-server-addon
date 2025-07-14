@@ -28,10 +28,10 @@
       },
       "minecraft:enchantable": {
         "slot": "sword",
-        "value": 12
+        "value": 17
       },
       "minecraft:durability": {
-        "max_durability": 251
+        "max_durability": 503
       },
       "minecraft:repairable": {
         "repair_items": [
@@ -76,7 +76,7 @@
       "minecraft:tags": {
         "tags": [
           "minecraft:is_sword",
-          "nacht:silver_tier"
+          "nacht:holy_silver_tier"
         ]
       }
     }

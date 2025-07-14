@@ -5,7 +5,7 @@
       "identifier": "nacht:$ITEM_NAME_shovel",
       "menu_category": {
         "category": "equipment",
-        "menu_category": "minecraft:itemGroup.name.shovel"
+        "group": "minecraft:itemGroup.name.shovel"
       }
     },
     "components": {
@@ -19,11 +19,11 @@
       "minecraft:glint": {
         "value": false
       },
-      "minecraft:max_stack_size": 64,
+      "minecraft:max_stack_size": 1,
       "minecraft:stacked_by_data": false,
       "minecraft:enchantable": {
         "slot": "shovel",
-        "value": 10
+        "value": 0
       },
       "minecraft:durability": {
         "max_durability": 2031

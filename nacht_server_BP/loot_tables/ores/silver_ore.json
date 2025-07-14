@@ -5,6 +5,61 @@
       "conditions": [
         {
           "condition": "match_tool",
+          "minecraft:match_tool_filter_all": [
+            "minecraft:is_pickaxe"
+          ],
+          "minecraft:match_tool_filter_any": [
+            "minecraft:iron_tier",
+            "minecraft:diamond_tier",
+            "minecraft:netherite_tier",
+            "nacht:siver_tier",
+            "nacht:holy_silver_tier",
+            "nacht:electrum_tier",
+            "nacht:scarlet_orichalcum_tier",
+            "nacht:star_iron_tier",
+            "nacht:orichalcum_tier",
+            "nacht:adamantium_tier"
+          ],
+          "count": 1
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "nacht:raw_silver",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "max": 2,
+                "min": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "minecraft:match_tool_filter_all": [
+            "minecraft:is_pickaxe"
+          ],
+          "minecraft:match_tool_filter_any": [
+            "minecraft:iron_tier",
+            "minecraft:diamond_tier",
+            "minecraft:netherite_tier",
+            "nacht:siver_tier",
+            "nacht:holy_silver_tier",
+            "nacht:electrum_tier",
+            "nacht:scarlet_orichalcum_tier",
+            "nacht:star_iron_tier",
+            "nacht:orichalcum_tier",
+            "nacht:adamantium_tier"
+          ],
           "count": 1,
           "enchantments": [
             {
@@ -37,6 +92,21 @@
       "conditions": [
         {
           "condition": "match_tool",
+          "minecraft:match_tool_filter_all": [
+            "minecraft:is_pickaxe"
+          ],
+          "minecraft:match_tool_filter_any": [
+            "minecraft:iron_tier",
+            "minecraft:diamond_tier",
+            "minecraft:netherite_tier",
+            "nacht:siver_tier",
+            "nacht:holy_silver_tier",
+            "nacht:electrum_tier",
+            "nacht:scarlet_orichalcum_tier",
+            "nacht:star_iron_tier",
+            "nacht:orichalcum_tier",
+            "nacht:adamantium_tier"
+          ],
           "count": 1,
           "enchantments": [
             {
@@ -69,6 +139,21 @@
       "conditions": [
         {
           "condition": "match_tool",
+          "minecraft:match_tool_filter_all": [
+            "minecraft:is_pickaxe"
+          ],
+          "minecraft:match_tool_filter_any": [
+            "minecraft:iron_tier",
+            "minecraft:diamond_tier",
+            "minecraft:netherite_tier",
+            "nacht:siver_tier",
+            "nacht:holy_silver_tier",
+            "nacht:electrum_tier",
+            "nacht:scarlet_orichalcum_tier",
+            "nacht:star_iron_tier",
+            "nacht:orichalcum_tier",
+            "nacht:adamantium_tier"
+          ],
           "count": 1,
           "enchantments": [
             {
@@ -79,25 +164,6 @@
           ]
         }
       ],
-      "entries": [
-        {
-          "type": "item",
-          "name": "nacht:raw_silver",
-          "weight": 100,
-          "functions": [
-            {
-              "function": "set_count",
-              "count": {
-                "min": 1,
-                "max": 2
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "rolls": 1,
       "entries": [
         {
           "type": "item",

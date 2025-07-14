@@ -25,7 +25,7 @@
         "slot": "slot.armor.legs"
       },
       "minecraft:enchantable": {
-        "value": 10,
+        "value": 0,
         "slot": "armor_legs"
       },
       "minecraft:durability": {

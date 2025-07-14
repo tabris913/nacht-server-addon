@@ -2,19 +2,19 @@
   "format_version": "1.21.60",
   "minecraft:item": {
     "description": {
-      "identifier": "nacht:$ITEM_NAME_pickaxe",
+      "identifier": "nacht:holy_silver_pickaxe",
       "menu_category": {
         "category": "equipment",
         "group": "minecraft:itemGroup.name.pickaxe"
       }
     },
     "components": {
-      "minecraft:icon": "nacht:$ITEM_NAME_pickaxe",
+      "minecraft:icon": "nacht:holy_silver_pickaxe",
       "minecraft:display_name": {
-        "value": "item.nacht:$ITEM_NAME_pickaxe.name"
+        "value": "item.nacht:holy_silver_pickaxe.name"
       },
       "minecraft:rarity": {
-        "value": "common"
+        "value": "uncommon"
       },
       "minecraft:glint": {
         "value": false
@@ -22,34 +22,46 @@
       "minecraft:max_stack_size": 1,
       "minecraft:stacked_by_data": false,
       "minecraft:enchantable": {
-        "value": 0,
+        "value": 17,
         "slot": "pickaxe"
       },
       "minecraft:durability": {
-        "max_durability": 100
+        "max_durability": 502
       },
       "minecraft:repairable": {
         "repair_items": [
           {
             "items": [
-              "nacht:$ITEM_NAME_ingot"
+              "nacht:silver_ingot"
             ],
             "repair_amount": "query.max_durability * 0.25"
           },
           {
             "items": [
-              "nacht:$ITEM_NAME_pickaxe"
+              "nacht:silver_pickaxe"
             ],
             "repair_amount": "c.other->query.remaining_durability + (0.12 * c.other->query.max_durability)"
+          },
+          {
+            "items": [
+              "nacht:holy_silver_pickaxe"
+            ],
+            "repair_amount": "c.other->query.remaining_durability + (0.24 * c.other->query.max_durability)"
+          },
+          {
+            "items": [
+              "nacht:holy_water"
+            ],
+            "repair_amount": "query.max_durability * 0.5"
           }
         ]
       },
-      "minecraft:damage": 3,
+      "minecraft:damage": 9,
       "minecraft:hand_equipped": true,
       "minecraft:tags": {
         "tags": [
           "minecraft:is_pickaxe",
-          "nacht:$ITEM_NAME_tier",
+          "nacht:holy_silver_tier",
           "minecraft:digger"
         ]
       },
@@ -57,27 +69,21 @@
         "destroy_speeds": [
           {
             "block": {
-              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('minecraft:_tier_destructible')"
+              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('minecraft:diamond_tier_destructible')"
             },
-            "speed": 5
+            "speed": 10
           },
           {
             "block": {
-              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('nacht:$ITEM_NAME_tier_destructible')"
+              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('nacht:holy_silver_tier_destructible')"
             },
-            "speed": 5
+            "speed": 10
           },
           {
             "block": {
-              "tags": "query.any_tag('_pick_diggable','iron_pick_diggable')"
+              "tags": "q.any_tag('stone', 'diamond_pick_diggable', 'gold_pick_diggable', 'iron_pick_diggable', 'stone_pick_diggable', 'wood_pick_diggable', 'nacht:silver_pick_diggable')"
             },
-            "speed": 5
-          },
-          {
-            "block": {
-              "tags": "query.any_tag('stone', 'diamond_pick_diggable', 'gold_pick_diggable', 'iron_pick_diggable', 'stone_pick_diggable', 'wood_pick_diggable')"
-            },
-            "speed": 8
+            "speed": 10
           }
         ]
       }

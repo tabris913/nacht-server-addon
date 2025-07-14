@@ -37,7 +37,7 @@ cat templates/items.json | sed s/\$ITEM_NAME/${METAL_NAME}_ingot/g > $BP/items/m
 
 # ores
 cat templates/loot_tables.json | sed s/\$ITEM_NAME/raw_${METAL_NAME}/g > $BP/loot_tables/ores/${METAL_NAME}_ore.json
-cat templates/loot_tables.json | sed s/\$ITEM_NAME/raw_${METAL_NAME}/g > $BP/loot_tables/ores/deepslate_${METAL_NAME}_ore.json
+# cat templates/loot_tables.json | sed s/\$ITEM_NAME/raw_${METAL_NAME}/g > $BP/loot_tables/ores/deepslate_${METAL_NAME}_ore.json
 
 # blocks, items
 mkdir -p $BP/recipes/metal/${METAL_NAME}
@@ -117,10 +117,6 @@ echo "item.nacht:${METAL_NAME}_axe.name=${2}の斧	##" >> lang.txt
 echo "item.nacht:${METAL_NAME}_pickaxe.name=${2}のピッケル	##" >> lang.txt
 echo "item.nacht:${METAL_NAME}_shovel.name=${2}のシャベル	##" >> lang.txt
 echo "item.nacht:${METAL_NAME}_hoe.name=${2}のクワ	##" >> lang.txt
-echo "item.nacht:${METAL_NAME}_boots.name=${2}のブーツ	##" >> lang.txt
-echo "item.nacht:${METAL_NAME}_chestplate.name=${2}のチェストプレート	##" >> lang.txt
-echo "item.nacht:${METAL_NAME}_helmet.name=${2}のヘルメット	##" >> lang.txt
-echo "item.nacht:${METAL_NAME}_leggings.name=${2}のレギンス	##" >> lang.txt
 echo >> lang.txt
 
 echo "// $RP/textures/item_texture.json" >> lang.txt

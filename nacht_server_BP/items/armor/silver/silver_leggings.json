@@ -21,7 +21,7 @@
       },
       "minecraft:stacked_by_data": false,
       "minecraft:wearable": {
-        "protection": 6,
+        "protection": 5,
         "slot": "slot.armor.legs"
       },
       "minecraft:enchantable": {

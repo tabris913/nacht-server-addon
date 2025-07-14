@@ -35,8 +35,14 @@
     "nacht:silver_knife": {
       "textures": "textures/items/tools/silver_knife"
     },
+    "nacht:silver_pickaxe": {
+      "textures": "textures/items/tools/silver_pickaxe"
+    },
     "nacht:holy_silver_knife": {
       "textures": "textures/items/tools/holy_silver_knife"
+    },
+    "nacht:holy_silver_pickaxe": {
+      "textures": "textures/items/tools/holy_silver_pickaxe"
     },
     "nacht:silver_boots": {
       "textures": "textures/items/armor/silver/silver_boots"

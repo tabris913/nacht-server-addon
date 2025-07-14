@@ -5,6 +5,18 @@
       "conditions": [
         {
           "condition": "match_tool",
+          "minecraft:match_tool_filter_all": [
+            "minecraft:is_pickaxe"
+          ],
+          "minecraft:match_tool_filter_any": [
+            "nacht:siver_tier",
+            "nacht:holy_silver_tier",
+            "nacht:electrum_tier",
+            "nacht:scarlet_orichalcum_tier",
+            "nacht:star_iron_tier",
+            "nacht:orichalcum_tier",
+            "nacht:adamantium_tier"
+          ],
           "count": 1,
           "enchantments": [
             {
@@ -37,6 +49,18 @@
       "conditions": [
         {
           "condition": "match_tool",
+          "minecraft:match_tool_filter_all": [
+            "minecraft:is_pickaxe"
+          ],
+          "minecraft:match_tool_filter_any": [
+            "nacht:siver_tier",
+            "nacht:holy_silver_tier",
+            "nacht:electrum_tier",
+            "nacht:scarlet_orichalcum_tier",
+            "nacht:star_iron_tier",
+            "nacht:orichalcum_tier",
+            "nacht:adamantium_tier"
+          ],
           "count": 1,
           "enchantments": [
             {
@@ -69,6 +93,18 @@
       "conditions": [
         {
           "condition": "match_tool",
+          "minecraft:match_tool_filter_all": [
+            "minecraft:is_pickaxe"
+          ],
+          "minecraft:match_tool_filter_any": [
+            "nacht:siver_tier",
+            "nacht:holy_silver_tier",
+            "nacht:electrum_tier",
+            "nacht:scarlet_orichalcum_tier",
+            "nacht:star_iron_tier",
+            "nacht:orichalcum_tier",
+            "nacht:adamantium_tier"
+          ],
           "count": 1,
           "enchantments": [
             {
@@ -98,6 +134,24 @@
     },
     {
       "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "minecraft:match_tool_filter_all": [
+            "minecraft:is_pickaxe"
+          ],
+          "minecraft:match_tool_filter_any": [
+            "nacht:siver_tier",
+            "nacht:holy_silver_tier",
+            "nacht:electrum_tier",
+            "nacht:scarlet_orichalcum_tier",
+            "nacht:star_iron_tier",
+            "nacht:orichalcum_tier",
+            "nacht:adamantium_tier"
+          ],
+          "count": 1
+        }
+      ],
       "entries": [
         {
           "type": "item",

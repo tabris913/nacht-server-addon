@@ -28,19 +28,17 @@ item.nacht:silver_chestplate.name=銀のチェストプレート	##
 item.nacht:silver_helmet.name=銀のヘルメット	##
 item.nacht:silver_leggings.name=銀のレギンス	##
 item.nacht:silver_knife.name=銀のナイフ	##
-item.nacht:holy_silver_knife.name=霊銀のナイフ	##
-item.nacht:silver_boots.name=銀のブーツ	##
-item.nacht:silver_chestplate.name=銀のチェストプレート	##
-item.nacht:silver_helmet.name=銀のヘルメット	##
-item.nacht:silver_leggings.name=銀のレギンス	##
-item.nacht:holy_silver_boots.name=霊銀のブーツ	##
-item.nacht:holy_silver_chestplate.name=霊銀のチェストプレート	##
-item.nacht:holy_silver_helmet.name=霊銀のヘルメット	##
-item.nacht:holy_silver_leggings.name=霊銀のレギンス	##
+item.nacht:silver_pickaxe.name=銀のツルハシ	##
+item.nacht:holy_silver_boots.name=霊銀の靴	##
+item.nacht:holy_silver_chestplate.name=霊銀の鎧(上)	##
+item.nacht:holy_silver_helmet.name=霊銀の兜	##
+item.nacht:holy_silver_leggings.name=霊銀の鎧(下)	##
+item.nacht:holy_silver_knife.name=霊銀の短剣	##
+item.nacht:holy_silver_pickaxe.name=霊銀の十字鍬	##
 
 ## orichalcum
 item.nacht:raw_orichalcum.name=オリハルコンの原石	##
-item.nacht:orichalcum_ingot.name=オリハルコンのインゴット	##
+item.nacht:orichalcum_ingot.name=オリハルコンインゴット	##
 tile.nacht:deepslate_orichalcum_ore.name=深層岩オリハルコン鉱石	##
 tile.nacht:orichalcum_block.name=オリハルコンブロック	##
 tile.nacht:raw_orichalcum_block.name=オリハルコンの原石ブロック	##
@@ -50,14 +48,11 @@ item.nacht:orichalcum_helmet.name=オリハルコンのヘルメット	##
 item.nacht:orichalcum_leggings.name=オリハルコンのレギンス	##
 item.nacht:orichalcum_sword.name=オリハルコンの剣	##
 item.nacht:orichalcum_axe.name=オリハルコンの斧	##
-item.nacht:orichalcum_pickaxe.name=オリハルコンのピッケル	##
+item.nacht:orichalcum_pickaxe.name=オリハルコンのツルハシ	##
 item.nacht:orichalcum_shovel.name=オリハルコンのシャベル	##
 item.nacht:orichalcum_hoe.name=オリハルコンのクワ	##
-item.nacht:orichalcum_boots.name=オリハルコンのブーツ	##
-item.nacht:orichalcum_chestplate.name=オリハルコンのチェストプレート	##
-item.nacht:orichalcum_helmet.name=オリハルコンのヘルメット	##
-item.nacht:orichalcum_leggings.name=オリハルコンのレギンス	##
 
+## 鎧、兜、十字鍬、氷斧、円匙、鍬
 
 ## -----------------------------------------------------------------------------
 ## 正しく表示できないもの
@@ -152,7 +147,9 @@ tile.waxed_exposed_double_cut_copper_slab.name=錆止めされた風化した切
 tile.waxed_wheathered_double_cut_copper_slab.name=錆止めされた錆びた切り込み入りの銅のダブルハーフブロック	##
 tile.waxed_oxidized_double_cut_copper_slab.name=錆止めされた酸化した切り込み入りの銅のダブルハーフブロック	##
 
+tile.portal.name=ネザーポータル	##
 tile.end_portal.name=エンドポータル	##
+tile.end_gateway.name=エンドゲートウェイ	##
 
 tile.frame.name=額縁	##
 tile.glow_frame.name=輝く額縁	##

@@ -54,12 +54,6 @@
           },
           {
             "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe', 'minecraft:silver_tier')"
-            },
-            "destroy_speed": 1.35
-          },
-          {
-            "item": {
               "tags": "query.all_tags('minecraft:is_pickaxe','minecraft:diamond_tier')"
             },
             "destroy_speed": 0.85
@@ -69,12 +63,53 @@
               "tags": "query.all_tags('minecraft:is_pickaxe','minecraft:netherite_tier')"
             },
             "destroy_speed": 0.75
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:silver_tier')"
+            },
+            "destroy_speed": 0.5
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:holy_silver_tier')"
+            },
+            "destroy_speed": 0.5
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:electrum_tier')"
+            },
+            "destroy_speed": 0.5
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:scarlet_orichalcum_tier')"
+            },
+            "destroy_speed": 0.5
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:star_iron_tier')"
+            },
+            "destroy_speed": 0.5
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:orichalcum_tier')"
+            },
+            "destroy_speed": 0.5
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:adamantium_tier')"
+            },
+            "destroy_speed": 0.5
           }
         ]
       },
       "tag:minecraft:iron_tier_destructible": {},
       "tag:minecraft:is_pickaxe_item_destructible": {},
-      "tag:metal": {},
       "tag:iron_pick_diggable": {}
     }
   }
