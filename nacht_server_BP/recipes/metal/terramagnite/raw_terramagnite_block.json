@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:raw_terramagnite_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:raw_terramagnite"
+      }
+    ],
+    "pattern": [
+      "###",
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:raw_terramagnite"
+      }
+    },
+    "result": {
+      "item": "nacht:raw_terramagnite_block"
+    }
+  }
+}

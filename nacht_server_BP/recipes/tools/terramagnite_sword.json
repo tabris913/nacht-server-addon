@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:terramagnite_sword"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:terramagnite_ingot"
+      }
+    ],
+    "pattern": [
+      "#",
+      "#",
+      "S"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:terramagnite_ingot"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "nacht:terramagnite_sword"
+    }
+  }
+}

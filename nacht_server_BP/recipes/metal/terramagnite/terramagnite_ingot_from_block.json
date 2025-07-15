@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:terramagnite_ingot"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:terramagnite_block"
+      }
+    ],
+    "pattern": [
+      "#"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:terramagnite_block"
+      }
+    },
+    "result": {
+      "item": "nacht:terramagnite_ingot"
+    }
+  }
+}
