@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:nocturium_ingot"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:nocturium_block"
+      }
+    ],
+    "pattern": [
+      "#"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:nocturium_block"
+      }
+    },
+    "result": {
+      "item": "nacht:nocturium_ingot",
+      "count": 9
+    }
+  }
+}

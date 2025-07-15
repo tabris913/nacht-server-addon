@@ -1,0 +1,59 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:nocturium_boots",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.boots"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:nocturium_boots",
+      "minecraft:display_name": {
+        "value": "item.nacht:nocturium_boots.name"
+      },
+      "minecraft:rarity": {
+        "value": "uncommon"
+      },
+      "minecraft:glint": {
+        "value": false
+      },
+      "minecraft:stacked_by_data": false,
+      "minecraft:wearable": {
+        "protection": 3,
+        "slot": "slot.armor.feet"
+      },
+      "minecraft:enchantable": {
+        "value": 10,
+        "slot": "armor_feet"
+      },
+      "minecraft:durability": {
+        "max_durability": 429
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:nocturium_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:nocturium_boots"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor",
+          "minecraft:trimmable_armors"
+        ]
+      }
+    }
+  }
+}

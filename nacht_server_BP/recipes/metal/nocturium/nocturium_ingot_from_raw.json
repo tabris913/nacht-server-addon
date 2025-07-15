@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "nacht:nocturium_ingot_from_raw"
+    },
+    "tags": [
+      "furnace",
+      "blast_furnace"
+    ],
+    "input": "nacht:raw_nocturium",
+    "output": "nacht:nocturium_ingot"
+  }
+}

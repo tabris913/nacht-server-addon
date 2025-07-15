@@ -1,0 +1,25 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:raw_nocturium",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:raw_nocturium",
+      "minecraft:display_name": {
+        "value": "item.nacht:raw_nocturium.name"
+      },
+      "minecraft:rarity": {
+        "value": "uncommon"
+      },
+      "minecraft:glint": {
+        "value": false
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:stacked_by_data": false
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:nocturium_leggings"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:nocturium_ingot"
+      }
+    ],
+    "pattern": [
+      "###",
+      "# #",
+      "# #"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:nocturium_ingot"
+      }
+    },
+    "result": {
+      "item": "nacht:nocturium_leggings"
+    }
+  }
+}
