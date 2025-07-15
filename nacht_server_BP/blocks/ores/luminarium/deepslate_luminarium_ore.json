@@ -1,0 +1,61 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "nacht:deepslate_luminarium_ore",
+      "menu_category": {
+        "category": "nature",
+        "group": "minecraft:itemGroup.name.ore"
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "minecraft:geometry.full_block"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "nacht:deepslate_luminarium_ore"
+        }
+      },
+      "minecraft:loot": "loot_tables/ores/deepslate_luminarium_ore.json",
+      "minecraft:destructible_by_explosion": false,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 22.5,
+        "item_specific_speeds": [
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:holy_silver_tier')"
+            },
+            "destroy_speed": 0.7
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:electrum_tier')"
+            },
+            "destroy_speed": 0.65
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:scarlet_orichalcum_tier')"
+            },
+            "destroy_speed": 0.55
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:star_iron_tier')"
+            },
+            "destroy_speed": 0.5
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:orichalcum_tier', 'nacht:adamantium_tier')"
+            },
+            "destroy_speed": 0.5
+          }
+        ]
+      },
+      "tag:nacht:holy_silver_tier_destructible": {},
+      "tag:minecraft:is_pickaxe_item_destructible": {}
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "nacht:ores/luminarium_ore"
+    },
+    "count": 6,
+    "replace_rules": [
+      {
+        "places_block": "nacht:luminarium_ore",
+        "may_replace": [
+          {
+            "name": "minecraft:stone"
+          }
+        ]
+      },
+      {
+        "places_block": "nacht:deepslate_luminarium_ore",
+        "may_replace": [
+          {
+            "name": "minecraft:deepslate"
+          }
+        ]
+      }
+    ]
+  }
+}

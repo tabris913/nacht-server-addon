@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:luminarium_boots"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:luminarium_ingot"
+      }
+    ],
+    "pattern": [
+      "# #",
+      "# #"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:luminarium_ingot"
+      }
+    },
+    "result": {
+      "item": "nacht:luminarium_boots"
+    }
+  }
+}
