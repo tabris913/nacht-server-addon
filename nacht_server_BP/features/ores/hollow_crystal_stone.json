@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "nacht:ores/hollow_crystal_stone"
+    },
+    "count": 8,
+    "replace_rules": [
+      {
+        "places_block": "nacht:hollow_crystal_stone",
+        "may_replace": [
+          {
+            "name": "minecraft:basalt"
+          }
+        ]
+      }
+    ]
+  }
+}

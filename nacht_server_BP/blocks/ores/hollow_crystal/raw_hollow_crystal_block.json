@@ -1,0 +1,68 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "nacht:raw_hollow_crystal_block",
+      "menu_category": {
+        "category": "nature",
+        "group": "minecraft:itemGroup.name.oreBlocks"
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "minecraft:geometry.full_block"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "nacht:raw_hollow_crystal_block"
+        }
+      },
+      "minecraft:loot": "loot_tables/ores/raw_hollow_crystal_block.json",
+      "minecraft:destructible_by_explosion": false,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 25,
+        "item_specific_speeds": [
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:silver_tier')"
+            },
+            "destroy_speed": 1.1
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:holy_silver_tier')"
+            },
+            "destroy_speed": 0.75
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:electrum_tier')"
+            },
+            "destroy_speed": 0.7
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:scarlet_orichalcum_tier')"
+            },
+            "destroy_speed": 0.6
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:star_iron_tier')"
+            },
+            "destroy_speed": 0.55
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:orichalcum_tier', 'nacht:adamantium_tier')"
+            },
+            "destroy_speed": 0.5
+          }
+        ]
+      },
+      "tag:nacht:silver_tier_destructible": {},
+      "tag:minecraft:is_pickaxe_item_destructible": {},
+      "tag:metal": {}
+    }
+  }
+}
