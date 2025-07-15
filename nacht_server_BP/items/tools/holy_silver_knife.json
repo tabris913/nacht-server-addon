@@ -45,7 +45,7 @@
             "items": [
               "nacht:silver_knife"
             ],
-            "repair_amount": "c.other->query.remaining_durability + (0.12 * c.other->query.max_durability)"
+            "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
           },
           {
             "items": [
@@ -57,7 +57,7 @@
             "items": [
               "nacht:holy_silver_knife"
             ],
-            "repair_amount": "c.other->query.remaining_durability + (0.24 * c.other->query.max_durability)"
+            "repair_amount": "context.other->query.remaining_durability + (0.24 * context.other->query.max_durability)"
           }
         ]
       },

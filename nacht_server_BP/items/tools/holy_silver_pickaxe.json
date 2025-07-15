@@ -40,13 +40,13 @@
             "items": [
               "nacht:silver_pickaxe"
             ],
-            "repair_amount": "c.other->query.remaining_durability + (0.12 * c.other->query.max_durability)"
+            "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
           },
           {
             "items": [
               "nacht:holy_silver_pickaxe"
             ],
-            "repair_amount": "c.other->query.remaining_durability + (0.24 * c.other->query.max_durability)"
+            "repair_amount": "context.other->query.remaining_durability + (0.24 * context.other->query.max_durability)"
           },
           {
             "items": [
@@ -82,7 +82,7 @@
           },
           {
             "block": {
-              "tags": "q.any_tag('stone')"
+              "tags": "query.any_tag('stone')"
             },
             "speed": 10
           }
