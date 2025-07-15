@@ -19,7 +19,7 @@
       },
       "scripts": {
         // boot chest helmet leg
-        "parent_setup": "variable.chestplate_layer_visible = 0.0;",
+        "parent_setup": "variable.chest_layer_visible = 0.0;",
         "animate": [
           "offset"
         ]

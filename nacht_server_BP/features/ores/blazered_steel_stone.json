@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:ores/blazered_steel_stone"
     },
-    "count": 12,
+    "count": 8,
     "replace_rules": [
       {
         "places_block": "nacht:blazered_steel_stone",

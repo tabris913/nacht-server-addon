@@ -9,17 +9,20 @@
     ],
     "unlock": [
       {
-        "item": "nacht:"
+        "item": "nacht:blazered_steel_block"
       }
     ],
-    "pattern": [],
+    "pattern": [
+      "#"
+    ],
     "key": {
       "#": {
-        "item": "nacht:"
+        "item": "nacht:blazered_steel_block"
       }
     },
     "result": {
-      "item": "nacht:blazered_steel_ingot"
+      "item": "nacht:blazered_steel_ingot",
+      "count": 9
     }
   }
 }
