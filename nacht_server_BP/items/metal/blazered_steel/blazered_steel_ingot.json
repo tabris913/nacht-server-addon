@@ -13,7 +13,7 @@
         "value": "item.nacht:blazered_steel_ingot.name"
       },
       "minecraft:rarity": {
-        "value": "common"
+        "value": "uncommon"
       },
       "minecraft:glint": {
         "value": false
