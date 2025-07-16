@@ -1,0 +1,49 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "nacht:ruin_lump",
+      "menu_category": {
+        "category": "nature",
+        "group": "minecraft:itemGroup.name.ore"
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "minecraft:geometry.full_block"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "nacht:ruin_lump"
+        }
+      },
+      "minecraft:loot": "loot_tables/ores/ruin_lump.json",
+      "minecraft:destructible_by_explosion": false,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 50,
+        "item_specific_speeds": [
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:star_iron_tier')"
+            },
+            "destroy_speed": 1.1
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:orichalcum_tier')"
+            },
+            "destroy_speed": 1
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:adamantium_tier')"
+            },
+            "destroy_speed": 0.95
+          }
+        ]
+      },
+      "tag:nacht:star_iron_tier_destructible": {},
+      "tag:minecraft:is_pickaxe_item_destructible": {}
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:magradis_ingot"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:magradis_block"
+      }
+    ],
+    "pattern": [
+      "#"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:magradis_block"
+      }
+    },
+    "result": {
+      "item": "nacht:magradis_ingot"
+    }
+  }
+}

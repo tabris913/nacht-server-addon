@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:magradis_chestplate"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:magradis_ingot"
+      }
+    ],
+    "pattern": [
+      "# #",
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:magradis_ingot"
+      }
+    },
+    "result": {
+      "item": "nacht:magradis_chestplate"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nacht:magradis_ingot_from_raw"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:magradis_shard"
+      },
+      {
+        "item": "anti_wither_core"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "nacht:magradis_shard"
+      },
+      {
+        "item": "nacht:magradis_shard"
+      },
+      {
+        "item": "nacht:magradis_shard"
+      },
+      {
+        "item": "nacht:magradis_shard"
+      },
+      {
+        "item": "nacht:magradis_shard"
+      },
+      {
+        "item": "nacht:magradis_shard"
+      },
+      {
+        "item": "nacht:magradis_shard"
+      },
+      {
+        "item": "nacht:magradis_shard"
+      },
+      {
+        "item": "nacht:anti_wither_core"
+      }
+    ],
+    "result": {
+      "item": "nacht:magradis_ingot",
+      "count": 2
+    }
+  }
+}

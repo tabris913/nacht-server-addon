@@ -1,0 +1,26 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "nacht:magradis_leggings",
+      "materials": {
+        "default": "armor",
+        "enchanted": "armor_enchanted"
+      },
+      "textures": {
+        "default": "textures/models/armor/magradis_main",
+        "enchanted": "textures/misc/enchanted_actor_glint"
+      },
+      "geometry": {
+        "default": "geometry.humanoid.armor.leggings"
+      },
+      "scripts": {
+        // boot chest helmet leg
+        "parent_setup": "variable.leg_layer_visible = 0.0;"
+      },
+      "render_controllers": [
+        "controller.render.armor"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "nacht:ores/ruin_lump"
+    },
+    "count": 4,
+    "replace_rules": [
+      {
+        "places_block": "nacht:ruin_lump",
+        "may_replace": [
+          {
+            "name": "minecraft:netherrack"
+          },
+          {
+            "name": "minecraft:basalt"
+          },
+          {
+            "name": "minecraft:blackstone"
+          }
+        ]
+      }
+    ]
+  }
+}
