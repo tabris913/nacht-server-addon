@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "nacht:ores/scarlet_orichalcum_ore"
+    },
+    "count": 4,
+    "replace_rules": [
+      {
+        "places_block": "nacht:scarlet_orichalcum_ore",
+        "may_replace": [
+          {
+            "name": "minecraft:stone"
+          }
+        ]
+      },
+      {
+        "places_block": "nacht:deepslate_scarlet_orichalcum_ore",
+        "may_replace": [
+          {
+            "name": "minecraft:deepslate"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -43,6 +43,9 @@
     "nacht:deepslate_electrum_ore": {
       "textures": "textures/blocks/ores/electrum/deepslate_electrum_ore"
     },
+    "nacht:magnos_ore_top": {
+      "textures": "textures/blocks/ores/magnos/magnos_ore_top"
+    },
     "nacht:magnos_ore": {
       "textures": "textures/blocks/ores/magnos/magnos_ore"
     },

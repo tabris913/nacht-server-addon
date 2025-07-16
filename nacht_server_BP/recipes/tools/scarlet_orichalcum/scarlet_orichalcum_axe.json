@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:scarlet_orichalcum_axe"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:scarlet_orichalcum_ingot"
+      }
+    ],
+    "pattern": [
+      "##",
+      "#S",
+      " S"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:scarlet_orichalcum_ingot"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "nacht:scarlet_orichalcum_axe"
+    }
+  }
+}

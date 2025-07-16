@@ -59,7 +59,11 @@
   },
   "nacht:magnos_ore": {
     "sound": "stone",
-    "carried_textures": "textures/blocks/ores/magnos/magnos_ore"
+    "textures": {
+      "down": "magnos_ore_top",
+      "side": "magnos_ore",
+      "up": "magnos_ore_top"
+    }
   },
   "nacht:aedrium_ore": {
     "sound": "stone",

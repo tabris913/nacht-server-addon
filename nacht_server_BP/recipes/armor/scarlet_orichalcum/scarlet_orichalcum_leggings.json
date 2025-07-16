@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:scarlet_orichalcum_leggings"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:scarlet_orichalcum_ingot"
+      }
+    ],
+    "pattern": [
+      "###",
+      "# #",
+      "# #"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:scarlet_orichalcum_ingot"
+      }
+    },
+    "result": {
+      "item": "nacht:scarlet_orichalcum_leggings"
+    }
+  }
+}
