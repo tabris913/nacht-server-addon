@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:solistite_sword"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:solistite_ingot"
+      }
+    ],
+    "pattern": [
+      "#",
+      "#",
+      "S"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:solistite_ingot"
+      },
+      "S": {
+        "item": "nacht:element_spine"
+      }
+    },
+    "result": {
+      "item": "nacht:solistite_sword"
+    }
+  }
+}

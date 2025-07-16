@@ -1,0 +1,31 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nacht:solistite_ingot_from_raw"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:magradis_ingot"
+      },
+      {
+        "item": "nacht:nexiatite_ingot"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "nacht:magradis_ingot"
+      },
+      {
+        "item": "nexiatite_ingot"
+      }
+    ],
+    "result": {
+      "item": "nacht:solistite_ingot",
+      "count": 2
+    }
+  }
+}
