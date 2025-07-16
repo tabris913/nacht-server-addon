@@ -469,6 +469,9 @@
     },
     "nacht:adamantium_leggings": {
       "textures": "textures/items/armor/adamantium/adamantium_leggings"
+    },
+    "nacht:element_spine": {
+      "textures": "textures/items/element_spine"
     }
   }
 }

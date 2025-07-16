@@ -1,0 +1,31 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nacht:element_spine"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:breeze_rod"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:blaze_rod"
+      },
+      {
+        "item": "minecraft:end_rod"
+      },
+      {
+        "item": "minecraft:breeze_rod"
+      }
+    ],
+    "result": {
+      "item": "nacht:element_spine",
+      "count": 3
+    }
+  }
+}

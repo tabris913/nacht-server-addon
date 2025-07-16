@@ -18,6 +18,7 @@ item.nacht:holy_water.name=聖水	##
 item.nacht:chest_key.name=チェストの鍵	##
 item.nacht:aether.name=エーテル	##
 item.nacht:condensed_aether.name=濃縮されたエーテル	##
+item.nacht:element_spine.name=エレメントスパイン	##
 
 nacht:alchemy_items_name=錬金術	##
 item.nacht:poor_elixir.name=粗悪なエリクサー	##

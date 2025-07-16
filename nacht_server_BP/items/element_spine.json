@@ -1,0 +1,25 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:element_spine",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:element_spine",
+      "minecraft:display_name": {
+        "value": "item.nacht:element_spine.name"
+      },
+      "minecraft:rarity": {
+        "value": "uncommon"
+      },
+      "minecraft:glint": {
+        "value": false
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:stacked_by_data": false
+    }
+  }
+}
