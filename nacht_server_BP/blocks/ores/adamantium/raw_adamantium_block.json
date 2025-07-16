@@ -1,0 +1,43 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "nacht:raw_adamantium_block",
+      "menu_category": {
+        "category": "nature",
+        "group": "minecraft:itemGroup.name.oreBlocks"
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "minecraft:geometry.full_block"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "nacht:raw_adamantium_block"
+        }
+      },
+      "minecraft:destructible_by_explosion": false,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 150,
+        "item_specific_speeds": [
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:orichalcum_tier')"
+            },
+            "destroy_speed": 3
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:adamantium_tier')"
+            },
+            "destroy_speed": 2.85
+          }
+        ]
+      },
+      "tag:nacht:orichalcum_tier_destructible": {},
+      "tag:minecraft:is_pickaxe_item_destructible": {},
+      "tag:metal": {}
+    }
+  }
+}

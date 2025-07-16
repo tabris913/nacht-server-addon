@@ -8,6 +8,11 @@
       "furnace",
       "blast_furnace"
     ],
+    "unlock": [
+      {
+        "item": "nacht:raw_scarlet_orichalcum"
+      }
+    ],
     "input": "nacht:raw_scarlet_orichalcum",
     "output": "nacht:scarlet_orichalcum_ingot"
   }

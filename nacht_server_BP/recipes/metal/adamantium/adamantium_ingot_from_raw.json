@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "nacht:adamantium_ingot_from_raw"
+    },
+    "unlock": [
+      {
+        "item": "raw_adamantium"
+      }
+    ],
+    "tags": [
+      "furnace",
+      "blast_furnace"
+    ],
+    "input": "nacht:raw_adamantium",
+    "output": "nacht:adamantium_ingot"
+  }
+}

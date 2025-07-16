@@ -1,0 +1,70 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:adamantium_hoe",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.hoe"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:adamantium_hoe",
+      "minecraft:display_name": {
+        "value": "item.nacht:adamantium_hoe.name"
+      },
+      "minecraft:rarity": {
+        "value": "epic"
+      },
+      "minecraft:glint": {
+        "value": true
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:stacked_by_data": false,
+      "minecraft:enchantable": {
+        "value": 0,
+        "slot": "hoe"
+      },
+      "minecraft:durability": {
+        "max_durability": 3031
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:adamantium_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:adamantium_hoe"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:damage": 10,
+      "minecraft:hand_equipped": true,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_hoe",
+          "nacht:adamantium_tier",
+          "minecraft:digger",
+          "minecraft:is_tool"
+        ]
+      },
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "query.any_tag('minecraft:is_hoe_item_destructible')"
+            },
+            "speed": 16
+          }
+        ]
+      }
+    }
+  }
+}

@@ -8,6 +8,11 @@
       "furnace",
       "blast_furnace"
     ],
+    "unlock": [
+      {
+        "item": "nacht:raw_terramagnite"
+      }
+    ],
     "input": "nacht:raw_terramagnite",
     "output": "nacht:terramagnite_ingot"
   }

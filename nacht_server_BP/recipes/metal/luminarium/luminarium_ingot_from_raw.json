@@ -8,6 +8,11 @@
       "furnace",
       "blast_furnace"
     ],
+    "unlock": [
+      {
+        "item": "nacht:raw_luminarium"
+      }
+    ],
     "input": "nacht:raw_luminarium",
     "output": "nacht:luminarium_ingot"
   }

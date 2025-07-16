@@ -30,7 +30,11 @@
         ]
       },
       "y": {
-        "distribution": "uniform"
+        "distribution": "uniform",
+        "extent": [
+          0,
+          130
+        ]
       },
       "z": {
         "distribution": "uniform",

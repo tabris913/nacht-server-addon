@@ -1,0 +1,81 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:adamantium_pickaxe",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.pickaxe"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:adamantium_pickaxe",
+      "minecraft:display_name": {
+        "value": "item.nacht:adamantium_pickaxe.name"
+      },
+      "minecraft:rarity": {
+        "value": "epic"
+      },
+      "minecraft:glint": {
+        "value": true
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:stacked_by_data": false,
+      "minecraft:enchantable": {
+        "value": 0,
+        "slot": "pickaxe"
+      },
+      "minecraft:durability": {
+        "max_durability": 3031
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:adamantium_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:adamantium_pickaxe"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:damage": 10,
+      "minecraft:hand_equipped": true,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_pickaxe",
+          "nacht:adamantium_tier",
+          "minecraft:digger",
+          "minecraft:is_tool"
+        ]
+      },
+      "minecraft:digger": {
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.any_tag('minecraft:wooden_tier_destructible', 'minecraft:stone_tier_destructible', 'minecraft:iron_tier_destructible', 'minecraft:copper_tier_destructible', 'minecraft:diamond_tier_destructible', 'minecraft:netherite_tier_destructible')"
+            },
+            "speed": 16
+          },
+          {
+            "block": {
+              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.any_tag('nacht:silver_tier_destructible', 'nacht:holy_silver_tier_destructible', 'nacht:electrum_tier_destructible', 'nacht:scarlet_orichalcum_tier_destructible', 'nacht:star_iron_tier_destructible', 'nacht:orichalcum_tier_destructible', 'nacht:adamantium_tier_destructible')"
+            },
+            "speed": 16
+          },
+          {
+            "block": {
+              "tags": "query.any_tag('stone')"
+            },
+            "speed": 16
+          }
+        ]
+      }
+    }
+  }
+}

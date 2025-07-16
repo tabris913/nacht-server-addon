@@ -8,6 +8,11 @@
       "furnace",
       "blast_furnace"
     ],
+    "unlock": [
+      {
+        "item": "nacht:raw_silver"
+      }
+    ],
     "input": "nacht:raw_silver",
     "output": "nacht:silver_ingot"
   }

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:raw_adamantium_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:raw_adamantium"
+      }
+    ],
+    "pattern": [
+      "###",
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:raw_adamantium"
+      }
+    },
+    "result": {
+      "item": "nacht:raw_adamantium_block"
+    }
+  }
+}
