@@ -62,10 +62,10 @@
       "textures": "textures/blocks/ores/orichalcum/deepslate_orichalcum_ore"
     },
     "nacht:ruin_lump": {
-      "textures": "textures/blocks/ores/ruin_lump"
+      "textures": "textures/blocks/ores/magradis/ruin_lump"
     },
     "nacht:endrift_lump": {
-      "textures": "textures/blocks/ores/endrift_lump"
+      "textures": "textures/blocks/ores/nexiatite/endrift_lump"
     },
     "nacht:deepslate_adamantium_ore": {
       "textures": "textures/blocks/ores/adamantium/deepslate_adamantium_ore"

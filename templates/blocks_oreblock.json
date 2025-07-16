@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:$ITEM_NAME",
       "menu_category": {
-        "category": "nature",
-        "group": "minecraft:itemGroup.name.oreBlocks"
+        "category": "nature"
       }
     },
     "components": {

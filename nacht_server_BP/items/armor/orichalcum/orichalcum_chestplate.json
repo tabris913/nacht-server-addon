@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:orichalcum_chestplate",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.chestplate"
+        "category": "equipment"
       }
     },
     "components": {

@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:silver_helmet",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.helmet"
+        "category": "equipment"
       }
     },
     "components": {

@@ -29,16 +29,16 @@
         "item": "nacht:aedrium_block"
       },
       {
-        "item": "nacht:netherite_block"
+        "item": "minecraft:netherite_block"
       },
       {
-        "item": "nacht:netherite_block"
+        "item": "minecraft:netherite_block"
       },
       {
-        "item": "nacht:scarlet_orichalcum_block"
+        "item": "nacht:scarlet_orichalcum_lump"
       },
       {
-        "item": "nacht:scarlet_orichalcum_block"
+        "item": "nacht:scarlet_orichalcum_lump"
       }
     ],
     "result": {

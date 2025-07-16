@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:orichalcum_hoe",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.hoe"
+        "category": "equipment"
       }
     },
     "components": {

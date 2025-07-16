@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:blazered_steel_stone",
       "menu_category": {
-        "category": "nature",
-        "group": "minecraft:itemGroup.name.ore"
+        "category": "nature"
       }
     },
     "components": {
@@ -14,7 +13,13 @@
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "nacht:blazered_steel_stone"
+          "texture": "nacht:blazered_steel_stone_side"
+        },
+        "up": {
+          "texture": "nacht:blazered_steel_stone_top"
+        },
+        "down": {
+          "texture": "nacht:blazered_steel_stone_top"
         }
       },
       "minecraft:loot": "loot_tables/ores/blazered_steel_stone.json",

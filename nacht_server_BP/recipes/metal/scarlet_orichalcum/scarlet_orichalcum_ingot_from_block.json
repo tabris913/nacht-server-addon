@@ -9,13 +9,15 @@
     ],
     "unlock": [
       {
-        "item": "nacht:"
+        "item": "nacht:scarlet_orichalcum_lump"
       }
     ],
-    "pattern": [],
+    "pattern": [
+      "#"
+    ],
     "key": {
       "#": {
-        "item": "nacht:"
+        "item": "nacht:scarlet_orichalcum_lump"
       }
     },
     "result": {

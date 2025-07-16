@@ -2,7 +2,7 @@
   "format_version": "1.21.80",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "nacht:scarlet_orichalcum_block"
+      "identifier": "nacht:scarlet_orichalcum_lump"
     },
     "tags": [
       "crafting_table"
@@ -23,7 +23,7 @@
       }
     },
     "result": {
-      "item": "nacht:scarlet_orichalcum_block"
+      "item": "nacht:scarlet_orichalcum_lump"
     }
   }
 }

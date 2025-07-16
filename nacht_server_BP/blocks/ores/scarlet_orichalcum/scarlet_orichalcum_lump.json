@@ -2,10 +2,9 @@
   "format_version": "1.21.60",
   "minecraft:block": {
     "description": {
-      "identifier": "nacht:scarlet_orichalcum_block",
+      "identifier": "nacht:scarlet_orichalcum_lump",
       "menu_category": {
-        "category": "nature",
-        "group": "minecraft:itemGroup.name.oreBlocks"
+        "category": "construction"
       }
     },
     "components": {
@@ -14,7 +13,7 @@
       },
       "minecraft:material_instances": {
         "*": {
-          "texture": "nacht:scarlet_orichalcum_block"
+          "texture": "nacht:scarlet_orichalcum_lump"
         }
       },
       "minecraft:destructible_by_explosion": false,

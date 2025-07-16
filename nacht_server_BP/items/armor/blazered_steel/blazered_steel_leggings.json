@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:blazered_steel_leggings",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.chestplate"
+        "category": "equipment"
       }
     },
     "components": {

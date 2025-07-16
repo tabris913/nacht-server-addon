@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:aedrium_chestplate",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.chestplate"
+        "category": "equipment"
       }
     },
     "components": {

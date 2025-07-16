@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:$ITEM_NAME",
       "menu_category": {
-        "category": "constructure",
-        "group": "minecraft:itemGroup.name."
+        "category": "constructure"
       }
     },
     "components": {

@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:nexiatite_block",
       "menu_category": {
-        "category": "nature",
-        "group": "minecraft:itemGroup.name.oreBlocks"
+        "category": "construction"
       }
     },
     "components": {
@@ -17,7 +16,6 @@
           "texture": "nacht:nexiatite_block"
         }
       },
-      "minecraft:loot": "loot_tables/ores/nexiatite_block.json",
       "minecraft:destructible_by_explosion": false,
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 150,

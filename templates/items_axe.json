@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:$ITEM_NAME_axe",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.axe"
+        "category": "equipment"
       }
     },
     "components": {
@@ -32,13 +31,13 @@
         "repair_items": [
           {
             "items": [
-              "nacht::$ITEM_NAME_ingot"
+              "nacht:$ITEM_NAME_ingot"
             ],
             "repair_amount": "query.max_durability * 0.25"
           },
           {
             "items": [
-              "nacht::$ITEM_NAME_axe"
+              "nacht:$ITEM_NAME_axe"
             ],
             "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
           }

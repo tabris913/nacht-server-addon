@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:electrum_shovel",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.shovel"
+        "category": "equipment"
       }
     },
     "components": {

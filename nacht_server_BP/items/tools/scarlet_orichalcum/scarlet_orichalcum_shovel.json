@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:scarlet_orichalcum_shovel",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.shovel"
+        "category": "equipment"
       }
     },
     "components": {

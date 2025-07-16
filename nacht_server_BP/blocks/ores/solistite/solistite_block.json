@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:solistite_block",
       "menu_category": {
-        "category": "nature",
-        "group": "minecraft:itemGroup.name.oreBlocks"
+        "category": "construction"
       }
     },
     "components": {

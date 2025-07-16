@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:star_iron_shovel",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.shovel"
+        "category": "equipment"
       }
     },
     "components": {
@@ -17,7 +16,7 @@
         "value": "rare"
       },
       "minecraft:glint": {
-        "value": false
+        "value": true
       },
       "minecraft:max_stack_size": 1,
       "minecraft:stacked_by_data": false,

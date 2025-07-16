@@ -14,7 +14,7 @@
     "carried_textures": "textures/blocks/ores/silver/deepslate_silver_ore"
   },
   "nacht:blazered_steel_stone": {
-    "sound": "stone",
+    "sound": "basalt",
     "textures": {
       "down": "blazered_steel_stone_top",
       "side": "blazered_steel_stone_side",

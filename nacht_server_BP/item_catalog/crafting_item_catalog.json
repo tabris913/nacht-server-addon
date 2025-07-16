@@ -4,11 +4,220 @@
     "categories": [
       {
         "category_name": "construction",
-        "groups": []
+        "groups": [
+          {
+            "items": [
+              "nacht:silver_block",
+              "nacht:blazered_steel_block",
+              "nacht:hollow_crystal_block",
+              "nacht:nocturium_block",
+              "nacht:luminarium_block",
+              "nacht:terramagnite_block",
+              "nacht:electrum_block",
+              "nacht:magnos_block",
+              "nacht:aedrium_block",
+              "nacht:scarlet_orichalcum_lump",
+              "nacht:star_iron_block",
+              "nacht:orichalcum_block",
+              "nacht:magradis_block",
+              "nacht:nexiatite_block",
+              "nacht:solistite_block",
+              "nacht:adamantium_block",
+              "nacht:raw_silver_block",
+              "nacht:raw_nocturium_block",
+              "nacht:raw_luminarium_block",
+              "nacht:raw_terramagnite_block",
+              "nacht:raw_electrum_block",
+              "nacht:raw_scarlet_orichalcum_block",
+              "nacht:raw_orichalcum_block",
+              "nacht:raw_adamantium_block"
+            ]
+          }
+        ]
       },
       {
         "category_name": "equipment",
-        "groups": []
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "nacht:adamantium_helmet",
+              "name": "nacht:helmet_items_name"
+            },
+            "items": [
+              "nacht:silver_helmet",
+              "nacht:holy_silver_helmet",
+              "nacht:blazered_steel_helmet",
+              "nacht:hollow_crystal_helmet",
+              "nacht:nocturium_helmet",
+              "nacht:luminarium_helmet",
+              "nacht:terramagnite_helmet",
+              "nacht:electrum_helmet",
+              "nacht:magnos_helmet",
+              "nacht:aedrium_helmet",
+              "nacht:scarlet_orichalcum_helmet",
+              "nacht:star_iron_helmet",
+              "nacht:orichalcum_helmet",
+              "nacht:magradis_helmet",
+              "nacht:nexiatite_helmet",
+              "nacht:solistite_helmet",
+              "nacht:adamantium_helmet"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:adamantium_chestplate",
+              "name": "nacht:chestplate_items_name"
+            },
+            "items": [
+              "nacht:silver_chestplate",
+              "nacht:holy_silver_chestplate",
+              "nacht:blazered_steel_chestplate",
+              "nacht:hollow_crystal_chestplate",
+              "nacht:nocturium_chestplate",
+              "nacht:luminarium_chestplate",
+              "nacht:terramagnite_chestplate",
+              "nacht:electrum_chestplate",
+              "nacht:magnos_chestplate",
+              "nacht:aedrium_chestplate",
+              "nacht:scarlet_orichalcum_chestplate",
+              "nacht:star_iron_chestplate",
+              "nacht:orichalcum_chestplate",
+              "nacht:magradis_chestplate",
+              "nacht:nexiatite_chestplate",
+              "nacht:solistite_chestplate",
+              "nacht:adamantium_chestplate"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:adamantium_leggings",
+              "name": "nacht:leggings_items_name"
+            },
+            "items": [
+              "nacht:silver_leggings",
+              "nacht:holy_silver_leggings",
+              "nacht:blazered_steel_leggings",
+              "nacht:hollow_crystal_leggings",
+              "nacht:nocturium_leggings",
+              "nacht:luminarium_leggings",
+              "nacht:terramagnite_leggings",
+              "nacht:electrum_leggings",
+              "nacht:magnos_leggings",
+              "nacht:aedrium_leggings",
+              "nacht:scarlet_orichalcum_leggings",
+              "nacht:star_iron_leggings",
+              "nacht:orichalcum_leggings",
+              "nacht:magradis_leggings",
+              "nacht:nexiatite_leggings",
+              "nacht:solistite_leggings",
+              "nacht:adamantium_leggings"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:adamantium_boots",
+              "name": "nacht:boots_items_name"
+            },
+            "items": [
+              "nacht:silver_boots",
+              "nacht:holy_silver_boots",
+              "nacht:blazered_steel_boots",
+              "nacht:hollow_crystal_boots",
+              "nacht:nocturium_boots",
+              "nacht:luminarium_boots",
+              "nacht:terramagnite_boots",
+              "nacht:electrum_boots",
+              "nacht:magnos_boots",
+              "nacht:aedrium_boots",
+              "nacht:scarlet_orichalcum_boots",
+              "nacht:star_iron_boots",
+              "nacht:orichalcum_boots",
+              "nacht:magradis_boots",
+              "nacht:nexiatite_boots",
+              "nacht:solistite_boots",
+              "nacht:adamantium_boots"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:adamantium_sword",
+              "name": "nacht:sword_items_name"
+            },
+            "items": [
+              "nacht:silver_knife",
+              "nacht:holy_silver_knife",
+              "nacht:blazered_steel_sword",
+              "nacht:hollow_crystal_sword",
+              "nacht:nocturium_sword",
+              "nacht:luminarium_sword",
+              "nacht:terramagnite_sword",
+              "nacht:electrum_sword",
+              "nacht:magnos_sword",
+              "nacht:aedrium_sword",
+              "nacht:scarlet_orichalcum_sword",
+              "nacht:star_iron_sword",
+              "nacht:orichalcum_sword",
+              "nacht:magradis_sword",
+              "nacht:nexiatite_sword",
+              "nacht:solistite_sword",
+              "nacht:adamantium_sword"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:adamantium_axe",
+              "name": "nacht:axe_items_name"
+            },
+            "items": [
+              "nacht:electrum_axe",
+              "nacht:scarlet_orichalcum_axe",
+              "nacht:star_iron_axe",
+              "nacht:orichalcum_axe",
+              "nacht:adamantium_axe"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:adamantium_pickaxe",
+              "name": "nacht:pickaxe_items_name"
+            },
+            "items": [
+              "nacht:silver_pickaxe",
+              "nacht:holy_silver_pickaxe",
+              "nacht:electrum_pickaxe",
+              "nacht:scarlet_orichalcum_pickaxe",
+              "nacht:star_iron_pickaxe",
+              "nacht:orichalcum_pickaxe",
+              "nacht:adamantium_pickaxe"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:adamantium_shovel",
+              "name": "nacht:shovel_items_name"
+            },
+            "items": [
+              "nacht:electrum_shovel",
+              "nacht:scarlet_orichalcum_shovel",
+              "nacht:star_iron_shovel",
+              "nacht:orichalcum_shovel",
+              "nacht:adamantium_shovel"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:adamantium_hoe",
+              "name": "nacht:hoe_items_name"
+            },
+            "items": [
+              "nacht:electrum_hoe",
+              "nacht:scarlet_orichalcum_hoe",
+              "nacht:star_iron_hoe",
+              "nacht:orichalcum_hoe",
+              "nacht:adamantium_hoe"
+            ]
+          }
+        ]
       },
       {
         "category_name": "items",
@@ -36,35 +245,35 @@
           {
             "items": [
               "nacht:raw_silver",
-              "nacht:silver_ingot",
-              "nacht:blazered_steel_shard",
-              "nacht:blazered_steel",
-              "nacht:hollow_crystal_shard",
-              "nacht:hollow_crystal",
               "nacht:raw_nocturium",
-              "nacht:nocturium_ingot",
               "nacht:raw_luminarium",
-              "nacht:luminarium_ingot",
               "nacht:raw_terramagnite",
-              "nacht:terramagnite_ingot",
               "nacht:raw_electrum",
-              "nacht:electrum_ingot",
-              "nacht:magnos_shard",
-              "nacht:magnos_ingot",
-              "nacht:aedrium_shard",
-              "nacht:aedrium_ingot",
               "nacht:raw_scarlet_orichalcum",
+              "nacht:raw_orichalcum",
+              "nacht:raw_adamantium",
+              "nacht:silver_ingot",
+              "nacht:blazered_steel",
+              "nacht:hollow_crystal",
+              "nacht:nocturium_ingot",
+              "nacht:luminarium_ingot",
+              "nacht:terramagnite_ingot",
+              "nacht:electrum_ingot",
+              "nacht:magnos_ingot",
+              "nacht:aedrium_ingot",
               "nacht:scarlet_orichalcum_ingot",
               "nacht:star_iron_ingot",
-              "nacht:raw_orichalcum",
               "nacht:orichalcum_ingot",
-              "nacht:magradis_shard",
               "nacht:magradis_ingot",
-              "nacht:nexiatite_shard",
               "nacht:nexiatite_ingot",
               "nacht:solistite_ingot",
-              "nacht:raw_adamantium",
-              "nacht:adamantium_ingot"
+              "nacht:adamantium_ingot",
+              "nacht:blazered_steel_shard",
+              "nacht:hollow_crystal_shard",
+              "nacht:magnos_shard",
+              "nacht:aedrium_shard",
+              "nacht:magradis_shard",
+              "nacht:nexiatite_shard"
             ]
           },
           {
@@ -106,6 +315,34 @@
       {
         "category_name": "nature",
         "groups": [
+          {
+            "group_identifier": {
+              "icon": "nacht:scarlet_orichalcum_ore",
+              "name": "nacht:ore_blocks_name"
+            },
+            "items": [
+              "nacht:silver_ore",
+              "nacht:nocturium_ore",
+              "nacht:luminarium_ore",
+              "nacht:terramagnite_ore",
+              "nacht:electrum_ore",
+              "nacht:scarlet_orichalcum_ore",
+              "nacht:blazered_steel_stone",
+              "nacht:magnos_ore",
+              "nacht:ruin_lump",
+              "nacht:hollow_crystal_stone",
+              "nacht:aedrium_ore",
+              "nacht:endrift_lump",
+              "nacht:deepslate_silver_ore",
+              "nacht:deepslate_nocturium_ore",
+              "nacht:deepslate_luminarium_ore",
+              "nacht:deepslate_terramagnite_ore",
+              "nacht:deepslate_electrum_ore",
+              "nacht:deepslate_scarlet_orichalcum_ore",
+              "nacht:deepslate_orichalcum_ore",
+              "nacht:deepslate_adamantium_ore"
+            ]
+          },
           {
             "items": [
               "nacht:aether",

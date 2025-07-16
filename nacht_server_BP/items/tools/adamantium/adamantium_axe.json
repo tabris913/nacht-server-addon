@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:adamantium_axe",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.axe"
+        "category": "equipment"
       }
     },
     "components": {
@@ -17,7 +16,7 @@
         "value": "epic"
       },
       "minecraft:glint": {
-        "value": false
+        "value": true
       },
       "minecraft:max_stack_size": 1,
       "minecraft:stacked_by_data": false,
@@ -32,13 +31,13 @@
         "repair_items": [
           {
             "items": [
-              "nacht::adamantium_ingot"
+              "nacht:adamantium_ingot"
             ],
             "repair_amount": "query.max_durability * 0.25"
           },
           {
             "items": [
-              "nacht::adamantium_axe"
+              "nacht:adamantium_axe"
             ],
             "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
           }

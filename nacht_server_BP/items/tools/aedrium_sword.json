@@ -4,8 +4,7 @@
     "description": {
       "identifier": "nacht:aedrium_sword",
       "menu_category": {
-        "category": "equipment",
-        "group": "minecraft:itemGroup.name.sword"
+        "category": "equipment"
       }
     },
     "components": {
