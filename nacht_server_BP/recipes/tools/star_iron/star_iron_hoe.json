@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:star_iron_hoe"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:star_iron_ingot"
+      }
+    ],
+    "pattern": [
+      "##",
+      " S",
+      " S"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:star_iron_ingot"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "nacht:star_iron_hoe"
+    }
+  }
+}

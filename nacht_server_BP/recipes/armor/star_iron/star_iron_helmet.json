@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:star_iron_helmet"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:star_iron_ingot"
+      }
+    ],
+    "pattern": [
+      "###",
+      "# #"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:star_iron_ingot"
+      }
+    },
+    "result": {
+      "item": "nacht:star_iron_helmet"
+    }
+  }
+}
