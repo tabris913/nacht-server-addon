@@ -20,43 +20,25 @@
       "minecraft:loot": "loot_tables/ores/$ITEM_NAME.json",
       "minecraft:destructible_by_explosion": false,
       "minecraft:destructible_by_mining": {
-        "seconds_to_destroy": 22.5,
+        "seconds_to_destroy": 100,
         "item_specific_speeds": [
-          {
-            "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:silver_tier')"
-            },
-            "destroy_speed": 1
-          },
-          {
-            "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:holy_silver_tier')"
-            },
-            "destroy_speed": 0.7
-          },
-          {
-            "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:electrum_tier')"
-            },
-            "destroy_speed": 0.65
-          },
-          {
-            "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:scarlet_orichalcum_tier')"
-            },
-            "destroy_speed": 0.55
-          },
           {
             "item": {
               "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:star_iron_tier')"
             },
-            "destroy_speed": 0.5
+            "destroy_speed": 2.15
           },
           {
             "item": {
-              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:orichalcum_tier', 'nacht:adamantium_tier')"
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:orichalcum_tier')"
             },
-            "destroy_speed": 1.35
+            "destroy_speed": 2
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe', 'nacht:adamantium_tier')"
+            },
+            "destroy_speed": 1.9
           }
         ]
       },
