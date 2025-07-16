@@ -58,7 +58,7 @@
         "destroy_speeds": [
           {
             "block": {
-              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('nacht:silver_tier_destructible')"
+              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('minecraft:wooden_tier_destructible', 'minecraft:stone_tier_destructible', 'minecraft:iron_tier_destructible', 'minecraft:copper_tier_destructible')"
             },
             "speed": 7
           },

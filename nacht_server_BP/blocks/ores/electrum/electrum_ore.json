@@ -1,0 +1,49 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "nacht:electrum_ore",
+      "menu_category": {
+        "category": "nature",
+        "group": "minecraft:itemGroup.name.ore"
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "minecraft:geometry.full_block"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "nacht:electrum_ore"
+        }
+      },
+      "minecraft:loot": "loot_tables/ores/electrum_ore.json",
+      "minecraft:destructible_by_explosion": false,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 15,
+        "item_specific_speeds": [
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:electrum_tier', 'nacht:holy_silver_tier')"
+            },
+            "destroy_speed": 0.45
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:scarlet_orichalcum_tier', 'nacht:star_iron_tier')"
+            },
+            "destroy_speed": 0.35
+          },
+          {
+            "item": {
+              "tags": "query.all_tags('minecraft:is_pickaxe') && query.any_tag('nacht:orichalcum_tier', 'nacht:adamantium_tier')"
+            },
+            "destroy_speed": 0.3
+          }
+        ]
+      },
+      "tag:nacht:holy_silver_tier_destructible": {},
+      "tag:minecraft:is_pickaxe_item_destructible": {}
+    }
+  }
+}

@@ -21,7 +21,7 @@ METAL_NAME=$1
 
 # blocks
 mkdir -p $BP/blocks/ores/${METAL_NAME}
-cat templates/blocks_ore.json | sed s/\$ITEM_NAME/deepslate_${METAL_NAME}_ore/g > $BP/blocks/ores/${METAL_NAME}/deepslate_${METAL_NAME}_ore.json
+cat templates/blocks_deepslate_ore.json | sed s/\$ITEM_NAME/deepslate_${METAL_NAME}_ore/g > $BP/blocks/ores/${METAL_NAME}/deepslate_${METAL_NAME}_ore.json
 cat templates/blocks_ore.json | sed s/\$ITEM_NAME/${METAL_NAME}_ore/g > $BP/blocks/ores/${METAL_NAME}/${METAL_NAME}_ore.json
 cat templates/blocks_oreblock.json | sed s/\$ITEM_NAME/raw_${METAL_NAME}_block/g > $BP/blocks/ores/${METAL_NAME}/raw_${METAL_NAME}_block.json
 cat templates/blocks_oreblock.json | sed s/\$ITEM_NAME/${METAL_NAME}_block/g > $BP/blocks/ores/${METAL_NAME}/${METAL_NAME}_block.json

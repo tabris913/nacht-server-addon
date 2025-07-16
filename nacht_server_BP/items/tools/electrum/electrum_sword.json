@@ -1,0 +1,72 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:electrum_sword",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.sword"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:electrum_sword",
+      "minecraft:display_name": {
+        "value": "item.nacht:electrum_sword.name"
+      },
+      "minecraft:rarity": {
+        "value": "uncommon"
+      },
+      "minecraft:glint": {
+        "value": false
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:stacked_by_data": false,
+      "minecraft:enchantable": {
+        "value": 0,
+        "slot": "sword"
+      },
+      "minecraft:durability": {
+        "max_durability": 2531
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:electrum_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:electrum_sword"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:damage": 14,
+      "minecraft:hand_equipped": true,
+      "minecraft:can_destroy_in_creative": false,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_sword",
+          "nacht:electrum_tier",
+          "minecraft:digger",
+          "minecraft:is_tool"
+        ]
+      },
+      "minecraft:digger": {
+        "destroy_speeds": [
+          {
+            "speed": 15,
+            "block": "minecraft:web"
+          },
+          {
+            "speed": 30,
+            "block": "minecraft:bamboo"
+          }
+        ]
+      }
+    }
+  }
+}

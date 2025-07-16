@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "nacht:electrum_leggings.player",
+      "item": {
+        "nacht:electrum_leggings": "query.is_owner_identifier_any('minecraft:player')"
+      },
+      "materials": {
+        "default": "armor",
+        "enchanted": "armor_enchanted"
+      },
+      "textures": {
+        "default": "textures/models/armor/electrum_main",
+        "enchanted": "textures/misc/enchanted_actor_glint"
+      },
+      "geometry": {
+        "default": "geometry.player.armor.leggings"
+      },
+      "scripts": {
+        // boot chest helmet leg
+        "parent_setup": "variable.leg_layer_visible = 0.0;",
+        "animate": [
+          "offset"
+        ]
+      },
+      "animations": {
+        "offset": "animation.armor.leggings.offset"
+      },
+      "render_controllers": [
+        "controller.render.armor"
+      ]
+    }
+  }
+}

@@ -58,11 +58,11 @@
       "minecraft:digger": {
         "destroy_speeds": [
           {
-            "speed": 7,
+            "speed": 15,
             "block": "minecraft:web"
           },
           {
-            "speed": 7,
+            "speed": 30,
             "block": "minecraft:bamboo"
           }
         ]
