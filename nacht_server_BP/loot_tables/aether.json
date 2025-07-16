@@ -1,0 +1,40 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "killed_by_player"
+        },
+        {
+          "condition": "match_tool",
+          "minecraft:match_tool_filter_any": [
+            "nacht:holy_silver_tier"
+          ],
+          "count": 1
+        },
+        {
+          "condition": "random_chance_with_looting",
+          "chance": 0.2,
+          "looting_multiplier": 0.1
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "nacht:aether",
+          "count": 1,
+          "functions": [
+            {
+              "function": "looting_enchant",
+              "count": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
