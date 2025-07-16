@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "nacht:ores/orichalcum_ore"
+    },
+    "count": 4,
+    "replace_rules": [
+      {
+        "places_block": "nacht:deepslate_orichalcum_ore",
+        "may_replace": [
+          {
+            "name": "minecraft:deepslate"
+          }
+        ]
+      }
+    ]
+  }
+}

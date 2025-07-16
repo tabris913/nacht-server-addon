@@ -1,0 +1,27 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:orichalcum_ingot"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:orichalcum_block"
+      }
+    ],
+    "pattern": [
+      "#"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:orichalcum_block"
+      }
+    },
+    "result": {
+      "item": "nacht:orichalcum_ingot"
+    }
+  }
+}

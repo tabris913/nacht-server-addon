@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:orichalcum_chestplate"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:orichalcum_ingot"
+      }
+    ],
+    "pattern": [
+      "# #",
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:orichalcum_ingot"
+      }
+    },
+    "result": {
+      "item": "nacht:orichalcum_chestplate"
+    }
+  }
+}

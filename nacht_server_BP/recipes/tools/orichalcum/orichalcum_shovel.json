@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:orichalcum_shovel"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:orichalcum_ingot"
+      }
+    ],
+    "pattern": [
+      "#",
+      "S",
+      "S"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:orichalcum_ingot"
+      },
+      "S": {
+        "item": "nacht:element_spine"
+      }
+    },
+    "result": {
+      "item": "nacht:orichalcum_shovel"
+    }
+  }
+}
