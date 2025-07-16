@@ -1,0 +1,44 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:feature_rules": {
+    "description": {
+      "identifier": "nacht:aedrium_ore",
+      "places_feature": "nacht:ores/aedrium_ore"
+    },
+    "conditions": {
+      "placement_pass": "underground_pass",
+      "minecraft:biome_filter": [
+        {
+          "any_of": [
+            {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "end"
+            }
+          ]
+        }
+      ]
+    },
+    "distribution": {
+      "iterations": 4,
+      "coordinate_eval_order": "yxz",
+      "x": {
+        "distribution": "uniform",
+        "extent": [
+          0,
+          16
+        ]
+      },
+      "y": {
+        "distribution": "uniform"
+      },
+      "z": {
+        "distribution": "uniform",
+        "extent": [
+          0,
+          16
+        ]
+      }
+    }
+  }
+}

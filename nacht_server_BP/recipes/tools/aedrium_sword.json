@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:aedrium_sword"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:aedrium_ingot"
+      }
+    ],
+    "pattern": [
+      "#",
+      "#",
+      "S"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:aedrium_ingot"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "nacht:aedrium_sword"
+    }
+  }
+}

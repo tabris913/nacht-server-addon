@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:aedrium_boots"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:aedrium_ingot"
+      }
+    ],
+    "pattern": [
+      "# #",
+      "# #"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:aedrium_ingot"
+      }
+    },
+    "result": {
+      "item": "nacht:aedrium_boots"
+    }
+  }
+}
