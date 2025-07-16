@@ -17,7 +17,7 @@
           "texture": "nacht:deepslate_electrum_ore"
         }
       },
-      "minecraft:loot": "loot_tables/ores/deepslate_electrum_ore.json",
+      "minecraft:loot": "loot_tables/ores/electrum_ore.json",
       "minecraft:destructible_by_explosion": false,
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 22.5,

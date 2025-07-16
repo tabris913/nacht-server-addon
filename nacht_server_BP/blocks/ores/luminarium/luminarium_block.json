@@ -17,7 +17,6 @@
           "texture": "nacht:luminarium_block"
         }
       },
-      "minecraft:loot": "loot_tables/ores/luminarium_block.json",
       "minecraft:destructible_by_explosion": false,
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 25,

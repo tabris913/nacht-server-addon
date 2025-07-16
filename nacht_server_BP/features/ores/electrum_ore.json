@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:ores/electrum_ore"
     },
-    "count": 8,
+    "count": 6,
     "replace_rules": [
       {
         "places_block": "nacht:electrum_ore",
