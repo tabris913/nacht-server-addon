@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nacht:anti_wither_core_from_eye"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:invertia_core"
+      }
+    ],
+    "pattern": [
+      "PPP",
+      "P#P",
+      "PPP"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:invertia_core"
+      },
+      "P": {
+        "item": "minecraft:ender_eye"
+      }
+    },
+    "result": {
+      "item": "nacht:anti_wither_core",
+      "count": 12
+    }
+  }
+}

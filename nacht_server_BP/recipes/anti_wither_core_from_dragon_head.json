@@ -2,7 +2,7 @@
   "format_version": "1.21.80",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "nacht:anti_wither_core"
+      "identifier": "nacht:anti_wither_core_from_dragon_head"
     },
     "tags": [
       "crafting_table"
@@ -10,9 +10,6 @@
     "unlock": [
       {
         "item": "nacht:invertia_core"
-      },
-      {
-        "item": "nacht:magradis_shard"
       }
     ],
     "ingredients": [
@@ -20,17 +17,13 @@
         "item": "nacht:invertia_core"
       },
       {
-        "item": "nacht:magradis_shard"
-      },
-      {
-        "item": "nacht:magradis_shard"
-      },
-      {
-        "item": "nacht:magradis_shard"
+        "item": "minecraft:skull",
+        "data": 5
       }
     ],
     "result": {
-      "item": "nacht:anti_wither_core"
+      "item": "nacht:anti_wither_core",
+      "count": 16
     }
   }
 }

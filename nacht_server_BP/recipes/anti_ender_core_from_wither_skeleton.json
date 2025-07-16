@@ -2,7 +2,7 @@
   "format_version": "1.21.80",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "nacht:anti_ender_core"
+      "identifier": "nacht:anti_ender_core_from_wither_sleketon"
     },
     "tags": [
       "crafting_table"
@@ -10,9 +10,6 @@
     "unlock": [
       {
         "item": "nacht:invertia_core"
-      },
-      {
-        "item": "nacht:nexiatite_shard"
       }
     ],
     "ingredients": [
@@ -20,17 +17,13 @@
         "item": "nacht:invertia_core"
       },
       {
-        "item": "nacht:nexiatite_shard"
-      },
-      {
-        "item": "nacht:nexiatite_shard"
-      },
-      {
-        "item": "nacht:nexiatite_shard"
+        "item": "minecraft:skull",
+        "data": 1
       }
     ],
     "result": {
-      "item": "nacht:anti_ender_core"
+      "item": "nacht:anti_ender_core",
+      "count": 16
     }
   }
 }
