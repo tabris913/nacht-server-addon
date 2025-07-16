@@ -1,0 +1,59 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:nexiatite_leggings",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.chestplate"
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:nexiatite_leggings",
+      "minecraft:display_name": {
+        "value": "item.nacht:nexiatite_leggings.name"
+      },
+      "minecraft:rarity": {
+        "value": "epic"
+      },
+      "minecraft:glint": {
+        "value": true
+      },
+      "minecraft:stacked_by_data": false,
+      "minecraft:wearable": {
+        "protection": 6,
+        "slot": "slot.armor.legs"
+      },
+      "minecraft:enchantable": {
+        "value": 25,
+        "slot": "armor_legs"
+      },
+      "minecraft:durability": {
+        "max_durability": 585
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:nexiatite_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:nexiatite_leggings"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor",
+          "minecraft:trimmable_armors"
+        ]
+      }
+    }
+  }
+}

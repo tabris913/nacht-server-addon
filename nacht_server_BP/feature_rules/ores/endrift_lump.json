@@ -2,14 +2,14 @@
   "format_version": "1.21.60",
   "minecraft:feature_rules": {
     "description": {
-      "identifier": "nacht:hollow_crystal_stone",
-      "places_feature": "nacht:ores/hollow_crystal_stone"
+      "identifier": "nacht:endrift_lump",
+      "places_feature": "nacht:ores/endrift_lump"
     },
     "conditions": {
       "placement_pass": "underground_pass",
       "minecraft:biome_filter": [
         {
-          "all_of": [
+          "any_of": [
             {
               "test": "has_biome_tag",
               "operator": "==",
@@ -20,7 +20,7 @@
       ]
     },
     "distribution": {
-      "iterations": 4,
+      "iterations": 2,
       "coordinate_eval_order": "yxz",
       "x": {
         "distribution": "uniform",
@@ -30,7 +30,11 @@
         ]
       },
       "y": {
-        "distribution": "uniform"
+        "distribution": "gaussian",
+        "extent": [
+          10,
+          30
+        ]
       },
       "z": {
         "distribution": "uniform",

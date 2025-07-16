@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "nacht:ores/endrift_lump"
+    },
+    "count": 4,
+    "replace_rules": [
+      {
+        "places_block": "nacht:endrift_lump",
+        "may_replace": [
+          {
+            "name": "minecraft:endstone"
+          }
+        ]
+      }
+    ]
+  }
+}
