@@ -35,7 +35,7 @@
         "repair_items": [
           {
             "items": [
-              "nacht:hollow_crystal_ingot"
+              "nacht:hollow_crystal"
             ],
             "repair_amount": "query.max_durability * 0.25"
           },

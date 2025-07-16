@@ -1,14 +1,28 @@
 {
   "format_version": "1.21.80",
-  "minecraft:recipe_furnace": {
+  "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "nacht:blazered_steel_ingot_from_raw"
+      "identifier": "nacht:blazered_steel_from_raw"
     },
     "tags": [
-      "furnace",
-      "blast_furnace"
+      "crafting_table"
     ],
-    "input": "nacht:raw_blazered_steel",
-    "output": "nacht:blazered_steel_ingot"
+    "unlock": [
+      {
+        "item": "nacht:blazered_steel_shard"
+      }
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:blazered_steel_shard"
+      }
+    },
+    "result": {
+      "item": "nacht:blazered_steel"
+    }
   }
 }

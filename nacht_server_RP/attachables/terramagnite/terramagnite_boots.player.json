@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:terramagnite_boots.player",
       "item": {
-        "nacht:terramagnite_boots": "query.owner_identifier == 'minecraft:player'"
+        "nacht:terramagnite_boots": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",

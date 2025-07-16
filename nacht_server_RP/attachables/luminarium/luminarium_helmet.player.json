@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:luminarium_helmet.player",
       "item": {
-        "nacht:luminarium_helmet": "query.owner_identifier == 'minecraft:player'"
+        "nacht:luminarium_helmet": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",

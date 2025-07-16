@@ -2,15 +2,15 @@
   "format_version": "1.21.80",
   "minecraft:item": {
     "description": {
-      "identifier": "nacht:raw_hollow_crystal",
+      "identifier": "nacht:hollow_crystal_shard",
       "menu_category": {
         "category": "items"
       }
     },
     "components": {
-      "minecraft:icon": "nacht:raw_hollow_crystal",
+      "minecraft:icon": "nacht:hollow_crystal_shard",
       "minecraft:display_name": {
-        "value": "item.nacht:raw_hollow_crystal.name"
+        "value": "item.nacht:hollow_crystal_shard.name"
       },
       "minecraft:rarity": {
         "value": "uncommon"

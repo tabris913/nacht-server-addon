@@ -1,14 +1,23 @@
 {
   "format_version": "1.21.80",
-  "minecraft:recipe_furnace": {
+  "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "nacht:hollow_crystal_ingot_from_raw"
+      "identifier": "nacht:hollow_crystal_from_raw"
     },
     "tags": [
-      "furnace",
-      "blast_furnace"
+      "crafting_table"
     ],
-    "input": "nacht:raw_hollow_crystal",
-    "output": "nacht:hollow_crystal_ingot"
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "nacht:hollow_crystal_shard"
+      }
+    },
+    "result": {
+      "item": "nacht:hollow_crystal"
+    }
   }
 }

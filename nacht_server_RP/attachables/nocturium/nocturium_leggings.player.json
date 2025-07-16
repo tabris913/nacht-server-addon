@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:nocturium_leggings.player",
       "item": {
-        "nacht:nocturium_leggings": "query.owner_identifier == 'minecraft:player'"
+        "nacht:nocturium_leggings": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",

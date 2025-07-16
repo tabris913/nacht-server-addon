@@ -9,7 +9,7 @@
     ],
     "unlock": [
       {
-        "item": "nacht:hollow_crystal_ingot"
+        "item": "nacht:hollow_crystal"
       }
     ],
     "pattern": [
@@ -19,7 +19,7 @@
     ],
     "key": {
       "#": {
-        "item": "nacht:hollow_crystal_ingot"
+        "item": "nacht:hollow_crystal"
       }
     },
     "result": {

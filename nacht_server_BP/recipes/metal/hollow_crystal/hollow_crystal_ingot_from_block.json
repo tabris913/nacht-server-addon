@@ -2,7 +2,7 @@
   "format_version": "1.21.80",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "nacht:hollow_crystal_ingot"
+      "identifier": "nacht:hollow_crystal"
     },
     "tags": [
       "crafting_table"
@@ -21,7 +21,7 @@
       }
     },
     "result": {
-      "item": "nacht:hollow_crystal_ingot",
+      "item": "nacht:hollow_crystal",
       "count": 9
     }
   }

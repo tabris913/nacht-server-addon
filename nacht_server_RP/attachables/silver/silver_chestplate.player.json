@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:silver_chestplate.player",
       "item": {
-        "nacht:silver_chestplate": "query.owner_identifier == 'minecraft:player'"
+        "nacht:silver_chestplate": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",

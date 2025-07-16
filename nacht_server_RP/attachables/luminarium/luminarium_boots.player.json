@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:luminarium_boots.player",
       "item": {
-        "nacht:luminarium_boots": "query.owner_identifier == 'minecraft:player'"
+        "nacht:luminarium_boots": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",

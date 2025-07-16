@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:holy_silver_helmet.player",
       "item": {
-        "nacht:holy_silver_helmet": "query.owner_identifier == 'minecraft:player'"
+        "nacht:holy_silver_helmet": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",

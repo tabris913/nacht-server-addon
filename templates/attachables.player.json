@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:$ITEM_NAME_$PART.player",
       "item": {
-        "nacht:$ITEM_NAME_$PART": "query.owner_identifier == 'minecraft:player'"
+        "nacht:$ITEM_NAME_$PART": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",

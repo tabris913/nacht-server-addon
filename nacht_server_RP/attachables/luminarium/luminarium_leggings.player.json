@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:luminarium_leggings.player",
       "item": {
-        "nacht:luminarium_leggings": "query.owner_identifier == 'minecraft:player'"
+        "nacht:luminarium_leggings": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",

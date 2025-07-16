@@ -30,7 +30,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "nacht:raw_hollow_crystal",
+          "name": "nacht:hollow_crystal_shard",
           "weight": 100,
           "functions": [
             {
@@ -74,7 +74,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "nacht:raw_hollow_crystal",
+          "name": "nacht:hollow_crystal_shard",
           "weight": 100,
           "functions": [
             {
@@ -118,7 +118,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "nacht:raw_hollow_crystal",
+          "name": "nacht:hollow_crystal_shard",
           "weight": 100,
           "functions": [
             {
@@ -155,7 +155,7 @@
       "entries": [
         {
           "type": "item",
-          "name": "nacht:raw_hollow_crystal",
+          "name": "nacht:hollow_crystal_shard",
           "weight": 100,
           "functions": [
             {

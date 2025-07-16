@@ -2,14 +2,14 @@
   "format_version": "1.21.80",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "nacht:raw_hollow_crystal_block"
+      "identifier": "nacht:hollow_crystal_shard_block"
     },
     "tags": [
       "crafting_table"
     ],
     "unlock": [
       {
-        "item": "nacht:raw_hollow_crystal"
+        "item": "nacht:hollow_crystal_shard"
       }
     ],
     "pattern": [
@@ -19,11 +19,11 @@
     ],
     "key": {
       "#": {
-        "item": "nacht:raw_hollow_crystal"
+        "item": "nacht:hollow_crystal_shard"
       }
     },
     "result": {
-      "item": "nacht:raw_hollow_crystal_block"
+      "item": "nacht:hollow_crystal_shard_block"
     }
   }
 }

@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:blazered_steel_chestplate.player",
       "item": {
-        "nacht:blazered_steel_chestplate": "query.owner_identifier == 'minecraft:player'"
+        "nacht:blazered_steel_chestplate": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",

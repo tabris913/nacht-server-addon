@@ -9,7 +9,7 @@
     ],
     "unlock": [
       {
-        "item": "nacht:blazered_steel_ingot"
+        "item": "nacht:blazered_steel"
       }
     ],
     "pattern": [
@@ -18,7 +18,7 @@
     ],
     "key": {
       "#": {
-        "item": "nacht:blazered_steel_ingot"
+        "item": "nacht:blazered_steel"
       }
     },
     "result": {

@@ -4,7 +4,7 @@
     "description": {
       "identifier": "nacht:blazered_steel_leggings.player",
       "item": {
-        "nacht:blazered_steel_leggings": "query.owner_identifier == 'minecraft:player'"
+        "nacht:blazered_steel_leggings": "query.is_owner_identifier_any('minecraft:player')"
       },
       "materials": {
         "default": "armor",
