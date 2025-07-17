@@ -5,6 +5,13 @@
       "identifier": "nacht:blazered_steel_stone",
       "menu_category": {
         "category": "nature"
+      },
+      "states": {
+        "minecraft:axis": [
+          "x",
+          "y",
+          "z"
+        ]
       }
     },
     "components": {
