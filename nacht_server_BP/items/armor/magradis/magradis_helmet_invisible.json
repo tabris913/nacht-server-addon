@@ -1,0 +1,60 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:magradis_helmet_invisible",
+      "menu_category": {
+        "category": "equipment",
+        "is_hidden_in_commands": true
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:magradis_helmet",
+      "minecraft:display_name": {
+        "value": "item.nacht:magradis_helmet.name"
+      },
+      "minecraft:rarity": {
+        "value": "epic"
+      },
+      "minecraft:glint": {
+        "value": true
+      },
+      "minecraft:stacked_by_data": false,
+      "minecraft:wearable": {
+        "protection": 3,
+        "slot": "slot.armor.head"
+      },
+      "minecraft:enchantable": {
+        "value": 25,
+        "slot": "armor_head"
+      },
+      "minecraft:durability": {
+        "max_durability": 437
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:magradis_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:magradis_helmet"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor",
+          "minecraft:trimmable_armors",
+          "nacht:invisible"
+        ]
+      }
+    }
+  }
+}

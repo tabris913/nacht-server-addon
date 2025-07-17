@@ -1,0 +1,70 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "nacht:holy_silver_leggings_invisible",
+      "menu_category": {
+        "category": "equipment",
+        "is_hidden_in_commands": true
+      }
+    },
+    "components": {
+      "minecraft:icon": "nacht:holy_silver_leggings",
+      "minecraft:display_name": {
+        "value": "item.nacht:holy_silver_leggings.name"
+      },
+      "minecraft:rarity": {
+        "value": "uncommon"
+      },
+      "minecraft:glint": {
+        "value": true
+      },
+      "minecraft:stacked_by_data": false,
+      "minecraft:wearable": {
+        "protection": 6,
+        "slot": "slot.armor.legs"
+      },
+      "minecraft:enchantable": {
+        "value": 10,
+        "slot": "armor_legs"
+      },
+      "minecraft:durability": {
+        "max_durability": 225
+      },
+      "minecraft:repairable": {
+        "repair_items": [
+          {
+            "items": [
+              "nacht:silver_ingot"
+            ],
+            "repair_amount": "query.max_durability * 0.25"
+          },
+          {
+            "items": [
+              "nacht:silver_leggings"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + (0.12 * context.other->query.max_durability)"
+          },
+          {
+            "items": [
+              "nacht:holy_water"
+            ],
+            "repair_amount": "query.max_durability * 0.5"
+          },
+          {
+            "items": [
+              "nacht:holy_silver_leggings"
+            ],
+            "repair_amount": "context.other->query.remaining_durability + (0.24 * context.other->query.max_durability)"
+          }
+        ]
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_armor"
+        ]
+      }
+    }
+  }
+}

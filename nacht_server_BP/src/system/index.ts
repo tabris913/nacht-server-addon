@@ -6,6 +6,7 @@ import { Logger } from '../utils/logger';
 
 import actionbar from './actionbar';
 import area from './area';
+import armorInvisible from './armorInvisible';
 import base from './base';
 import border from './border';
 import fortune from './fortune';
@@ -43,6 +44,7 @@ export default () =>
         fortune();
       }
       if (tickCounter % TicksPerSecond === 0) {
+        armorInvisible();
         base();
         title();
       }

@@ -436,6 +436,7 @@ export const GAMERULE_DEFAULT = {
 };
 
 // Items
+export const ITEM_TAG_INVISIBLE = 'nacht:invisible';
 // export const BIOME_TYPES = BiomeTypes.getAll().map((bt) => bt.id);
 // export const BLOCK_TYPES = BlockTypes.getAll().map((bt) => bt.id);
 // export const DIMENSION_TYPES = DimensionTypes.getAll().map((dt) => dt.typeId);
@@ -454,6 +455,7 @@ export const SCOREBOARD_POINT = 'point';
 export const TAG_AREA_BASE = 'AREA_BASE';
 export const TAG_AREA_EXPL = 'AREA_EXPL';
 export const TAG_AREA_TOWN = 'AREA_TOWN';
+export const TAG_INVISIBLE = 'ARMOR_INVISIBLE';
 export const TAG_OPERATOR = 'OP';
 export const TAG_OP_DEV = 'OP_DEVELOPMENT';
 export const TAG_OP_PLAY = 'OP_PLAY';

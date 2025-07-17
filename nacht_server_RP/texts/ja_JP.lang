@@ -155,6 +155,8 @@ item.nacht:star_iron_hoe.name=星鉄の鍬	##
 item.nacht:orichalcum_hoe.name=オリハルコンのクワ	##
 item.nacht:adamantium_hoe.name=アダマンタイトのクワ	##
 
+nacht:invisible_items_name=透明装備	##
+
 ### item
 items.base_flag.name=拠点の旗	##
 tile.nacht:base_flag.name=拠点の旗	##
