@@ -132,7 +132,7 @@ const checkPlayers = async (area: Area) => {
             // town 以外
             PlayerUtils.sendMessageToOps(`所定の時間内に ${player.name} が${areaName}に戻らなかったため、転移させます`);
             if (isInWrongArea(player)) {
-              // 対称エリアにいる場合
+              // 対象エリアにいる場合
               tp(player, areaTag);
             } else if (AreaUtils.existsInTownArea(player)) {
               tp(player, areaTag);

@@ -2,6 +2,7 @@ import { Logger } from '../utils/logger';
 
 import base from './base';
 import entityDie from './entityDie';
+import entityHit from './entityHit';
 import entitySpawn from './entitySpawn';
 import load from './load';
 import playerJoin from './playerJoin';
@@ -13,6 +14,7 @@ export default () => {
 
   base();
   entityDie();
+  entityHit();
   entitySpawn();
   load();
   playerJoin();

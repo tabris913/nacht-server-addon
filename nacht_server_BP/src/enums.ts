@@ -1,7 +1,5 @@
 /**
  * アドオンで追加したブロックの種類
- *
- * ※まだない
  */
 export enum NachtServerAddonBlockTypes {}
 
@@ -17,9 +15,11 @@ export enum NachtServerAddonEntityTypes {
  */
 export enum NachtServerAddonItemTypes {
   BaseFlag = 'nacht:base_flag',
+  ChestKey = 'nacht:chest_key',
   NachtFeather = 'nacht:nacht_feather',
   NachtHalo = 'nacht:nacht_halo',
   NachtLeftWing = 'nacht:nacht_left_wing',
   NachtRightWing = 'nacht:nacht_right_wing',
   NachtTail = 'nacht:nacht_tail',
+  Elixir = 'nacht:elixir',
 }

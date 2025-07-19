@@ -360,6 +360,24 @@ export const UnnecessaryEntities: Array<string> = [
   // MinecraftEntityTypes.ZombieVillagerV2,
 ];
 
+export const Undead: Array<string> = [
+  MinecraftEntityTypes.Bogged,
+  MinecraftEntityTypes.Drowned,
+  MinecraftEntityTypes.Husk,
+  MinecraftEntityTypes.Phantom,
+  MinecraftEntityTypes.Skeleton,
+  MinecraftEntityTypes.SkeletonHorse,
+  MinecraftEntityTypes.Stray,
+  MinecraftEntityTypes.Wither,
+  MinecraftEntityTypes.WitherSkeleton,
+  MinecraftEntityTypes.Zoglin,
+  MinecraftEntityTypes.Zombie,
+  MinecraftEntityTypes.ZombieHorse,
+  MinecraftEntityTypes.ZombiePigman,
+  MinecraftEntityTypes.ZombieVillager,
+  MinecraftEntityTypes.ZombieVillagerV2,
+];
+
 // Formatting
 export const Formatting = {
   Color: {
@@ -437,6 +455,7 @@ export const GAMERULE_DEFAULT = {
 
 // Items
 export const ITEM_TAG_INVISIBLE = 'nacht:invisible';
+export const TOOL_TAG_SILVER = 'nacht:silver_tier';
 // export const BIOME_TYPES = BiomeTypes.getAll().map((bt) => bt.id);
 // export const BLOCK_TYPES = BlockTypes.getAll().map((bt) => bt.id);
 // export const DIMENSION_TYPES = DimensionTypes.getAll().map((dt) => dt.typeId);

@@ -19,9 +19,9 @@ import DynamicPropertyUtils from '../utils/DynamicPropertyUtils';
 import PlayerUtils from '../utils/PlayerUtils';
 
 import { registerCommand } from './common';
+import { Mode } from './enum';
 
 import type { UneditableAreas } from '../models/location';
-import { Mode } from './enum';
 
 const setSafeZoneCommand: CustomCommand = {
   name: 'nacht:setsafezone',

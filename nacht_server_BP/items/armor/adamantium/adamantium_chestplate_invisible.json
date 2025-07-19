@@ -52,7 +52,8 @@
         "tags": [
           "minecraft:is_armor",
           "minecraft:trimmable_armors",
-          "nacht:invisible"
+          "nacht:invisible",
+          "nacht:adamantium_tier"
         ]
       }
     }
