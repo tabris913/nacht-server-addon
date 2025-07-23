@@ -4,14 +4,15 @@ import {
   EntityDamageCause,
   EquipmentSlot,
   TicksPerDay,
+  TicksPerSecond,
   world,
 } from '@minecraft/server';
 
 import { TAG_DIM_END, TAG_DIM_NETHER, Undead } from '../const';
 import { NachtServerAddonItemTypes } from '../enums';
-import { MinecraftEntityTypes } from '../types/index';
-import SafeZoneUtils from '../utils/SafeZoneUtils';
 import { GameTime } from '../models/GameTime';
+import { MinecraftEffectTypes, MinecraftEntityTypes } from '../types/index';
+import SafeZoneUtils from '../utils/SafeZoneUtils';
 
 /**
  *
@@ -162,14 +163,38 @@ const playerDamaging = (player: Entity, hurtEntity: Entity, damage: number) => {
       }
       break;
     case NachtServerAddonItemTypes.MagnosSword:
+      hurtEntity.setOnFire(5);
       break;
     case NachtServerAddonItemTypes.AedriumSword:
+      hurtEntity.addEffect(MinecraftEffectTypes.Levitation, 5 * TicksPerSecond);
       break;
     case NachtServerAddonItemTypes.MagradisSword:
+      switch (hurtEntity.typeId) {
+        case MinecraftEntityTypes.Wither:
+          hurtEntity.applyDamage(Math.floor(damage * 0.5));
+          break;
+        case MinecraftEntityTypes.WitherSkeleton:
+          hurtEntity.applyDamage(Math.floor(damage));
+          break;
+      }
       break;
     case NachtServerAddonItemTypes.NexiatiteSword:
+      switch (hurtEntity.typeId) {
+        case MinecraftEntityTypes.EnderDragon:
+          hurtEntity.applyDamage(Math.floor(damage * 0.5));
+          break;
+        case MinecraftEntityTypes.Enderman:
+        case MinecraftEntityTypes.Endermite:
+          hurtEntity.applyDamage(Math.floor(damage));
+          break;
+      }
       break;
     case NachtServerAddonItemTypes.SolistiteSword:
+      switch (hurtEntity.typeId) {
+        case MinecraftEntityTypes.Warden:
+          hurtEntity.applyDamage(Math.floor(damage * 0.5));
+          break;
+      }
       break;
   }
 };
