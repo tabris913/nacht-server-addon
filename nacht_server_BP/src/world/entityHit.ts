@@ -30,6 +30,27 @@ const calcRate = (maxRate: number, term: GameTime, standardTime: GameTime, targe
   return Math.min(maxRate - 1, ((maxRate - 1) / term.ticks) * diff.ticks);
 };
 
+const calcRateWithTicks = (
+  ticks: number,
+  maxRate: number,
+  range: { from: number; maxFrom: number; maxTo: number; to: number }
+) => {
+  const newRange = { ...range };
+  if (range.maxFrom < range.from) newRange.maxFrom += TicksPerDay;
+  if (range.maxTo < range.from) newRange.maxTo += TicksPerDay;
+  if (range.to < range.from) newRange.to += TicksPerDay;
+
+  if (ticks < newRange.from || newRange.to < ticks) return 1;
+
+  if (newRange.maxFrom <= ticks) {
+    if (ticks <= newRange.maxTo) return maxRate - 1;
+
+    return maxRate - 1 - ((ticks - newRange.maxTo) * (maxRate - 1)) / (newRange.to - newRange.maxTo + 1);
+  }
+
+  return maxRate - 1 - ((newRange.maxFrom - ticks) * (maxRate - 1)) / (newRange.maxFrom - newRange.from + 1);
+};
+
 const isOverTwoDays = (day: number, timeOfDay: number) => {
   const today = world.getDay();
   if (today - day >= 2) return true;
@@ -86,47 +107,58 @@ const playerDamaging = (player: Entity, hurtEntity: Entity, damage: number) => {
     case NachtServerAddonItemTypes.NocturiumSword:
       // 真夜中には2.5倍ダメージにまで伸びる
       if (now.isNight) {
-        let rate = 0;
-        if (17_000 <= now.timeOfDay) {
-          if (now.timeOfDay <= 19_000) {
-            rate = 1.5;
-          } else {
-            rate = 1.5 - ((now.timeOfDay - 19_000) * 1.5) / 3300;
-          }
-        } else {
-          rate = 1.5 - ((17_000 - now.timeOfDay) * 1.5) / 3300;
-        }
-        hurtEntity.applyDamage(rate * damage);
+        // let rate = 0;
+        // if (17_000 <= now.timeOfDay) {
+        //   if (now.timeOfDay <= 19_000) {
+        //     rate = 1.5;
+        //   } else {
+        //     rate = 1.5 - ((now.timeOfDay - 19_000) * 1.5) / 3300;
+        //   }
+        // } else {
+        //   rate = 1.5 - ((17_000 - now.timeOfDay) * 1.5) / 3300;
+        // }
+        // hurtEntity.applyDamage(rate * damage);
+        hurtEntity.applyDamage(
+          Math.floor(
+            calcRateWithTicks(now.timeOfDay, 2.5, { from: 13_702, maxFrom: 17_000, maxTo: 19_000, to: 22_299 }) * damage
+          )
+        );
       }
       break;
     case NachtServerAddonItemTypes.LuminariumSword:
       // 真昼間には2.5倍ダメージにまで伸びる
       if (!now.isNight) {
-        let rate = 0;
-        if (5_000 <= now.timeOfDay) {
-          if (22_300 <= now.timeOfDay) {
-            rate = 1.5 - ((29_000 - now.timeOfDay) * 1.5) / 6700;
-          } else if (now.timeOfDay <= 7_000) {
-            rate = 1.5;
-          } else {
-            rate = 1.5 - ((now.timeOfDay - 7_000) * 1.5) / 6700;
-          }
-        } else {
-          rate = 1.5 - ((5_000 - now.timeOfDay) * 1.5) / 6700;
-        }
-        hurtEntity.applyDamage(rate * damage);
+        // let rate = 0;
+        // if (5_000 <= now.timeOfDay) {
+        //   if (22_300 <= now.timeOfDay) {
+        //     rate = 1.5 - ((29_000 - now.timeOfDay) * 1.5) / 6700;
+        //   } else if (now.timeOfDay <= 7_000) {
+        //     rate = 1.5;
+        //   } else {
+        //     rate = 1.5 - ((now.timeOfDay - 7_000) * 1.5) / 6700;
+        //   }
+        // } else {
+        //   rate = 1.5 - ((5_000 - now.timeOfDay) * 1.5) / 6700;
+        // }
+        // hurtEntity.applyDamage(rate * damage);
+        hurtEntity.applyDamage(
+          Math.floor(calcRateWithTicks(now.timeOfDay, 2.5, { from: 22_300, maxFrom: 5_000, maxTo: 7_000, to: 13_701 }))
+        );
       }
       break;
     case NachtServerAddonItemTypes.TerramagniteSword:
       // 深いほどダメージが上がり，-50以下で2.5倍ダメージにまで伸びる
       if (player.location.y <= 64) {
-        let rate = 0;
-        if (player.location.y <= -50) {
-          rate = 1.5;
-        } else {
-          rate = 1.5 - ((player.location.y - -50) * 1.5) / 115;
-        }
-        hurtEntity.applyDamage(rate * damage);
+        // let rate = 0;
+        // if (player.location.y <= -50) {
+        //   rate = 1.5;
+        // } else {
+        //   rate = 1.5 - ((player.location.y - -50) * 1.5) / 115;
+        // }
+        // hurtEntity.applyDamage(rate * damage);
+        hurtEntity.applyDamage(
+          Math.floor(calcRateWithTicks(player.location.y, 2.5, { from: -64, maxFrom: -64, maxTo: -50, to: 64 }))
+        );
       }
       break;
     case NachtServerAddonItemTypes.MagnosSword:
