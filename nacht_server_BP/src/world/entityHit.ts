@@ -175,15 +175,39 @@ const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEnt
   const health = player.getComponent(EntityComponentTypes.Health);
   if (health === undefined) return;
 
+  const now = GameTime.now();
+
   if (armorItemStacks.every((is) => is?.hasTag('nacht:holy_silver_tier')) && damagingEntity) {
     // アンデッドからのダメージを半減する
     if (Undead.includes(damagingEntity.typeId)) {
       reduceDamage(health, damage / 2);
     }
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:blazered_steel_tier'))) {
-    //
+    // ゲーム内時間で2日間ネザーにいると2.5倍ダメージにまで伸びる
+    const netherTags = player.getTags().filter((tag) => tag.startsWith(TAG_DIM_NETHER));
+    if (netherTags.length > 0) {
+      const [day, timeOfDay] = netherTags[0]
+        .replace(TAG_DIM_NETHER, '')
+        .split('_')
+        .map((v) => parseInt(v));
+      reduceDamage(
+        health,
+        Math.floor((1 - 1 / (calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) + 1)) * damage)
+      );
+    }
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:hollow_crystal_tier'))) {
-    //
+    // ゲーム内時間で2日間エンドにいると2.5倍ダメージにまで伸びる
+    const endTags = player.getTags().filter((tag) => tag.startsWith(TAG_DIM_END));
+    if (endTags.length > 0) {
+      const [day, timeOfDay] = endTags[0]
+        .replace(TAG_DIM_END, '')
+        .split('_')
+        .map((v) => parseInt(v));
+      reduceDamage(
+        health,
+        Math.floor((1 - 1 / (calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) + 1)) * damage)
+      );
+    }
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:nocturium_tier'))) {
     //
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:luminarium_tier'))) {
