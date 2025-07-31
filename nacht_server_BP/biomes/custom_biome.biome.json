@@ -1,0 +1,89 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:biome": {
+    "description": {
+      "identifier": "nacht:custom_biome"
+    },
+    "components": {
+      "minecraft:climate": {
+        "downfall": 0.4,
+        "snow_accumulation": [
+          0.0,
+          0.125
+        ],
+        "temperature": 0.8
+      },
+      "minecraft:multinoise_generation_rules": {
+        "target_temperature": 0.0,
+        "target_humidity": 0.0,
+        "target_altitude": 0.0,
+        "target_weirdness": 0.0,
+        "weight": 0.4
+      },
+      "minecraft:overworld_height": {
+        "noise_type": "lowlands"
+      },
+      "minecraft:surface_parameters": {
+        "sea_floor_depth": 7,
+        "sea_floor_material": "minecraft:diamond_block",
+        "foundation_material": "minecraft:gold_block",
+        "mid_material": "minecraft:redstone_block",
+        "top_material": "minecraft:lapis_block",
+        "sea_material": "minecraft:netherite_block"
+      },
+      "minecraft:surface_material_adjustments": {
+        "adjustments": [
+          {
+            "materials": {
+              "mid_material": "minecraft:iron_block",
+              "top_material": "minecraft:coal_block"
+            },
+            "noise_range": [
+              -0.1,
+              0.1
+            ]
+          }
+        ]
+      },
+      "minecraft:overworld_generation_rules": {
+        "hills_transformation": [
+          [
+            "forest_hills",
+            1
+          ],
+          [
+            "forest",
+            2
+          ],
+          [
+            "nacht:custom_biome",
+            2
+          ]
+        ],
+        "generate_for_climates": [
+          [
+            "medium",
+            3
+          ],
+          [
+            "warm",
+            1
+          ],
+          [
+            "cold",
+            1
+          ]
+        ]
+      },
+      "minecraft:tags": {
+        "tags": [
+          "animal",
+          "monster",
+          "overworld",
+          "plains",
+          "bee_habitat"
+        ]
+      }
+    }
+  }
+}
