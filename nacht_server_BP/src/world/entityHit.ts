@@ -121,9 +121,11 @@ const playerDamaging = (player: Entity, hurtEntity: Entity, damage: number) => {
       }
       break;
     case NachtServerAddonItemTypes.MagnosSword:
+      // 5秒間火を付与する
       hurtEntity.setOnFire(5);
       break;
     case NachtServerAddonItemTypes.AedriumSword:
+      // 5秒間浮遊を付与する
       hurtEntity.addEffect(MinecraftEffectTypes.Levitation, 5 * TicksPerSecond);
       break;
     case NachtServerAddonItemTypes.MagradisSword:
