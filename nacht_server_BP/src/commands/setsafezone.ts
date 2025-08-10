@@ -64,7 +64,8 @@ const commandProcess = (origin: CustomCommandOrigin, mode: Mode, from?: Vector3,
             dimension: blockVolume.dimension.id as MinecraftDimensionTypes,
             id,
             index,
-            ...blockVolume.getBoundingBox(),
+            max: blockVolume.getMax(),
+            min: blockVolume.getMin(),
           } satisfies UneditableAreas)
         );
         DynamicPropertyUtils.countUpCounter(COUNTER_SAFE_AREA);

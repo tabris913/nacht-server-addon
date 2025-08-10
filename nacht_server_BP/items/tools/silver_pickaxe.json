@@ -59,19 +59,19 @@
             "block": {
               "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('minecraft:wooden_tier_destructible', 'minecraft:stone_tier_destructible', 'minecraft:iron_tier_destructible', 'minecraft:copper_tier_destructible')"
             },
-            "speed": 7
+            "speed": 8
           },
           {
             "block": {
               "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('minecraft:iron_tier_destructible')"
             },
-            "speed": 7
+            "speed": 8
           },
           {
             "block": {
               "tags": "query.any_tag('stone')"
             },
-            "speed": 7
+            "speed": 8
           }
         ]
       }

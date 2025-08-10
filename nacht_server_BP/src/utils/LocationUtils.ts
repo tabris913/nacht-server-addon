@@ -130,7 +130,8 @@ export const isOverlapped = <T extends BlockVolume>(area1: T, area2: T) => {
  * @returns
  */
 const isSurface = (location: Vector3, blockVolume: BlockVolume) => {
-  const { max, min } = blockVolume.getBoundingBox();
+  const max = blockVolume.getMax(),
+    min = blockVolume.getMin();
 
   return (
     [max.x, min.x].includes(location.x) || [max.y, min.y].includes(location.y) || [max.z, min.z].includes(location.z)
@@ -259,6 +260,22 @@ const findDynamicPropertiesBySuffix = (owner: string, index: string | number) =>
   }
 };
 
+/**
+ * 座標範囲に変換する
+ *
+ * @param chunkId チャンク座標
+ * @returns
+ */
+const fromChunkId = (chunkId: number) => ({ max: 16 * chunkId, min: 16 * (chunkId + 1) - 1 });
+
+/**
+ * チャンク座標に変換する
+ *
+ * @param coordinate 座標
+ * @returns
+ */
+const toChunkId = (coordinate: number) => Math.floor(coordinate / 16);
+
 const LocationUtils = {
   calcDistance,
   calcDistances,
@@ -275,6 +292,8 @@ const LocationUtils = {
   offsetLocation,
   findDynamicPropertiesByPrefix,
   findDynamicPropertiesBySuffix,
+  fromChunkId,
+  toChunkId,
 };
 
 export default LocationUtils;

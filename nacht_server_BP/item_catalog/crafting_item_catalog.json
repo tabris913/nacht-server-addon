@@ -385,6 +385,15 @@
             "items": [
               "nacht:stellavita_ring"
             ]
+          },
+          {
+            "group_identifier": {
+              "icon": "nacht:book_portfolio",
+              "name": "nacht:guide_books_name"
+            },
+            "items": [
+              "nacht:guide_book_ores"
+            ]
           }
         ]
       },

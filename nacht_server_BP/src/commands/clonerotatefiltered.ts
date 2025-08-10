@@ -46,7 +46,7 @@ const commandProcess = (
   const player = NonAdminSourceError.validate(origin);
 
   const blockVolume = new BlockVolume(begin, end);
-  const { min } = blockVolume.getBoundingBox();
+  const min = blockVolume.getMin();
 
   const offset = { x: destination.x - min.x, y: destination.y - min.y, z: destination.z - min.z };
   system.runTimeout(() => {

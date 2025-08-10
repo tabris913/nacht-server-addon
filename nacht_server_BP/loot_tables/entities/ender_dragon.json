@@ -5,11 +5,11 @@
       "entries": [
         {
           "type": "loot_table",
-          "name": "loot_tables/invertia_core"
+          "name": "loot_tables/invertia_core.json"
         },
         {
           "type": "loot_table",
-          "name": "loot_tables/unrefined_lapis_philosophorum"
+          "name": "loot_tables/unrefined_lapis_philosophorum.json"
         }
       ]
     }

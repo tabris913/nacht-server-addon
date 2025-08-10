@@ -178,10 +178,13 @@ export default () => {
           return;
         }
 
-        const entity = event.block.dimension.spawnEntity<NachtServerAddonEntityTypes>(
+        const entity = event.block.dimension.spawnEntity(
           NachtServerAddonEntityTypes.BaseFlag,
-          next.location,
-          { initialPersistence: true, initialRotation: 180 + event.player.getRotation().y }
+          next.location
+          // {
+          //   initialPersistence: true,
+          //   initialRotation: 180 + event.player.getRotation().y,
+          // }
         );
         world.setDynamicProperty(baseDp.id, JSON.stringify({ ...baseDp, entityId: entity.id } satisfies BaseAreaInfo));
         InventoryUtils.removeItem(event.player, NachtServerAddonItemTypes.BaseFlag, 1);

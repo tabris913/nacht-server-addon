@@ -17,6 +17,7 @@ import fixarea from './fixarea';
 import gamemodeop from './gamemodeop';
 import gamerule from './gamerule';
 import getdp from './getdp';
+import locateblock from './locateblock';
 import message from './message';
 import messageop from './messageop';
 import migrate from './migrate';
@@ -62,6 +63,7 @@ export default () => {
   gamemodeop();
   gamerule();
   getdp();
+  locateblock();
   migrate();
   message();
   messageop();

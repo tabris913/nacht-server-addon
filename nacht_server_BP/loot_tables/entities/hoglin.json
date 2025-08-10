@@ -69,7 +69,7 @@
       "entries": [
         {
           "type": "loot_table",
-          "name": "loot_tables/stellavita"
+          "name": "loot_tables/stellavita.json"
         }
       ]
     }

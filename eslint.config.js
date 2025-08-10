@@ -18,6 +18,7 @@ export default tseslint.config(
       parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
     },
   },
+  { settings: { 'import/resolver': { typescript: [] } } },
   {
     ...eslint.configs.recommended,
     rules: {
@@ -51,6 +52,11 @@ export default tseslint.config(
               pattern: '@src/**',
               group: 'parent',
               position: 'before',
+            },
+            {
+              pattern: '@/**',
+              group: 'external',
+              position: 'after',
             },
           ],
           pathGroupsExcludedImportTypes: ['builtin'],

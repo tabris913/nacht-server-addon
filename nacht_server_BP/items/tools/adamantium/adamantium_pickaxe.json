@@ -59,19 +59,19 @@
             "block": {
               "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.any_tag('minecraft:wooden_tier_destructible', 'minecraft:stone_tier_destructible', 'minecraft:iron_tier_destructible', 'minecraft:copper_tier_destructible', 'minecraft:diamond_tier_destructible', 'minecraft:netherite_tier_destructible')"
             },
-            "speed": 16
+            "speed": 45
           },
           {
             "block": {
               "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.any_tag('nacht:silver_tier_destructible', 'nacht:holy_silver_tier_destructible', 'nacht:electrum_tier_destructible', 'nacht:scarlet_orichalcum_tier_destructible', 'nacht:star_iron_tier_destructible', 'nacht:orichalcum_tier_destructible', 'nacht:adamantium_tier_destructible')"
             },
-            "speed": 16
+            "speed": 45
           },
           {
             "block": {
               "tags": "query.any_tag('stone')"
             },
-            "speed": 16
+            "speed": 45
           }
         ]
       }

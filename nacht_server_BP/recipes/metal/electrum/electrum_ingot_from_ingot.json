@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nacht:electrum_ingot_from_ingot"
+    },
+    "tags": [
+      "furnace",
+      "blast_furnace"
+    ],
+    "unlock": [
+      {
+        "item": "nacht:raw_electrum"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:gold_ingot"
+      },
+      {
+        "item": "nacht:silver_ingot"
+      },
+      {
+        "item": "nacht:silver_ingot"
+      },
+      {
+        "item": "nacht:silver_ingot"
+      }
+    ],
+    "result": {
+      "item": "nacht:electrum_ingot",
+      "count": 4
+    }
+  }
+}

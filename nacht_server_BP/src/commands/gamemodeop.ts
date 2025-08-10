@@ -93,7 +93,6 @@ const commandProcess = (origin: CustomCommandOrigin, name: OpGameMode): CustomCo
     }
     if (equippable) {
       gameData.equippable = [
-        EquipmentSlot.Body,
         EquipmentSlot.Chest,
         EquipmentSlot.Feet,
         EquipmentSlot.Head,
@@ -157,14 +156,9 @@ const commandProcess = (origin: CustomCommandOrigin, name: OpGameMode): CustomCo
       parsed.effects?.forEach((effect) =>
         player.addEffect(effect.typeId, effect.duration, { amplifier: effect.amplifier })
       );
-      [
-        EquipmentSlot.Body,
-        EquipmentSlot.Chest,
-        EquipmentSlot.Feet,
-        EquipmentSlot.Head,
-        EquipmentSlot.Legs,
-        EquipmentSlot.Offhand,
-      ].forEach((slot) => equippable?.setEquipment(slot, undefined));
+      [EquipmentSlot.Chest, EquipmentSlot.Feet, EquipmentSlot.Head, EquipmentSlot.Legs, EquipmentSlot.Offhand].forEach(
+        (slot) => equippable?.setEquipment(slot, undefined)
+      );
       Object.entries(parsed.equippable || {}).forEach(([eqSlot, eqItem]) => {
         const itemStack = new ItemStack(eqItem.typeId, eqItem.amount);
         itemStack.nameTag = eqItem.nameTag;
@@ -213,14 +207,9 @@ const commandProcess = (origin: CustomCommandOrigin, name: OpGameMode): CustomCo
       player.resetLevel();
       ScoreboardUtils.setScore(player, SCOREBOARD_POINT, 0);
       player.getEffects().forEach((effect) => player.removeEffect(effect.typeId));
-      [
-        EquipmentSlot.Body,
-        EquipmentSlot.Chest,
-        EquipmentSlot.Feet,
-        EquipmentSlot.Head,
-        EquipmentSlot.Legs,
-        EquipmentSlot.Offhand,
-      ].forEach((slot) => equippable?.setEquipment(slot, undefined));
+      [EquipmentSlot.Chest, EquipmentSlot.Feet, EquipmentSlot.Head, EquipmentSlot.Legs, EquipmentSlot.Offhand].forEach(
+        (slot) => equippable?.setEquipment(slot, undefined)
+      );
       player.getComponent(EntityComponentTypes.Inventory)?.container.clearAll();
     }
 

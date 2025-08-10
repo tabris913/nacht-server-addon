@@ -100,6 +100,9 @@ fi
 if [ "$SOURCE" = 1 ]; then
   rm -rf nacht_server_BP/scripts/
   npx tsc
+  rm -rf nacht_server_BP/scripts/mocks
+  mv nacht_server_BP/scripts/nacht_server_BP/src/* nacht_server_BP/scripts/
+  rm -rf nacht_server_BP/scripts/nacht_server_BP
   mkdir nacht_server_BP/scripts/types
   cp node_modules/@minecraft/vanilla-data/lib/index.js nacht_server_BP/scripts/types/
 

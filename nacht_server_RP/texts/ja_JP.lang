@@ -218,6 +218,9 @@ item.nacht:anti_ender_core.name=アンチエンダーコア	##
 
 item.nacht:stellavita_ring.name=星命石リング	##
 
+nacht:guide_books_name=ガイドブック	##
+item.guide_book.ores.name=追加鉱石ガイドブック	##
+
 ### nature
 nacht:ore_blocks_name=オリジナル鉱石	##
 tile.nacht:silver_ore.name=銀鉱石	##

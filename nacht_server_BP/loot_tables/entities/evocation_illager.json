@@ -50,7 +50,7 @@
       "entries": [
         {
           "type": "loot_table",
-          "name": "loot_tables/aether"
+          "name": "loot_tables/aether.json"
         }
       ]
     }

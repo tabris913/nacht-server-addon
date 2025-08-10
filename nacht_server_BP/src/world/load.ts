@@ -1,11 +1,11 @@
-import { world } from '@minecraft/server';
+import { type Vector3, world } from '@minecraft/server';
 
 import { GAMERULE_DEFAULT, PREFIX_GAMERULE, SCOREBOARD_POINT } from '../const';
 import { Logger } from '../utils/logger';
 
 import camera from './afterLoading/camera';
 
-const RESTORE_DATA = {};
+const RESTORE_DATA: Record<string, boolean | number | string | Vector3> = {};
 export default () =>
   world.afterEvents.worldLoad.subscribe((event) => {
     // ポイント準備
@@ -19,7 +19,7 @@ export default () =>
 
     // ゲームルール
     if (world.getDynamicPropertyIds().length === 0) {
-      world.setDynamicProperties(RESTORE_DATA);
+      Object.entries(RESTORE_DATA).forEach(([key, value]) => world.setDynamicProperty(key, value));
       Logger.log(`Succeeded to restore data.`);
     }
     Object.entries(GAMERULE_DEFAULT).forEach(([ruleName, value]) => {

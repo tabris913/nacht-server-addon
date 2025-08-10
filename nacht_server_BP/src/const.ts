@@ -482,6 +482,10 @@ export const TAG_OPERATOR = 'OP';
 export const TAG_OP_DEV = 'OP_DEVELOPMENT';
 export const TAG_OP_PLAY = 'OP_PLAY';
 
+/// Prefix
+export const TAG_ITEM = 'ITEM_';
+export const TAG_VERSION = 'LATEST_VER_';
+
 /// Title
 export const TAG_TITLE_BILLIONAIRE = 'TITLE_BILLIONAIRE';
 export const TAG_TITLE_FIRST_BILLIONAIRE = 'TITLE_FIRST_BILLIONAIRE';
@@ -503,3 +507,6 @@ export const Titles = {
   [TAG_TITLE_NACHT_RIGHT_WING]: '誓約の翼を得たもの',
   [TAG_TITLE_NACHT_TAIL]: '尾を掴みし者',
 };
+
+// Version
+export const CURRENT_VERSION: [number, number, number] = [1, 1, 2];

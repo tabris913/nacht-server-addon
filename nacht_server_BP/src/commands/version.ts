@@ -1,5 +1,6 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
 
+import { CURRENT_VERSION } from '../const';
 import { UndefinedSourceOrInitiatorError } from '../errors/command';
 import PlayerUtils from '../utils/PlayerUtils';
 
@@ -17,7 +18,7 @@ export default () =>
         const player = PlayerUtils.convertToPlayer(origin.initiator || origin.sourceEntity);
         if (player === undefined) throw new UndefinedSourceOrInitiatorError();
 
-        player.sendMessage('1.1.1');
+        player.sendMessage(CURRENT_VERSION.join('.'));
 
         return { status: CustomCommandStatus.Success };
       }

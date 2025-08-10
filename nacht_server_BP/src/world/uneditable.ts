@@ -25,10 +25,11 @@ export default () => {
     }
   });
   // 設置不可能
-  world.beforeEvents.playerPlaceBlock.subscribe((event) => {
+  world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
+    if (!event.isFirstEvent) return;
     if (
       DynamicPropertyUtils.retrieveUneditableAreas()
-        .filter((area) => area.dimension === event.dimension.id)
+        .filter((area) => area.dimension === event.block.dimension.id)
         .map((area) => new DimensionBlockVolume(area.min, area.max, area.dimension))
         .some((bv) => bv.isInside(event.block.location))
     ) {

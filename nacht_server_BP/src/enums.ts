@@ -59,6 +59,8 @@ export enum NachtServerAddonEntityTypes {
  * アドオンで追加したアイテムの種類
  */
 export enum NachtServerAddonItemTypes {
+  GuideBookOres = 'nacht:guide_book_ores',
+  //
   BaseFlag = 'nacht:base_flag',
   ChestKey = 'nacht:chest_key',
   NachtFeather = 'nacht:nacht_feather',

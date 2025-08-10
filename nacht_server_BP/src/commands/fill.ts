@@ -70,7 +70,8 @@ const commandProcessNew = (
    * 適用範囲
    */
   const fillAreaBV = new DimensionBlockVolume(from, to, player.dimension);
-  const { max: fillAreaMaxPoint, min: fillAreaMinPoint } = fillAreaBV.getBoundingBox();
+  const fillAreaMaxPoint = fillAreaBV.getMax(),
+    fillAreaMinPoint = fillAreaBV.getMin();
   const fillBP = BlockPermutation.resolve(tileName.id, blockStates ? parseBlockStates(blockStates) : undefined);
   if (blockStates) Logger.debug('blockStates is given.');
   else Logger.debug('blockStates is undefined.');

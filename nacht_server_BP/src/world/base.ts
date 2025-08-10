@@ -36,7 +36,8 @@ export default () => {
   });
 
   // ブロック設置
-  world.beforeEvents.playerPlaceBlock.subscribe((event) => {
+  world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
+    if (!event.isFirstEvent) return;
     if (AreaUtils.isInBaseArea(event.block)) {
       for (const dp of BaseUtils.retrieveBases().filter(isFixedBase)) {
         const southEast = LocationUtils.offsetLocation(dp.northWest, dp.edgeSize);

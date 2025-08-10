@@ -24,14 +24,16 @@ export const fillHollow = (
   fillBlock: BlockPermutation
 ) => {
   Logger.debug('hollow mode');
-  const { max: fillAreaMaxPoint, min: fillAreaMinPoint } = fillArea.getBoundingBox();
+  const fillAreaMaxPoint = fillArea.getMax(),
+    fillAreaMinPoint = fillArea.getMin();
 
   system.runJob(
     (function* () {
       let index = 1;
       let total = 0;
       for (const chunksBV of chunks) {
-        const { max: chunksMaxPoint, min: chunksMinPoint } = chunksBV.getBoundingBox();
+        const chunksMaxPoint = chunksBV.getMax(),
+          chunksMinPoint = chunksBV.getMin();
         CommandUtils.buildCommand(player.dimension, 'tickingarea', 'add', chunksMinPoint, chunksMaxPoint, 'FILL', true);
         yield;
         const area = new BlockVolume(

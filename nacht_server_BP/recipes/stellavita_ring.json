@@ -14,7 +14,7 @@
     ],
     "pattern": [
       "S#S",
-      "SHS",
+      "SES",
       "SSS"
     ],
     "key": {
@@ -24,8 +24,8 @@
       "S": {
         "item": "nacht:silver_ingot"
       },
-      "H": {
-        "item": "nacht:holy_water"
+      "E": {
+        "item": "nacht:elixir"
       }
     },
     "result": {

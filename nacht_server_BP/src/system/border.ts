@@ -19,7 +19,8 @@ import { isFixedBase } from '../utils/TypeGuards';
 const collectAreaBorder = (playerBV: BlockVolume, yArray: Array<number>) => {
   try {
     const locations: Array<Vector3> = [];
-    const { max: southEast, min: northWest } = playerBV.getBoundingBox();
+    const southEast = playerBV.getMax(),
+      northWest = playerBV.getMin();
 
     // Borders Between Base and Exploring Area
     if (northWest.z <= 0 && 0 <= southEast.z) {
@@ -155,15 +156,14 @@ const collectAreaBorder = (playerBV: BlockVolume, yArray: Array<number>) => {
 const collectBaseBorder = (playerBV: BlockVolume, yArray: Array<number>, bases: Array<BlockVolume>) => {
   try {
     const locations: Array<Vector3> = [];
-    const { max: southEast, min: northWest } = playerBV.getBoundingBox();
+    const southEast = playerBV.getMax(),
+      northWest = playerBV.getMin();
 
     bases
       .filter((baseBV) => playerBV.intersects(baseBV) !== BlockVolumeIntersection.Disjoint)
       .forEach((baseBV) => {
-        const {
-          max: { x: eastX, z: southZ },
-          min: { x: westX, z: northZ },
-        } = baseBV.getBoundingBox();
+        const { x: eastX, z: southZ } = baseBV.getMax(),
+          { x: westX, z: northZ } = baseBV.getMin();
         // east
         if (northWest.x <= eastX && eastX <= southEast.x) {
           const zArray = LocationUtils.makeArray(Math.max(northWest.z, northZ), Math.min(southEast.z, southZ)).filter(
