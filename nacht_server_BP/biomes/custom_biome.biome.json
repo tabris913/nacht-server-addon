@@ -54,10 +54,6 @@
           [
             "forest",
             2
-          ],
-          [
-            "nacht:custom_biome",
-            2
           ]
         ],
         "generate_for_climates": [
