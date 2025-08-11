@@ -11,7 +11,7 @@
         "enchanted": "armor_enchanted"
       },
       "textures": {
-        "default": "textures/models/armor/magradis_main",
+        "default": "textures/models/armor/magradis_leggings",
         "enchanted": "textures/misc/enchanted_actor_glint"
       },
       "geometry": {
