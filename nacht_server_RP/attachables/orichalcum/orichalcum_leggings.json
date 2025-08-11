@@ -8,7 +8,7 @@
         "enchanted": "armor_enchanted"
       },
       "textures": {
-        "default": "textures/models/armor/orichalcum_main",
+        "default": "textures/models/armor/orichalcum_leggings",
         "enchanted": "textures/misc/enchanted_actor_glint"
       },
       "geometry": {
