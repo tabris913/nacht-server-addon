@@ -4,6 +4,7 @@ import base from './base';
 import entityDie from './entityDie';
 import entityHit from './entityHit';
 import entitySpawn from './entitySpawn';
+import item from './item';
 import load from './load';
 import playerDimensionChange from './playerDimensionChange';
 import playerJoin from './playerJoin';
@@ -17,6 +18,7 @@ export default () => {
   entityDie();
   entityHit();
   entitySpawn();
+  item();
   load();
   playerDimensionChange();
   playerJoin();

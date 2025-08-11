@@ -12,6 +12,7 @@ import { TAG_DIM_END, TAG_DIM_NETHER, Undead } from '../const';
 import { NachtServerAddonItemTypes } from '../enums';
 import { GameTime } from '../models/GameTime';
 import { MinecraftEffectTypes, MinecraftEntityTypes } from '../types/index';
+import { Logger } from '../utils/logger';
 import SafeZoneUtils from '../utils/SafeZoneUtils';
 import TicksUtils from '../utils/TicksUtils';
 
@@ -169,15 +170,25 @@ const reduceDamage = (health: EntityHealthComponent, reduction: number) => {
  * @param player プレイヤー
  */
 const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEntity?: Entity, damage: number = 0) => {
+  Logger.info(`${damagingEntity?.typeId} ${player.typeId} ${damageSource} ${damage}`);
   const equippable = player.getComponent(EntityComponentTypes.Equippable);
-  if (equippable === undefined) return;
+  if (equippable === undefined) {
+    Logger.error('Equippable component not found.');
+    return;
+  }
   const armorItemStacks = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet].map((es) =>
     equippable.getEquipment(es)
   );
   const health = player.getComponent(EntityComponentTypes.Health);
-  if (health === undefined) return;
+  if (health === undefined) {
+    Logger.error('Health component not found.');
+    return;
+  }
 
   const now = GameTime.now();
+
+  Logger.info(`${equippable.totalArmor} ${equippable.totalToughness}`);
+  Logger.info(equippable.getEquipment(EquipmentSlot.Head)?.typeId);
 
   if (armorItemStacks.every((is) => is?.hasTag('nacht:holy_silver_tier')) && damagingEntity) {
     // アンデッドからのダメージを半減する
@@ -228,6 +239,7 @@ const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEnt
         reduceDamage(health, damage);
     }
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:aedrium_tier'))) {
+    Logger.info('aedrium', damageSource);
     // 落下ダメージ無効
     switch (damageSource) {
       case EntityDamageCause.fall:
@@ -265,27 +277,27 @@ const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEnt
 
 export default () =>
   world.afterEvents.entityHurt.subscribe((event) => {
+    // Logger.info(
+    //   `${event.damageSource.damagingEntity?.typeId} ${event.hurtEntity.typeId} ${event.damageSource.cause} ${event.damage}`
+    // );
+
     // 安全地帯
     if (event.hurtEntity.typeId === MinecraftEntityTypes.Player) {
+      Logger.info('hurtEntity: player');
       if (
         SafeZoneUtils.isInSafeArea({ ...event.hurtEntity.location, dimension: event.hurtEntity.dimension }) &&
         [EntityDamageCause.entityAttack, EntityDamageCause.entityExplosion, EntityDamageCause.projectile].includes(
           event.damageSource.cause
         )
       ) {
+        Logger.info('in safe area');
         const health = event.hurtEntity.getComponent(EntityComponentTypes.Health);
         health?.setCurrentValue(Math.min(health.currentValue + event.damage, health.effectiveMax));
+      } else {
+        playerHurt(event.hurtEntity, event.damageSource.cause, event.damageSource.damagingEntity, event.damage);
       }
-
-      return;
-    }
-
-    if (event.damageSource.damagingEntity?.typeId === MinecraftEntityTypes.Player) {
+    } else if (event.damageSource.damagingEntity?.typeId === MinecraftEntityTypes.Player) {
+      Logger.info('damagingEntity: player');
       playerDamaging(event.damageSource.damagingEntity, event.hurtEntity, event.damage);
-    } else if (
-      event.hurtEntity.typeId === MinecraftEntityTypes.Player &&
-      event.damageSource.damagingEntity !== undefined
-    ) {
-      playerHurt(event.hurtEntity, event.damageSource.cause, event.damageSource.damagingEntity, event.damage);
     }
   });
