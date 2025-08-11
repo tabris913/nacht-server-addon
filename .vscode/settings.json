@@ -1,75 +1,55 @@
 {
   "[json]": {
-    // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
-    // null: None
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[markdown]": {
-    // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
-    // null: None
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    // The number of spaces a tab is equal to. This setting is overridden based on the file contents when #editor.detectIndentation# is on.
-    "editor.tabSize": 4,
-    "files.trimTrailingWhitespace": false
+    "editor.tabSize": 4
   },
-  // Defines a default formatter which takes precedence over all other formatter settings. Must be the identifier of an extension contributing a formatter.
-  // null: None
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // Controls the font family.
-  "editor.fontFamily": "Consolas, 'Courier New', monospace, 'Yu Gothic'",
-  // Controls the font size in pixels.
-  "editor.fontSize": 14,
-  // Format a file on save. A formatter must be available, the file must not be saved after delay, and the editor must not be shutting down.
-  "editor.formatOnSave": true,
-  // Controls whether the minimap is shown.
-  "editor.minimap.enabled": false,
-  // Controls whether the editor should render control characters.
-  "editor.renderControlCharacters": false,
-  // Controls how the editor should render whitespace characters.
-  "editor.renderWhitespace": "all",
-  // Render vertical rulers after a certain number of monospace characters. Use multiple values for multiple rulers. No rulers are drawn if array is empty.
-  "editor.rulers": [
-    80,
-    120
-  ],
-  // Controls whether the semanticHighlighting is shown for the languages that support it.
-  // true: Semantic highlighting enabled for all color themes.
-  "editor.semanticHighlighting.enabled": true,
-  // Controls how suggestions are pre-selected when showing the suggest list.
-  // first: Always select the first suggestion.
-  "editor.suggestSelection": "first",
-  // The number of spaces a tab is equal to. This setting is overridden based on the file contents when #editor.detectIndentation# is on.
-  "editor.tabSize": 2,
-  // Controls how lines should wrap.
-  // wordWrapColumn: Lines will wrap at #editor.wordWrapColumn#.
-  "editor.wordWrap": "wordWrapColumn",
-  // Controls the wrapping column of the editor when #editor.wordWrap# is wordWrapColumn or bounded.
-  "editor.wordWrapColumn": 120,
-  // Enables or disables all validations.
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "css.validate": false,
-  // Code action kinds to be run on save.
   "editor.codeActionsOnSave": {
     "editor.organizeImports": "explicit",
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.stylelint": "explicit"
+    "source.fixAll.eslint": "explicit"
   },
-  // The default end of line character.
-  // : LF
-  "files.eol": "\n",
-  // When enabled, will trim trailing whitespace when saving a file.
-  "files.trimTrailingWhitespace": true,
-  // When enabled, insert a final new line at the end of the file when saving it.
-  "files.insertFinalNewline": true,
-  // When enabled, will trim all new lines after the final new line at the end of the file when saving it.
-  "files.trimFinalNewlines": true,
-  // Enables or disables all validations.
-  "less.validate": false,
-  // Path to the prettier configuration file
-  // "prettier.configPath": ".prettierrc.json",
-  // Path to a .prettierignore file
-  "prettier.ignorePath": ".prettierignore",
-  // Enables or disables all validations.
-  "scss.validate": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontFamily": "Consolas, 'Courier New', monospace, 'Yu Gothic'",
+  "editor.fontSize": 14,
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.renderControlCharacters": false,
+  "editor.renderWhitespace": "all",
+  "editor.rulers": [80, 120],
+  "editor.semanticHighlighting.enabled": true,
+  "editor.suggestSelection": "first",
+  "editor.tabSize": 2,
+  // "editor.wordSegmenterLocales": null,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 120,
   "eslint.format.enable": true,
-  "eslint.run": "onSave",
+  "explorer.confirmDragAndDrop": false,
+  "files.associations": {
+    "*.scss": "postcss"
+  },
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "git.openRepositoryInParentFolders": "never",
+  "IDX.agenticWorkspace": true,
+  "less.validate": false,
+  "prettier.ignorePath": ".prettierignore",
+  "redhat.telemetry.enabled": false,
+  "remote.autoForwardPortsSource": "hybrid",
+  "rest-client.decodeEscapedUnicodeCharacters": true,
+  "scss.validate": false,
+  "swaggerViewer.previewInBrowser": true,
+  "tailwindCSS.experimental.classRegex": [["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "workbench.activityBar.location": "bottom",
+  "workbench.sideBar.location": "right",
+  "workbench.startupEditor": "none"
 }

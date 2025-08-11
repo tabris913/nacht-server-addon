@@ -1,6 +1,34 @@
 pack.name=Nacht Server Addon	##
 
 ## -----------------------------------------------------------------------------
+## 単語
+## -----------------------------------------------------------------------------
+### 鉱石
+word.silver=銀	##
+word.holy_silver=霊銀	##
+word.blazered_steel=熾紅鋼	##
+word.hollow_crystal=虚晶石	##
+word.nocturium=ノクタリウム	##
+word.luminarium=ルミナリウム	##
+word.terramagnite=テラマグナイト	##
+word.electrum=エレクトラム	##
+word.magnos=マグノス	##
+word.aedrium=エイドリウム	##
+word.scarlet_orichalcum=ヒヒイロカネ	##
+word.star_iron=星鉄	##
+word.orichalcum=オリハルコン	##
+word.magradis=マグラディス	##
+word.nexiatite=ネクシアイト	##
+word.solistite=ソリスタイト	##
+word.adamantium=アダマンタイト	##
+
+### その他
+word.stella=星	##
+word.alchemy=錬金術	##
+word.alchemist=錬金術師	##
+word.invertia=反転	##
+
+## -----------------------------------------------------------------------------
 ## オリジナルアイテム
 ## -----------------------------------------------------------------------------
 ### constructure
