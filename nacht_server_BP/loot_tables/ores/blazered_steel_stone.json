@@ -9,7 +9,7 @@
             "minecraft:is_pickaxe"
           ],
           "minecraft:match_tool_filter_any": [
-            "nacht:siver_tier",
+            "nacht:silver_tier",
             "nacht:holy_silver_tier",
             "nacht:electrum_tier",
             "nacht:scarlet_orichalcum_tier",
@@ -53,7 +53,7 @@
             "minecraft:is_pickaxe"
           ],
           "minecraft:match_tool_filter_any": [
-            "nacht:siver_tier",
+            "nacht:silver_tier",
             "nacht:holy_silver_tier",
             "nacht:electrum_tier",
             "nacht:scarlet_orichalcum_tier",
@@ -97,7 +97,7 @@
             "minecraft:is_pickaxe"
           ],
           "minecraft:match_tool_filter_any": [
-            "nacht:siver_tier",
+            "nacht:silver_tier",
             "nacht:holy_silver_tier",
             "nacht:electrum_tier",
             "nacht:scarlet_orichalcum_tier",
@@ -141,7 +141,7 @@
             "minecraft:is_pickaxe"
           ],
           "minecraft:match_tool_filter_any": [
-            "nacht:siver_tier",
+            "nacht:silver_tier",
             "nacht:holy_silver_tier",
             "nacht:electrum_tier",
             "nacht:scarlet_orichalcum_tier",

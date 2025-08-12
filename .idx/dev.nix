@@ -36,6 +36,7 @@
       "arjun.swagger-viewer" # Swagger Viewer
       "dotjoshjohnson.xml" # XML Tools
       "redhat.vscode-yaml" # YAML
+      "mojang-studios.minecraft-debugger" #
       # typescript
       "salbert.comment-ts" # Comments in Typescript
       "dbaeumer.vscode-eslint" # ESLint

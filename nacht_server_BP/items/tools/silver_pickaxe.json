@@ -43,7 +43,9 @@
           }
         ]
       },
-      "minecraft:damage": 4,
+      "minecraft:damage": {
+        "value": 4
+      },
       "minecraft:hand_equipped": true,
       "minecraft:tags": {
         "tags": [
@@ -57,19 +59,13 @@
         "destroy_speeds": [
           {
             "block": {
-              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('minecraft:wooden_tier_destructible', 'minecraft:stone_tier_destructible', 'minecraft:iron_tier_destructible', 'minecraft:copper_tier_destructible')"
+              "tags": "query.all_tags('minecraft:is_pickaxe_item_destructible') && query.any_tag('minecraft:wooden_tier_destructible', 'minecraft:stone_tier_destructible', 'minecraft:iron_tier_destructible', 'minecraft:copper_tier_destructible')"
             },
             "speed": 8
           },
           {
             "block": {
-              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('minecraft:iron_tier_destructible')"
-            },
-            "speed": 8
-          },
-          {
-            "block": {
-              "tags": "query.any_tag('stone')"
+              "tags": "query.any_tag('stone', 'metal')"
             },
             "speed": 8
           }

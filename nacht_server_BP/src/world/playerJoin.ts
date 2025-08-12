@@ -6,6 +6,7 @@ import {
   TAG_AREA_BASE,
   TAG_AREA_EXPL,
   TAG_AREA_TOWN,
+  TAG_ITEM,
   TAG_OP_DEV,
   TAG_OP_PLAY,
   TAG_OPERATOR,
@@ -39,6 +40,13 @@ const playerJoinEvent: Parameters<PlayerSpawnAfterEventSignal['subscribe']>[0] =
 
     // バージョンタグ
     checkVersionTag(player);
+
+    // その他
+    if (player.hasTag(TAG_ITEM + 'nexiatitie_tier')) {
+      // ネクシアイトティアタグ誤字修正
+      player.removeTag(TAG_ITEM + 'nexiatitie_tier');
+      player.addTag(TAG_ITEM + 'nexiatite_tier');
+    }
 
     // オペレーターゲームモード
     if (player.hasTag(TAG_OPERATOR) && !(player.hasTag(TAG_OP_DEV) || player.hasTag(TAG_OP_PLAY))) {
