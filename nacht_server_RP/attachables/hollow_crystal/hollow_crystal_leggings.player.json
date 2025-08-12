@@ -11,7 +11,7 @@
         "enchanted": "armor_enchanted"
       },
       "textures": {
-        "default": "textures/models/armor/hollow_crystal_main",
+        "default": "textures/models/armor/hollow_crystal_leggings",
         "enchanted": "textures/misc/enchanted_actor_glint"
       },
       "geometry": {

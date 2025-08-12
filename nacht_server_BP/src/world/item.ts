@@ -70,8 +70,13 @@ export default () =>
           event.player.addTag(TAG_ITEM + 'orichalcum_tier');
         } else if (event.itemStack?.typeId.includes('magradis') || event.itemStack?.typeId.includes('ruin_lump')) {
           event.player.addTag(TAG_ITEM + 'magradis_tier');
+<<<<<<< HEAD
         } else if (event.itemStack?.typeId.includes('nexiatite') || event.itemStack?.typeId.includes('endrift_lump')) {
           event.player.addTag(TAG_ITEM + 'nexiatite_tier');
+=======
+        } else if (event.itemStack?.typeId.includes('nexiatitie') || event.itemStack?.typeId.includes('endrift_lump')) {
+          event.player.addTag(TAG_ITEM + 'nexiatitie_tier');
+>>>>>>> a8578cfd77d0e0f78354dd2240f729d704c2ec0f
         } else if (event.itemStack?.typeId.includes('solistite')) {
           event.player.addTag(TAG_ITEM + 'solistite_tier');
         } else if (event.itemStack?.typeId.includes('adamantium')) {

@@ -19,7 +19,7 @@ import ScoreboardUtils from '../utils/ScoreboardUtils';
 import { compareVersion } from '../utils/version';
 
 const playerJoinEvent: Parameters<PlayerSpawnAfterEventSignal['subscribe']>[0] = (event) => {
-  Logger.info(`${event.player.name} is joined.`);
+  // Logger.info(`${event.player.name} is joined.`);
   // world.sendMessage(`${event.playerName} さんが参加しました`);
 
   const player = event.player;

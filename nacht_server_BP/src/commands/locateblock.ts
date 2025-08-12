@@ -24,9 +24,10 @@ const locateBlockCommand: CustomCommand = {
   description: 'ブロックが存在する最も近いチャンクを表示する',
   permissionLevel: CommandPermissionLevel.GameDirectors,
   mandatoryParameters: [{ name: 'block', type: CustomCommandParamType.BlockType }],
+  optionalParameters: [{ name: 'chunkRange', type: CustomCommandParamType.Integer }],
 };
 
-const commandProcess = (origin: CustomCommandOrigin, block: BlockType): CustomCommandResult => {
+const commandProcess = (origin: CustomCommandOrigin, block: BlockType, chunkRange?: number): CustomCommandResult => {
   const player = NonPlayerSourceError.validate(origin);
 
   const chunk = {
@@ -34,17 +35,17 @@ const commandProcess = (origin: CustomCommandOrigin, block: BlockType): CustomCo
     z: LocationUtils.toChunkId(player.location.z),
   };
 
-  system.runJob(searchBlock(block, chunk, player));
+  system.runJob(searchBlock(block, chunk, player, chunkRange));
 
   return { status: CustomCommandStatus.Success };
 };
 
-function* searchBlock(blockType: BlockType, chunk: VectorXZ, player: Player) {
+function* searchBlock(blockType: BlockType, chunk: VectorXZ, player: Player, chunkRange: number = 3) {
   try {
     let diff = 0;
     let beforeBV: BlockVolume | undefined = undefined;
     let foundBlockLocation: Vector3 | undefined = undefined;
-    while (diff <= 100) {
+    while (diff <= chunkRange) {
       const nw = LocationUtils.offsetLocation(chunk, -diff);
       const se = LocationUtils.offsetLocation(chunk, diff);
       const bv = new BlockVolume(

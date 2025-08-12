@@ -11,7 +11,7 @@
         "enchanted": "armor_enchanted"
       },
       "textures": {
-        "default": "textures/models/armor/terramagnite_main",
+        "default": "textures/models/armor/terramagnite_leggings",
         "enchanted": "textures/misc/enchanted_actor_glint"
       },
       "geometry": {
