@@ -8,6 +8,9 @@
       }
     },
     "components": {
+      "minecraft:custom_components": [
+        "nacht:tool_durability"
+      ],
       "minecraft:icon": "nacht:adamantium_hoe",
       "minecraft:display_name": {
         "value": "item.nacht:adamantium_hoe.name"

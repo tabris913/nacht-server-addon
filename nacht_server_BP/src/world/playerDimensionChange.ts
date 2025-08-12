@@ -19,12 +19,21 @@ export default () =>
     }
     switch (event.fromDimension.id) {
       case MinecraftDimensionTypes.Nether:
-        event.player.removeTag(TAG_DIM_NETHER + `${world.getDay()}_${world.getTimeOfDay()}`);
+        event.player
+          .getTags()
+          .filter((tag) => tag.startsWith(TAG_DIM_NETHER))
+          .forEach((tag) => event.player.removeTag(tag));
         break;
       case MinecraftDimensionTypes.Overworld:
-        event.player.removeTag(TAG_DIM_OW + `${world.getDay()}_${world.getTimeOfDay()}`);
+        event.player
+          .getTags()
+          .filter((tag) => tag.startsWith(TAG_DIM_OW))
+          .forEach((tag) => event.player.removeTag(tag));
         break;
       case MinecraftDimensionTypes.TheEnd:
-        event.player.removeTag(TAG_DIM_END + `${world.getDay()}_${world.getTimeOfDay()}`);
+        event.player
+          .getTags()
+          .filter((tag) => tag.startsWith(TAG_DIM_END))
+          .forEach((tag) => event.player.removeTag(tag));
     }
   });

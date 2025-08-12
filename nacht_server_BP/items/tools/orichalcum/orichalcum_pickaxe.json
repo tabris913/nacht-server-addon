@@ -8,6 +8,9 @@
       }
     },
     "components": {
+      "minecraft:custom_components": [
+        "nacht:tool_durability"
+      ],
       "minecraft:icon": "nacht:orichalcum_pickaxe",
       "minecraft:display_name": {
         "value": "item.nacht:orichalcum_pickaxe.name"

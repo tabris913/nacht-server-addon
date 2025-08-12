@@ -1,0 +1,30 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.logo_w",
+				"texture_width": 1920,
+				"texture_height": 1080,
+				"visible_bounds_width": 121,
+				"visible_bounds_height": 102,
+				"visible_bounds_offset": [0, 17, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-960, 0, 0],
+							"size": [1920, 1080, 0],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [1920, 1080]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

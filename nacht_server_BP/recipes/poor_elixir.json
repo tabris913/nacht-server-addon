@@ -1,6 +1,6 @@
 {
   "format_version": "1.21.80",
-  "minecraft:recipe_brewing_container": {
+  "minecraft:recipe_brewing_mix": {
     "description": {
       "identifier": "nacht:poor_elixir"
     },

@@ -8,6 +8,9 @@
       }
     },
     "components": {
+      "minecraft:custom_components": [
+        "nacht:tool_durability"
+      ],
       "minecraft:icon": "nacht:orichalcum_axe",
       "minecraft:display_name": {
         "value": "item.nacht:orichalcum_axe.name"

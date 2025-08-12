@@ -8,6 +8,9 @@
       }
     },
     "components": {
+      "minecraft:custom_components": [
+        "nacht:tool_durability"
+      ],
       "minecraft:icon": "nacht:scarlet_orichalcum_shovel",
       "minecraft:display_name": {
         "value": "item.nacht:scarlet_orichalcum_shovel.name"

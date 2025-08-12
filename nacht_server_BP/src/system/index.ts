@@ -1,4 +1,4 @@
-import { system, TicksPerDay, TicksPerSecond, world } from '@minecraft/server';
+import { system, TicksPerSecond, world } from '@minecraft/server';
 
 import { RuleName } from '../commands/enum';
 import { PREFIX_GAMERULE } from '../const';
@@ -9,10 +9,13 @@ import area from './area';
 import armorInvisible from './armorInvisible';
 import base from './base';
 import border from './border';
+import custom_component from './custom_component';
 import fortune from './fortune';
 import title from './title';
 
-export default () =>
+export default () => {
+  custom_component();
+
   system.run(() => {
     Logger.log('Subscribing original game systems...');
 
@@ -58,3 +61,4 @@ export default () =>
       }
     });
   });
+};

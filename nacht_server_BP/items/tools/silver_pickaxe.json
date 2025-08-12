@@ -8,6 +8,9 @@
       }
     },
     "components": {
+      "minecraft:custom_components": [
+        "nacht:tool_durability"
+      ],
       "minecraft:icon": "nacht:silver_pickaxe",
       "minecraft:display_name": {
         "value": "item.nacht:silver_pickaxe.name"
@@ -43,9 +46,7 @@
           }
         ]
       },
-      "minecraft:damage": {
-        "value": 4
-      },
+      "minecraft:damage": 4,
       "minecraft:hand_equipped": true,
       "minecraft:tags": {
         "tags": [
@@ -69,7 +70,8 @@
             },
             "speed": 8
           }
-        ]
+        ],
+        "use_efficiency": true
       }
     }
   }

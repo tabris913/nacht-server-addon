@@ -620,7 +620,7 @@ export default () =>
               form2.header(VARS.Magnos);
               form2.label(
                 makeMetalDesc(
-                  '別名炎心鉱とも呼ばれる、熱のエネルギーを秘めた金属。火山の神が爆発させた怒りの結晶。攻撃する際は熱による追加ダメージを与える。',
+                  '別名炎心鉱とも呼ばれる、熱のエネルギーを秘めた金属。火山の神が爆発させた怒りの結晶。攻撃する際に熱による追加ダメージを与える。',
                   makeRawMessage(
                     'ネザーにある',
                     hasMagnosTier ? { translate: 'tile.nacht:magnos_ore.name' } : `${VARS.Magnos}鉱石`,

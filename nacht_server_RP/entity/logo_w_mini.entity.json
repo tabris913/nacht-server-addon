@@ -1,0 +1,22 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "nacht:logo_w_mini",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"default": "textures/entity/logo_w_mini"
+			},
+			"geometry": {
+				"default": "geometry.logo_w_mini"
+			},
+			"render_controllers": ["controller.render.default"],
+			"spawn_egg": {
+				"base_color": "#ffffff",
+				"overlay_color": "#d242db"
+			}
+		}
+	}
+}

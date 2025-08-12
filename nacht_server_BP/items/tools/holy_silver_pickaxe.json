@@ -8,6 +8,9 @@
       }
     },
     "components": {
+      "minecraft:custom_components": [
+        "nacht:tool_durability"
+      ],
       "minecraft:icon": "nacht:holy_silver_pickaxe",
       "minecraft:display_name": {
         "value": "item.nacht:holy_silver_pickaxe.name"
@@ -69,23 +72,24 @@
         "destroy_speeds": [
           {
             "block": {
-              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('minecraft:wooden_tier_destructible', 'minecraft:stone_tier_destructible', 'minecraft:iron_tier_destructible', 'minecraft:copper_tier_destructible', 'minecraft:diamond_tier_destructible')"
+              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.any_tag('minecraft:wooden_tier_destructible', 'minecraft:stone_tier_destructible', 'minecraft:iron_tier_destructible', 'minecraft:copper_tier_destructible', 'minecraft:diamond_tier_destructible')"
             },
             "speed": 10
           },
           {
             "block": {
-              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.all_tags('nacht:silver_tier_destructible', 'nacht:holy_silver_tier_destructible')"
+              "tags": "query.any_tag('minecraft:is_pickaxe_item_destructible') && !query.any_tag('nacht:silver_tier_destructible', 'nacht:holy_silver_tier_destructible')"
             },
             "speed": 10
           },
           {
             "block": {
-              "tags": "query.any_tag('stone')"
+              "tags": "query.any_tag('stone', 'metal')"
             },
             "speed": 10
           }
-        ]
+        ],
+        "use_efficiency": true
       }
     }
   }

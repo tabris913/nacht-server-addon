@@ -8,6 +8,9 @@
       }
     },
     "components": {
+      "minecraft:custom_components": [
+        "nacht:tool_durability"
+      ],
       "minecraft:icon": "nacht:electrum_shovel",
       "minecraft:display_name": {
         "value": "item.nacht:electrum_shovel.name"

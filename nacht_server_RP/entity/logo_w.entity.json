@@ -1,0 +1,18 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "nacht:logo_w",
+			"materials": {
+				"default": "entity_alphatest"
+			},
+			"textures": {
+				"default": "textures/entity/logo_w"
+			},
+			"geometry": {
+				"default": "geometry.logo_w"
+			},
+			"render_controllers": ["controller.render.default"]
+		}
+	}
+}

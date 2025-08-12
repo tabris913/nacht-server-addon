@@ -8,6 +8,9 @@
       }
     },
     "components": {
+      "minecraft:custom_components": [
+        "nacht:tool_durability"
+      ],
       "minecraft:icon": "nacht:star_iron_axe",
       "minecraft:display_name": {
         "value": "item.nacht:star_iron_axe.name"
