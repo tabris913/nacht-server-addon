@@ -212,7 +212,7 @@ export default () =>
                 makeMetalDesc(
                   '至って普遍的な金属だが、その聖性を高めることによって新たな鉱石探求の旅の起点となるだろう。',
                   makeRawMessage(
-                    '自然産出する',
+                    '高さ-64～100の範囲で自然産出する',
                     hasSilverTier ? { translate: 'tile.nacht:silver_ore.name' } : `${VARS.Silver}鉱石`,
                     '、',
                     hasSilverTier ? { translate: 'tile.nacht:deepslate_silver_ore.name' } : `深層岩${VARS.Silver}鉱石`,
@@ -251,14 +251,6 @@ export default () =>
               );
               form2.divider();
               form2.header(VARS.HolySilver);
-              form2.label(
-                makeRawMessage(
-                  VARS.Silver,
-                  'を',
-                  VARS.HolyWater,
-                  'で清めることにより、鉄の倍近くの耐久力とネザライト以上の力を引き出すことに成功した。特にアンデッド系に絶大な力を発揮する。'
-                )
-              );
               form2.label(
                 makeMetalDesc(
                   '天使の力を宿すことで、唯一の欠点だった耐久性が強化された。アンデッド系に絶大な力を発揮するようになったほかにも様々な力を得た。',
@@ -311,7 +303,7 @@ export default () =>
                 makeMetalDesc(
                   'ネザーに満ちるエネルギーを吸収して特別な力を宿した鉱物。ネザーに滞在している時間が長いほど強力になるが、一度異なるディメンションに移動するとエネルギーが発散してしまう。',
                   makeRawMessage(
-                    'ネザーで自然産出される',
+                    'ネザーの高さ0～130で自然産出される',
                     hasBlazeredSteelTier
                       ? { translate: 'tile.nacht:blazered_steel_stone.name' }
                       : `${VARS.BlazeredSteel}石`,
@@ -362,7 +354,7 @@ export default () =>
                 makeMetalDesc(
                   'エンドに満ちるエネルギーを吸収して特別な力を宿した鉱物。エンドに滞在している時間が長いほど強力になるが、一度異なるディメンションに移動するとエネルギーが発散してしまう。',
                   makeRawMessage(
-                    'エンドで自然産出される',
+                    'エンドの高さ10～70で自然産出される',
                     hasHollowCrystalTier ? { translate: 'tile.nacht:hollow_crystal_stone.name' } : VARS.HollowCrystal,
                     'から採取したかけらを凝縮することでインゴットを精製できる。晶石は',
                     VARS.Silver,
@@ -411,7 +403,7 @@ export default () =>
                 makeMetalDesc(
                   '月のエネルギーを溜める性質を持った金属。月との距離が近くなる夜間は強大な力を発揮する。',
                   makeRawMessage(
-                    '自然産出される',
+                    '高さ-64～50で自然産出される',
                     hasNocturiumTier ? { translate: 'tile.nacht:nocturium_ore.name' } : `${VARS.Nocturium}鉱石`,
                     '、',
                     hasNocturiumTier
@@ -456,7 +448,7 @@ export default () =>
                 makeMetalDesc(
                   '太陽のエネルギーを溜める性質を持った金属。太陽との距離が近くなる昼間は強大な力を発揮する。',
                   makeRawMessage(
-                    '自然産出される',
+                    '高さ-64～50で自然産出される',
                     hasLuminariumTier ? { translate: 'tile.nacht:luminarium_ore.name' } : `${VARS.Luminarium}鉱石`,
                     '、',
                     hasLuminariumTier
@@ -505,7 +497,7 @@ export default () =>
                 makeMetalDesc(
                   '星の核のかけらが長い年月をかけて凝縮した金属。星の核との距離が近くなる地底にいると強力になる。',
                   makeRawMessage(
-                    '自然産出される',
+                    '高さ-64～50で自然産出される',
                     hasTerramagniteTier
                       ? { translate: 'tile.nacht:terramagnite_ore.name' }
                       : `${VARS.Terramagnite}鉱石`,
@@ -560,7 +552,7 @@ export default () =>
                   makeRawMessage(
                     'インゴットは金と',
                     VARS.Silver,
-                    'のインゴットからクラフト可能。自然産出された鉱石から採取した原石を精錬しても得られる。'
+                    'のインゴットからクラフト可能。高さ-64～50で自然産出された鉱石から採取した原石を精錬しても得られる。'
                   ),
                   makeRawMessage(
                     { translate: 'enchantment.damage.all' },
@@ -622,7 +614,7 @@ export default () =>
                 makeMetalDesc(
                   '別名炎心鉱とも呼ばれる、熱のエネルギーを秘めた金属。火山の神が爆発させた怒りの結晶。攻撃する際に熱による追加ダメージを与える。',
                   makeRawMessage(
-                    'ネザーにある',
+                    'ネザーの高さ0～130にある',
                     hasMagnosTier ? { translate: 'tile.nacht:magnos_ore.name' } : `${VARS.Magnos}鉱石`,
                     'から採取した欠片を凝縮することでインゴットを精製できる。鉱石は',
                     VARS.Electrum,
@@ -661,7 +653,7 @@ export default () =>
                 makeMetalDesc(
                   '別名浮遊鉱とも呼ばれる重力に反発する力を持った金属で，エンドシップが浮遊するためのエネルギーとして用いられる。攻撃した相手の重力を無効化する。',
                   makeRawMessage(
-                    'エンドにある',
+                    'エンドの高さ10～70にある',
                     hasAedriumTier ? { translate: 'tile.nacht:aedrium_ore.name' } : `${VARS.Aedrium}鉱石`,
                     'から採取した欠片を凝縮することでインゴットを精製できる。鉱石は',
                     VARS.Electrum,
@@ -702,7 +694,7 @@ export default () =>
                 makeMetalDesc(
                   '日出る国で初めて発見された、太陽のように緋く輝く伝説の鉱物。不老不死とも関わると云われるが、現時点で特別な力は見つかっていない。エンチャントすることはできない。',
                   makeRawMessage(
-                    '自然産出される希少な',
+                    '高さ-64～30で自然産出される希少な',
                     hasScarletOrichalcumTier
                       ? { translate: 'tile.nacht:scarlet_orichalcum_ore.name' }
                       : `${VARS.ScarletOrichalcum}鉱石`,
@@ -842,6 +834,7 @@ export default () =>
                 makeMetalDesc(
                   'かつては、海に沈んだ広大な大陸で多く産出された伝説の鉱物で、その輝きは太陽を凌ぐと云われる。現在はそれ以上の特別な力は見つかっていない。エンチャントすることはできない。',
                   makeRawMessage(
+                    '高さ-50～-20の範囲で自然産出される',
                     hasOrichalcumTier
                       ? { translate: 'tile.nacht:deepslate_orichalcum_ore.name' }
                       : `深層岩${VARS.Orichalcum}鉱石`,
@@ -919,7 +912,7 @@ export default () =>
                 makeMetalDesc(
                   '崩壊の力を秘めておりそのままでは金属として加工することはできない。ウィザースケルトン、ウィザーに対して力を発揮する。',
                   makeRawMessage(
-                    'ネザーにある',
+                    'ネザーの高さ15～35にある',
                     hasMagradisTier ? { translate: 'tile.nacht:ruin_lump.name' } : VARS.Magradis,
                     'から採取できる破片からインゴットを精製するにはウィザーエネルギーと逆の性質の力によって安定させる必要がある。'
                   ),
@@ -963,7 +956,7 @@ export default () =>
                 makeMetalDesc(
                   '世界を断つ力を秘めておりそのままでは金属として加工することはできない。ネザライト以上の力と耐久力を持つ。エンダーマンおよびエンダーマイト、エンダードラゴンに対して力を発揮する。',
                   makeRawMessage(
-                    'エンドにある',
+                    'エンドの高さ10～30にある',
                     hasNexiatiteTier ? { translate: 'tile.nacht:endrift_lump.name' } : VARS.Nexiatite,
                     'から採取できる破片からインゴットを精製するにはエンダーエネルギーと逆の性質の力によって安定させる必要がある。'
                   ),
@@ -1052,6 +1045,7 @@ export default () =>
                 makeMetalDesc(
                   '地の奥底に沈黙する大地の心臓と呼ばれる最硬の鉱物。長い年月をかけて成長した鉱脈が、大きな地殻変動のあとに稀に発見される。現在はそれ以上の特別な力は見つかっていない。エンチャントすることはできない。',
                   makeRawMessage(
+                    '高さ-50～-40で自然算出される',
                     hasAdamantiumTier
                       ? { translate: 'tile.nacht:deepslate_adamantium_ore.name' }
                       : `深層岩${VARS.Adamantium}鉱石`,

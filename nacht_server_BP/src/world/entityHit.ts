@@ -61,6 +61,7 @@ const playerDamaging = (player: Entity, hurtEntity: Entity, damage: number) => {
     case NachtServerAddonItemTypes.HolySilverPickaxe:
       // 霊銀装備はアンデッドに2倍ダメージ
       if (Undead.includes(hurtEntity.typeId)) {
+        // Logger.info(`Additional damage: ${damage}`);
         hurtEntity.applyDamage(damage);
       }
       break;
@@ -72,7 +73,9 @@ const playerDamaging = (player: Entity, hurtEntity: Entity, damage: number) => {
           .replace(TAG_DIM_NETHER, '')
           .split('_')
           .map((v) => parseInt(v));
-        hurtEntity.applyDamage(Math.floor(calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) * damage));
+        const dmg = calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) * damage;
+        // Logger.info(`Additional damage: ${dmg}`);
+        hurtEntity.applyDamage(dmg);
       }
       break;
     case NachtServerAddonItemTypes.HollowCrystalSword:
@@ -83,42 +86,51 @@ const playerDamaging = (player: Entity, hurtEntity: Entity, damage: number) => {
           .replace(TAG_DIM_END, '')
           .split('_')
           .map((v) => parseInt(v));
-        hurtEntity.applyDamage(Math.floor(calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) * damage));
+        const dmg = calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) * damage;
+        // Logger.info(`Additional damage: ${dmg}`);
+        hurtEntity.applyDamage(dmg);
       }
       break;
     case NachtServerAddonItemTypes.NocturiumSword:
       // 真夜中には2.5倍ダメージにまで伸びる
       if (now.isNight) {
-        hurtEntity.applyDamage(
-          Math.floor(
-            TicksUtils.calcRateWithTicks(now.timeOfDay, 2.5, {
-              from: 13_702,
-              maxFrom: 17_000,
-              maxTo: 19_000,
-              to: 22_299,
-            }) * damage
-          )
-        );
+        const dmg =
+          TicksUtils.calcRateWithTicks(now.timeOfDay, 2.5, {
+            from: 13_702,
+            maxFrom: 17_000,
+            maxTo: 19_000,
+            to: 22_299,
+          }) * damage;
+        // Logger.info(`Additional damage: ${dmg}`);
+        hurtEntity.applyDamage(dmg);
       }
       break;
     case NachtServerAddonItemTypes.LuminariumSword:
       // 真昼間には2.5倍ダメージにまで伸びる
       if (!now.isNight) {
-        hurtEntity.applyDamage(
-          Math.floor(
-            TicksUtils.calcRateWithTicks(now.timeOfDay, 2.5, { from: 22_300, maxFrom: 5_000, maxTo: 7_000, to: 13_701 })
-          )
-        );
+        const dmg =
+          TicksUtils.calcRateWithTicks(now.timeOfDay, 2.5, {
+            from: 22_300,
+            maxFrom: 5_000,
+            maxTo: 7_000,
+            to: 13_701,
+          }) * damage;
+        // Logger.info(`Additional damage: ${dmg}`);
+        hurtEntity.applyDamage(dmg);
       }
       break;
     case NachtServerAddonItemTypes.TerramagniteSword:
       // 深いほどダメージが上がり，-50以下で2.5倍ダメージにまで伸びる
       if (player.location.y <= 64) {
-        hurtEntity.applyDamage(
-          Math.floor(
-            TicksUtils.calcRateWithTicks(player.location.y, 2.5, { from: -64, maxFrom: -64, maxTo: -50, to: 64 })
-          )
-        );
+        const dmg =
+          TicksUtils.calcRateWithTicks(player.location.y, 2.5, {
+            from: -64,
+            maxFrom: -64,
+            maxTo: -50,
+            to: 64,
+          }) * damage;
+        // Logger.info(`Additional damage: ${dmg}`);
+        hurtEntity.applyDamage(dmg);
       }
       break;
     case NachtServerAddonItemTypes.MagnosSword:
@@ -132,28 +144,36 @@ const playerDamaging = (player: Entity, hurtEntity: Entity, damage: number) => {
     case NachtServerAddonItemTypes.MagradisSword:
       switch (hurtEntity.typeId) {
         case MinecraftEntityTypes.Wither:
-          hurtEntity.applyDamage(Math.floor(damage * 0.5));
+          const dmg = damage * 0.5;
+          // Logger.info(`Additional damage: ${dmg}`);
+          hurtEntity.applyDamage(dmg);
           break;
         case MinecraftEntityTypes.WitherSkeleton:
-          hurtEntity.applyDamage(Math.floor(damage));
+          // Logger.info(`Additional damage: ${damage}`);
+          hurtEntity.applyDamage(damage);
           break;
       }
       break;
     case NachtServerAddonItemTypes.NexiatiteSword:
       switch (hurtEntity.typeId) {
         case MinecraftEntityTypes.EnderDragon:
-          hurtEntity.applyDamage(Math.floor(damage * 0.5));
+          const dmg = damage * 0.5;
+          // Logger.info(`Additional damage: ${dmg}`);
+          hurtEntity.applyDamage(dmg);
           break;
         case MinecraftEntityTypes.Enderman:
         case MinecraftEntityTypes.Endermite:
-          hurtEntity.applyDamage(Math.floor(damage));
+          // Logger.info(`Additional damage: ${damage}`);
+          hurtEntity.applyDamage(damage);
           break;
       }
       break;
     case NachtServerAddonItemTypes.SolistiteSword:
       switch (hurtEntity.typeId) {
         case MinecraftEntityTypes.Warden:
-          hurtEntity.applyDamage(Math.floor(damage * 0.5));
+          const dmg = damage * 0.5;
+          // Logger.info(`Additional damage: ${dmg}`);
+          hurtEntity.applyDamage(dmg);
           break;
       }
       break;
@@ -161,7 +181,9 @@ const playerDamaging = (player: Entity, hurtEntity: Entity, damage: number) => {
 };
 
 const reduceDamage = (health: EntityHealthComponent, reduction: number) => {
-  health.setCurrentValue(Math.min(health.effectiveMax, Math.floor(health.currentValue + reduction)));
+  const reduced = Math.min(health.effectiveMax, health.currentValue + reduction);
+  // Logger.info(`current: ${health.currentValue}; recovered: ${reduced}`);
+  health.setCurrentValue(reduced);
 };
 
 /**
@@ -170,10 +192,8 @@ const reduceDamage = (health: EntityHealthComponent, reduction: number) => {
  * @param player プレイヤー
  */
 const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEntity?: Entity, damage: number = 0) => {
-  Logger.info(`${damagingEntity?.typeId} ${player.typeId} ${damageSource} ${damage}`);
   const equippable = player.getComponent(EntityComponentTypes.Equippable);
   if (equippable === undefined) {
-    Logger.error('Equippable component not found.');
     return;
   }
   const armorItemStacks = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet].map((es) =>
@@ -181,14 +201,10 @@ const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEnt
   );
   const health = player.getComponent(EntityComponentTypes.Health);
   if (health === undefined) {
-    Logger.error('Health component not found.');
     return;
   }
 
   const now = GameTime.now();
-
-  Logger.info(`${equippable.totalArmor} ${equippable.totalToughness}`);
-  Logger.info(equippable.getEquipment(EquipmentSlot.Head)?.typeId);
 
   if (armorItemStacks.every((is) => is?.hasTag('nacht:holy_silver_tier')) && damagingEntity) {
     // アンデッドからのダメージを半減する
@@ -203,10 +219,7 @@ const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEnt
         .replace(TAG_DIM_NETHER, '')
         .split('_')
         .map((v) => parseInt(v));
-      reduceDamage(
-        health,
-        Math.floor((1 - 1 / (calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) + 1)) * damage)
-      );
+      reduceDamage(health, (1 - 1 / (calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) + 1)) * damage);
     }
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:hollow_crystal_tier'))) {
     // ゲーム内時間で2日間エンドにいると2.5倍ダメージにまで伸びる
@@ -216,17 +229,50 @@ const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEnt
         .replace(TAG_DIM_END, '')
         .split('_')
         .map((v) => parseInt(v));
-      reduceDamage(
-        health,
-        Math.floor((1 - 1 / (calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) + 1)) * damage)
-      );
+      reduceDamage(health, (1 - 1 / (calcRate(2.5, new GameTime(2), new GameTime(day, timeOfDay), now) + 1)) * damage);
     }
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:nocturium_tier'))) {
-    //
+    const dmg =
+      (1 -
+        1 /
+          (1 +
+            TicksUtils.calcRateWithTicks(now.timeOfDay, 2, {
+              from: 13_702,
+              maxFrom: 17_000,
+              maxTo: 19_000,
+              to: 22_299,
+            }))) *
+      damage;
+    // Logger.info(`Additional damage: ${dmg}`);
+    reduceDamage(health, dmg);
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:luminarium_tier'))) {
-    //
+    const dmg =
+      (1 -
+        1 /
+          (1 +
+            TicksUtils.calcRateWithTicks(now.timeOfDay, 2, {
+              from: 22_300,
+              maxFrom: 5_000,
+              maxTo: 7_000,
+              to: 13_701,
+            }))) *
+      damage;
+    // Logger.info(`Additional damage: ${dmg}`);
+    reduceDamage(health, dmg);
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:terramagnite_tier'))) {
-    //
+    const dmg =
+      (1 -
+        1 /
+          (1 +
+            TicksUtils.calcRateWithTicks(player.location.y, 2.5, {
+              from: -64,
+              maxFrom: -64,
+              maxTo: -50,
+              to: 64,
+            }))) *
+      damage;
+    // Logger.info(`Additional damage: ${dmg}`);
+    reduceDamage(health, dmg);
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:magnos_tier'))) {
     // 炎無効
     switch (damageSource) {
@@ -239,7 +285,6 @@ const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEnt
         reduceDamage(health, damage);
     }
   } else if (armorItemStacks.every((is) => is?.hasTag('nacht:aedrium_tier'))) {
-    Logger.info('aedrium', damageSource);
     // 落下ダメージ無効
     switch (damageSource) {
       case EntityDamageCause.fall:
@@ -277,27 +322,21 @@ const playerHurt = (player: Entity, damageSource: EntityDamageCause, damagingEnt
 
 export default () =>
   world.afterEvents.entityHurt.subscribe((event) => {
-    // Logger.info(
-    //   `${event.damageSource.damagingEntity?.typeId} ${event.hurtEntity.typeId} ${event.damageSource.cause} ${event.damage}`
-    // );
-
+    // Logger.info(`Base damage: ${event.damage}`);
     // 安全地帯
     if (event.hurtEntity.typeId === MinecraftEntityTypes.Player) {
-      Logger.info('hurtEntity: player');
       if (
         SafeZoneUtils.isInSafeArea({ ...event.hurtEntity.location, dimension: event.hurtEntity.dimension }) &&
         [EntityDamageCause.entityAttack, EntityDamageCause.entityExplosion, EntityDamageCause.projectile].includes(
           event.damageSource.cause
         )
       ) {
-        Logger.info('in safe area');
         const health = event.hurtEntity.getComponent(EntityComponentTypes.Health);
         health?.setCurrentValue(Math.min(health.currentValue + event.damage, health.effectiveMax));
       } else {
         playerHurt(event.hurtEntity, event.damageSource.cause, event.damageSource.damagingEntity, event.damage);
       }
     } else if (event.damageSource.damagingEntity?.typeId === MinecraftEntityTypes.Player) {
-      Logger.info('damagingEntity: player');
       playerDamaging(event.damageSource.damagingEntity, event.hurtEntity, event.damage);
     }
   });

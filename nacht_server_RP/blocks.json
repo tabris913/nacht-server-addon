@@ -188,5 +188,18 @@
   "nacht:raw_adamantium_block": {
     "sound": "stone",
     "carried_textures": "textures/blocks/ores/adamantium/raw_adamantium_block"
+  },
+  "nacht:logo_block": {
+    "sound": "glass",
+    "carried_textures": "textures/blocks/logo_block"
+  },
+  "nacht:glow_white_slab": {
+    "sound": "stone"
+  },
+  "nacht:glow_white_block": {
+    "sound": "stone"
+  },
+  "nacht:glow_white_stair": {
+    "sound": "stone"
   }
 }

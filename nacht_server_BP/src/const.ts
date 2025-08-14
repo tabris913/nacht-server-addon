@@ -573,6 +573,7 @@ export const GAMERULE_DEFAULT = {
   [RuleName.teleportTimeout]: 5,
   [RuleName.watchCrossingArea]: true,
   [RuleName.watchCrossingAreaInterval]: TicksPerSecond / 5,
+  [RuleName.isMaintenainceMode]: false,
 };
 
 // Items

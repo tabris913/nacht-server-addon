@@ -1,0 +1,31 @@
+{
+	"format_version": "1.21.50",
+	"minecraft:block": {
+		"description": {
+			"identifier": "nacht:glow_white_block",
+			"menu_category": {
+				"category": "construction"
+			}
+		},
+		"components": {
+			"minecraft:collision_box": true,
+			"minecraft:selection_box": true,
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 0.4
+			},
+			"minecraft:destructible_by_explosion": {
+				"explosion_resistance": 30
+			},
+			"minecraft:geometry": "geometry.glow_white_block",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "nacht:glow_white_block",
+					"render_method": "alpha_test",
+					"ambient_occlusion": false
+				}
+			},
+			"minecraft:light_emission": 15,
+			"minecraft:map_color": "#ffffff"
+		}
+	}
+}

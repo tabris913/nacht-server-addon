@@ -1,0 +1,36 @@
+{
+	"format_version": "1.21.50",
+	"minecraft:block": {
+		"description": {
+			"identifier": "nacht:logo_block",
+			"menu_category": {
+				"category": "construction"
+			}
+		},
+		"components": {
+			"minecraft:collision_box": true,
+			"minecraft:selection_box": true,
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 200,
+				"item_specific_speeds": [
+					{
+						"item": {
+							"tags": "q.all_tags('minecraft:is_pickaxe')"
+						},
+						"destroy_speed": 6.25
+					}
+				]
+			},
+			"minecraft:destructible_by_explosion": false,
+			"minecraft:geometry": "geometry.logo_block",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "nacht:logo_block",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:light_emission": 15,
+			"minecraft:map_color": "#ffffff"
+		}
+	}
+}

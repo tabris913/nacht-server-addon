@@ -141,6 +141,18 @@
     },
     "nacht:raw_adamantium_block": {
       "textures": "textures/blocks/ores/adamantium/raw_adamantium_block"
+    },
+    "nacht:logo_block": {
+      "textures": "textures/blocks/logo_block"
+    },
+    "nacht:glow_white_slab": {
+      "textures": "textures/blocks/glow_white_slab"
+    },
+    "nacht:glow_white_block": {
+      "textures": "textures/blocks/glow_white_block"
+    },
+    "nacht:glow_white_stair": {
+      "textures": "textures/blocks/glow_white_stair"
     }
   }
 }

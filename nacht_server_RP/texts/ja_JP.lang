@@ -57,6 +57,11 @@ tile.nacht:raw_scarlet_orichalcum_block.name=ヒヒイロカネの原石ブロ�
 tile.nacht:raw_orichalcum_block.name=オリハルコンの原石ブロック	##
 tile.nacht:raw_adamantium_block.name=アダマンタイトの原石ブロック	##
 
+tile.nacht:logo_block.name=ロゴブロック	##
+tile.nacht:glow_white_block.name=輝く白いブロック	##
+tile.nacht:glow_white_slab.name=輝く白いハーフブロック	##
+tile.nacht:glow_white_stair.name=輝く白い階段ブロック	##
+
 ### equipment
 nacht:helmet_items_name=オリジナルヘルメット	##
 item.nacht:silver_helmet.name=銀のヘルメット	##

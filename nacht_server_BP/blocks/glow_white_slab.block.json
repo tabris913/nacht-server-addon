@@ -1,0 +1,90 @@
+{
+	"format_version": "1.21.60",
+	"minecraft:block": {
+		"description": {
+			"identifier": "nacht:glow_white_slab",
+			"menu_category": {
+				"category": "construction"
+			},
+			"traits": {
+				"minecraft:placement_position": {
+					"enabled_states": [
+						"minecraft:vertical_half"
+					]
+				}
+			}
+		},
+		"components": {
+			"minecraft:collision_box": {
+				"origin": [
+					-8,
+					0,
+					-8
+				],
+				"size": [
+					16,
+					8,
+					16
+				]
+			},
+			"minecraft:selection_box": {
+				"origin": [
+					-8,
+					0,
+					-8
+				],
+				"size": [
+					16,
+					8,
+					16
+				]
+			},
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 7.5,
+				"item_specific_speeds": [
+					{
+						"item": {
+							"tags": "q.all_tags('minecraft:is_pickaxe')"
+						},
+						"destroy_speed": 1.15
+					}
+				]
+			},
+			"minecraft:destructible_by_explosion": {
+				"explosion_resistance": 30
+			},
+			"minecraft:geometry": "geometry.glow_white_slab",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "nacht:glow_white_slab",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:light_emission": 15,
+			"minecraft:map_color": "#ffffff",
+			"minecraft:liquid_detection": {
+				"detection_rules": [
+					{
+						"liquid_type": "water",
+						"can_contain_liquid": true,
+						"on_liquid_touches": "blocking"
+					}
+				]
+			}
+		},
+		"permutations": [
+			{
+				"condition": "q.block_state('minecraft:vertical_half') == 'top'",
+				"components": {
+					"minecraft:transformation": {
+						"translation": [
+							0,
+							0.5,
+							0
+						]
+					}
+				}
+			}
+		]
+	}
+}

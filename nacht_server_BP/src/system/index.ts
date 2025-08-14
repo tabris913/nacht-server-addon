@@ -1,7 +1,8 @@
 import { system, TicksPerSecond, world } from '@minecraft/server';
 
 import { RuleName } from '../commands/enum';
-import { PREFIX_GAMERULE } from '../const';
+import { Formatting, PREFIX_GAMERULE } from '../const';
+import { MinecraftDimensionTypes } from '../types/index';
 import { Logger } from '../utils/logger';
 
 import actionbar from './actionbar';
@@ -50,6 +51,17 @@ export default () => {
         armorInvisible();
         base();
         title();
+      }
+      if ((tickCounter % TicksPerSecond) * 10 === 0) {
+        if (world.getDynamicProperty(PREFIX_GAMERULE + RuleName.isMaintenainceMode) === true) {
+          // world.sendMessage(`${Formatting.Color.RED}ただいまサーバーメンテナンス中です。`);
+          [MinecraftDimensionTypes.Overworld, MinecraftDimensionTypes.Nether, MinecraftDimensionTypes.TheEnd].forEach(
+            (dimensionId) => {
+              world.getDimension(dimensionId).runCommand('title @a times 0 220 0');
+              world.getDimension(dimensionId).runCommand(`title @a title ${Formatting.Color.RED}メンテナンス中`);
+            }
+          );
+        }
       }
 
       const today = world.getDay();

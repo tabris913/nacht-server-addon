@@ -1,6 +1,6 @@
 {
   "format_version": "1.21.80",
-  "minecraft:recipe_shapeless": {
+  "minecraft:recipe_shaped": {
     "description": {
       "identifier": "nacht:holy_silver_knife"
     },
@@ -12,35 +12,19 @@
         "item": "nacht:silver_knife"
       }
     ],
-    "ingredients": [
-      {
+    "pattern": [
+      "HHH",
+      "H#H",
+      "HHH"
+    ],
+    "key": {
+      "#": {
         "item": "nacht:silver_knife"
       },
-      {
-        "item": "nacht:holy_water"
-      },
-      {
-        "item": "nacht:holy_water"
-      },
-      {
-        "item": "nacht:holy_water"
-      },
-      {
-        "item": "nacht:holy_water"
-      },
-      {
-        "item": "nacht:holy_water"
-      },
-      {
-        "item": "nacht:holy_water"
-      },
-      {
-        "item": "nacht:holy_water"
-      },
-      {
+      "H": {
         "item": "nacht:holy_water"
       }
-    ],
+    },
     "result": {
       "item": "nacht:holy_silver_knife"
     }

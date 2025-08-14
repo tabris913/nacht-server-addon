@@ -4,8 +4,8 @@
 		{
 			"description": {
 				"identifier": "geometry.logo_w",
-				"texture_width": 1920,
-				"texture_height": 1080,
+				"texture_width": 1515,
+				"texture_height": 821,
 				"visible_bounds_width": 121,
 				"visible_bounds_height": 102,
 				"visible_bounds_offset": [0, 17, 0]
@@ -16,10 +16,10 @@
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{
-							"origin": [-960, 0, 0],
-							"size": [1920, 1080, 0],
+							"origin": [-758, 0, 0],
+							"size": [1515, 821, 0],
 							"uv": {
-								"north": {"uv": [0, 0], "uv_size": [1920, 1080]}
+								"north": {"uv": [0, 0], "uv_size": [1515, 821]}
 							}
 						}
 					]

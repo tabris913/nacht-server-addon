@@ -1,4 +1,8 @@
 [
+  "textures/blocks/glow_white_block",
+  "textures/blocks/glow_white_slab",
+  "textures/blocks/glow_white_stair",
+  "textures/blocks/logo_block",
   "textures/blocks/ores/adamantium/adamantium_block",
   "textures/blocks/ores/adamantium/deepslate_adamantium_ore",
   "textures/blocks/ores/adamantium/raw_adamantium_block",

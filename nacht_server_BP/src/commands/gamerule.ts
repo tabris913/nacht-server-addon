@@ -12,6 +12,7 @@ import { registerCommand } from './common';
 import { RuleName } from './enum';
 import { setAutoRemoveFortuneEnchant, setAutoRemoveFortuneEnchantInterval } from './gameRules/autoRemoveFortuneEnchant';
 import { setBaseMarketPrice, setBaseMaximumRange } from './gameRules/base';
+import { setMaintenanceMode } from './gameRules/other';
 import { setPrayPrice } from './gameRules/pray';
 import {
   setShowAreaBorder,
@@ -68,6 +69,8 @@ const commandProcess = (origin: CustomCommandOrigin, ruleName: RuleName, value: 
       return setWatchCrossingArea(value);
     case RuleName.watchCrossingAreaInterval:
       return setWatchCrossingAreaInterval(value);
+    case RuleName.isMaintenainceMode:
+      return setMaintenanceMode(value);
     default:
       return { status: CustomCommandStatus.Success };
   }

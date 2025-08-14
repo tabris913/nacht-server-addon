@@ -91,6 +91,7 @@ export enum RuleName {
   teleportTimeout = 'teleportTimeout',
   watchCrossingArea = 'watchCrossingArea',
   watchCrossingAreaInterval = 'watchCrossingAreaInterval',
+  isMaintenainceMode = 'isMaintenanceMode',
 }
 
 export enum VerticalDirection {
@@ -255,6 +256,7 @@ export default () =>
       RuleName.teleportTimeout,
       RuleName.watchCrossingArea,
       RuleName.watchCrossingAreaInterval,
+      RuleName.isMaintenainceMode,
     ]);
 
     event.customCommandRegistry.registerEnum('nacht:VerticalDirection', [VerticalDirection.DOWN, VerticalDirection.UP]);
