@@ -273,12 +273,24 @@ export default () => {
       if (event.target.typeId !== NachtServerAddonEntityTypes.BaseFlag) return;
       if (event.itemStack?.typeId === NachtServerAddonItemTypes.NachtFeather) return;
 
-      const base = BaseUtils.findByEntityId(event.target.id);
+      let base = BaseUtils.findByEntityId(event.target.id);
       if (base === undefined) {
-        // 未登録
-        event.player.sendMessage(`${Formatting.Color.RED}拠点登録されていません。`);
+        // エンティティ ID 未設定
+        base = BaseUtils.findByLocation({ ...event.target.location, dimension: event.target.dimension });
+        if (base === undefined) {
+          // 場所からも推定できない
+          event.player.sendMessage(`${Formatting.Color.RED}拠点登録されていません。`);
 
-        return;
+          return;
+        } else {
+          // 場所から取得できた --> エンティティ ID をセット
+          system.run(() =>
+            world.setDynamicProperty(
+              base!.id,
+              JSON.stringify({ ...base!, entityId: event.target.id } satisfies BaseAreaInfo)
+            )
+          );
+        }
       }
       if (base.owner !== event.player.nameTag) {
         // 別の人の旗をインタラクトすると登録ダイアログ

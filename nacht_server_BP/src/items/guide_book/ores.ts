@@ -82,7 +82,7 @@ export default () =>
           Aether: event.source.hasTag(TAG_ITEM + NachtServerAddonItemTypes.Aether)
             ? { translate: 'item.nacht:aether.name' }
             : obfuscate('Aether'),
-          CondensedAether: event.source.hasComponent(TAG_ITEM + NachtServerAddonItemTypes.CondensedAether)
+          CondensedAether: event.source.hasTag(TAG_ITEM + NachtServerAddonItemTypes.CondensedAether)
             ? { translate: 'item.nacht:condensed_aether.name' }
             : obfuscate('CondensedAether'),
           PoorElixir: event.source.hasTag(TAG_ITEM + NachtServerAddonItemTypes.PoorElixir)
@@ -1173,7 +1173,7 @@ export default () =>
                   'アイテムの力を',
                   VARS.Invertia,
                   'させる。',
-                  VARS.HolySilver,
+                  VARS.StarIron,
                   `で強力なモブを倒すと一定確率でドロップする。`
                 )
               );

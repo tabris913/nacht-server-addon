@@ -5,8 +5,7 @@
       "identifier": "nacht:electrum_ingot_from_ingot"
     },
     "tags": [
-      "furnace",
-      "blast_furnace"
+      "crafting_table"
     ],
     "unlock": [
       {

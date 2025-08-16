@@ -68,7 +68,8 @@ const show = async (player: Player) => {
     }
 
     if (player.playerPermissionLevel === PlayerPermissionLevel.Operator) {
-      content.push('\nEntity Id: ', entity.typeId);
+      content.push('\nEntity Id: ', entity.id);
+      content.push('\nEntity TypeId: ', entity.typeId);
       content.push('\nEntity Localization Key: ', entity.localizationKey);
     }
   } else {
@@ -82,7 +83,7 @@ const show = async (player: Player) => {
       }
 
       if (player.playerPermissionLevel === PlayerPermissionLevel.Operator) {
-        content.push('\nBlock Id: ', block.typeId);
+        content.push('\nBlock TypeId: ', block.typeId);
         content.push('\nBlock Localization Key: ', block.localizationKey);
       }
     }

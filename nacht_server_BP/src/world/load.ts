@@ -6,7 +6,6 @@ import { Logger } from '../utils/logger';
 import camera from './afterLoading/camera';
 
 const RESTORE_DATA: Record<string, boolean | number | string | Vector3> = {};
-
 export default () =>
   world.afterEvents.worldLoad.subscribe((event) => {
     // ポイント準備

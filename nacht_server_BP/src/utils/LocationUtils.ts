@@ -12,6 +12,7 @@ import {
 import { PREFIX_LOCATION } from '../const';
 import { LengthError } from '../errors/locations';
 import { DimensionBlockVolume } from '../models/DimensionBlockVolume';
+import { MinecraftDimensionTypes } from '../types/index';
 
 import { Logger } from './logger';
 
@@ -105,6 +106,10 @@ export const generateIntegerLocation = <T extends VectorXZ | Vector3>(location: 
         x: Math.floor(location.x),
         z: Math.floor(location.z),
       } as T);
+
+const isInNether = (entity: Entity) => entity.dimension.id === MinecraftDimensionTypes.Nether;
+const isInOverworld = (entity: Entity) => entity.dimension.id === MinecraftDimensionTypes.Overworld;
+const isInTheEnd = (entity: Entity) => entity.dimension.id === MinecraftDimensionTypes.TheEnd;
 
 /**
  * 2つのエリアが重なっているか判定する
@@ -282,6 +287,9 @@ const LocationUtils = {
   collectBlocksWithin,
   generateBlockVolume,
   generateIntegerLocation,
+  isInNether,
+  isInOverworld,
+  isInTheEnd,
   isOverlapped,
   isSurface,
   isVector,
